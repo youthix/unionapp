@@ -58,6 +58,9 @@ public class UserBO implements Serializable {
 	@Column(name = "status")
 	private String status;
 	
+	@Column(name = "role")
+	private String role;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -164,6 +167,14 @@ public class UserBO implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 

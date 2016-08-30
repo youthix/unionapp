@@ -8,7 +8,6 @@ import org.presentation.dto.ResponseObj;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
-import org.repository.DAOInterface.ITestDAO;
 import org.repository.RepositoryDelegate.RepositoryDelegator;
 import org.repository.entity.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +37,10 @@ public class ServiceDelegator {
 			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
 
 			User userObj = userList.get(0);
+			
 
-			if ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
-					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd()))) {
+			if ((null!=userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
+					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
 				setResponse(responseObj);
 			}
 			else {
@@ -78,7 +78,21 @@ public class ServiceDelegator {
 
 	public ResponseObj fetch(RequestObj reqparam) {
 
-		return null;
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj = reqparam.getUserListObj();
+
+		if (null != reqparam.getCriteria()) {
+
+			repositoryDelegator.fetch(reqparam.getCriteria());
+			responseObj.setUserListObj(userListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException(" Fetch Criteria is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
 	}
 
 	public void hello() {

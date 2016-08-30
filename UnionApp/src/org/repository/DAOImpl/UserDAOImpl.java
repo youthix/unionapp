@@ -30,11 +30,19 @@ public class UserDAOImpl implements IUserDAO {
 
 	public UserBO fetchUserByParam(User userDTO) {
 
-		UserBO userBOObj;
+		UserBO userBOObj = null;
 		try {
 
 			System.out.println("InDAOloginUser");
-			String SQL = "select u from " +  UserBO.class.getName() + " u where connumber = '" + userDTO.getConNu() + "'";
+			
+/*			public List findWithName(String name) {
+			    return em.createQuery(
+			        "SELECT c FROM Customer c WHERE c.name LIKE :custName")
+			        .setParameter("custName", name)
+			        .getResultList();
+			}*/
+			 
+			String SQL = "select u from " +  UserBO.class.getName() + " u where usname = '" + userDTO.getUsNa() + "'";
 			//"select p from " + Payment.class.getName() + " p"
 			userBOObj = (UserBO) manager.createQuery(SQL).getSingleResult();
 

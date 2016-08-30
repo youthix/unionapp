@@ -20,6 +20,7 @@ public class User {
 	private String emId;
 	private String uId;
 	private String status;
+	private String role;
 
 	public String getPwd() {
 		return pwd;
@@ -117,4 +118,13 @@ public class User {
 		this.usNa = usNa;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	
 }

@@ -2,6 +2,7 @@ package org.presentation.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.presentation.dto.fetchcriteria.Criteria;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "reqparam")
 public class RequestObj {
@@ -9,6 +10,8 @@ public class RequestObj {
 	private UserList UserListObj;
 	
 	private String bid;
+	
+	private Criteria criteria;
 
 
 	public UserList getUserListObj() {
@@ -26,6 +29,16 @@ public class RequestObj {
 	public void setBid(String bid) {
 		this.bid = bid;
 	}
+
+	public Criteria getCriteria() {
+		return criteria;
+	}
+
+	public void setCriteria(Criteria criteria) {
+		this.criteria = criteria;
+	}
+
+
 	
 
 }

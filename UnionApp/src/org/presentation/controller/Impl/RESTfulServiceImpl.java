@@ -80,6 +80,33 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetch(RequestObj reqparam) {
 
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj= serviceDelegator.fetch(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/update")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj update(RequestObj reqparam) {
+
 		serviceDelegator.fetch(null);
 		return null;
 

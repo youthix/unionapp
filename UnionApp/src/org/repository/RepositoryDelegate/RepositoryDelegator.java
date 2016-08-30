@@ -3,6 +3,7 @@ package org.repository.RepositoryDelegate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.presentation.dto.fetchcriteria.Criteria;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -18,33 +19,6 @@ public class RepositoryDelegator {
 
 	@Autowired
 	IUserDAO userdao;
-
-	// @Cacheable(cacheName = "fetchPagesCache", keyGenerator =
-	// @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties =
-	// @Property(name = "includeMethod", value = "false") ) )
-
-	public UserBO login(UserList userListObj) {
-		System.out.println("InRDLogin");
-
-		UserBO userBOObj ;
-		
-		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
-
-		if (userList.size() > 0) {
-			
-			User userObj = userList.get(0);
-
-			userBOObj = userdao.fetchUserByParam(userObj);
-
-		}
-
-		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
-			throw serviceExceptionObj;
-		}
-
-		return userBOObj;
-	}
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -75,6 +49,54 @@ public class RepositoryDelegator {
 		return userListObj;
 	}
 
+	public UserBO login(UserList userListObj) {
+		System.out.println("InRDLogin");
+
+		UserBO userBOObj = null;
+
+		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+
+		if (userList.size() > 0) {
+
+			User userObj = userList.get(0);
+
+			userBOObj = userdao.fetchUserByParam(userObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return userBOObj;
+	}
+
+	public UserList fetch(Criteria criteriaObj) {
+		System.out.println("InRDLogin");
+
+		UserBO userBOObj;
+
+		UserList userListObj = null;
+
+		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+
+		if (userList.size() > 0) {
+
+			User userObj = userList.get(0);
+
+			userBOObj = userdao.fetchUserByParam(userObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return userListObj;
+	}
+
 	private void populateUserBO(User userObj, UserBO userBOObj) {
 		userBOObj.setUsname(userObj.getUsNa());
 		userBOObj.setPwd(userObj.getPwd());
@@ -86,14 +108,18 @@ public class RepositoryDelegator {
 		userBOObj.setGen(userObj.getGen());
 		userBOObj.setJoindt(userObj.getJoinDt());
 		userBOObj.setLn(userObj.getLn());
-		userBOObj.setStatus(userObj.getStatus());
+		if (null == userObj.getStatus() || userObj.getStatus().equals("")) {
+			userBOObj.setStatus("P");
+		} else {
+			userBOObj.setStatus(userObj.getStatus());
+		}
+		if (null == userObj.getRole() || userObj.getRole().equals("")) {
+			userBOObj.setRole("N");
+		} else {
+			userBOObj.setRole(userObj.getRole());
+		}
 		userBOObj.setuId(userObj.getuId());
 
-	}
-
-	public UserList fetch(UserList reqparam) {
-		System.out.println("InRDFetch");
-		return null;
 	}
 
 }

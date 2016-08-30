@@ -10,5 +10,7 @@ public interface RESTfulServiceInterface {
 	ResponseObj register(RequestObj reqparam);
 	
 	ResponseObj fetch(RequestObj reqparam);
+	
+	ResponseObj update(RequestObj reqparam);
 
 }
