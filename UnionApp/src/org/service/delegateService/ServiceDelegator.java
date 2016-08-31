@@ -22,8 +22,9 @@ public class ServiceDelegator {
 
 	ResStatus resStatus;
 
-/*	@Autowired
-	ITestDAO dao;*/
+	/*
+	 * @Autowired ITestDAO dao;
+	 */
 
 	public ResponseObj login(RequestObj reqparam) {
 
@@ -37,20 +38,19 @@ public class ServiceDelegator {
 			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
 
 			User userObj = userList.get(0);
-			
 
-			if ((null!=userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
+			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
 					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
 				setResponse(responseObj);
-			}
-			else {
-				ServiceException serviceExceptionObj = new ServiceException("Credentials Incorrect");
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException(
+						"Credentials Incorrect. No matching Object Found");
 				throw serviceExceptionObj;
 			}
 			responseObj.setUserListObj(userListObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
 			throw serviceExceptionObj;
 		}
 
@@ -79,16 +79,16 @@ public class ServiceDelegator {
 	public ResponseObj fetch(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		UserList userListObj = reqparam.getUserListObj();
+		UserList userListObj;
 
 		if (null != reqparam.getCriteria()) {
 
-			repositoryDelegator.fetch(reqparam.getCriteria());
+			userListObj = repositoryDelegator.fetch(reqparam.getCriteria());
 			responseObj.setUserListObj(userListObj);
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException(" Fetch Criteria is NULL");
+			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
 			throw serviceExceptionObj;
 		}
 
@@ -126,13 +126,11 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-/*	public ITestDAO getDao() {
-		return dao;
-	}
-
-	public void setDao(ITestDAO dao) {
-		this.dao = dao;
-	}*/
+	/*
+	 * public ITestDAO getDao() { return dao; }
+	 * 
+	 * public void setDao(ITestDAO dao) { this.dao = dao; }
+	 */
 
 	private void setResponse(ResponseObj responseObj) {
 		ResStatus resStatus = new ResStatus();

@@ -2,6 +2,7 @@ package org.repository.RepositoryDelegate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import org.presentation.dto.fetchcriteria.Criteria;
 import org.presentation.dto.user.User;
@@ -65,7 +66,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
 			throw serviceExceptionObj;
 		}
 
@@ -73,24 +74,30 @@ public class RepositoryDelegator {
 	}
 
 	public UserList fetch(Criteria criteriaObj) {
-		System.out.println("InRDLogin");
+		System.out.println("InRDFetch");
 
-		UserBO userBOObj;
+		UserList userListObj = new UserList();
+		ArrayList<User> userDTOList = new ArrayList<User>();
 
-		UserList userListObj = null;
+		ArrayList<UserBO> userBOList;
 
-		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+		userBOList = userdao.fetchUser(criteriaObj);
 
-		if (userList.size() > 0) {
+		if (null != userBOList && userBOList.size() > 0) {
 
-			User userObj = userList.get(0);
+			Iterator<UserBO> litr = userBOList.iterator();
 
-			userBOObj = userdao.fetchUserByParam(userObj);
+			while (litr.hasNext()) {
+				User userDTOObj = new User();
+				populateUserDTO(userDTOObj, litr.next());
+				userDTOList.add(userDTOObj);
 
-		}
+			}
 
-		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			userListObj.setUl(userDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
 			throw serviceExceptionObj;
 		}
 
@@ -119,6 +126,23 @@ public class RepositoryDelegator {
 			userBOObj.setRole(userObj.getRole());
 		}
 		userBOObj.setuId(userObj.getuId());
+
+	}
+
+	private void populateUserDTO(User userObj, UserBO userBOObj) {
+
+		userObj.setAdd(userBOObj.getAdd());
+		userObj.setAge(userBOObj.getAge());
+		userObj.setConNu(userBOObj.getConNu());
+		userObj.setEmId(userBOObj.getEmailid());
+		userObj.setFn(userBOObj.getFn());
+		userObj.setGen(userBOObj.getGen());
+		userObj.setJoinDt(userBOObj.getJoindt());
+		userObj.setLn(userBOObj.getLn());
+		userObj.setPwd(userBOObj.getPwd());
+		userObj.setRole(userBOObj.getRole());
+		userObj.setStatus(userBOObj.getStatus());
+		userObj.setUsNa(userBOObj.getUsname());
 
 	}
 
