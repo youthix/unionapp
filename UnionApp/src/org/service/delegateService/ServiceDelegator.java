@@ -94,6 +94,25 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj update(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj = reqparam.getUserListObj();
+
+		if (null != userListObj) {
+
+			repositoryDelegator.update(userListObj);
+			responseObj.setUserListObj(userListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
 
 	public void hello() {
 		System.out.println("In Service");

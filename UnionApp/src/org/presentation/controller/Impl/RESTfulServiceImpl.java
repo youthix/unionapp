@@ -20,32 +20,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Autowired
 	private ServiceDelegator serviceDelegator;
 
-	@Override
-	@POST
-	@Path("/login")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-	public ResponseObj login(RequestObj reqparam) {
-
-		ResponseObj responseObj = new ResponseObj();
-
-		try {
-			if (null != reqparam) {
-				responseObj = serviceDelegator.login(reqparam);
-			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
-				throw serviceExceptionObj;
-
-			}
-		} catch (Exception exceptionObj) {
-
-			return ServiceExceptionMapper.toResponse(exceptionObj);
-		}
-
-		return responseObj;
-
-	}
-
+	
 	@Override
 	@POST
 	@Path("/register")
@@ -72,6 +47,34 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
+	
+	
+	@Override
+	@POST
+	@Path("/login")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj login(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.login(reqparam);
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
 
 	@Override
 	@POST
@@ -107,8 +110,23 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj update(RequestObj reqparam) {
 
-		serviceDelegator.fetch(null);
-		return null;
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj= serviceDelegator.update(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
 
 	}
 

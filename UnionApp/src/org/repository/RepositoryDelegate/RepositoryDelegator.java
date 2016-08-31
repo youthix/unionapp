@@ -54,14 +54,29 @@ public class RepositoryDelegator {
 		System.out.println("InRDLogin");
 
 		UserBO userBOObj = null;
+		
+		Criteria criteriaObj = new Criteria ();
+		criteriaObj.setSetCriteria("TRUE");
+		
+		ArrayList<UserBO> userBOList;
 
+		
+		
 		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
 
 		if (userList.size() > 0) {
+			
+			
 
 			User userObj = userList.get(0);
+			
+			criteriaObj.setEmailid(userObj.getUsNa());
 
-			userBOObj = userdao.fetchUserByParam(userObj);
+			//userBOObj = userdao.fetchUserByParam(userObj);
+			
+			userBOList = userdao.fetchUser(criteriaObj);
+			
+			userBOObj = userBOList.get(0);
 
 		}
 
@@ -104,6 +119,34 @@ public class RepositoryDelegator {
 		return userListObj;
 	}
 
+	public UserList update(UserList userListObj) {
+		System.out.println("InRDUpdate");
+
+		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+
+		if (userList.size() > 0) {
+			Iterator<User> userListIterator = userList.iterator();
+
+			while (userListIterator.hasNext()) {
+
+				User userObj = userListIterator.next();
+
+				UserBO userBOObj = new UserBO();
+
+				populateUserBO(userObj, userBOObj);
+				userdao.update(userBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return userListObj;
+	}
 	private void populateUserBO(User userObj, UserBO userBOObj) {
 		userBOObj.setUsname(userObj.getUsNa());
 		userBOObj.setPwd(userObj.getPwd());

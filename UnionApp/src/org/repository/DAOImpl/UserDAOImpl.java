@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.presentation.dto.fetchcriteria.Criteria;
@@ -28,6 +28,21 @@ public class UserDAOImpl implements IUserDAO {
 		try {
 			System.out.println("InDAOAddUser");
 			manager.persist(userBO);
+			System.out.println("DoneDAOAddUser");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+
+	public void update(UserBO userBO) {
+		try {
+			System.out.println("InDAOAddUser");
+
+			String SQL = "update " +  UserBO.class.getName() + " u Set u.status='"+ userBO.getStatus()+"' where usname = '" + userBO.getUsname() + "'";
+			Query query = manager.createQuery(SQL);
+            query.executeUpdate();
+			
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
@@ -70,7 +85,7 @@ public class UserDAOImpl implements IUserDAO {
 
 			if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
 				if (null != criteriaObj.getEmailid() && criteriaObj.getEmailid() != "") {
-					
+
 					cq.where(cb.equal(c.get("emailid"), criteriaObj.getEmailid()));
 
 				}
