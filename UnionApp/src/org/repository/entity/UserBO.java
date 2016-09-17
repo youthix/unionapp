@@ -17,10 +17,6 @@ public class UserBO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private Integer  id;
 	
 	@Column(name = "usname")
 	private String usname;
@@ -48,12 +44,11 @@ public class UserBO implements Serializable {
 	
 	@Column(name = "connumber")
 	private String conNu;
-	
+
+	@Id
 	@Column(name = "emailid")
 	private String emailid;
 	
-	@Column(name = "uniqueid")
-	private String uId;
 	
 	@Column(name = "status")
 	private String status;
@@ -61,13 +56,12 @@ public class UserBO implements Serializable {
 	@Column(name = "role")
 	private String role;
 	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	@Column(name = "loginstatus")
+	private String loginstatus;
+	
+	@Column(name = "deviceid")
+	private String deviceid;	
+	
 
 	public String getUsname() {
 		return usname;
@@ -149,13 +143,6 @@ public class UserBO implements Serializable {
 		this.emailid = emailid;
 	}
 
-	public String getuId() {
-		return uId;
-	}
-
-	public void setuId(String uId) {
-		this.uId = uId;
-	}
 
 	public String getStatus() {
 		return status;
@@ -175,6 +162,22 @@ public class UserBO implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getLoginstatus() {
+		return loginstatus;
+	}
+
+	public void setLoginstatus(String loginstatus) {
+		this.loginstatus = loginstatus;
+	}
+
+	public String getDeviceid() {
+		return deviceid;
+	}
+
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
 	}
 	
 

@@ -37,7 +37,7 @@ public class RepositoryDelegator {
 
 				populateUserBO(userObj, userBOObj);
 				userdao.addUser(userBOObj);
-				userObj.setuId(userBOObj.getId().toString());
+				userObj.setuId(userBOObj.getEmailid());
 			}
 
 		}
@@ -54,28 +54,24 @@ public class RepositoryDelegator {
 		System.out.println("InRDLogin");
 
 		UserBO userBOObj = null;
-		
-		Criteria criteriaObj = new Criteria ();
+
+		Criteria criteriaObj = new Criteria();
 		criteriaObj.setSetCriteria("TRUE");
-		
+
 		ArrayList<UserBO> userBOList;
 
-		
-		
 		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
 
 		if (userList.size() > 0) {
-			
-			
 
 			User userObj = userList.get(0);
-			
+
 			criteriaObj.setEmailid(userObj.getUsNa());
 
-			//userBOObj = userdao.fetchUserByParam(userObj);
-			
+			// userBOObj = userdao.fetchUserByParam(userObj);
+
 			userBOList = userdao.fetchUser(criteriaObj);
-			
+
 			userBOObj = userBOList.get(0);
 
 		}
@@ -147,8 +143,11 @@ public class RepositoryDelegator {
 
 		return userListObj;
 	}
+
 	private void populateUserBO(User userObj, UserBO userBOObj) {
+
 		userBOObj.setUsname(userObj.getUsNa());
+		userBOObj.setDeviceid(userObj.getDeviceid());
 		userBOObj.setPwd(userObj.getPwd());
 		userBOObj.setAdd(userObj.getAdd());
 		userBOObj.setAge(userObj.getAge());
@@ -168,7 +167,6 @@ public class RepositoryDelegator {
 		} else {
 			userBOObj.setRole(userObj.getRole());
 		}
-		userBOObj.setuId(userObj.getuId());
 
 	}
 
@@ -186,6 +184,8 @@ public class RepositoryDelegator {
 		userObj.setRole(userBOObj.getRole());
 		userObj.setStatus(userBOObj.getStatus());
 		userObj.setUsNa(userBOObj.getUsname());
+		userObj.setLoginstatus(userBOObj.getLoginstatus());
+		userBOObj.setDeviceid(userBOObj.getDeviceid());
 
 	}
 

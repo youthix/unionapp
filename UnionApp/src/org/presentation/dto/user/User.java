@@ -21,6 +21,8 @@ public class User {
 	private String uId;
 	private String status;
 	private String role;
+	private String loginstatus;
+	private String deviceid;
 
 	public String getPwd() {
 		return pwd;
@@ -124,6 +126,22 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getLoginstatus() {
+		return loginstatus;
+	}
+
+	public void setLoginstatus(String loginstatus) {
+		this.loginstatus = loginstatus;
+	}
+
+	public String getDeviceid() {
+		return deviceid;
+	}
+
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
 	}
 
 	

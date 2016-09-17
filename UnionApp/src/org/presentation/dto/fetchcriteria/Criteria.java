@@ -12,6 +12,7 @@ public class Criteria {
 	private String emailid;
 	private String status;
 	private String role;
+	private String loginstatus;
 
 	public String getSetCriteria() {
 		return setCriteria;
@@ -44,5 +45,14 @@ public class Criteria {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public String getLoginstatus() {
+		return loginstatus;
+	}
+
+	public void setLoginstatus(String loginstatus) {
+		this.loginstatus = loginstatus;
+	}
+	
 
 }

@@ -39,9 +39,11 @@ public class UserDAOImpl implements IUserDAO {
 		try {
 			System.out.println("InDAOAddUser");
 
-			String SQL = "update " +  UserBO.class.getName() + " u Set u.status='"+ userBO.getStatus()+"' where usname = '" + userBO.getUsname() + "'";
+/*			String SQL = "update " +  UserBO.class.getName() + " u Set u.status='"+ userBO.getStatus()+"' where usname = '" + userBO.getUsname() + "'";
 			Query query = manager.createQuery(SQL);
-            query.executeUpdate();
+            query.executeUpdate();*/
+			
+			manager.merge(userBO);
 			
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
@@ -50,7 +52,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
-	public UserBO fetchUserByParam(User userDTO) {
+/*	public UserBO fetchUserByParam(User userDTO) {
 
 		UserBO userBOObj = null;
 		try {
@@ -68,7 +70,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 
 		return userBOObj;
-	}
+	}*/
 
 	public ArrayList<UserBO> fetchUser(Criteria criteriaObj) {
 
@@ -101,6 +103,12 @@ public class UserDAOImpl implements IUserDAO {
 					cq.where(cb.equal(c.get("status"), criteriaObj.getStatus()));
 
 				}
+				
+				if (null != criteriaObj.getLoginstatus() && criteriaObj.getLoginstatus() != "") {
+
+					cq.where(cb.equal(c.get("loginstatus"), criteriaObj.getLoginstatus()));
+
+				}				
 
 			}
 
