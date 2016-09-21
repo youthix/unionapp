@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
+import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -41,7 +42,25 @@ public class ServiceDelegator {
 
 			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
 					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
-				setResponse(responseObj);
+				if(userBOObj.getStatus().equalsIgnoreCase("B")){
+					ServiceException serviceExceptionObj = new ServiceException(
+							"User is Blocked");
+					throw serviceExceptionObj;
+				}
+				else if(userBOObj.getStatus().equalsIgnoreCase("P")){
+					ServiceException serviceExceptionObj = new ServiceException(
+							"User is Pending for Approval");
+					throw serviceExceptionObj;
+				}
+				else if (userBOObj.getStatus().equalsIgnoreCase("A")){
+					setResponse(responseObj);
+					//Update the Login status
+					userListObj.getUl().get(0).setLoginstatus("T");
+					Criteria criteriaObj = new Criteria();
+					criteriaObj.setUpdatefield("loginstatus");
+					repositoryDelegator.update(userListObj,criteriaObj);
+					}
+				
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException(
 						"Credentials Incorrect. No matching Object Found");
@@ -102,7 +121,7 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			repositoryDelegator.update(userListObj);
+			repositoryDelegator.update(userListObj,reqparam.getCriteria());
 			responseObj.setUserListObj(userListObj);
 			setResponse(responseObj);
 

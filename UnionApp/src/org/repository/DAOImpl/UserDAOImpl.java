@@ -9,8 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.presentation.dto.fetchcriteria.Criteria;
-import org.presentation.dto.user.User;
+import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.UserBO;
@@ -51,7 +50,33 @@ public class UserDAOImpl implements IUserDAO {
 			throw serviceExceptionObj;
 		}
 	}
+	
+	public void updateOnCriteria(UserBO userBO,Criteria criteriaObj ) {
+		try {
+			System.out.println("DoneDAOUpdateLoginStatus");
+			String SQL="";
 
+			if (criteriaObj.getUpdatefield().equalsIgnoreCase("loginstatus")){
+				 SQL = "update " +  UserBO.class.getName() + " u Set u.loginstatus='"+ userBO.getLoginstatus()+"' where usname = '" + userBO.getUsname() + "'";
+			}
+			else if(criteriaObj.getUpdatefield().equalsIgnoreCase("deviceid")){
+				 SQL = "update " +  UserBO.class.getName() + " u Set u.deviceid='"+ userBO.getDeviceid()+"' where usname = '" + userBO.getUsname() + "'";
+			}
+			else if(criteriaObj.getUpdatefield().equalsIgnoreCase("status")){
+				 SQL = "update " +  UserBO.class.getName() + " u Set u.status='"+ userBO.getStatus()+"' where usname = '" + userBO.getUsname() + "'";
+			}
+			
+			Query query = manager.createQuery(SQL);
+            query.executeUpdate();
+			
+			System.out.println("DoneDAOUpdateLoginStatus");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+
+	
 /*	public UserBO fetchUserByParam(User userDTO) {
 
 		UserBO userBOObj = null;

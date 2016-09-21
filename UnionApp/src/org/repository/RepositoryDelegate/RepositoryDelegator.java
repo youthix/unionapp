@@ -2,9 +2,8 @@ package org.repository.RepositoryDelegate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ListIterator;
 
-import org.presentation.dto.fetchcriteria.Criteria;
+import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -115,7 +114,7 @@ public class RepositoryDelegator {
 		return userListObj;
 	}
 
-	public UserList update(UserList userListObj) {
+	public UserList update(UserList userListObj,Criteria criteriaObj) {
 		System.out.println("InRDUpdate");
 
 		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
@@ -128,9 +127,19 @@ public class RepositoryDelegator {
 				User userObj = userListIterator.next();
 
 				UserBO userBOObj = new UserBO();
+				userBOObj.setUsname(userObj.getUsNa());
+				
+				if (criteriaObj.getUpdatefield().equalsIgnoreCase("loginstatus")){
+					userBOObj.setLoginstatus(userObj.getLoginstatus());
+				}
+				else if(criteriaObj.getUpdatefield().equalsIgnoreCase("deviceid")){
+					userBOObj.setDeviceid(userObj.getDeviceid());
+				}
+				else if(criteriaObj.getUpdatefield().equalsIgnoreCase("status")){
+					userBOObj.setStatus(userObj.getStatus());
+				}
+				userdao.updateOnCriteria(userBOObj,criteriaObj);
 
-				populateUserBO(userObj, userBOObj);
-				userdao.update(userBOObj);
 
 			}
 
@@ -143,6 +152,8 @@ public class RepositoryDelegator {
 
 		return userListObj;
 	}
+
+	
 
 	private void populateUserBO(User userObj, UserBO userBOObj) {
 

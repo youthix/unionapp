@@ -1,10 +1,10 @@
-package org.presentation.dto.fetchcriteria;
+package org.presentation.dto.criteria;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-@XmlRootElement(name = "fetchcriteria")
+@XmlRootElement(name = "criteria")
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Criteria {
 
@@ -13,6 +13,7 @@ public class Criteria {
 	private String status;
 	private String role;
 	private String loginstatus;
+	private String updatefield;
 
 	public String getSetCriteria() {
 		return setCriteria;
@@ -52,6 +53,14 @@ public class Criteria {
 
 	public void setLoginstatus(String loginstatus) {
 		this.loginstatus = loginstatus;
+	}
+
+	public String getUpdatefield() {
+		return updatefield;
+	}
+
+	public void setUpdatefield(String updatefield) {
+		this.updatefield = updatefield;
 	}
 	
 

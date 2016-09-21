@@ -2,7 +2,7 @@ package org.presentation.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.presentation.dto.fetchcriteria.Criteria;
+import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "reqparam")
 public class RequestObj {
