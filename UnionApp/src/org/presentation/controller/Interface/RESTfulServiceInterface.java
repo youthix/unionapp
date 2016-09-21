@@ -12,5 +12,9 @@ public interface RESTfulServiceInterface {
 	ResponseObj fetch(RequestObj reqparam);
 	
 	ResponseObj update(RequestObj reqparam);
+	
+	ResponseObj updatepwd(RequestObj reqparam);
+	
+	ResponseObj resetpwd(RequestObj reqparam);
 
 }

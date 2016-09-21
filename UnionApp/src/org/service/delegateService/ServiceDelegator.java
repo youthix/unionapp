@@ -1,6 +1,7 @@
 package org.service.delegateService;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResStatus;
@@ -42,25 +43,21 @@ public class ServiceDelegator {
 
 			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
 					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
-				if(userBOObj.getStatus().equalsIgnoreCase("B")){
-					ServiceException serviceExceptionObj = new ServiceException(
-							"User is Blocked");
+				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
 					throw serviceExceptionObj;
-				}
-				else if(userBOObj.getStatus().equalsIgnoreCase("P")){
-					ServiceException serviceExceptionObj = new ServiceException(
-							"User is Pending for Approval");
+				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
 					throw serviceExceptionObj;
-				}
-				else if (userBOObj.getStatus().equalsIgnoreCase("A")){
+				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 					setResponse(responseObj);
-					//Update the Login status
+					// Update the Login status
 					userListObj.getUl().get(0).setLoginstatus("T");
 					Criteria criteriaObj = new Criteria();
 					criteriaObj.setUpdatefield("loginstatus");
-					repositoryDelegator.update(userListObj,criteriaObj);
-					}
-				
+					repositoryDelegator.update(userListObj, criteriaObj);
+				}
+
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException(
 						"Credentials Incorrect. No matching Object Found");
@@ -113,7 +110,7 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
+
 	public ResponseObj update(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -121,7 +118,7 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			repositoryDelegator.update(userListObj,reqparam.getCriteria());
+			repositoryDelegator.update(userListObj, reqparam.getCriteria());
 			responseObj.setUserListObj(userListObj);
 			setResponse(responseObj);
 
@@ -131,7 +128,111 @@ public class ServiceDelegator {
 		}
 
 		return responseObj;
-	}	
+	}
+
+	public ResponseObj updatepwd(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj = reqparam.getUserListObj();
+
+		if (null != userListObj) {
+
+			UserBO userBOObj = repositoryDelegator.login(userListObj);
+
+			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+
+			User userObj = userList.get(0);
+
+			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
+					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
+				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
+					throw serviceExceptionObj;
+				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
+					throw serviceExceptionObj;
+				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
+
+					// Update the Pwd
+					String newPwd = userListObj.getUl().get(0).getNewpwd();
+					userListObj.getUl().get(0).setPwd(newPwd);
+					Criteria criteriaObj = new Criteria();
+					criteriaObj.setUpdatefield("pwd");
+					repositoryDelegator.update(userListObj, criteriaObj);
+					setResponse(responseObj);
+				}
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException(
+						"Credentials Incorrect. No matching Object Found");
+				throw serviceExceptionObj;
+			}
+			responseObj.setUserListObj(userListObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj resetpwd(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj = reqparam.getUserListObj();
+
+		if (null != userListObj) {
+
+			UserBO userBOObj = repositoryDelegator.login(userListObj);
+
+			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+
+			User userObj = userList.get(0);
+
+			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa())))) {
+				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
+					throw serviceExceptionObj;
+				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
+					throw serviceExceptionObj;
+				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
+
+					// Reset the Pwd
+					String newPwd = generatepwd();
+					userListObj.getUl().get(0).setPwd(newPwd);
+					userListObj.getUl().get(0).setNewpwd(newPwd);
+					Criteria criteriaObj = new Criteria();
+					criteriaObj.setUpdatefield("pwd");
+					repositoryDelegator.update(userListObj, criteriaObj);
+					setResponse(responseObj);
+					responseObj.setUserListObj(userListObj);
+				}
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException(
+						"Credentials Incorrect. No matching Object Found");
+				throw serviceExceptionObj;
+			}
+			responseObj.setUserListObj(userListObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	private String generatepwd() {
+
+		String newPwd = UUID.randomUUID().toString();
+
+		newPwd = newPwd.substring(0, 7);
+
+		return newPwd;
+	}
 
 	public void hello() {
 		System.out.println("In Service");

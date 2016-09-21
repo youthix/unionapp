@@ -23,6 +23,7 @@ public class User {
 	private String role;
 	private String loginstatus;
 	private String deviceid;
+	private String newpwd;
 
 	public String getPwd() {
 		return pwd;
@@ -142,6 +143,14 @@ public class User {
 
 	public void setDeviceid(String deviceid) {
 		this.deviceid = deviceid;
+	}
+
+	public String getNewpwd() {
+		return newpwd;
+	}
+
+	public void setNewpwd(String newpwd) {
+		this.newpwd = newpwd;
 	}
 
 	

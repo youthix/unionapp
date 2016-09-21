@@ -65,7 +65,9 @@ public class UserDAOImpl implements IUserDAO {
 			else if(criteriaObj.getUpdatefield().equalsIgnoreCase("status")){
 				 SQL = "update " +  UserBO.class.getName() + " u Set u.status='"+ userBO.getStatus()+"' where usname = '" + userBO.getUsname() + "'";
 			}
-			
+			else if(criteriaObj.getUpdatefield().equalsIgnoreCase("pwd")){
+				 SQL = "update " +  UserBO.class.getName() + " u Set u.pwd='"+ userBO.getPwd()+"' where usname = '" + userBO.getUsname() + "'";
+			}
 			Query query = manager.createQuery(SQL);
             query.executeUpdate();
 			

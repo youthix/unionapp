@@ -114,7 +114,7 @@ public class RepositoryDelegator {
 		return userListObj;
 	}
 
-	public UserList update(UserList userListObj,Criteria criteriaObj) {
+	public UserList update(UserList userListObj, Criteria criteriaObj) {
 		System.out.println("InRDUpdate");
 
 		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
@@ -128,18 +128,17 @@ public class RepositoryDelegator {
 
 				UserBO userBOObj = new UserBO();
 				userBOObj.setUsname(userObj.getUsNa());
-				
-				if (criteriaObj.getUpdatefield().equalsIgnoreCase("loginstatus")){
-					userBOObj.setLoginstatus(userObj.getLoginstatus());
-				}
-				else if(criteriaObj.getUpdatefield().equalsIgnoreCase("deviceid")){
-					userBOObj.setDeviceid(userObj.getDeviceid());
-				}
-				else if(criteriaObj.getUpdatefield().equalsIgnoreCase("status")){
-					userBOObj.setStatus(userObj.getStatus());
-				}
-				userdao.updateOnCriteria(userBOObj,criteriaObj);
 
+				if (criteriaObj.getUpdatefield().equalsIgnoreCase("loginstatus")) {
+					userBOObj.setLoginstatus(userObj.getLoginstatus());
+				} else if (criteriaObj.getUpdatefield().equalsIgnoreCase("deviceid")) {
+					userBOObj.setDeviceid(userObj.getDeviceid());
+				} else if (criteriaObj.getUpdatefield().equalsIgnoreCase("status")) {
+					userBOObj.setStatus(userObj.getStatus());
+				} else if (criteriaObj.getUpdatefield().equalsIgnoreCase("pwd")) {
+					userBOObj.setStatus(userObj.getPwd());
+				}
+				userdao.updateOnCriteria(userBOObj, criteriaObj);
 
 			}
 
@@ -153,7 +152,6 @@ public class RepositoryDelegator {
 		return userListObj;
 	}
 
-	
 
 	private void populateUserBO(User userObj, UserBO userBOObj) {
 
