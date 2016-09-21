@@ -157,6 +157,7 @@ public class RepositoryDelegator {
 		userBOObj.setGen(userObj.getGen());
 		userBOObj.setJoindt(userObj.getJoinDt());
 		userBOObj.setLn(userObj.getLn());
+		userBOObj.setLoginstatus("F");
 		if (null == userObj.getStatus() || userObj.getStatus().equals("")) {
 			userBOObj.setStatus("P");
 		} else {

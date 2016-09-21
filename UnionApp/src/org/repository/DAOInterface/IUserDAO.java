@@ -10,7 +10,7 @@ public interface IUserDAO {
 
 	public void addUser(UserBO userBO);
 
-	public UserBO fetchUserByParam(User userdto);
+	//public UserBO fetchUserByParam(User userdto);
 	
 	public void update(UserBO userBO);
 
