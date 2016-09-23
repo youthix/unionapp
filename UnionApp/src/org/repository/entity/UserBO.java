@@ -60,13 +60,19 @@ public class UserBO implements Serializable {
 	private String loginstatus;
 	
 	@Column(name = "deviceid")
-	private String deviceid;	
+	private String deviceid;
+	
+	@Column(name = "devicetype")
+	private String deviceType;	
 	
 	@Column(name = "city")
 	private String city;
 	
 	@Column(name = "zipcode")
 	private String zipcode;	
+	
+	@Column(name = "meetingid")
+	private String meetingid;
 	
 
 	public String getUsname() {
@@ -200,6 +206,22 @@ public class UserBO implements Serializable {
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getMeetingid() {
+		return meetingid;
+	}
+
+	public void setMeetingid(String meetingid) {
+		this.meetingid = meetingid;
 	}
 	
 

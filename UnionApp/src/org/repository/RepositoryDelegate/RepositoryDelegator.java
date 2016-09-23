@@ -142,6 +142,7 @@ public class RepositoryDelegator {
 							userBOObj.setLoginstatus(userObj.getLoginstatus());
 						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
 							userBOObj.setDeviceid(userObj.getDeviceid());
+							userBOObj.setDeviceType(userObj.getDevicetype());
 						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
 							userBOObj.setStatus(userObj.getStatus());
 						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
@@ -215,6 +216,8 @@ public class RepositoryDelegator {
 		userObj.setDeviceid(userBOObj.getDeviceid());
 		userObj.setZipcode(userBOObj.getZipcode());
 		userObj.setCity(userBOObj.getCity());
+		userObj.setDevicetype(userBOObj.getDeviceType());
+		userObj.setMeetingid(userBOObj.getMeetingid());
 
 	}
 

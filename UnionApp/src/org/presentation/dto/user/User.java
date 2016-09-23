@@ -23,9 +23,11 @@ public class User {
 	private String role;
 	private String loginstatus;
 	private String deviceid;
+	private String devicetype;
 	private String newpwd;
 	private String city;
 	private String zipcode;
+	private String meetingid;
 
 	public String getPwd() {
 		return pwd;
@@ -169,6 +171,22 @@ public class User {
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+
+	public String getDevicetype() {
+		return devicetype;
+	}
+
+	public void setDevicetype(String devicetype) {
+		this.devicetype = devicetype;
+	}
+
+	public String getMeetingid() {
+		return meetingid;
+	}
+
+	public void setMeetingid(String meetingid) {
+		this.meetingid = meetingid;
 	}
 
 	
