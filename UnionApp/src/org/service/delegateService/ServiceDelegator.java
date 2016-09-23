@@ -7,6 +7,7 @@ import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
+import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -54,7 +55,10 @@ public class ServiceDelegator {
 					// Update the Login status
 					userListObj.getUl().get(0).setLoginstatus("T");
 					Criteria criteriaObj = new Criteria();
-					criteriaObj.setUpdatefield("loginstatus");
+					criteriaObj.setSetCriteria("TRUE");
+					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+					updateUserCriteriaObj.setName("loginstatus");
+					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 					repositoryDelegator.update(userListObj, criteriaObj);
 				}
 
@@ -157,7 +161,10 @@ public class ServiceDelegator {
 					String newPwd = userListObj.getUl().get(0).getNewpwd();
 					userListObj.getUl().get(0).setPwd(newPwd);
 					Criteria criteriaObj = new Criteria();
-					criteriaObj.setUpdatefield("pwd");
+					criteriaObj.setSetCriteria("TRUE");
+					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+					updateUserCriteriaObj.setName("pwd");
+					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 					repositoryDelegator.update(userListObj, criteriaObj);
 					setResponse(responseObj);
 				}
@@ -204,7 +211,10 @@ public class ServiceDelegator {
 					userListObj.getUl().get(0).setPwd(newPwd);
 					userListObj.getUl().get(0).setNewpwd(newPwd);
 					Criteria criteriaObj = new Criteria();
-					criteriaObj.setUpdatefield("pwd");
+					criteriaObj.setSetCriteria("TRUE");
+					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+					updateUserCriteriaObj.setName("pwd");
+					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 					repositoryDelegator.update(userListObj, criteriaObj);
 					setResponse(responseObj);
 					responseObj.setUserListObj(userListObj);

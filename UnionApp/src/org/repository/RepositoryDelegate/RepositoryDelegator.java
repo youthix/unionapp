@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.presentation.dto.criteria.Criteria;
+import org.presentation.dto.criteria.FetchUserCriteria;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -24,6 +25,7 @@ public class RepositoryDelegator {
 		System.out.println("InRDRegister");
 
 		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+		UserList userListObjResp = new UserList();
 
 		if (userList.size() > 0) {
 			Iterator<User> userListIterator = userList.iterator();
@@ -36,7 +38,8 @@ public class RepositoryDelegator {
 
 				populateUserBO(userObj, userBOObj);
 				userdao.addUser(userBOObj);
-				userObj.setuId(userBOObj.getEmailid());
+				populateUserDTO(userObj,userBOObj);
+
 			}
 
 		}
@@ -46,7 +49,7 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 
-		return userListObj;
+		return userListObjResp;
 	}
 
 	public UserBO login(UserList userListObj) {
@@ -64,10 +67,13 @@ public class RepositoryDelegator {
 		if (userList.size() > 0) {
 
 			User userObj = userList.get(0);
+			
 
-			criteriaObj.setEmailid(userObj.getUsNa());
-
-			// userBOObj = userdao.fetchUserByParam(userObj);
+			FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+			
+			fetchUserCriteriaObj.setName("emailid");
+			fetchUserCriteriaObj.setValue(userObj.getUsNa());
+			criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
 			userBOList = userdao.fetchUser(criteriaObj);
 
@@ -129,15 +135,21 @@ public class RepositoryDelegator {
 				UserBO userBOObj = new UserBO();
 				userBOObj.setUsname(userObj.getUsNa());
 
-				if (criteriaObj.getUpdatefield().equalsIgnoreCase("loginstatus")) {
-					userBOObj.setLoginstatus(userObj.getLoginstatus());
-				} else if (criteriaObj.getUpdatefield().equalsIgnoreCase("deviceid")) {
-					userBOObj.setDeviceid(userObj.getDeviceid());
-				} else if (criteriaObj.getUpdatefield().equalsIgnoreCase("status")) {
-					userBOObj.setStatus(userObj.getStatus());
-				} else if (criteriaObj.getUpdatefield().equalsIgnoreCase("pwd")) {
-					userBOObj.setStatus(userObj.getPwd());
+				if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
+					if (criteriaObj.getUpdateUserCriteriaObj() != null) {
+
+						if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("loginstatus")) {
+							userBOObj.setLoginstatus(userObj.getLoginstatus());
+						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
+							userBOObj.setDeviceid(userObj.getDeviceid());
+						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
+							userBOObj.setStatus(userObj.getStatus());
+						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
+							userBOObj.setPwd(userObj.getPwd());
+						}
+					}
 				}
+
 				userdao.updateOnCriteria(userBOObj, criteriaObj);
 
 			}
@@ -152,7 +164,6 @@ public class RepositoryDelegator {
 		return userListObj;
 	}
 
-
 	private void populateUserBO(User userObj, UserBO userBOObj) {
 
 		userBOObj.setUsname(userObj.getUsNa());
@@ -166,7 +177,13 @@ public class RepositoryDelegator {
 		userBOObj.setGen(userObj.getGen());
 		userBOObj.setJoindt(userObj.getJoinDt());
 		userBOObj.setLn(userObj.getLn());
-		userBOObj.setLoginstatus("F");
+		userBOObj.setZipcode(userObj.getZipcode());
+		userBOObj.setCity(userObj.getCity());
+		if (null == userObj.getLoginstatus() || userObj.getLoginstatus().equals("")) {
+			userBOObj.setLoginstatus("F");
+		} else {
+			userBOObj.setLoginstatus(userObj.getLoginstatus());
+		}		
 		if (null == userObj.getStatus() || userObj.getStatus().equals("")) {
 			userBOObj.setStatus("P");
 		} else {
@@ -195,7 +212,9 @@ public class RepositoryDelegator {
 		userObj.setStatus(userBOObj.getStatus());
 		userObj.setUsNa(userBOObj.getUsname());
 		userObj.setLoginstatus(userBOObj.getLoginstatus());
-		userBOObj.setDeviceid(userBOObj.getDeviceid());
+		userObj.setDeviceid(userBOObj.getDeviceid());
+		userObj.setZipcode(userBOObj.getZipcode());
+		userObj.setCity(userBOObj.getCity());
 
 	}
 

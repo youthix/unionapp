@@ -62,6 +62,12 @@ public class UserBO implements Serializable {
 	@Column(name = "deviceid")
 	private String deviceid;	
 	
+	@Column(name = "city")
+	private String city;
+	
+	@Column(name = "zipcode")
+	private String zipcode;	
+	
 
 	public String getUsname() {
 		return usname;
@@ -178,6 +184,22 @@ public class UserBO implements Serializable {
 
 	public void setDeviceid(String deviceid) {
 		this.deviceid = deviceid;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 	
 

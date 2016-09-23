@@ -24,6 +24,8 @@ public class User {
 	private String loginstatus;
 	private String deviceid;
 	private String newpwd;
+	private String city;
+	private String zipcode;
 
 	public String getPwd() {
 		return pwd;
@@ -151,6 +153,22 @@ public class User {
 
 	public void setNewpwd(String newpwd) {
 		this.newpwd = newpwd;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 	

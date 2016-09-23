@@ -1,6 +1,7 @@
 package org.repository.DAOImpl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.presentation.dto.criteria.Criteria;
+import org.presentation.dto.criteria.FetchUserCriteria;
+import org.presentation.dto.user.User;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.UserBO;
@@ -38,66 +41,54 @@ public class UserDAOImpl implements IUserDAO {
 		try {
 			System.out.println("InDAOAddUser");
 
-/*			String SQL = "update " +  UserBO.class.getName() + " u Set u.status='"+ userBO.getStatus()+"' where usname = '" + userBO.getUsname() + "'";
-			Query query = manager.createQuery(SQL);
-            query.executeUpdate();*/
-			
+			/*
+			 * String SQL = "update " + UserBO.class.getName() +
+			 * " u Set u.status='"+ userBO.getStatus()+"' where usname = '" +
+			 * userBO.getUsname() + "'"; Query query = manager.createQuery(SQL);
+			 * query.executeUpdate();
+			 */
+
 			manager.merge(userBO);
-			
+
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
-	
-	public void updateOnCriteria(UserBO userBO,Criteria criteriaObj ) {
+
+	public void updateOnCriteria(UserBO userBO, Criteria criteriaObj) {
 		try {
 			System.out.println("DoneDAOUpdateLoginStatus");
-			String SQL="";
+			String SQL = "";
 
-			if (criteriaObj.getUpdatefield().equalsIgnoreCase("loginstatus")){
-				 SQL = "update " +  UserBO.class.getName() + " u Set u.loginstatus='"+ userBO.getLoginstatus()+"' where usname = '" + userBO.getUsname() + "'";
-			}
-			else if(criteriaObj.getUpdatefield().equalsIgnoreCase("deviceid")){
-				 SQL = "update " +  UserBO.class.getName() + " u Set u.deviceid='"+ userBO.getDeviceid()+"' where usname = '" + userBO.getUsname() + "'";
-			}
-			else if(criteriaObj.getUpdatefield().equalsIgnoreCase("status")){
-				 SQL = "update " +  UserBO.class.getName() + " u Set u.status='"+ userBO.getStatus()+"' where usname = '" + userBO.getUsname() + "'";
-			}
-			else if(criteriaObj.getUpdatefield().equalsIgnoreCase("pwd")){
-				 SQL = "update " +  UserBO.class.getName() + " u Set u.pwd='"+ userBO.getPwd()+"' where usname = '" + userBO.getUsname() + "'";
+			if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getUpdateUserCriteriaObj() != null) {
+
+					if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("loginstatus")) {
+						SQL = "update " + UserBO.class.getName() + " u Set u.loginstatus='" + userBO.getLoginstatus()
+								+ "' where usname = '" + userBO.getUsname() + "'";
+					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
+						SQL = "update " + UserBO.class.getName() + " u Set u.deviceid='" + userBO.getDeviceid()
+								+ "' where usname = '" + userBO.getUsname() + "'";
+					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
+						SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
+								+ "' where usname = '" + userBO.getUsname() + "'";
+					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
+						SQL = "update " + UserBO.class.getName() + " u Set u.pwd='" + userBO.getPwd()
+								+ "' where usname = '" + userBO.getUsname() + "'";
+					}
+				}
 			}
 			Query query = manager.createQuery(SQL);
-            query.executeUpdate();
-			
+			query.executeUpdate();
+
 			System.out.println("DoneDAOUpdateLoginStatus");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
-
-	
-/*	public UserBO fetchUserByParam(User userDTO) {
-
-		UserBO userBOObj = null;
-		try {
-
-			System.out.println("InDAOloginUser");
-
-			String SQL = "select u from " + UserBO.class.getName() + " u where usname = '" + userDTO.getUsNa() + "'";
-
-			userBOObj = (UserBO) manager.createQuery(SQL).getSingleResult();
-
-			System.out.println("DoneDAOloginUser");
-		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
-			throw serviceExceptionObj;
-		}
-
-		return userBOObj;
-	}*/
 
 	public ArrayList<UserBO> fetchUser(Criteria criteriaObj) {
 
@@ -106,40 +97,60 @@ public class UserDAOImpl implements IUserDAO {
 
 		try {
 
-			CriteriaBuilder cb = manager.getCriteriaBuilder();
-			CriteriaQuery<UserBO> cq = cb.createQuery(UserBO.class);
-
-			Root<UserBO> c = cq.from(UserBO.class);
-			cq.select(c);
+			/*
+			 * CriteriaBuilder cb = manager.getCriteriaBuilder();
+			 * CriteriaQuery<UserBO> cq = cb.createQuery(UserBO.class);
+			 * 
+			 * Root<UserBO> c = cq.from(UserBO.class); cq.select(c);
+			 * 
+			 * 
+			 * if (null != criteriaObj.getSetCriteria() &&
+			 * criteriaObj.getSetCriteria().equalsIgnoreCase("True")) { if (null
+			 * != criteriaObj.getEmailid() && criteriaObj.getEmailid() != "") {
+			 * 
+			 * cq.where(cb.equal(c.get("emailid"), criteriaObj.getEmailid()));
+			 * 
+			 * }
+			 * 
+			 * if (null != criteriaObj.getRole() && criteriaObj.getRole() != "")
+			 * {
+			 * 
+			 * cq.where(cb.equal(c.get("role"), criteriaObj.getRole()));
+			 * 
+			 * }
+			 * 
+			 * if (null != criteriaObj.getStatus() && criteriaObj.getStatus() !=
+			 * "") {
+			 * 
+			 * cq.where(cb.equal(c.get("status"), criteriaObj.getStatus()));
+			 * 
+			 * }
+			 * 
+			 * if (null != criteriaObj.getLoginstatus() &&
+			 * criteriaObj.getLoginstatus() != "") {
+			 * 
+			 * cq.where(cb.equal(c.get("loginstatus"),
+			 * criteriaObj.getLoginstatus()));
+			 * 
+			 * }
+			 * 
+			 * }
+			 */
 
 			if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
-				if (null != criteriaObj.getEmailid() && criteriaObj.getEmailid() != "") {
+				if (criteriaObj.getFetchUserCriteriaObj() != null) {
 
-					cq.where(cb.equal(c.get("emailid"), criteriaObj.getEmailid()));
+					String SQL = "select u from " + UserBO.class.getName() + " u where "
+							+ criteriaObj.getFetchUserCriteriaObj().getName() + " = '"
+							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "'";
 
+					userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
+
+				} else {
+					String SQL = "select u from " + UserBO.class.getName();
+					userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
 				}
-
-				if (null != criteriaObj.getRole() && criteriaObj.getRole() != "") {
-
-					cq.where(cb.equal(c.get("role"), criteriaObj.getRole()));
-
-				}
-
-				if (null != criteriaObj.getStatus() && criteriaObj.getStatus() != "") {
-
-					cq.where(cb.equal(c.get("status"), criteriaObj.getStatus()));
-
-				}
-				
-				if (null != criteriaObj.getLoginstatus() && criteriaObj.getLoginstatus() != "") {
-
-					cq.where(cb.equal(c.get("loginstatus"), criteriaObj.getLoginstatus()));
-
-				}				
-
 			}
-
-			userBOList = (ArrayList<UserBO>) manager.createQuery(cq).getResultList();
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {

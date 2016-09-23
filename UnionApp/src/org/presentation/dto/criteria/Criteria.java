@@ -1,5 +1,7 @@
 package org.presentation.dto.criteria;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -9,11 +11,10 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class Criteria {
 
 	private String setCriteria;
-	private String emailid;
-	private String status;
-	private String role;
-	private String loginstatus;
-	private String updatefield;
+	
+	private FetchUserCriteria fetchUserCriteriaObj ;
+	
+	private UpdateUserCriteria UpdateUserCriteriaObj ;
 
 	public String getSetCriteria() {
 		return setCriteria;
@@ -23,45 +24,23 @@ public class Criteria {
 		this.setCriteria = setCriteria;
 	}
 
-	public String getEmailid() {
-		return emailid;
+
+	public FetchUserCriteria getFetchUserCriteriaObj() {
+		return fetchUserCriteriaObj;
 	}
 
-	public void setEmailid(String emailid) {
-		this.emailid = emailid;
+	public void setFetchUserCriteriaObj(FetchUserCriteria fetchUserCriteriaObj) {
+		this.fetchUserCriteriaObj = fetchUserCriteriaObj;
 	}
 
-	public String getStatus() {
-		return status;
+	public UpdateUserCriteria getUpdateUserCriteriaObj() {
+		return UpdateUserCriteriaObj;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setUpdateUserCriteriaObj(UpdateUserCriteria updateUserCriteriaObj) {
+		UpdateUserCriteriaObj = updateUserCriteriaObj;
 	}
 
-	public String getRole() {
-		return role;
-	}
 
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public String getLoginstatus() {
-		return loginstatus;
-	}
-
-	public void setLoginstatus(String loginstatus) {
-		this.loginstatus = loginstatus;
-	}
-
-	public String getUpdatefield() {
-		return updatefield;
-	}
-
-	public void setUpdatefield(String updatefield) {
-		this.updatefield = updatefield;
-	}
-	
 
 }
