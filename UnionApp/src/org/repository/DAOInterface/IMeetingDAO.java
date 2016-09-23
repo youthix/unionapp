@@ -3,22 +3,17 @@ package org.repository.DAOInterface;
 import java.util.ArrayList;
 
 import org.presentation.dto.criteria.Criteria;
+import org.repository.entity.MeetingBO;
 import org.repository.entity.UserBO;
 
-public interface IUserDAO {
+public interface IMeetingDAO {
 
-	public void addUser(UserBO userBO);
+	public void createMeeting(MeetingBO meetingBO);
+	
+	public void update(MeetingBO meetingBO);
 
-	//public UserBO fetchUserByParam(User userdto);
-	
-	public void update(UserBO userBO);
-	
-	public void updateOnCriteria(UserBO userBO,Criteria criteriaObj );
-	
-/*	public void updateLoginStatus(UserBO userBO);
-	
-	public void updateDeviceId(UserBO userBO);*/
+	public void updateOnCriteria(MeetingBO meetingBO, Criteria criteriaObj);
 
-	public ArrayList<UserBO> fetchUser(Criteria criteriaObj);
+	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj);
 
 }

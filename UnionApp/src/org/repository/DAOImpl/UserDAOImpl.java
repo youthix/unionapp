@@ -62,7 +62,7 @@ public class UserDAOImpl implements IUserDAO {
 			System.out.println("DoneDAOUpdateLoginStatus");
 			String SQL = "";
 
-			if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
 				if (criteriaObj.getUpdateUserCriteriaObj() != null) {
 
 					if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("loginstatus")) {
@@ -137,7 +137,7 @@ public class UserDAOImpl implements IUserDAO {
 			 * }
 			 */
 
-			if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
 				if (criteriaObj.getFetchUserCriteriaObj() != null) {
 
 					String SQL = "select u from " + UserBO.class.getName() + " u where "

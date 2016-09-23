@@ -16,5 +16,13 @@ public interface RESTfulServiceInterface {
 	ResponseObj updatepwd(RequestObj reqparam);
 	
 	ResponseObj resetpwd(RequestObj reqparam);
+	
+	ResponseObj createmeeting(RequestObj reqparam);
+	
+	ResponseObj updatemeeting(RequestObj reqparam);
+	
+	ResponseObj fetchmeeting(RequestObj reqparam);
+	
+	ResponseObj acceptdenymeeting(RequestObj reqparam);
 
 }

@@ -20,7 +20,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Autowired
 	private ServiceDelegator serviceDelegator;
 
-	
 	@Override
 	@POST
 	@Path("/register")
@@ -47,8 +46,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
-	
+
 	@Override
 	@POST
 	@Path("/login")
@@ -75,7 +73,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
-
 	@Override
 	@POST
 	@Path("/fetch")
@@ -87,7 +84,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		try {
 			if (null != reqparam) {
-				responseObj= serviceDelegator.fetch(reqparam);
+				responseObj = serviceDelegator.fetch(reqparam);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
@@ -114,7 +111,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		try {
 			if (null != reqparam) {
-				responseObj= serviceDelegator.update(reqparam);
+				responseObj = serviceDelegator.update(reqparam);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
@@ -129,6 +126,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
+
 	@Override
 	@POST
 	@Path("/updatepwd")
@@ -140,7 +138,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		try {
 			if (null != reqparam) {
-				responseObj= serviceDelegator.updatepwd(reqparam);
+				responseObj = serviceDelegator.updatepwd(reqparam);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
@@ -155,7 +153,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/resetpwd")
@@ -167,7 +165,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		try {
 			if (null != reqparam) {
-				responseObj= serviceDelegator.resetpwd(reqparam);
+				responseObj = serviceDelegator.resetpwd(reqparam);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
@@ -181,7 +179,115 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
+	}
+
+	@Override
+	@POST
+	@Path("/createmeeting")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj createmeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.createmeeting(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/updatemeeting")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj updatemeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.updatemeeting(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/fetchmeeting")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchmeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.fetchmeeting(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/acceptdenymeeting")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj acceptdenymeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.acceptdenymeeting(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
 
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;

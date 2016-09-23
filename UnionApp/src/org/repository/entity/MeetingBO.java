@@ -1,10 +1,10 @@
 package org.repository.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -23,10 +23,10 @@ public class MeetingBO implements Serializable {
 	
 	
 	@Column(name = "meetdate")
-	private String meetdate;
+	private Date meetdate;
 	
 	@Column(name = "meettime")
-	private String meettime;
+	private Date meettime;
 	
 	@Column(name = "detail")
 	private String detail;
@@ -55,21 +55,6 @@ public class MeetingBO implements Serializable {
 		this.subject = subject;
 	}
 
-	public String getMeetdate() {
-		return meetdate;
-	}
-
-	public void setMeetdate(String meetdate) {
-		this.meetdate = meetdate;
-	}
-
-	public String getMeettime() {
-		return meettime;
-	}
-
-	public void setMeettime(String meettime) {
-		this.meettime = meettime;
-	}
 
 	public String getDetail() {
 		return detail;
@@ -122,6 +107,25 @@ public class MeetingBO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public Date getMeetdate() {
+		return meetdate;
+	}
+
+	public void setMeetdate(Date meetdate) {
+		this.meetdate = meetdate;
+	}
+
+	public Date getMeettime() {
+		return meettime;
+	}
+
+	public void setMeettime(Date meettime) {
+		this.meettime = meettime;
+	}
+
+
+
 	
 	
 

@@ -8,6 +8,7 @@ import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
+import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -55,7 +56,7 @@ public class ServiceDelegator {
 					// Update the Login status
 					userListObj.getUl().get(0).setLoginstatus("T");
 					Criteria criteriaObj = new Criteria();
-					criteriaObj.setSetCriteria("TRUE");
+					criteriaObj.setCriteria("TRUE");
 					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
 					updateUserCriteriaObj.setName("loginstatus");
 					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
@@ -161,7 +162,7 @@ public class ServiceDelegator {
 					String newPwd = userListObj.getUl().get(0).getNewpwd();
 					userListObj.getUl().get(0).setPwd(newPwd);
 					Criteria criteriaObj = new Criteria();
-					criteriaObj.setSetCriteria("TRUE");
+					criteriaObj.setCriteria("TRUE");
 					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
 					updateUserCriteriaObj.setName("pwd");
 					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
@@ -211,7 +212,7 @@ public class ServiceDelegator {
 					userListObj.getUl().get(0).setPwd(newPwd);
 					userListObj.getUl().get(0).setNewpwd(newPwd);
 					Criteria criteriaObj = new Criteria();
-					criteriaObj.setSetCriteria("TRUE");
+					criteriaObj.setCriteria("TRUE");
 					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
 					updateUserCriteriaObj.setName("pwd");
 					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
@@ -235,6 +236,83 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
+	public ResponseObj createmeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		MeetingList meetingListObj = reqparam.getMeetingListObj();
+
+		if (null != meetingListObj) {
+
+			repositoryDelegator.createmeeting(meetingListObj);
+			responseObj.setMeetingListObj(meetingListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("MeetingList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
+	
+	public ResponseObj fetchmeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		MeetingList meetingListObj;
+
+		if (null != reqparam.getCriteria()) {
+
+			meetingListObj = repositoryDelegator.fetchmeeting(reqparam.getCriteria());
+			responseObj.setMeetingListObj(meetingListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
+	
+	public ResponseObj updatemeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		MeetingList meetingListObj = reqparam.getMeetingListObj();
+
+		if (null != meetingListObj) {
+
+			//repositoryDelegator.updatemeeting(meetingListObj, reqparam.getCriteria());
+			responseObj.setMeetingListObj(meetingListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+	
+	public ResponseObj acceptdenymeeting(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj;
+
+		if (null != reqparam.getCriteria()) {
+
+			userListObj = repositoryDelegator.fetch(reqparam.getCriteria());
+			responseObj.setUserListObj(userListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
+	
+	
 	private String generatepwd() {
 
 		String newPwd = UUID.randomUUID().toString();

@@ -1,43 +1,38 @@
 package org.repository.DAOImpl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.presentation.dto.criteria.Criteria;
-import org.presentation.dto.criteria.FetchUserCriteria;
-import org.presentation.dto.user.User;
 import org.presentation.util.ServiceException;
-import org.repository.DAOInterface.IUserDAO;
+import org.repository.DAOInterface.IMeetingDAO;
+import org.repository.entity.MeetingBO;
 import org.repository.entity.UserBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class UserDAOImpl implements IUserDAO {
+public class MeetingDAOImpl implements IMeetingDAO {
 
 	@PersistenceContext
 	private EntityManager manager;
 
-	public void addUser(UserBO userBO) {
+	public void createMeeting(MeetingBO meetingBO) {
 		try {
-			System.out.println("InDAOAddUser");
-			manager.persist(userBO);
-			System.out.println("DoneDAOAddUser");
+			System.out.println("InDAOCreateMeet");
+			manager.persist(meetingBO);
+			System.out.println("DoneDAOCreateMeet");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
 
-	public void update(UserBO userBO) {
+	public void update(MeetingBO meetingBO) {
 		try {
 			System.out.println("InDAOAddUser");
 
@@ -48,7 +43,7 @@ public class UserDAOImpl implements IUserDAO {
 			 * query.executeUpdate();
 			 */
 
-			manager.merge(userBO);
+			manager.merge(meetingBO);
 
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
@@ -56,19 +51,16 @@ public class UserDAOImpl implements IUserDAO {
 			throw serviceExceptionObj;
 		}
 	}
-
-	public void updateOnCriteria(UserBO userBO, Criteria criteriaObj) {
-		try {
-			System.out.println("DoneDAOUpdateLoginStatus");
+	
+	public void updateOnCriteria(MeetingBO meetingBO, Criteria criteriaObj) {
+/*		try {
+			
 			String SQL = "";
 
-			if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getUpdateUserCriteriaObj() != null) {
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getUpdateMeetingCriteriaObj() != null) {
 
-					if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("loginstatus")) {
-						SQL = "update " + UserBO.class.getName() + " u Set u.loginstatus='" + userBO.getLoginstatus()
-								+ "' where usname = '" + userBO.getUsname() + "'";
-					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
+					if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.deviceid='" + userBO.getDeviceid()
 								+ "' and u.devicetype='" +userBO.getDeviceType() +"' where usname = '" + userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
@@ -87,70 +79,31 @@ public class UserDAOImpl implements IUserDAO {
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
-		}
+		}*/
 	}
 
-	public ArrayList<UserBO> fetchUser(Criteria criteriaObj) {
+	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj) {
 
 		System.out.println("InDAOFetchUser");
-		ArrayList<UserBO> userBOList = null;
+		ArrayList<MeetingBO> meetingBOList = null;
 
 		try {
 
-			/*
-			 * CriteriaBuilder cb = manager.getCriteriaBuilder();
-			 * CriteriaQuery<UserBO> cq = cb.createQuery(UserBO.class);
-			 * 
-			 * Root<UserBO> c = cq.from(UserBO.class); cq.select(c);
-			 * 
-			 * 
-			 * if (null != criteriaObj.getSetCriteria() &&
-			 * criteriaObj.getSetCriteria().equalsIgnoreCase("True")) { if (null
-			 * != criteriaObj.getEmailid() && criteriaObj.getEmailid() != "") {
-			 * 
-			 * cq.where(cb.equal(c.get("emailid"), criteriaObj.getEmailid()));
-			 * 
-			 * }
-			 * 
-			 * if (null != criteriaObj.getRole() && criteriaObj.getRole() != "")
-			 * {
-			 * 
-			 * cq.where(cb.equal(c.get("role"), criteriaObj.getRole()));
-			 * 
-			 * }
-			 * 
-			 * if (null != criteriaObj.getStatus() && criteriaObj.getStatus() !=
-			 * "") {
-			 * 
-			 * cq.where(cb.equal(c.get("status"), criteriaObj.getStatus()));
-			 * 
-			 * }
-			 * 
-			 * if (null != criteriaObj.getLoginstatus() &&
-			 * criteriaObj.getLoginstatus() != "") {
-			 * 
-			 * cq.where(cb.equal(c.get("loginstatus"),
-			 * criteriaObj.getLoginstatus()));
-			 * 
-			 * }
-			 * 
-			 * }
-			 */
 
-			if (null != criteriaObj.getSetCriteria() && criteriaObj.getSetCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getFetchUserCriteriaObj() != null) {
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getFetchMeetingCriteriaObj() != null) {
 
-					String SQL = "select u from " + UserBO.class.getName() + " u where "
-							+ criteriaObj.getFetchUserCriteriaObj().getName() + " = '"
-							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "'";
+					String SQL = "select u from " + MeetingBO.class.getName() + " u where "
+							+ criteriaObj.getFetchMeetingCriteriaObj().getName() + " = '"
+							+ criteriaObj.getFetchMeetingCriteriaObj().getValue() + "'";
 
-					userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
+					meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).getResultList();
 
 				} 
 			}
 			else {
-				String SQL = "select u from " + UserBO.class.getName() + " u";
-				userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
+				String SQL = "select u from " + MeetingBO.class.getName() + " u";
+				meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).getResultList();
 			}
 
 			System.out.println("DoneDAOFetchUser");
@@ -159,7 +112,7 @@ public class UserDAOImpl implements IUserDAO {
 			throw serviceExceptionObj;
 		}
 
-		return userBOList;
+		return meetingBOList;
 	}
 
 	public EntityManager getManager() {

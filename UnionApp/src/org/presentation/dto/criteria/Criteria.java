@@ -10,20 +10,24 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Criteria {
 
-	private String setCriteria;
+	private String criteria;
 	
 	private FetchUserCriteria fetchUserCriteriaObj ;
 	
 	private UpdateUserCriteria UpdateUserCriteriaObj ;
+	
+	private FetchMeetingCriteria fetchMeetingCriteriaObj ;
+	
+	private UpdateMeetingCriteria UpdateMeetingCriteriaObj ;
 
-	public String getSetCriteria() {
-		return setCriteria;
+
+	public String getCriteria() {
+		return criteria;
 	}
 
-	public void setSetCriteria(String setCriteria) {
-		this.setCriteria = setCriteria;
+	public void setCriteria(String criteria) {
+		this.criteria = criteria;
 	}
-
 
 	public FetchUserCriteria getFetchUserCriteriaObj() {
 		return fetchUserCriteriaObj;
@@ -39,6 +43,22 @@ public class Criteria {
 
 	public void setUpdateUserCriteriaObj(UpdateUserCriteria updateUserCriteriaObj) {
 		UpdateUserCriteriaObj = updateUserCriteriaObj;
+	}
+
+	public FetchMeetingCriteria getFetchMeetingCriteriaObj() {
+		return fetchMeetingCriteriaObj;
+	}
+
+	public void setFetchMeetingCriteriaObj(FetchMeetingCriteria fetchMeetingCriteriaObj) {
+		this.fetchMeetingCriteriaObj = fetchMeetingCriteriaObj;
+	}
+
+	public UpdateMeetingCriteria getUpdateMeetingCriteriaObj() {
+		return UpdateMeetingCriteriaObj;
+	}
+
+	public void setUpdateMeetingCriteriaObj(UpdateMeetingCriteria updateMeetingCriteriaObj) {
+		UpdateMeetingCriteriaObj = updateMeetingCriteriaObj;
 	}
 
 
