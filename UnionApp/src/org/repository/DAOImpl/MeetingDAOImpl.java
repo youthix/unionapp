@@ -53,23 +53,17 @@ public class MeetingDAOImpl implements IMeetingDAO {
 	}
 	
 	public void updateOnCriteria(MeetingBO meetingBO, Criteria criteriaObj) {
-/*		try {
+		try {
 			
 			String SQL = "";
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
 				if (criteriaObj.getUpdateMeetingCriteriaObj() != null) {
 
-					if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
-						SQL = "update " + UserBO.class.getName() + " u Set u.deviceid='" + userBO.getDeviceid()
-								+ "' and u.devicetype='" +userBO.getDeviceType() +"' where usname = '" + userBO.getUsname() + "'";
-					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
-						SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
-								+ "' where usname = '" + userBO.getUsname() + "'";
-					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
-						SQL = "update " + UserBO.class.getName() + " u Set u.pwd='" + userBO.getPwd()
-								+ "' where usname = '" + userBO.getUsname() + "'";
-					}
+					if (criteriaObj.getUpdateMeetingCriteriaObj().getName().equalsIgnoreCase("acceptdecline")) {
+						SQL = "update " + MeetingBO.class.getName() + " m Set m.acceptid='" + meetingBO.getAcceptid()
+								+ "' , m.acceptcount='" +meetingBO.getAcceptcount() + "' , m.declineid='" +meetingBO.getDeclineid()+ "' , m.declinecount='" +meetingBO.getDeclinecount()+"' where meetingid = '" + meetingBO.getMeetingid() + "'";
+					} 
 				}
 			}
 			Query query = manager.createQuery(SQL);
@@ -79,7 +73,7 @@ public class MeetingDAOImpl implements IMeetingDAO {
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
-		}*/
+		}
 	}
 
 	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj) {

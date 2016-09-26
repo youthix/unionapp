@@ -72,6 +72,32 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
+	
+	@Override
+	@POST
+	@Path("/logout")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj logout(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.logout(reqparam);
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}	
 
 	@Override
 	@POST

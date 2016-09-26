@@ -7,6 +7,8 @@ public interface RESTfulServiceInterface {
 
 	ResponseObj login(RequestObj reqparam);
 	
+	ResponseObj logout(RequestObj reqparam);
+	
 	ResponseObj register(RequestObj reqparam);
 	
 	ResponseObj fetch(RequestObj reqparam);

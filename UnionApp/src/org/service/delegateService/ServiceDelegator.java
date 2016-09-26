@@ -78,6 +78,35 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
+	public ResponseObj logout(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj = reqparam.getUserListObj();
+
+		if (null != userListObj) {
+
+			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+
+			// Update the Login status
+			userListObj.getUl().get(0).setLoginstatus("F");
+			Criteria criteriaObj = new Criteria();
+			criteriaObj.setCriteria("TRUE");
+			UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+			updateUserCriteriaObj.setName("loginstatus");
+			criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
+			repositoryDelegator.update(userListObj, criteriaObj);
+
+			setResponse(responseObj);
+			responseObj.setUserListObj(userListObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
 	public ResponseObj register(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -253,8 +282,8 @@ public class ServiceDelegator {
 		}
 
 		return responseObj;
-	}	
-	
+	}
+
 	public ResponseObj fetchmeeting(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -272,8 +301,8 @@ public class ServiceDelegator {
 		}
 
 		return responseObj;
-	}	
-	
+	}
+
 	public ResponseObj updatemeeting(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -281,7 +310,8 @@ public class ServiceDelegator {
 
 		if (null != meetingListObj) {
 
-			//repositoryDelegator.updatemeeting(meetingListObj, reqparam.getCriteria());
+			// repositoryDelegator.updatemeeting(meetingListObj,
+			// reqparam.getCriteria());
 			responseObj.setMeetingListObj(meetingListObj);
 			setResponse(responseObj);
 
@@ -292,27 +322,17 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
+
 	public ResponseObj acceptdenymeeting(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		UserList userListObj;
 
-		if (null != reqparam.getCriteria()) {
-
-			userListObj = repositoryDelegator.fetch(reqparam.getCriteria());
-			responseObj.setUserListObj(userListObj);
-			setResponse(responseObj);
-
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
-			throw serviceExceptionObj;
-		}
+		responseObj = repositoryDelegator.acceptdeny(reqparam);
+		setResponse(responseObj);
 
 		return responseObj;
-	}	
-	
-	
+	}
+
 	private String generatepwd() {
 
 		String newPwd = UUID.randomUUID().toString();

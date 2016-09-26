@@ -21,9 +21,18 @@ public class MeetingDTO {
 
 	private String status;
 	
-	private String attendee;
+	private String acceptid;
+	
+	private String acceptcount;	
+	
+	private String declineid;	
+	
+	private String declinecount;	
+	
 
 	private String meetingid;
+	
+	private String acceptdenyind;
 
 	public String getSubject() {
 		return subject;
@@ -81,13 +90,6 @@ public class MeetingDTO {
 		this.status = status;
 	}
 
-	public String getAttendee() {
-		return attendee;
-	}
-
-	public void setAttendee(String attendee) {
-		this.attendee = attendee;
-	}
 
 	public String getMeetingid() {
 		return meetingid;
@@ -97,5 +99,46 @@ public class MeetingDTO {
 		this.meetingid = meetingid;
 	}
 
+	public String getAcceptid() {
+		return acceptid;
+	}
+
+	public void setAcceptid(String acceptid) {
+		this.acceptid = acceptid;
+	}
+
+	public String getAcceptcount() {
+		return acceptcount;
+	}
+
+	public void setAcceptcount(String acceptcount) {
+		this.acceptcount = acceptcount;
+	}
+
+	public String getDeclineid() {
+		return declineid;
+	}
+
+	public void setDeclineid(String declineid) {
+		this.declineid = declineid;
+	}
+
+	public String getDeclinecount() {
+		return declinecount;
+	}
+
+	public void setDeclinecount(String declinecount) {
+		this.declinecount = declinecount;
+	}
+
+	public String getAcceptdenyind() {
+		return acceptdenyind;
+	}
+
+	public void setAcceptdenyind(String acceptdenyind) {
+		this.acceptdenyind = acceptdenyind;
+	}
+
+	
 
 }

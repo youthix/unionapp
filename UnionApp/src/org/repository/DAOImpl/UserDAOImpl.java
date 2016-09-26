@@ -70,7 +70,7 @@ public class UserDAOImpl implements IUserDAO {
 								+ "' where usname = '" + userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.deviceid='" + userBO.getDeviceid()
-								+ "' and u.devicetype='" +userBO.getDeviceType() +"' where usname = '" + userBO.getUsname() + "'";
+								+ "' , u.devicetype='" +userBO.getDevicetype() +"' where usname = '" + userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
 								+ "' where usname = '" + userBO.getUsname() + "'";
@@ -78,6 +78,10 @@ public class UserDAOImpl implements IUserDAO {
 						SQL = "update " + UserBO.class.getName() + " u Set u.pwd='" + userBO.getPwd()
 								+ "' where usname = '" + userBO.getUsname() + "'";
 					}
+					else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("meeting")) {
+						SQL = "update " + UserBO.class.getName() + " u Set u.acceptmeetingid='" + userBO.getAcceptmeetingid()
+						+ "' , u.declinemeetingid='" +userBO.getDeclinemeetingid() + "' where usname = '" + userBO.getUsname() + "'";
+					}					
 				}
 			}
 			Query query = manager.createQuery(SQL);

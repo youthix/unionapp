@@ -27,7 +27,8 @@ public class User {
 	private String newpwd;
 	private String city;
 	private String zipcode;
-	private String meetingid;
+	private String acceptmeetingid;
+	private String declinemeetingid;
 
 	public String getPwd() {
 		return pwd;
@@ -181,13 +182,23 @@ public class User {
 		this.devicetype = devicetype;
 	}
 
-	public String getMeetingid() {
-		return meetingid;
+	public String getAcceptmeetingid() {
+		return acceptmeetingid;
 	}
 
-	public void setMeetingid(String meetingid) {
-		this.meetingid = meetingid;
+	public void setAcceptmeetingid(String acceptmeetingid) {
+		this.acceptmeetingid = acceptmeetingid;
 	}
+
+	public String getDeclinemeetingid() {
+		return declinemeetingid;
+	}
+
+	public void setDeclinemeetingid(String declinemeetingid) {
+		this.declinemeetingid = declinemeetingid;
+	}
+
+
 
 	
 }

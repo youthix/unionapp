@@ -21,7 +21,6 @@ public class MeetingBO implements Serializable {
 	@Column(name = "subject")
 	private String subject;
 	
-	
 	@Column(name = "meetdate")
 	private Date meetdate;
 	
@@ -40,8 +39,17 @@ public class MeetingBO implements Serializable {
 	@Column(name = "status")
 	private String status;
 	
-	@Column(name = "attendee")
-	private String attendee;
+	@Column(name = "acceptid")
+	private String acceptid;
+	
+	@Column(name = "acceptcount")
+	private Integer acceptcount;
+	
+	@Column(name = "declineid")
+	private String declineid;	
+	
+	@Column(name = "declinecount")
+	private Integer declinecount;	
 
 	@Id
 	@Column(name = "meetingid")
@@ -88,13 +96,6 @@ public class MeetingBO implements Serializable {
 		this.status = status;
 	}
 
-	public String getAttendee() {
-		return attendee;
-	}
-
-	public void setAttendee(String attendee) {
-		this.attendee = attendee;
-	}
 
 	public String getMeetingid() {
 		return meetingid;
@@ -124,10 +125,41 @@ public class MeetingBO implements Serializable {
 		this.meettime = meettime;
 	}
 
+	public String getAcceptid() {
+		return acceptid;
+	}
+
+	public void setAcceptid(String acceptid) {
+		this.acceptid = acceptid;
+	}
 
 
+	public String getDeclineid() {
+		return declineid;
+	}
+
+	public void setDeclineid(String declineid) {
+		this.declineid = declineid;
+	}
+
+	public Integer getAcceptcount() {
+		return acceptcount;
+	}
+
+	public void setAcceptcount(Integer acceptcount) {
+		this.acceptcount = acceptcount;
+	}
+
+	public Integer getDeclinecount() {
+		return declinecount;
+	}
+
+	public void setDeclinecount(Integer declinecount) {
+		this.declinecount = declinecount;
+	}
+
 	
-	
+
 
 
 }
