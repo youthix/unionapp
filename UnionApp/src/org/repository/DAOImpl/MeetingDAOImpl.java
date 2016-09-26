@@ -10,7 +10,6 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IMeetingDAO;
 import org.repository.entity.MeetingBO;
-import org.repository.entity.UserBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,10 +50,10 @@ public class MeetingDAOImpl implements IMeetingDAO {
 			throw serviceExceptionObj;
 		}
 	}
-	
+
 	public void updateOnCriteria(MeetingBO meetingBO, Criteria criteriaObj) {
 		try {
-			
+
 			String SQL = "";
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
@@ -62,8 +61,10 @@ public class MeetingDAOImpl implements IMeetingDAO {
 
 					if (criteriaObj.getUpdateMeetingCriteriaObj().getName().equalsIgnoreCase("acceptdecline")) {
 						SQL = "update " + MeetingBO.class.getName() + " m Set m.acceptid='" + meetingBO.getAcceptid()
-								+ "' , m.acceptcount='" +meetingBO.getAcceptcount() + "' , m.declineid='" +meetingBO.getDeclineid()+ "' , m.declinecount='" +meetingBO.getDeclinecount()+"' where meetingid = '" + meetingBO.getMeetingid() + "'";
-					} 
+								+ "' , m.acceptcount='" + meetingBO.getAcceptcount() + "' , m.declineid='"
+								+ meetingBO.getDeclineid() + "' , m.declinecount='" + meetingBO.getDeclinecount()
+								+ "' where meetingid = '" + meetingBO.getMeetingid() + "'";
+					}
 				}
 			}
 			Query query = manager.createQuery(SQL);
@@ -83,19 +84,45 @@ public class MeetingDAOImpl implements IMeetingDAO {
 
 		try {
 
-
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
 				if (criteriaObj.getFetchMeetingCriteriaObj() != null) {
 
-					String SQL = "select u from " + MeetingBO.class.getName() + " u where "
-							+ criteriaObj.getFetchMeetingCriteriaObj().getName() + " = '"
-							+ criteriaObj.getFetchMeetingCriteriaObj().getValue() + "'";
+					String searchCriteria = "";
+					int index = -1;
+					int pageListSize;
+					if (null != criteriaObj.getFetchMeetingCriteriaObj().getValue()
+							&& criteriaObj.getFetchMeetingCriteriaObj().getValue() != "") {
 
-					meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).getResultList();
+						if (criteriaObj.getFetchMeetingCriteriaObj().getValue().contains(",")) {
 
-				} 
-			}
-			else {
+							String[] idList = criteriaObj.getFetchMeetingCriteriaObj().getValue().split(",");
+
+							for (String id : idList) {
+								searchCriteria = searchCriteria + "'" + id + "',";
+							}
+
+							index = searchCriteria.lastIndexOf(",");
+							if (index != -1) {
+								searchCriteria = searchCriteria.substring(0, index);
+							}
+
+						} else {
+							searchCriteria = "'" + criteriaObj.getFetchMeetingCriteriaObj().getValue() + "'";
+						}
+
+						String SQL = "select u from " + MeetingBO.class.getName() + " u where "
+								+ criteriaObj.getFetchMeetingCriteriaObj().getName() + " in (" + searchCriteria + ")";
+
+						meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).getResultList();
+
+					}
+
+				} else {
+
+					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					throw serviceExceptionObj;
+				}
+			} else {
 				String SQL = "select u from " + MeetingBO.class.getName() + " u";
 				meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).getResultList();
 			}

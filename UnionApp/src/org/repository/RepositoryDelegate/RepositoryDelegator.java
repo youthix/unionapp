@@ -534,7 +534,7 @@ public class RepositoryDelegator {
 			meetingBOObj.setCreator(meetingdtoObj.getCreator());
 			meetingBOObj.setDetail(meetingdtoObj.getDetail());
 			meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()));
-			meetingBOObj.setMeetingid(meetingdtoObj.getMeetingid());
+			//meetingBOObj.setMeetingid(meetingdtoObj.getMeetingid());
 			meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
 			meetingBOObj.setStatus(meetingdtoObj.getStatus());
 			meetingBOObj.setSubject(meetingdtoObj.getSubject());
@@ -559,7 +559,7 @@ public class RepositoryDelegator {
 		meetingdtoObj.setCreator(meetingBOObj.getCreator());
 		meetingdtoObj.setDetail(meetingBOObj.getDetail());
 		meetingdtoObj.setMeetdate(dateformatter.format(meetingBOObj.getMeetdate()));
-		meetingdtoObj.setMeetingid(meetingBOObj.getMeetingid());
+		meetingdtoObj.setMeetingid(meetingBOObj.getMeetingid().toString());
 		meetingdtoObj.setMeettime(timeformatter.format(meetingBOObj.getMeettime()));
 		meetingdtoObj.setStatus(meetingBOObj.getStatus());
 		meetingdtoObj.setSubject(meetingBOObj.getSubject());

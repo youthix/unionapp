@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -52,8 +54,9 @@ public class MeetingBO implements Serializable {
 	private Integer declinecount;	
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "meetingid")
-	private String meetingid;
+	private Integer meetingid;
 
 	public String getSubject() {
 		return subject;
@@ -97,13 +100,6 @@ public class MeetingBO implements Serializable {
 	}
 
 
-	public String getMeetingid() {
-		return meetingid;
-	}
-
-	public void setMeetingid(String meetingid) {
-		this.meetingid = meetingid;
-	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -156,6 +152,14 @@ public class MeetingBO implements Serializable {
 
 	public void setDeclinecount(Integer declinecount) {
 		this.declinecount = declinecount;
+	}
+
+	public Integer getMeetingid() {
+		return meetingid;
+	}
+
+	public void setMeetingid(Integer meetingid) {
+		this.meetingid = meetingid;
 	}
 
 	
