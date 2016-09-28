@@ -14,6 +14,8 @@ public class ResponseObj {
 	
 	private MeetingList MeetingListObj;
 	
+	private String totalRecords;
+	
 	ResStatus resStatus;
 
 
@@ -39,6 +41,14 @@ public class ResponseObj {
 
 	public void setMeetingListObj(MeetingList meetingListObj) {
 		MeetingListObj = meetingListObj;
+	}
+
+	public String getTotalRecords() {
+		return totalRecords;
+	}
+
+	public void setTotalRecords(String totalRecords) {
+		this.totalRecords = totalRecords;
 	}
 
 

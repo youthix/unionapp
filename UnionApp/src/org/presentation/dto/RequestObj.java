@@ -14,6 +14,16 @@ public class RequestObj {
 	
 	private String bid;
 	
+	private String pageno;
+	
+	public String getPageno() {
+		return pageno;
+	}
+
+	public void setPageno(String pageno) {
+		this.pageno = pageno;
+	}
+
 	private Criteria criteria;
 
 

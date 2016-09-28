@@ -289,14 +289,14 @@ public class ServiceDelegator {
 		ResponseObj responseObj = new ResponseObj();
 		MeetingList meetingListObj;
 
-		if (null != reqparam.getCriteria()) {
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
 
-			meetingListObj = repositoryDelegator.fetchmeeting(reqparam.getCriteria());
-			responseObj.setMeetingListObj(meetingListObj);
+			responseObj = repositoryDelegator.fetchmeeting(reqparam);
+			
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
 			throw serviceExceptionObj;
 		}
 
