@@ -18,7 +18,6 @@ public class MeetingDTO {
 	
 	private String venue;
 	
-
 	private String status;
 	
 	private String acceptid;
@@ -29,10 +28,13 @@ public class MeetingDTO {
 	
 	private String declinecount;	
 	
+	private String noresponsecount;
+	
 
 	private String meetingid;
 	
 	private String acceptdenyind;
+	
 
 	public String getSubject() {
 		return subject;
@@ -137,6 +139,14 @@ public class MeetingDTO {
 
 	public void setAcceptdenyind(String acceptdenyind) {
 		this.acceptdenyind = acceptdenyind;
+	}
+
+	public String getNoresponsecount() {
+		return noresponsecount;
+	}
+
+	public void setNoresponsecount(String noresponsecount) {
+		this.noresponsecount = noresponsecount;
 	}
 
 	

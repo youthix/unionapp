@@ -50,7 +50,7 @@ public class RepositoryDelegator {
 
 				UserBO userBOObj = new UserBO();
 
-				populateUserBO(userObj, userBOObj);
+				populateCreateUserBO(userObj, userBOObj);
 				userdao.addUser(userBOObj);
 				populateUserDTO(userObj, userBOObj);
 
@@ -193,7 +193,7 @@ public class RepositoryDelegator {
 
 				MeetingBO meetingBOObj = new MeetingBO();
 
-				populateMeetingBO(meetingdtoObj, meetingBOObj);
+				populateCreateMeetingBO(meetingdtoObj, meetingBOObj);
 				meetingdao.createMeeting(meetingBOObj);
 				populateMeetingDTO(meetingdtoObj, meetingBOObj);
 
@@ -216,8 +216,30 @@ public class RepositoryDelegator {
 		ArrayList<MeetingDTO> meetingDTOList = new ArrayList<MeetingDTO>();
 
 		ArrayList<MeetingBO> meetingBOList;
+		
+		ArrayList<UserBO> userBOList;
+		
+		int totalActUserCount = 0;
 
 		meetingBOList = meetingdao.fetchMeeting(criteriaObj);
+		
+		
+		//To get the count of total Active Users. This count would be used to determine no of users who have not responded to a meeting.
+		
+		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+		fetchUserCriteriaObj.setName("status");
+		fetchUserCriteriaObj.setValue("A");
+		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+		
+		Criteria criteriaUserObj = new Criteria();
+		criteriaUserObj.setCriteria("TRUE");
+		userBOList = userdao.fetchUser(criteriaObj);	
+		
+		if(null!=userBOList){
+			totalActUserCount = userBOList.size();
+		}
+		
 
 		if (null != meetingBOList && meetingBOList.size() > 0) {
 
@@ -226,6 +248,7 @@ public class RepositoryDelegator {
 			while (litr.hasNext()) {
 				MeetingDTO meetingDTOObj = new MeetingDTO();
 				populateMeetingDTO(meetingDTOObj, litr.next());
+				meetingDTOObj.setNoresponsecount(String.valueOf((totalActUserCount - (litr.next().getAcceptcount()+litr.next().getDeclinecount()))));
 				meetingDTOList.add(meetingDTOObj);
 
 			}
@@ -402,8 +425,8 @@ public class RepositoryDelegator {
 			ServiceException serviceExceptionObj = new ServiceException("UserList or Meeting List is null");
 			throw serviceExceptionObj;
 		}
-		responseObj.setMeetingListObj(meetingListObj);
-		responseObj.setUserListObj(userListObj);
+/*		responseObj.setMeetingListObj(meetingListObj);
+		responseObj.setUserListObj(userListObj);*/
 		return responseObj;
 	}
 
@@ -452,7 +475,7 @@ public class RepositoryDelegator {
 		return userListObj;
 	}
 
-	private void populateUserBO(User userObj, UserBO userBOObj) {
+	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
 		userBOObj.setUsname(userObj.getUsNa());
 		userBOObj.setDeviceid(userObj.getDeviceid());
@@ -504,12 +527,11 @@ public class RepositoryDelegator {
 		userObj.setZipcode(userBOObj.getZipcode());
 		userObj.setCity(userBOObj.getCity());
 		userObj.setDevicetype(userBOObj.getDevicetype());
-		userObj.setAcceptmeetingid(userBOObj.getAcceptmeetingid());
-		userObj.setDeclinemeetingid(userBOObj.getDeclinemeetingid());
+
 
 	}
 
-	private void populateMeetingBO(MeetingDTO meetingdtoObj, MeetingBO meetingBOObj) {
+	private void populateCreateMeetingBO(MeetingDTO meetingdtoObj, MeetingBO meetingBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -528,6 +550,8 @@ public class RepositoryDelegator {
 			} else {
 				meetingBOObj.setDeclinecount(0);
 			}
+			
+			meetingBOObj.setNoresponsecount(0);
 
 			meetingBOObj.setDeclineid(meetingdtoObj.getDeclineid());
 
@@ -553,9 +577,7 @@ public class RepositoryDelegator {
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		meetingdtoObj.setAcceptcount(String.valueOf(meetingBOObj.getAcceptcount()));
-		meetingdtoObj.setAcceptid(meetingBOObj.getAcceptid());
 		meetingdtoObj.setDeclinecount(String.valueOf(meetingBOObj.getDeclinecount()));
-		meetingdtoObj.setDeclineid(meetingBOObj.getDeclineid());
 		meetingdtoObj.setCreator(meetingBOObj.getCreator());
 		meetingdtoObj.setDetail(meetingBOObj.getDetail());
 		meetingdtoObj.setMeetdate(dateformatter.format(meetingBOObj.getMeetdate()));
