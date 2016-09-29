@@ -53,16 +53,8 @@ public class MeetingBO implements Serializable {
 	@Column(name = "declinecount")
 	private Integer declinecount;	
 	
-	@Column(name = "noresponsecount")
-	private Integer noresponsecount;
-
-	public Integer getNoresponsecount() {
-		return noresponsecount;
-	}
-
-	public void setNoresponsecount(Integer noresponsecount) {
-		this.noresponsecount = noresponsecount;
-	}
+/*	@Column(name = "noresponsecount")
+	private Integer noresponsecount;*/
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

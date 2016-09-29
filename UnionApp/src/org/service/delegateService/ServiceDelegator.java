@@ -310,9 +310,7 @@ public class ServiceDelegator {
 
 		if (null != meetingListObj) {
 
-			// repositoryDelegator.updatemeeting(meetingListObj,
-			// reqparam.getCriteria());
-			responseObj.setMeetingListObj(meetingListObj);
+			responseObj = repositoryDelegator.updatemeeting(reqparam);
 			setResponse(responseObj);
 
 		} else {

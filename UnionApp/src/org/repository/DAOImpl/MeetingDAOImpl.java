@@ -77,10 +77,26 @@ public class MeetingDAOImpl implements IMeetingDAO {
 		}
 	}
 
-	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj) {
+	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj, String pageno) {
 
 		System.out.println("InDAOFetchUser");
 		ArrayList<MeetingBO> meetingBOList = null;
+
+		/* int pageno = pageno.v */
+
+		int offsetno;
+
+		int pageSize = 5;
+
+		int pageNo = Integer.parseInt(pageno);
+
+		if (null != pageno && pageno != "" && pageNo > 1) {
+
+			offsetno = (pageNo - 1) * pageSize;
+		} else {
+			offsetno = 0;
+
+		}
 
 		try {
 
@@ -110,10 +126,14 @@ public class MeetingDAOImpl implements IMeetingDAO {
 							searchCriteria = "'" + criteriaObj.getFetchMeetingCriteriaObj().getValue() + "'";
 						}
 
-						String SQL = "select u from " + MeetingBO.class.getName() + " u where "
-								+ criteriaObj.getFetchMeetingCriteriaObj().getName() + " in (" + searchCriteria + ")";
+						String SQL = "select m from " + MeetingBO.class.getName() + " m where "
+								+ criteriaObj.getFetchMeetingCriteriaObj().getName() + " in (" + searchCriteria
+								+ ") order by m.meetingid";
 
-						meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).getResultList();
+						meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+								.setMaxResults(pageSize) // limit
+								.getResultList();
+						;
 
 					}
 
@@ -123,8 +143,10 @@ public class MeetingDAOImpl implements IMeetingDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select u from " + MeetingBO.class.getName() + " u";
-				meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).getResultList();
+				String SQL = "select m from " + MeetingBO.class.getName() + " m order by m.meetingid ";
+				meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+						.setMaxResults(pageSize) // limit
+						.getResultList();
 			}
 
 			System.out.println("DoneDAOFetchUser");

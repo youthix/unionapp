@@ -212,7 +212,7 @@ public class RepositoryDelegator {
 	public ResponseObj fetchmeeting(RequestObj reqparam) {
 		System.out.println("InRDFetch");
 		ResponseObj responseObj = new ResponseObj();
-		
+
 		MeetingList meetingListObj = new MeetingList();
 		ArrayList<MeetingDTO> meetingDTOList = new ArrayList<MeetingDTO>();
 
@@ -227,9 +227,8 @@ public class RepositoryDelegator {
 		Criteria criteriaObj = reqparam.getCriteria();
 
 		UserList userListObj = reqparam.getUserListObj();
-		
 
-		meetingBOList = meetingdao.fetchMeeting(criteriaObj);
+		meetingBOList = meetingdao.fetchMeeting(criteriaObj, reqparam.getPageno());
 
 		// To get the count of total Active Users. This count would be used to
 		// determine no of users who have not responded to a meeting.
@@ -262,19 +261,21 @@ public class RepositoryDelegator {
 				// accept + deny from the total no of users calculated above.
 				meetingDTOObj.setNoresponsecount(String.valueOf(
 						(totalActUserCount - (meetingBOObj.getAcceptcount() + meetingBOObj.getDeclinecount()))));
-				
-				//for a particular user who is requesting this fetch Meeting, the accept or decline status of all the meetings needs to be populated in the return obj
+
+				// for a particular user who is requesting this fetch Meeting,
+				// the accept or decline status of all the meetings needs to be
+				// populated in the return obj
 				String acceptids = meetingBOObj.getAcceptid();
 				String declineids = meetingBOObj.getDeclineid();
-				
-				if (acceptids.contains(userListObj.getUl().get(0).getUsNa())){
-					
+
+				if (acceptids.contains(userListObj.getUl().get(0).getUsNa())) {
+
 					meetingDTOObj.setAcceptdenyind("accept");
-					
-				}else if (declineids.contains(userListObj.getUl().get(0).getUsNa())){
-					
+
+				} else if (declineids.contains(userListObj.getUl().get(0).getUsNa())) {
+
 					meetingDTOObj.setAcceptdenyind("deny");
-					
+
 				}
 				meetingDTOList.add(meetingDTOObj);
 
@@ -303,6 +304,8 @@ public class RepositoryDelegator {
 		ArrayList<MeetingDTO> meetingDTOList;
 
 		ArrayList<User> userDTOList;
+
+		String pageno = "1";
 
 		if (null != meetingListObj && null != userListObj && null != meetingListObj.getMeetingdtoLs()
 				&& meetingListObj.getMeetingdtoLs().size() > 0 && null != userListObj.getUl()
@@ -357,7 +360,7 @@ public class RepositoryDelegator {
 					fetchMeetingCriteriaObj.setValue(meetingDTOObj.getMeetingid());
 					criteriaObj.setFetchMeetingCriteriaObj(fetchMeetingCriteriaObj);
 
-					meetingBOList = meetingdao.fetchMeeting(criteriaObj);
+					meetingBOList = meetingdao.fetchMeeting(criteriaObj, pageno);
 					meetingBOObj = meetingBOList.get(0);
 
 					String acceptuserid = meetingBOObj.getAcceptid();
@@ -460,49 +463,74 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	public UserList updatemeeting(UserList userListObj, Criteria criteriaObj) {
+	public ResponseObj updatemeeting(RequestObj reqparam) {
 		System.out.println("InRDUpdate");
 
-		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+		ResponseObj responseObj = new ResponseObj();
 
-		if (userList.size() > 0) {
-			Iterator<User> userListIterator = userList.iterator();
+		/*
+		 * First fetch the meeting from the DB basis the id coming in the
+		 * request Then update teh fields of the MeetingBo fetched from DB with
+		 * those received in the input
+		 */
+		MeetingList meetingListObj = reqparam.getMeetingListObj();
 
-			while (userListIterator.hasNext()) {
+		ArrayList<MeetingDTO> meetingList = (ArrayList<MeetingDTO>) meetingListObj.getMeetingdtoLs();
 
-				User userObj = userListIterator.next();
+		ArrayList<MeetingBO> meetingBOList;
 
-				UserBO userBOObj = new UserBO();
-				userBOObj.setUsname(userObj.getUsNa());
+		MeetingBO meetingBOObj = null;
 
-				if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-					if (criteriaObj.getUpdateUserCriteriaObj() != null) {
+		Criteria criteriameetingObj = new Criteria();
+		criteriameetingObj.setCriteria("TRUE");
 
-						if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("loginstatus")) {
-							userBOObj.setLoginstatus(userObj.getLoginstatus());
-						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
-							userBOObj.setDeviceid(userObj.getDeviceid());
-							userBOObj.setDevicetype(userObj.getDevicetype());
-						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
-							userBOObj.setStatus(userObj.getStatus());
-						} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
-							userBOObj.setPwd(userObj.getPwd());
-						}
-					}
-				}
+		FetchMeetingCriteria fetchMeetingCriteriaObj = new FetchMeetingCriteria();
 
-				userdao.updateOnCriteria(userBOObj, criteriaObj);
+		fetchMeetingCriteriaObj.setName("meetingid");
+
+		if (meetingList.size() > 0) {
+
+			MeetingDTO meetingdtoObj = meetingList.get(0);
+
+			fetchMeetingCriteriaObj.setValue(meetingdtoObj.getMeetingid());
+			criteriameetingObj.setFetchMeetingCriteriaObj(fetchMeetingCriteriaObj);
+
+			meetingBOList = meetingdao.fetchMeeting(criteriameetingObj, "1");
+
+			if (null != meetingBOList && meetingBOList.size() > 0) {
+
+				meetingBOObj = meetingBOList.get(0);
+
+				// update the meetingBO fetched from DB
+
+				meetingBOObj.setCreator(meetingdtoObj.getCreator());
+				meetingBOObj.setDetail(meetingdtoObj.getDetail());
+				meetingBOObj.setStatus(meetingdtoObj.getStatus());
+				meetingBOObj.setSubject(meetingdtoObj.getSubject());
+				meetingBOObj.setVenue(meetingdtoObj.getVenue());
+
+				// merge this UpdateBO back in DB
+				meetingdao.update(meetingBOObj);
 
 			}
+
+			else {
+				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				throw serviceExceptionObj;
+			}
+
+			populateMeetingDTO(meetingdtoObj, meetingBOObj);
 
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException("MeetingList is NULL");
 			throw serviceExceptionObj;
 		}
 
-		return userListObj;
+		responseObj.setMeetingListObj(meetingListObj);
+
+		return responseObj;
 	}
 
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
@@ -580,7 +608,7 @@ public class RepositoryDelegator {
 				meetingBOObj.setDeclinecount(0);
 			}
 
-			meetingBOObj.setNoresponsecount(0);
+			// meetingBOObj.setNoresponsecount(0);
 
 			meetingBOObj.setDeclineid(meetingdtoObj.getDeclineid());
 
