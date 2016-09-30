@@ -268,11 +268,11 @@ public class RepositoryDelegator {
 				String acceptids = meetingBOObj.getAcceptid();
 				String declineids = meetingBOObj.getDeclineid();
 
-				if (acceptids.contains(userListObj.getUl().get(0).getUsNa())) {
+				if (null!= acceptids && acceptids.contains(userListObj.getUl().get(0).getUsNa())) {
 
 					meetingDTOObj.setAcceptdenyind("accept");
 
-				} else if (declineids.contains(userListObj.getUl().get(0).getUsNa())) {
+				} else if (null!= declineids && declineids.contains(userListObj.getUl().get(0).getUsNa())) {
 
 					meetingDTOObj.setAcceptdenyind("deny");
 
