@@ -163,6 +163,24 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj updateuserprofile(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj = reqparam.getUserListObj();
+
+		if (null != userListObj) {
+
+			responseObj = repositoryDelegator.updateuserprofile(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
 
 	public ResponseObj updatepwd(RequestObj reqparam) {
 
@@ -314,7 +332,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException("MeetingList is NULL");
 			throw serviceExceptionObj;
 		}
 

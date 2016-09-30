@@ -15,6 +15,8 @@ public interface RESTfulServiceInterface {
 	
 	ResponseObj update(RequestObj reqparam);
 	
+	ResponseObj updateuserprofile(RequestObj reqparam);
+	
 	ResponseObj updatepwd(RequestObj reqparam);
 	
 	ResponseObj resetpwd(RequestObj reqparam);
