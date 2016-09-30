@@ -28,5 +28,13 @@ public interface RESTfulServiceInterface {
 	ResponseObj fetchmeeting(RequestObj reqparam);
 	
 	ResponseObj acceptdenymeeting(RequestObj reqparam);
+	
+	ResponseObj createactivity(RequestObj reqparam);
+	
+	ResponseObj updateactivity(RequestObj reqparam);
+	
+	ResponseObj fetchactivity(RequestObj reqparam);
+	
+	ResponseObj acceptdenyactivity(RequestObj reqparam);
 
 }

@@ -3,6 +3,7 @@ package org.presentation.dto;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.presentation.dto.criteria.Criteria;
+import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "reqparam")
@@ -11,6 +12,8 @@ public class RequestObj {
 	private UserList UserListObj;
 	
 	private MeetingList MeetingListObj;
+	
+	private ActivityList ActivityListObj;
 	
 	private String bid;
 	
@@ -59,7 +62,13 @@ public class RequestObj {
 		MeetingListObj = meetingListObj;
 	}
 
+	public ActivityList getActivityListObj() {
+		return ActivityListObj;
+	}
 
-	
+	public void setActivityListObj(ActivityList activityListObj) {
+		ActivityListObj = activityListObj;
+	}
+
 
 }

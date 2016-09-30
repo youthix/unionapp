@@ -2,7 +2,7 @@ package org.presentation.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "resparam")
@@ -13,6 +13,8 @@ public class ResponseObj {
 	private UserList UserListObj;
 	
 	private MeetingList MeetingListObj;
+	
+	private ActivityList activityListObj;
 	
 	private String totalRecords;
 	
@@ -49,6 +51,14 @@ public class ResponseObj {
 
 	public void setTotalRecords(String totalRecords) {
 		this.totalRecords = totalRecords;
+	}
+
+	public ActivityList getActivityListObj() {
+		return activityListObj;
+	}
+
+	public void setActivityListObj(ActivityList activityListObj) {
+		this.activityListObj = activityListObj;
 	}
 
 

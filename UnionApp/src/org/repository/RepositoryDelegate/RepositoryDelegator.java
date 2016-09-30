@@ -8,17 +8,23 @@ import java.util.Iterator;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
+import org.presentation.dto.criteria.FetchActivityCriteria;
 import org.presentation.dto.criteria.FetchMeetingCriteria;
 import org.presentation.dto.criteria.FetchUserCriteria;
+import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
+import org.presentation.dto.feature.ActivityDTO;
+import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
+import org.repository.DAOInterface.IActivityDAO;
 import org.repository.DAOInterface.IMeetingDAO;
 import org.repository.DAOInterface.IUserDAO;
+import org.repository.entity.ActivityBO;
 import org.repository.entity.MeetingBO;
 import org.repository.entity.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +41,10 @@ public class RepositoryDelegator {
 	@Autowired
 	IMeetingDAO meetingdao;
 
+	@Autowired
+	IActivityDAO activitydao;
+	
+	
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
 
@@ -606,6 +616,364 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	
+	public ActivityList createactivity(ActivityList activityListObj) {
+		System.out.println("InRDRegister");
+
+		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
+		ActivityList activityListObjResp = new ActivityList();
+
+		if (activityList.size() > 0) {
+			Iterator<ActivityDTO> activityListIterator = activityList.iterator();
+
+			while (activityListIterator.hasNext()) {
+
+				ActivityDTO activitydtoObj = activityListIterator.next();
+
+				ActivityBO activityBOObj = new ActivityBO();
+
+				populateCreateActivityBO(activitydtoObj, activityBOObj);
+				activitydao.createActivity(activityBOObj);
+				populateActivityDTO(activitydtoObj, activityBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return activityListObjResp;
+	}
+
+	public ResponseObj fetchactivity(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+
+		ActivityList activityListObj = new ActivityList();
+		ArrayList<ActivityDTO> activityDTOList = new ArrayList<ActivityDTO>();
+
+		ArrayList<ActivityBO> activityBOList;
+
+		ActivityBO activityBOObj;
+
+		ArrayList<UserBO> userBOList;
+
+		int totalActUserCount = 0;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		UserList userListObj = reqparam.getUserListObj();
+
+		activityBOList = activitydao.fetchActivity(criteriaObj, reqparam.getPageno());
+
+		// To get the count of total Active Users. This count would be used to
+		// determine no of users who have not responded to a Activity.
+
+		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+		fetchUserCriteriaObj.setName("status");
+		fetchUserCriteriaObj.setValue("A");
+		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+
+		Criteria criteriaUserObj = new Criteria();
+		criteriaUserObj.setCriteria("TRUE");
+		userBOList = userdao.fetchUser(criteriaObj);
+
+		if (null != userBOList) {
+			totalActUserCount = userBOList.size();
+		}
+
+		if (null != activityBOList && activityBOList.size() > 0) {
+
+			Iterator<ActivityBO> litr = activityBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				activityBOObj = litr.next();
+				ActivityDTO activityDTOObj = new ActivityDTO();
+				populateActivityDTO(activityDTOObj, activityBOObj);
+
+				// set the no of users who did not responded by subtracting the
+				// accept + deny from the total no of users calculated above.
+				activityDTOObj.setNoresponsecount(String.valueOf(
+						(totalActUserCount - (activityBOObj.getAcceptcount() + activityBOObj.getDeclinecount()))));
+
+				// for a particular user who is requesting this fetch Activity,
+				// the accept or decline status of all the Activitys needs to be
+				// populated in the return obj
+				String acceptids = activityBOObj.getAcceptid();
+				String declineids = activityBOObj.getDeclineid();
+
+				if (null != acceptids && acceptids.contains(userListObj.getUl().get(0).getUsNa())) {
+
+					activityDTOObj.setAcceptdenyind("accept");
+
+				} else if (null != declineids && declineids.contains(userListObj.getUl().get(0).getUsNa())) {
+
+					activityDTOObj.setAcceptdenyind("deny");
+
+				}
+				activityDTOList.add(activityDTOObj);
+
+			}
+
+			activityListObj.setActivitydtoLs(activityDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setActivityListObj(activityListObj);
+		responseObj.setTotalRecords("15");
+		return responseObj;
+	}
+
+	public ResponseObj acceptdenyactivity(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		ActivityList activityListObj = reqparam.getActivityListObj();
+
+		UserList userListObj = reqparam.getUserListObj();
+
+		ArrayList<ActivityDTO> activityDTOList;
+
+		ArrayList<User> userDTOList;
+
+		String pageno = "1";
+
+		if (null != activityListObj && null != userListObj && null != activityListObj.getActivitydtoLs()
+				&& activityListObj.getActivitydtoLs().size() > 0 && null != userListObj.getUl()
+				&& userListObj.getUl().size() > 0) {
+
+			activityDTOList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
+
+			/*
+			 * Fetch the user on basis of usname and then update the
+			 * acceptActivityid or declineActivityid property
+			 */
+			userDTOList = (ArrayList<User>) userListObj.getUl();
+			User userObj = userDTOList.get(0);
+
+			Criteria criteriaObj = new Criteria();
+
+			criteriaObj.setCriteria("TRUE");
+
+			FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+			fetchUserCriteriaObj.setName("usname");
+
+			fetchUserCriteriaObj.setValue(userObj.getUsNa());
+
+			criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+
+			ArrayList<UserBO> userBOList;
+
+			userBOList = userdao.fetchUser(criteriaObj);
+
+			if (null != userBOList && userBOList.size() > 0) {
+				UserBO userBOObj = userBOList.get(0);
+
+				String acceptactivityid = userBOObj.getAcceptactivityid();
+
+				String declineactivityid = userBOObj.getDeclineactivityid();
+
+				for (ActivityDTO activityDTOObj : activityDTOList) {
+
+					/*
+					 * fetch and update the activityTable with the list of user
+					 * who accepted or declined Also need to update the
+					 * usertable with the activitys accepted or declined. This is
+					 * stored in comman separated list hence creating the String
+					 * below.
+					 */
+					ArrayList<ActivityBO> activityBOList;
+					ActivityBO activityBOObj;
+
+					FetchActivityCriteria fetchActivityCriteriaObj = new FetchActivityCriteria();
+					fetchActivityCriteriaObj.setName("activityid");
+					fetchActivityCriteriaObj.setValue(activityDTOObj.getActivityid());
+					criteriaObj.setFetchActivityCriteriaObj(fetchActivityCriteriaObj);
+
+					activityBOList = activitydao.fetchActivity(criteriaObj, pageno);
+					activityBOObj = activityBOList.get(0);
+
+					String acceptuserid = activityBOObj.getAcceptid();
+					String declineuserid = activityBOObj.getDeclineid();
+					int acceptcount = activityBOObj.getAcceptcount();
+					int declinecount = activityBOObj.getDeclinecount();
+
+					if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
+
+						// for user table
+						if (acceptactivityid == null || acceptactivityid.equals("")) {
+
+							acceptactivityid = activityDTOObj.getActivityid();
+						} else {
+
+							acceptactivityid = acceptactivityid + "," + activityDTOObj.getActivityid();
+						}
+
+						// for Activity table
+
+						if (acceptuserid == null || acceptuserid.equals("")) {
+
+							acceptuserid = userBOObj.getUsname();
+						} else {
+
+							acceptuserid = acceptuserid + "," + userBOObj.getUsname();
+						}
+						acceptcount = acceptcount + 1;
+
+					} else {
+
+						// for user table
+
+						if (declineactivityid == null || declineactivityid.equals("")) {
+
+							declineactivityid = activityDTOObj.getActivityid();
+						} else {
+
+							declineactivityid = declineactivityid + "," + activityDTOObj.getActivityid();
+						}
+
+						// for Activity table
+
+						if (declineuserid == null || declineuserid.equals("")) {
+
+							declineuserid = userBOObj.getUsname();
+						} else {
+
+							declineuserid = declineuserid + "," + userBOObj.getUsname();
+						}
+						declinecount = declinecount + 1;
+
+					}
+
+					// update the Activity obj
+
+					criteriaObj = new Criteria();
+					criteriaObj.setCriteria("TRUE");
+					UpdateActivityCriteria updateActivityCriteriaObj = new UpdateActivityCriteria();
+					updateActivityCriteriaObj.setName("acceptdecline");
+					criteriaObj.setUpdateActivityCriteriaObj(updateActivityCriteriaObj);
+
+					activityBOObj.setAcceptcount(acceptcount);
+					activityBOObj.setAcceptid(acceptuserid);
+					activityBOObj.setDeclinecount(declinecount);
+					activityBOObj.setDeclineid(declineuserid);
+
+					activitydao.updateOnCriteria(activityBOObj, criteriaObj);
+					populateActivityDTO(activityDTOObj, activityBOObj);
+
+				}
+
+				// update the UserObj with the activityids accept or declined
+				criteriaObj = new Criteria();
+				criteriaObj.setCriteria("TRUE");
+				UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+				updateUserCriteriaObj.setName("activity");
+				criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
+
+				userBOObj.setAcceptactivityid(acceptactivityid);
+				userBOObj.setDeclineactivityid(declineactivityid);
+
+				userdao.updateOnCriteria(userBOObj, criteriaObj);
+				populateUserDTO(userObj, userBOObj);
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+				throw serviceExceptionObj;
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList or Activity List is null");
+			throw serviceExceptionObj;
+		}
+		/*
+		 * responseObj.setActivityListObj(activityListObj);
+		 * responseObj.setUserListObj(userListObj);
+		 */
+		return responseObj;
+	}
+
+	public ResponseObj updateactivity(RequestObj reqparam) {
+		System.out.println("InRDUpdate");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the activity from the DB basis the id coming in the
+		 * request Then update teh fields of the activityBo fetched from DB with
+		 * those received in the input
+		 */
+		ActivityList activityListObj = reqparam.getActivityListObj();
+
+		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
+
+		ArrayList<ActivityBO> activityBOList;
+
+		ActivityBO activityBOObj = null;
+
+		Criteria criteriaactivityObj = new Criteria();
+		criteriaactivityObj.setCriteria("TRUE");
+
+		FetchActivityCriteria fetchActivityCriteriaObj = new FetchActivityCriteria();
+
+		fetchActivityCriteriaObj.setName("activityid");
+
+		if (activityList.size() > 0) {
+
+			ActivityDTO activitydtoObj = activityList.get(0);
+
+			fetchActivityCriteriaObj.setValue(activitydtoObj.getActivityid());
+			criteriaactivityObj.setFetchActivityCriteriaObj(fetchActivityCriteriaObj);
+
+			activityBOList = activitydao.fetchActivity(criteriaactivityObj, "1");
+
+			if (null != activityBOList && activityBOList.size() > 0) {
+
+				activityBOObj = activityBOList.get(0);
+
+				// update the activityBO fetched from DB
+
+				activityBOObj.setCreator(activitydtoObj.getCreator());
+				activityBOObj.setDetail(activitydtoObj.getDetail());
+				activityBOObj.setStatus(activitydtoObj.getStatus());
+				activityBOObj.setSubject(activitydtoObj.getSubject());
+				activityBOObj.setVenue(activitydtoObj.getVenue());
+
+				// merge this UpdateBO back in DB
+				activitydao.update(activityBOObj);
+
+			}
+
+			else {
+				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				throw serviceExceptionObj;
+			}
+
+			populateActivityDTO(activitydtoObj, activityBOObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setActivityListObj(activityListObj);
+
+		return responseObj;
+	}
+
+	
+	
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
 		userBOObj.setUsname(userObj.getUsNa());
@@ -719,4 +1087,61 @@ public class RepositoryDelegator {
 
 	}
 
+	
+	private void populateCreateActivityBO(ActivityDTO activitydtoObj, ActivityBO activityBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+
+		try {
+			activityBOObj.setAcceptid(activitydtoObj.getAcceptid());
+
+			if (null != activitydtoObj.getAcceptcount() && !activitydtoObj.getAcceptcount().equals("")) {
+				activityBOObj.setAcceptcount(Integer.parseInt(activitydtoObj.getAcceptcount()));
+			} else {
+				activityBOObj.setAcceptcount(0);
+			}
+			if (null != activitydtoObj.getDeclinecount() && !activitydtoObj.getDeclinecount().equals("")) {
+				activityBOObj.setDeclinecount(Integer.parseInt(activitydtoObj.getDeclinecount()));
+			} else {
+				activityBOObj.setDeclinecount(0);
+			}
+
+			// activityBOObj.setNoresponsecount(0);
+
+			activityBOObj.setDeclineid(activitydtoObj.getDeclineid());
+
+			activityBOObj.setCreator(activitydtoObj.getCreator());
+			activityBOObj.setDetail(activitydtoObj.getDetail());
+			activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate()));
+			// activityBOObj.setactivityid(activitydtoObj.getactivityid());
+			activityBOObj.setStatus(activitydtoObj.getStatus());
+			activityBOObj.setSubject(activitydtoObj.getSubject());
+			activityBOObj.setVenue(activitydtoObj.getVenue());
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populateActivityDTO(ActivityDTO activitydtoObj, ActivityBO activityBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+
+		activitydtoObj.setAcceptcount(String.valueOf(activityBOObj.getAcceptcount()));
+		activitydtoObj.setDeclinecount(String.valueOf(activityBOObj.getDeclinecount()));
+		activitydtoObj.setCreator(activityBOObj.getCreator());
+		activitydtoObj.setDetail(activityBOObj.getDetail());
+		activitydtoObj.setActdate(dateformatter.format(activityBOObj.getActdate()));
+		activitydtoObj.setActivityid(activityBOObj.getActivityid().toString());
+		activitydtoObj.setStatus(activityBOObj.getStatus());
+		activitydtoObj.setSubject(activityBOObj.getSubject());
+		activitydtoObj.setVenue(activityBOObj.getVenue());
+
+	}
+	
 }

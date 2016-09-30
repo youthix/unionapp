@@ -77,6 +77,12 @@ public class UserBO implements Serializable {
 	@Column(name = "declinemeetingid")
 	private String declinemeetingid;
 	
+	@Column(name = "acceptactivityid")
+	private String acceptactivityid;
+	
+	@Column(name = "declineactivityid")
+	private String declineactivityid;	
+	
 
 	public String getUsname() {
 		return usname;
@@ -235,6 +241,22 @@ public class UserBO implements Serializable {
 
 	public void setDeclinemeetingid(String declinemeetingid) {
 		this.declinemeetingid = declinemeetingid;
+	}
+
+	public String getAcceptactivityid() {
+		return acceptactivityid;
+	}
+
+	public void setAcceptactivityid(String acceptactivityid) {
+		this.acceptactivityid = acceptactivityid;
+	}
+
+	public String getDeclineactivityid() {
+		return declineactivityid;
+	}
+
+	public void setDeclineactivityid(String declineactivityid) {
+		this.declineactivityid = declineactivityid;
 	}
 
 

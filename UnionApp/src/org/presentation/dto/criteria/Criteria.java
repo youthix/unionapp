@@ -19,6 +19,10 @@ public class Criteria {
 	private FetchMeetingCriteria fetchMeetingCriteriaObj ;
 	
 	private UpdateMeetingCriteria UpdateMeetingCriteriaObj ;
+	
+	private FetchActivityCriteria fetchActivityCriteriaObj ;
+	
+	private UpdateActivityCriteria UpdateActivityCriteriaObj ;
 
 
 	public String getCriteria() {
@@ -59,6 +63,22 @@ public class Criteria {
 
 	public void setUpdateMeetingCriteriaObj(UpdateMeetingCriteria updateMeetingCriteriaObj) {
 		UpdateMeetingCriteriaObj = updateMeetingCriteriaObj;
+	}
+
+	public FetchActivityCriteria getFetchActivityCriteriaObj() {
+		return fetchActivityCriteriaObj;
+	}
+
+	public void setFetchActivityCriteriaObj(FetchActivityCriteria fetchActivityCriteriaObj) {
+		this.fetchActivityCriteriaObj = fetchActivityCriteriaObj;
+	}
+
+	public UpdateActivityCriteria getUpdateActivityCriteriaObj() {
+		return UpdateActivityCriteriaObj;
+	}
+
+	public void setUpdateActivityCriteriaObj(UpdateActivityCriteria updateActivityCriteriaObj) {
+		UpdateActivityCriteriaObj = updateActivityCriteriaObj;
 	}
 
 

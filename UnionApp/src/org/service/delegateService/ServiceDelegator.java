@@ -8,6 +8,7 @@ import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
+import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
@@ -349,6 +350,72 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
+	public ResponseObj createactivity(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		ActivityList activityListObj = reqparam.getActivityListObj();
+
+		if (null != activityListObj) {
+
+			repositoryDelegator.createactivity(activityListObj);
+			responseObj.setActivityListObj(activityListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchactivity(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		ActivityList activityListObj;
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
+
+			responseObj = repositoryDelegator.fetchactivity(reqparam);
+			
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updateactivity(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		ActivityList activityListObj = reqparam.getActivityListObj();
+
+		if (null != activityListObj) {
+
+			responseObj = repositoryDelegator.updateactivity(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj acceptdenyactivity(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		responseObj = repositoryDelegator.acceptdenyactivity(reqparam);
+		setResponse(responseObj);
+
+		return responseObj;
+	}
+	
 	private String generatepwd() {
 
 		String newPwd = UUID.randomUUID().toString();

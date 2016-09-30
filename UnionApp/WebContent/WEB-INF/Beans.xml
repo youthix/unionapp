@@ -23,6 +23,9 @@
 	<bean id="meetingdao" class="org.repository.DAOImpl.MeetingDAOImpl">
 	</bean>
 	
+	<bean id="activitydao" class="org.repository.DAOImpl.ActivityDAOImpl">
+	</bean>	
+	
     <bean id="restfulService" 
       class="org.presentation.controller.Impl.RESTfulServiceImpl">
       <!-- <property name="serviceDelegator" ref="serviceDelegator" /> -->
