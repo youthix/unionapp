@@ -43,8 +43,7 @@ public class RepositoryDelegator {
 
 	@Autowired
 	IActivityDAO activitydao;
-	
-	
+
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
 
@@ -371,7 +370,11 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 		responseObj.setMeetingListObj(meetingListObj);
-		responseObj.setTotalRecords("15");
+		int totalrecordcount = meetingdao.totalRecordCount();
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
 
@@ -616,7 +619,6 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	
 	public ActivityList createactivity(ActivityList activityListObj) {
 		System.out.println("InRDRegister");
 
@@ -727,7 +729,11 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 		responseObj.setActivityListObj(activityListObj);
-		responseObj.setTotalRecords("15");
+		int totalrecordcount = activitydao.totalRecordCount();
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
 
@@ -787,9 +793,9 @@ public class RepositoryDelegator {
 					/*
 					 * fetch and update the activityTable with the list of user
 					 * who accepted or declined Also need to update the
-					 * usertable with the activitys accepted or declined. This is
-					 * stored in comman separated list hence creating the String
-					 * below.
+					 * usertable with the activitys accepted or declined. This
+					 * is stored in comman separated list hence creating the
+					 * String below.
 					 */
 					ArrayList<ActivityBO> activityBOList;
 					ActivityBO activityBOObj;
@@ -972,8 +978,6 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	
-	
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
 		userBOObj.setUsname(userObj.getUsNa());
@@ -1087,7 +1091,6 @@ public class RepositoryDelegator {
 
 	}
 
-	
 	private void populateCreateActivityBO(ActivityDTO activitydtoObj, ActivityBO activityBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -1143,5 +1146,26 @@ public class RepositoryDelegator {
 		activitydtoObj.setVenue(activityBOObj.getVenue());
 
 	}
-	
+
+	private int getTotalPageCount(int totalrecordcount) {
+		int pagesize = 5;
+
+		int totalPage = 0;
+		
+		if(totalrecordcount > 0){
+			
+			if (totalrecordcount % pagesize == 0) {
+
+				totalPage = totalrecordcount / pagesize;
+
+			} else {
+				totalPage = totalrecordcount / pagesize + 1;
+			}
+			
+		}
+
+
+		return totalPage;
+	}
+
 }

@@ -16,7 +16,7 @@ public class ResponseObj {
 	
 	private ActivityList activityListObj;
 	
-	private String totalRecords;
+	private String totalPage;
 	
 	ResStatus resStatus;
 
@@ -45,13 +45,6 @@ public class ResponseObj {
 		MeetingListObj = meetingListObj;
 	}
 
-	public String getTotalRecords() {
-		return totalRecords;
-	}
-
-	public void setTotalRecords(String totalRecords) {
-		this.totalRecords = totalRecords;
-	}
 
 	public ActivityList getActivityListObj() {
 		return activityListObj;
@@ -59,6 +52,14 @@ public class ResponseObj {
 
 	public void setActivityListObj(ActivityList activityListObj) {
 		this.activityListObj = activityListObj;
+	}
+
+	public String getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(String totalPage) {
+		this.totalPage = totalPage;
 	}
 
 

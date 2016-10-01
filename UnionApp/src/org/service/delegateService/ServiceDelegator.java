@@ -311,6 +311,7 @@ public class ServiceDelegator {
 		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
 
 			responseObj = repositoryDelegator.fetchmeeting(reqparam);
+
 			
 			setResponse(responseObj);
 

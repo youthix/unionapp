@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IMeetingDAO;
+import org.repository.entity.ActivityBO;
 import org.repository.entity.MeetingBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -143,7 +144,7 @@ public class MeetingDAOImpl implements IMeetingDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + MeetingBO.class.getName() + " m order by m.meetingid ";
+				String SQL = "select m from " + MeetingBO.class.getName() + " m where status not in ('delete') order by m.meetingid ";
 				meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -157,6 +158,19 @@ public class MeetingDAOImpl implements IMeetingDAO {
 
 		return meetingBOList;
 	}
+	
+	public Integer totalRecordCount() {
+		
+		int count = 0 ;
+		String SQL = "select COUNT(*) from " + MeetingBO.class.getName() + "  where status not in ('delete') ";
+		
+		 if(null!= manager.createQuery(SQL).getResultList())	
+		 {
+			  count = manager.createQuery(SQL).getResultList().size();
+		 }
+		return count ;
+		
+	}	
 
 	public EntityManager getManager() {
 		return manager;

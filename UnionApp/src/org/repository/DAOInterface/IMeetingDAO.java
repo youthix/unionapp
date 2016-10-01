@@ -15,5 +15,7 @@ public interface IMeetingDAO {
 	public void updateOnCriteria(MeetingBO meetingBO, Criteria criteriaObj);
 
 	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj, String pageno);
+	
+	public Integer totalRecordCount();
 
 }
