@@ -10,6 +10,7 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
 import org.repository.entity.ActivityBO;
+import org.repository.entity.MeetingBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -178,5 +179,29 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 	public void setManager(EntityManager manager) {
 		this.manager = manager;
+	}
+
+	@Override
+	public void deleteOnCriteria(ActivityBO activityBO, Criteria criteriaObj) {
+		try {
+
+			String SQL = "";
+
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getUpdateActivityCriteriaObj() != null) {
+
+					if (criteriaObj.getUpdateActivityCriteriaObj().getName().equalsIgnoreCase("acceptdecline")) {
+						SQL = "delete from " + ActivityBO.class.getName() + " where meetingid = '" + activityBO.getActivityid() + "'";
+					}
+				}
+			}
+			Query query = manager.createQuery(SQL);
+			query.executeUpdate();
+
+			System.out.println("Done deleteOnCriteria");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
 	}
 }

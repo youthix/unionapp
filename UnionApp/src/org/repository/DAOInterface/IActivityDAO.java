@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.presentation.dto.criteria.Criteria;
 import org.repository.entity.ActivityBO;
-import org.repository.entity.MeetingBO;
 
 public interface IActivityDAO {
 
@@ -13,6 +12,8 @@ public interface IActivityDAO {
 	public void update(ActivityBO activityBO);
 
 	public void updateOnCriteria(ActivityBO activityBO, Criteria criteriaObj);
+	
+	public void deleteOnCriteria(ActivityBO meetingBO, Criteria criteriaObj);
 
 	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno);
 	

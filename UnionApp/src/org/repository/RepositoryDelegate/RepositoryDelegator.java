@@ -814,8 +814,11 @@ public class RepositoryDelegator {
 					String declineuserid = activityBOObj.getDeclineid();
 					int acceptcount = activityBOObj.getAcceptcount();
 					int declinecount = activityBOObj.getDeclinecount();
-
-					if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
+					
+					if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("delete")){
+						activitydao.deleteOnCriteria(activityBOObj, criteriaObj);
+					}
+					else if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
 
 						// for user table
 						if (acceptactivityid == null || acceptactivityid.equals("")) {
