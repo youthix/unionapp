@@ -198,13 +198,8 @@ public class ActivityDAOImpl implements IActivityDAO {
 	public void deleteOnCriteria(ActivityBO activityBO, Criteria criteriaObj) {
 		try {
 
-			String SQL = "";
-
-			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getUpdateActivityCriteriaObj() != null) {				
-						SQL = "delete from " + ActivityBO.class.getName() + " where activityid = '" + activityBO.getActivityid() + "'";
-					}
-			}
+			String SQL  = "delete from " + ActivityBO.class.getName() + " where activityid = '" + activityBO.getActivityid() + "'";
+					
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 

@@ -81,13 +81,8 @@ public class MeetingDAOImpl implements IMeetingDAO {
 	public void deleteOnCriteria(MeetingBO meetingBO, Criteria criteriaObj) {
 		try {
 
-			String SQL = "";
-
-			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getUpdateMeetingCriteriaObj() != null) {					
-						SQL = "delete from " + MeetingBO.class.getName() + " where meetingid = '" + meetingBO.getMeetingid() + "'";					
-				}
-			}
+			String SQL  = "delete from " + MeetingBO.class.getName() + " where meetingid = '" + meetingBO.getMeetingid() + "'";					
+				
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 
