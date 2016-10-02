@@ -27,6 +27,7 @@
     <param-value>
     WEB-INF/spring-db-integration.xml
     WEB-INF/Beans.xml
+    WEB-INF/Crons.xml
     </param-value>
 </context-param>
 
