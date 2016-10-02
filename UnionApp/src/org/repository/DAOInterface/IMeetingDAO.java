@@ -13,6 +13,8 @@ public interface IMeetingDAO {
 	public void update(MeetingBO meetingBO);
 
 	public void updateOnCriteria(MeetingBO meetingBO, Criteria criteriaObj);
+	
+	public void deleteOnCriteria(MeetingBO meetingBO, Criteria criteriaObj);
 
 	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj, String pageno);
 	

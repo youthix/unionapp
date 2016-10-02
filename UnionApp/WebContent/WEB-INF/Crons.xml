@@ -45,7 +45,7 @@
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 	    <property name="jobDetail" ref="exampleJob"/>
 	    <!-- run every morning at 6 AM -->
-	    <property name="cronExpression" value="0 0 12 * * ?"/>
+	    <property name="cronExpression" value="0 35 12 * * ?"/>
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

@@ -453,8 +453,10 @@ public class RepositoryDelegator {
 					String declineuserid = meetingBOObj.getDeclineid();
 					int acceptcount = meetingBOObj.getAcceptcount();
 					int declinecount = meetingBOObj.getDeclinecount();
-
-					if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
+					if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("delete")){
+						meetingdao.deleteOnCriteria(meetingBOObj, criteriaObj);
+					}
+					else if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
 
 						// for user table
 						if (acceptmeetingid == null || acceptmeetingid.equals("")) {
