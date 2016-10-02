@@ -19,5 +19,7 @@ public interface IMeetingDAO {
 	public ArrayList<MeetingBO> fetchMeeting(Criteria criteriaObj, String pageno);
 	
 	public Integer totalRecordCount();
+	
+	public void deleteCron(String beforeLimit);
 
 }

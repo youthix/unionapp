@@ -84,17 +84,28 @@ public class MeetingDAOImpl implements IMeetingDAO {
 			String SQL = "";
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getUpdateMeetingCriteriaObj() != null) {
-
-					if (criteriaObj.getUpdateMeetingCriteriaObj().getName().equalsIgnoreCase("acceptdecline")) {
-						SQL = "delete from " + MeetingBO.class.getName() + " where meetingid = '" + meetingBO.getMeetingid() + "'";
-					}
+				if (criteriaObj.getUpdateMeetingCriteriaObj() != null) {					
+						SQL = "delete from " + MeetingBO.class.getName() + " where meetingid = '" + meetingBO.getMeetingid() + "'";					
 				}
 			}
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 
 			System.out.println("Done deleteOnCriteria");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+	
+	public void deleteCron(String beforeLimit) {
+		try {
+
+			String SQL = "delete from " + MeetingBO.class.getName() + " where DATEDIFF(sysdate(),meetdate) > "+beforeLimit;					
+			Query query = manager.createQuery(SQL);
+			query.executeUpdate();
+
+			System.out.println("Done Meeting deleteCron");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;

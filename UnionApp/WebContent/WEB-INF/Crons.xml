@@ -25,34 +25,49 @@
     <property name="targetMethod" value="doIt"/>
    </bean>
  -->   
-   <bean id="exampleBusinessObject" class="org.cron.meet.ExampleBusinessObject"/>
+  <!--  <bean id="exampleBusinessObject" class="org.cron.meet.ExampleBusinessObject"/> -->
+   <bean id="meetingCron" class="org.cron.meet.MeetingCron"/>
+   <bean id="activityCron" class="org.cron.act.ActivityCron"/>
    
-   <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-    <property name="targetObject" ref="exampleBusinessObject"/>
+   <bean id="jobMeetingDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject" ref="meetingCron"/>
     <property name="targetMethod" value="doIt"/>
-    <property name="concurrent" value="false"/>
+    <property name="concurrent" value="true"/>
    </bean>
    
-   <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-    <!-- see the example of method invoking job above -->
+   <bean id="jobActivityDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject" ref="activityCron"/>
+    <property name="targetMethod" value="doIt"/>
+    <property name="concurrent" value="true"/>
+   </bean>
+   
+   <!-- <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+    see the example of method invoking job above
     <property name="jobDetail" ref="jobDetail"/>
-    <!-- 10 seconds -->
+    10 seconds
     <property name="startDelay" value="10000"/>
-    <!-- repeat every 50 seconds -->
+    repeat every 50 seconds
     <property name="repeatInterval" value="5000000"/>
    </bean>
-
-	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-	    <property name="jobDetail" ref="exampleJob"/>
+ -->
+	<bean id="cronMeetingTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="jobMeetingDetail"/>
 	    <!-- run every morning at 6 AM -->
-	    <property name="cronExpression" value="0 35 12 * * ?"/>
+	    <property name="cronExpression" value="0 0 1 * * ?"/>
+	</bean>
+	
+	<bean id="cronActivityTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="jobActivityDetail"/>
+	    <!-- run every morning at 6 AM -->
+	    <property name="cronExpression" value="0 0 1 * * ?"/>
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 	    <property name="triggers">
 	        <list>
-	            <ref bean="cronTrigger"/>
-	            <ref bean="simpleTrigger"/>
+	            <ref bean="cronMeetingTrigger"/>
+	            <ref bean="cronActivityTrigger"/>
+	            <!-- <ref bean="simpleTrigger"/> -->
 	        </list>
 	    </property>
 	</bean>

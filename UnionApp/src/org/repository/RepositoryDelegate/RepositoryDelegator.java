@@ -1172,5 +1172,13 @@ public class RepositoryDelegator {
 
 		return totalPage;
 	}
+	
+	public void deleteMeetingCron(String beforeLimit){
+		meetingdao.deleteCron(beforeLimit);			
+	}
+	
+	public void deleteActivityCron(String beforeLimit){		
+		activitydao.deleteCron(beforeLimit);		
+	}
 
 }

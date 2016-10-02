@@ -18,5 +18,7 @@ public interface IActivityDAO {
 	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno);
 	
 	public Integer totalRecordCount();
+	
+	public void deleteCron(String beforeLimit);
 
 }

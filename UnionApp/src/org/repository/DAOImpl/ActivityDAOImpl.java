@@ -10,7 +10,6 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
 import org.repository.entity.ActivityBO;
-import org.repository.entity.MeetingBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,7 +76,21 @@ public class ActivityDAOImpl implements IActivityDAO {
 			throw serviceExceptionObj;
 		}
 	}
+	
+	public void deleteCron(String beforeLimit) {
+		try {
 
+			String SQL = "delete from " + ActivityBO.class.getName() + " where DATEDIFF(sysdate(),actdate) > "+beforeLimit;					
+			Query query = manager.createQuery(SQL);
+			query.executeUpdate();
+
+			System.out.println("Done Activity deleteCron !!");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+	
 	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno) {
 
 		System.out.println("InDAOFetchUser");
@@ -188,12 +201,9 @@ public class ActivityDAOImpl implements IActivityDAO {
 			String SQL = "";
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getUpdateActivityCriteriaObj() != null) {
-
-					if (criteriaObj.getUpdateActivityCriteriaObj().getName().equalsIgnoreCase("acceptdecline")) {
-						SQL = "delete from " + ActivityBO.class.getName() + " where meetingid = '" + activityBO.getActivityid() + "'";
+				if (criteriaObj.getUpdateActivityCriteriaObj() != null) {				
+						SQL = "delete from " + ActivityBO.class.getName() + " where activityid = '" + activityBO.getActivityid() + "'";
 					}
-				}
 			}
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
