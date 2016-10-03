@@ -1153,7 +1153,7 @@ public class RepositoryDelegator {
 	}
 
 	private int getTotalPageCount(int totalrecordcount) {
-		int pagesize = 5;
+		int pagesize = 6;
 
 		int totalPage = 0;
 		

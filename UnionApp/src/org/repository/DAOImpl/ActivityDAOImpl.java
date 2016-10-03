@@ -100,7 +100,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 		int offsetno;
 
-		int pageSize = 5;
+		int pageSize = 6;
 
 		int pageNo = Integer.parseInt(pageno);
 
@@ -174,7 +174,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 	public Integer totalRecordCount() {
 		
 		int count = 0;
-		String SQL = "select COUNT(*) from " + ActivityBO.class.getName() + "  where status not in ('delete') ";
+		String SQL = "select a from " + ActivityBO.class.getName() + "  a where status not in ('delete') ";
 		
 		 if(null!= manager.createQuery(SQL).getResultList())	
 		 {

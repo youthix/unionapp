@@ -116,7 +116,7 @@ public class MeetingDAOImpl implements IMeetingDAO {
 
 		int offsetno;
 
-		int pageSize = 5;
+		int pageSize = 6;
 
 		int pageNo = Integer.parseInt(pageno);
 
@@ -191,7 +191,7 @@ public class MeetingDAOImpl implements IMeetingDAO {
 	public Integer totalRecordCount() {
 		
 		int count = 0 ;
-		String SQL = "select COUNT(*) from " + MeetingBO.class.getName() + "  where status not in ('delete') ";
+		String SQL = "select m from " + MeetingBO.class.getName() + "  m where status not in ('delete') ";
 		
 		 if(null!= manager.createQuery(SQL).getResultList())	
 		 {
