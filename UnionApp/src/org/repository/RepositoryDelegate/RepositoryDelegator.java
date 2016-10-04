@@ -941,7 +941,7 @@ public class RepositoryDelegator {
 
 		fetchActivityCriteriaObj.setName("activityid");
 
-		if (activityList.size() > 0) {
+		if (activityList.size() > 0) { 
 
 			ActivityDTO activitydtoObj = activityList.get(0);
 
