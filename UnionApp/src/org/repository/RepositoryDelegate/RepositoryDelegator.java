@@ -883,7 +883,7 @@ public class RepositoryDelegator {
 
 				}
 
-				// update the UserObj with the activityids accept or declined
+/*				// update the UserObj with the activityids accept or declined
 				criteriaObj = new Criteria();
 				criteriaObj.setCriteria("TRUE");
 				UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
@@ -893,7 +893,7 @@ public class RepositoryDelegator {
 				userBOObj.setAcceptactivityid(acceptactivityid);
 				userBOObj.setDeclineactivityid(declineactivityid);
 
-				userdao.updateOnCriteria(userBOObj, criteriaObj);
+				userdao.updateOnCriteria(userBOObj, criteriaObj);*/
 				populateUserDTO(userObj, userBOObj);
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
