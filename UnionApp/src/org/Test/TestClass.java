@@ -123,7 +123,7 @@ public class TestClass {
 			
 			System.out.println("in1");
 
-			try (final ResultSet resultSet = statement1.executeQuery("select id,firstname, lastname from testtable")) {
+			/*try (final ResultSet resultSet = statement1.executeQuery("select id,firstname, lastname from testtable")) {
 				while (resultSet.next()) {
 					// Get the values from the table1 record
 					final int id = resultSet.getInt("id");
@@ -137,7 +137,7 @@ public class TestClass {
 					insertStatement.setString(3, lastname);
 					insertStatement.executeUpdate();
 				}
-			}
+			}*/
 
 		} catch (Exception e) {
 			e.printStackTrace();
