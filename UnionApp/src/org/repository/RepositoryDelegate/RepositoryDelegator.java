@@ -582,7 +582,6 @@ public class RepositoryDelegator {
 
 			fetchMeetingCriteriaObj.setValue(meetingdtoObj.getMeetingid());
 			criteriameetingObj.setFetchMeetingCriteriaObj(fetchMeetingCriteriaObj);
-
 			meetingBOList = meetingdao.fetchMeeting(criteriameetingObj, "1");
 
 			if (null != meetingBOList && meetingBOList.size() > 0) {
@@ -590,7 +589,10 @@ public class RepositoryDelegator {
 				meetingBOObj = meetingBOList.get(0);
 
 				// update the meetingBO fetched from DB
-
+				if(meetingdtoObj.getStatus().equalsIgnoreCase("Delete")){
+					meetingdao.deleteOnCriteria(meetingBOObj, null);
+				}
+				else {
 				meetingBOObj.setCreator(meetingdtoObj.getCreator());
 				meetingBOObj.setDetail(meetingdtoObj.getDetail());
 				meetingBOObj.setStatus(meetingdtoObj.getStatus());
@@ -599,6 +601,7 @@ public class RepositoryDelegator {
 
 				// merge this UpdateBO back in DB
 				meetingdao.update(meetingBOObj);
+				}
 
 			}
 
@@ -950,6 +953,10 @@ public class RepositoryDelegator {
 			if (null != activityBOList && activityBOList.size() > 0) {
 
 				activityBOObj = activityBOList.get(0);
+				if(activitydtoObj.getStatus().equalsIgnoreCase("Delete")){
+					activitydao.deleteOnCriteria(activityBOObj, null);
+				}
+				else {
 
 				// update the activityBO fetched from DB
 
@@ -961,7 +968,7 @@ public class RepositoryDelegator {
 
 				// merge this UpdateBO back in DB
 				activitydao.update(activityBOObj);
-
+				}
 			}
 
 			else {
