@@ -403,7 +403,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchactivity(RequestObj reqparam) {
 
-		ResponseObj responseObj;
+		ResponseObj responseObj ;
 
 		try {
 			if (null != reqparam) {
