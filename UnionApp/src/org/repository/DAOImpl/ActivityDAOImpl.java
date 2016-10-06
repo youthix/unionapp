@@ -142,7 +142,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 						String SQL = "select m from " + ActivityBO.class.getName() + " m where "
 								+ criteriaObj.getFetchActivityCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.activityid";
+								+ ") order by m.actdate asc";
 
 						activityBOList = (ArrayList<ActivityBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -157,7 +157,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + ActivityBO.class.getName() + " m where status not in ('delete') order by m.activityid ";
+				String SQL = "select m from " + ActivityBO.class.getName() + " m where status not in ('delete') order by m.actdate asc ";
 				activityBOList = (ArrayList<ActivityBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();

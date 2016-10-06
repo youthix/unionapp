@@ -425,16 +425,12 @@ public class RepositoryDelegator {
 			if (null != userBOList && userBOList.size() > 0) {
 				UserBO userBOObj = userBOList.get(0);
 
-				String acceptmeetingid = userBOObj.getAcceptmeetingid();
-
-				String declinemeetingid = userBOObj.getDeclinemeetingid();
 
 				for (MeetingDTO meetingDTOObj : meetingDTOList) {
 
 					/*
 					 * fetch and update the meetingTable with the list of user
-					 * who accepted or declined Also need to update the
-					 * usertable with the meetings accepted or declined. This is
+					 * who accepted or declined. This is
 					 * stored in comman separated list hence creating the String
 					 * below.
 					 */
@@ -458,14 +454,6 @@ public class RepositoryDelegator {
 					}
 					else if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
 
-						// for user table
-						if (acceptmeetingid == null || acceptmeetingid.equals("")) {
-
-							acceptmeetingid = meetingDTOObj.getMeetingid();
-						} else {
-
-							acceptmeetingid = acceptmeetingid + "," + meetingDTOObj.getMeetingid();
-						}
 
 						// for meeting table
 
@@ -480,15 +468,6 @@ public class RepositoryDelegator {
 
 					} else {
 
-						// for user table
-
-						if (declinemeetingid == null || declinemeetingid.equals("")) {
-
-							declinemeetingid = meetingDTOObj.getMeetingid();
-						} else {
-
-							declinemeetingid = declinemeetingid + "," + meetingDTOObj.getMeetingid();
-						}
 
 						// for meeting table
 
@@ -521,17 +500,7 @@ public class RepositoryDelegator {
 
 				}
 
-				// update the UserObj with the meetingids accept or declined
-				criteriaObj = new Criteria();
-				criteriaObj.setCriteria("TRUE");
-				UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
-				updateUserCriteriaObj.setName("meeting");
-				criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 
-				userBOObj.setAcceptmeetingid(acceptmeetingid);
-				userBOObj.setDeclinemeetingid(declinemeetingid);
-
-				userdao.updateOnCriteria(userBOObj, criteriaObj);
 				populateUserDTO(userObj, userBOObj);
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
@@ -568,6 +537,10 @@ public class RepositoryDelegator {
 		ArrayList<MeetingBO> meetingBOList;
 
 		MeetingBO meetingBOObj = null;
+		
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		Criteria criteriameetingObj = new Criteria();
 		criteriameetingObj.setCriteria("TRUE");
@@ -584,29 +557,36 @@ public class RepositoryDelegator {
 			criteriameetingObj.setFetchMeetingCriteriaObj(fetchMeetingCriteriaObj);
 			meetingBOList = meetingdao.fetchMeeting(criteriameetingObj, "1");
 
-			if (null != meetingBOList && meetingBOList.size() > 0) {
+			try {
+				if (null != meetingBOList && meetingBOList.size() > 0) {
 
-				meetingBOObj = meetingBOList.get(0);
+					meetingBOObj = meetingBOList.get(0);
 
-				// update the meetingBO fetched from DB
-				if(meetingdtoObj.getStatus().equalsIgnoreCase("Delete")){
-					meetingdao.deleteOnCriteria(meetingBOObj, null);
+					// update the meetingBO fetched from DB
+					if(meetingdtoObj.getStatus().equalsIgnoreCase("Delete")){
+						meetingdao.deleteOnCriteria(meetingBOObj, null);
+					}
+					else {
+					meetingBOObj.setCreator(meetingdtoObj.getCreator());
+					meetingBOObj.setDetail(meetingdtoObj.getDetail());
+					meetingBOObj.setStatus(meetingdtoObj.getStatus());
+					meetingBOObj.setSubject(meetingdtoObj.getSubject());
+					meetingBOObj.setVenue(meetingdtoObj.getVenue());
+					meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()));
+					meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
+
+					// merge this UpdateBO back in DB
+					meetingdao.update(meetingBOObj);
+					}
+
 				}
+
 				else {
-				meetingBOObj.setCreator(meetingdtoObj.getCreator());
-				meetingBOObj.setDetail(meetingdtoObj.getDetail());
-				meetingBOObj.setStatus(meetingdtoObj.getStatus());
-				meetingBOObj.setSubject(meetingdtoObj.getSubject());
-				meetingBOObj.setVenue(meetingdtoObj.getVenue());
-
-				// merge this UpdateBO back in DB
-				meetingdao.update(meetingBOObj);
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
 				}
-
-			}
-
-			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
 				throw serviceExceptionObj;
 			}
 
@@ -789,18 +769,11 @@ public class RepositoryDelegator {
 			if (null != userBOList && userBOList.size() > 0) {
 				UserBO userBOObj = userBOList.get(0);
 
-				String acceptactivityid = userBOObj.getAcceptactivityid();
-
-				String declineactivityid = userBOObj.getDeclineactivityid();
-
 				for (ActivityDTO activityDTOObj : activityDTOList) {
 
 					/*
 					 * fetch and update the activityTable with the list of user
-					 * who accepted or declined Also need to update the
-					 * usertable with the activitys accepted or declined. This
-					 * is stored in comman separated list hence creating the
-					 * String below.
+					 * who accepted or declined.
 					 */
 					ArrayList<ActivityBO> activityBOList;
 					ActivityBO activityBOObj;
@@ -823,14 +796,6 @@ public class RepositoryDelegator {
 					}
 					else if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
 
-						// for user table
-						if (acceptactivityid == null || acceptactivityid.equals("")) {
-
-							acceptactivityid = activityDTOObj.getActivityid();
-						} else {
-
-							acceptactivityid = acceptactivityid + "," + activityDTOObj.getActivityid();
-						}
 
 						// for Activity table
 
@@ -845,15 +810,6 @@ public class RepositoryDelegator {
 
 					} else {
 
-						// for user table
-
-						if (declineactivityid == null || declineactivityid.equals("")) {
-
-							declineactivityid = activityDTOObj.getActivityid();
-						} else {
-
-							declineactivityid = declineactivityid + "," + activityDTOObj.getActivityid();
-						}
 
 						// for Activity table
 
@@ -886,17 +842,6 @@ public class RepositoryDelegator {
 
 				}
 
-/*				// update the UserObj with the activityids accept or declined
-				criteriaObj = new Criteria();
-				criteriaObj.setCriteria("TRUE");
-				UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
-				updateUserCriteriaObj.setName("activity");
-				criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
-
-				userBOObj.setAcceptactivityid(acceptactivityid);
-				userBOObj.setDeclineactivityid(declineactivityid);
-
-				userdao.updateOnCriteria(userBOObj, criteriaObj);*/
 				populateUserDTO(userObj, userBOObj);
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
@@ -909,10 +854,7 @@ public class RepositoryDelegator {
 			ServiceException serviceExceptionObj = new ServiceException("UserList or Activity List is null");
 			throw serviceExceptionObj;
 		}
-		/*
-		 * responseObj.setActivityListObj(activityListObj);
-		 * responseObj.setUserListObj(userListObj);
-		 */
+
 		return responseObj;
 	}
 
@@ -933,6 +875,10 @@ public class RepositoryDelegator {
 		ArrayList<ActivityBO> activityBOList;
 
 		ActivityBO activityBOObj = null;
+		
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		Criteria criteriaactivityObj = new Criteria();
 		criteriaactivityObj.setCriteria("TRUE");
@@ -950,29 +896,36 @@ public class RepositoryDelegator {
 
 			activityBOList = activitydao.fetchActivity(criteriaactivityObj, "1");
 
-			if (null != activityBOList && activityBOList.size() > 0) {
+			try {
+				if (null != activityBOList && activityBOList.size() > 0) {
 
-				activityBOObj = activityBOList.get(0);
-				if(activitydtoObj.getStatus().equalsIgnoreCase("Delete")){
-					activitydao.deleteOnCriteria(activityBOObj, null);
+					activityBOObj = activityBOList.get(0);
+					if(activitydtoObj.getStatus().equalsIgnoreCase("Delete")){
+						activitydao.deleteOnCriteria(activityBOObj, null);
+					}
+					else {
+
+					// update the activityBO fetched from DB
+
+					activityBOObj.setCreator(activitydtoObj.getCreator());
+					activityBOObj.setDetail(activitydtoObj.getDetail());
+					activityBOObj.setStatus(activitydtoObj.getStatus());
+					activityBOObj.setSubject(activitydtoObj.getSubject());
+					activityBOObj.setVenue(activitydtoObj.getVenue());
+					activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate()));
+					activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
+
+					// merge this UpdateBO back in DB
+					activitydao.update(activityBOObj);
+					}
 				}
+
 				else {
-
-				// update the activityBO fetched from DB
-
-				activityBOObj.setCreator(activitydtoObj.getCreator());
-				activityBOObj.setDetail(activitydtoObj.getDetail());
-				activityBOObj.setStatus(activitydtoObj.getStatus());
-				activityBOObj.setSubject(activitydtoObj.getSubject());
-				activityBOObj.setVenue(activitydtoObj.getVenue());
-
-				// merge this UpdateBO back in DB
-				activitydao.update(activityBOObj);
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
 				}
-			}
-
-			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
 				throw serviceExceptionObj;
 			}
 
@@ -1131,6 +1084,7 @@ public class RepositoryDelegator {
 			activityBOObj.setDetail(activitydtoObj.getDetail());
 			activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate()));
 			// activityBOObj.setactivityid(activitydtoObj.getactivityid());
+			activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
 			activityBOObj.setStatus(activitydtoObj.getStatus());
 			activityBOObj.setSubject(activitydtoObj.getSubject());
 			activityBOObj.setVenue(activitydtoObj.getVenue());
@@ -1152,6 +1106,7 @@ public class RepositoryDelegator {
 		activitydtoObj.setCreator(activityBOObj.getCreator());
 		activitydtoObj.setDetail(activityBOObj.getDetail());
 		activitydtoObj.setActdate(dateformatter.format(activityBOObj.getActdate()));
+		activitydtoObj.setActtime(timeformatter.format(activityBOObj.getActtime()));
 		activitydtoObj.setActivityid(activityBOObj.getActivityid().toString());
 		activitydtoObj.setStatus(activityBOObj.getStatus());
 		activitydtoObj.setSubject(activityBOObj.getSubject());

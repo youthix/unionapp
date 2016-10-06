@@ -158,7 +158,7 @@ public class MeetingDAOImpl implements IMeetingDAO {
 
 						String SQL = "select m from " + MeetingBO.class.getName() + " m where "
 								+ criteriaObj.getFetchMeetingCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.meetingid";
+								+ ") order by m.meetdate asc";
 
 						meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -173,7 +173,7 @@ public class MeetingDAOImpl implements IMeetingDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + MeetingBO.class.getName() + " m where status not in ('delete') order by m.meetingid ";
+				String SQL = "select m from " + MeetingBO.class.getName() + " m where status not in ('delete') order by m.meetdate asc ";
 				meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
