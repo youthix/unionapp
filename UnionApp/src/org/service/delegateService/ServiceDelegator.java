@@ -10,19 +10,18 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
+import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
 import org.repository.RepositoryDelegate.RepositoryDelegator;
 import org.repository.entity.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 
 public class ServiceDelegator {
 
 	@Autowired
 	private RepositoryDelegator repositoryDelegator;
-	private CacheManager cacheManager;
 	UserList res;
 
 	ResStatus resStatus;
@@ -86,8 +85,7 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
-
+			
 			// Update the Login status
 			userListObj.getUl().get(0).setLoginstatus("F");
 			Criteria criteriaObj = new Criteria();
@@ -306,7 +304,6 @@ public class ServiceDelegator {
 	public ResponseObj fetchmeeting(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		MeetingList meetingListObj;
 
 		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
 
@@ -373,8 +370,7 @@ public class ServiceDelegator {
 	public ResponseObj fetchactivity(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		ActivityList activityListObj;
-
+		
 		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
 
 			responseObj = repositoryDelegator.fetchactivity(reqparam);
@@ -416,6 +412,62 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj createNewsLetter(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		NewsLetterList newsLetterListObj = reqparam.getNewsLetterListObj();
+
+		if (null != newsLetterListObj) {
+
+			//repositoryDelegator.createNewsLetter(newsLetterListObj);
+			responseObj.setNewsLetterListObj(newsLetterListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("NewsLetterList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
+
+			//responseObj = repositoryDelegator.fetchNewsLetter(reqparam);
+			
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updateNewsLetter(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		NewsLetterList newsLetterListObj = reqparam.getNewsLetterListObj();
+
+		if (null != newsLetterListObj) {
+
+			//responseObj = repositoryDelegator.updateNewsLetter(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("NewsLetterList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
 	
 	private String generatepwd() {
 

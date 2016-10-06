@@ -37,4 +37,10 @@ public interface RESTfulServiceInterface {
 	
 	ResponseObj acceptdenyactivity(RequestObj reqparam);
 
+	ResponseObj fetchNewsLetter(RequestObj reqparam);
+
+	ResponseObj updateNewsLetter(RequestObj reqparam);
+
+	ResponseObj createNewsLetter(RequestObj reqparam);
+
 }
