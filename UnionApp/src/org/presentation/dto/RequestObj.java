@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
+import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "reqparam")
 public class RequestObj {
@@ -14,6 +15,8 @@ public class RequestObj {
 	private MeetingList MeetingListObj;
 	
 	private ActivityList ActivityListObj;
+	
+	private NewsLetterList NewsLetterListObj;
 	
 	private String bid;
 	
@@ -70,5 +73,11 @@ public class RequestObj {
 		ActivityListObj = activityListObj;
 	}
 
+	public NewsLetterList getNewsLetterListObj() {
+		return NewsLetterListObj;
+	}
 
+	public void setNewsLetterListObj(NewsLetterList newsLetterListObj) {
+		NewsLetterListObj = newsLetterListObj;
+	}
 }

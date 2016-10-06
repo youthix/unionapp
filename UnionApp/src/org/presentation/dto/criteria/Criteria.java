@@ -23,6 +23,8 @@ public class Criteria {
 	private FetchActivityCriteria fetchActivityCriteriaObj ;
 	
 	private UpdateActivityCriteria UpdateActivityCriteriaObj ;
+	
+	private FetchNewsLetterCriteria fetchNewsLetterCriteriaObj;
 
 
 	public String getCriteria() {
@@ -81,6 +83,12 @@ public class Criteria {
 		UpdateActivityCriteriaObj = updateActivityCriteriaObj;
 	}
 
+	public FetchNewsLetterCriteria getFetchNewsLetterCriteriaObj() {
+		return fetchNewsLetterCriteriaObj;
+	}
 
-
+	public void setFetchNewsLetterCriteriaObj(
+			FetchNewsLetterCriteria fetchNewsLetterCriteriaObj) {
+		this.fetchNewsLetterCriteriaObj = fetchNewsLetterCriteriaObj;
+	}
 }

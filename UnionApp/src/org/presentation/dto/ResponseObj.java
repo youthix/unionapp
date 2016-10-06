@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
+import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "resparam")
 //@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
@@ -15,6 +16,8 @@ public class ResponseObj {
 	private MeetingList MeetingListObj;
 	
 	private ActivityList activityListObj;
+	
+	private NewsLetterList newsLetterListObj;
 	
 	private String totalPage;
 	
@@ -62,7 +65,11 @@ public class ResponseObj {
 		this.totalPage = totalPage;
 	}
 
+	public NewsLetterList getNewsLetterListObj() {
+		return newsLetterListObj;
+	}
 
-
-
+	public void setNewsLetterListObj(NewsLetterList newsLetterListObj) {
+		this.newsLetterListObj = newsLetterListObj;
+	}
 }
