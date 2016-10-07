@@ -14,9 +14,6 @@ public class NewsLetterBO {
 	@Column(name = "nldate")
 	private Date nldate;
 	
-	@Column(name = "nltime")
-	private Date nltime;
-	
 	@Column(name = "detail")
 	private String detail;
 	
@@ -78,13 +75,4 @@ public class NewsLetterBO {
 	public void setNldate(Date nldate) {
 		this.nldate = nldate;
 	}
-
-	public Date getNltime() {
-		return nltime;
-	}
-
-	public void setNltime(Date nltime) {
-		this.nltime = nltime;
-	}	
-
 }
