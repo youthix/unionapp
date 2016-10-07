@@ -100,7 +100,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 						String SQL = "select m from " + NewsLetterBO.class.getName() + " m where "
 								+ criteriaObj.getFetchNewsLetterCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.actdate asc";
+								+ ") order by m.nldate asc";
 
 						NewsLetterBOList = (ArrayList<NewsLetterBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
