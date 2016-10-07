@@ -115,7 +115,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + NewsLetterBO.class.getName() + " m where status not in ('delete') order by m.actdate asc ";
+				String SQL = "select m from " + NewsLetterBO.class.getName() + " m where status not in ('delete') order by m.nldate asc ";
 				NewsLetterBOList = (ArrayList<NewsLetterBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -156,7 +156,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 	public void deleteOnCriteria(NewsLetterBO newsLetterBO, Criteria criteriaObj) {
 		try {
 
-			String SQL  = "delete from " + NewsLetterBO.class.getName() + " where NewsLetterid = '" + newsLetterBO.getNlid() + "'";
+			String SQL  = "delete from " + NewsLetterBO.class.getName() + " where nlid = '" + newsLetterBO.getNlid() + "'";
 					
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();

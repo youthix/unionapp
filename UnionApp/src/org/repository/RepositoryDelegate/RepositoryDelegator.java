@@ -1067,7 +1067,7 @@ public class RepositoryDelegator {
 
 		FetchNewsLetterCriteria fetchNewsLetterCriteriaObj = new FetchNewsLetterCriteria();
 
-		fetchNewsLetterCriteriaObj.setName("NewsLetterid");
+		fetchNewsLetterCriteriaObj.setName("nlid");
 
 		if (NewsLetterList.size() > 0) { 
 
