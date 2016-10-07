@@ -13,7 +13,7 @@ public interface IActivityDAO {
 
 	public void updateOnCriteria(ActivityBO activityBO, Criteria criteriaObj);
 	
-	public void deleteOnCriteria(ActivityBO meetingBO, Criteria criteriaObj);
+	public void deleteOnCriteria(ActivityBO activityBO, Criteria criteriaObj);
 
 	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno);
 	
