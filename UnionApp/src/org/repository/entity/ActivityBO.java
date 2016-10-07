@@ -26,9 +26,6 @@ public class ActivityBO implements Serializable {
 	@Column(name = "actdate")
 	private Date actdate;
 	
-	@Column(name = "acttime")
-	private Date acttime;
-	
 	@Column(name = "detail")
 	private String detail;
 	
@@ -146,14 +143,6 @@ public class ActivityBO implements Serializable {
 
 	public void setActdate(Date actdate) {
 		this.actdate = actdate;
-	}
-
-	public Date getActtime() {
-		return acttime;
-	}
-
-	public void setActtime(Date acttime) {
-		this.acttime = acttime;
 	}
 
 	public Integer getActivityid() {

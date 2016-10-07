@@ -540,7 +540,7 @@ public class RepositoryDelegator {
 		
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		Criteria criteriameetingObj = new Criteria();
 		criteriameetingObj.setCriteria("TRUE");
@@ -572,8 +572,9 @@ public class RepositoryDelegator {
 					meetingBOObj.setStatus(meetingdtoObj.getStatus());
 					meetingBOObj.setSubject(meetingdtoObj.getSubject());
 					meetingBOObj.setVenue(meetingdtoObj.getVenue());
-					meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()));
-					meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
+					meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()
+							+" "+meetingdtoObj.getMeettime()));
+					//meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
 
 					// merge this UpdateBO back in DB
 					meetingdao.update(meetingBOObj);
@@ -878,7 +879,7 @@ public class RepositoryDelegator {
 		
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		Criteria criteriaactivityObj = new Criteria();
 		criteriaactivityObj.setCriteria("TRUE");
@@ -912,8 +913,9 @@ public class RepositoryDelegator {
 					activityBOObj.setStatus(activitydtoObj.getStatus());
 					activityBOObj.setSubject(activitydtoObj.getSubject());
 					activityBOObj.setVenue(activitydtoObj.getVenue());
-					activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate()));
-					activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
+					activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate()
+							+" "+ activitydtoObj.getActtime()));
+					//activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
 
 					// merge this UpdateBO back in DB
 					activitydao.update(activityBOObj);
@@ -1000,9 +1002,9 @@ public class RepositoryDelegator {
 
 	private void populateCreateMeetingBO(MeetingDTO meetingdtoObj, MeetingBO meetingBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		try {
 			meetingBOObj.setAcceptid(meetingdtoObj.getAcceptid());
@@ -1024,9 +1026,10 @@ public class RepositoryDelegator {
 
 			meetingBOObj.setCreator(meetingdtoObj.getCreator());
 			meetingBOObj.setDetail(meetingdtoObj.getDetail());
-			meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()));
+			meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()
+					+" "+meetingdtoObj.getMeettime()));
 			// meetingBOObj.setMeetingid(meetingdtoObj.getMeetingid());
-			meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
+			//meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
 			meetingBOObj.setStatus(meetingdtoObj.getStatus());
 			meetingBOObj.setSubject(meetingdtoObj.getSubject());
 			meetingBOObj.setVenue(meetingdtoObj.getVenue());
@@ -1049,7 +1052,7 @@ public class RepositoryDelegator {
 		meetingdtoObj.setDetail(meetingBOObj.getDetail());
 		meetingdtoObj.setMeetdate(dateformatter.format(meetingBOObj.getMeetdate()));
 		meetingdtoObj.setMeetingid(meetingBOObj.getMeetingid().toString());
-		meetingdtoObj.setMeettime(timeformatter.format(meetingBOObj.getMeettime()));
+		meetingdtoObj.setMeettime(timeformatter.format(meetingBOObj.getMeetdate()));
 		meetingdtoObj.setStatus(meetingBOObj.getStatus());
 		meetingdtoObj.setSubject(meetingBOObj.getSubject());
 		meetingdtoObj.setVenue(meetingBOObj.getVenue());
@@ -1058,9 +1061,9 @@ public class RepositoryDelegator {
 
 	private void populateCreateActivityBO(ActivityDTO activitydtoObj, ActivityBO activityBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		try {
 			activityBOObj.setAcceptid(activitydtoObj.getAcceptid());
@@ -1082,9 +1085,10 @@ public class RepositoryDelegator {
 
 			activityBOObj.setCreator(activitydtoObj.getCreator());
 			activityBOObj.setDetail(activitydtoObj.getDetail());
-			activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate()));
+			activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate() 
+					+" "+activitydtoObj.getActtime()));
 			// activityBOObj.setactivityid(activitydtoObj.getactivityid());
-			activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
+			//activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
 			activityBOObj.setStatus(activitydtoObj.getStatus());
 			activityBOObj.setSubject(activitydtoObj.getSubject());
 			activityBOObj.setVenue(activitydtoObj.getVenue());
@@ -1106,7 +1110,7 @@ public class RepositoryDelegator {
 		activitydtoObj.setCreator(activityBOObj.getCreator());
 		activitydtoObj.setDetail(activityBOObj.getDetail());
 		activitydtoObj.setActdate(dateformatter.format(activityBOObj.getActdate()));
-		activitydtoObj.setActtime(timeformatter.format(activityBOObj.getActtime()));
+		activitydtoObj.setActtime(timeformatter.format(activityBOObj.getActdate()));
 		activitydtoObj.setActivityid(activityBOObj.getActivityid().toString());
 		activitydtoObj.setStatus(activityBOObj.getStatus());
 		activitydtoObj.setSubject(activityBOObj.getSubject());

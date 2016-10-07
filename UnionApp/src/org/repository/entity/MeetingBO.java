@@ -26,9 +26,6 @@ public class MeetingBO implements Serializable {
 	@Column(name = "meetdate")
 	private Date meetdate;
 	
-	@Column(name = "meettime")
-	private Date meettime;
-	
 	@Column(name = "detail")
 	private String detail;
 	
@@ -115,15 +112,7 @@ public class MeetingBO implements Serializable {
 	public void setMeetdate(Date meetdate) {
 		this.meetdate = meetdate;
 	}
-
-	public Date getMeettime() {
-		return meettime;
-	}
-
-	public void setMeettime(Date meettime) {
-		this.meettime = meettime;
-	}
-
+	
 	public String getAcceptid() {
 		return acceptid;
 	}
