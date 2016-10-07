@@ -420,7 +420,7 @@ public class ServiceDelegator {
 
 		if (null != newsLetterListObj) {
 
-			//repositoryDelegator.createNewsLetter(newsLetterListObj);
+			repositoryDelegator.createNewsLetter(newsLetterListObj);
 			responseObj.setNewsLetterListObj(newsLetterListObj);
 			setResponse(responseObj);
 
@@ -438,7 +438,7 @@ public class ServiceDelegator {
 		
 		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
 
-			//responseObj = repositoryDelegator.fetchNewsLetter(reqparam);
+			responseObj = repositoryDelegator.fetchNewsLetter(reqparam);
 			
 			setResponse(responseObj);
 
@@ -457,7 +457,7 @@ public class ServiceDelegator {
 
 		if (null != newsLetterListObj) {
 
-			//responseObj = repositoryDelegator.updateNewsLetter(reqparam);
+			responseObj = repositoryDelegator.updateNewsLetter(reqparam);
 			setResponse(responseObj);
 
 		} else {

@@ -7,7 +7,6 @@ import javax.ws.rs.Produces;
 
 import org.presentation.controller.Interface.RESTfulServiceInterface;
 import org.presentation.dto.RequestObj;
-import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
 import org.presentation.util.ServiceException;
 import org.presentation.util.ServiceExceptionMapper;
@@ -452,7 +451,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	
 	@Override
 	@POST
-	@Path("/createNewsLetter")
+	@Path("/createnewsletter")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createNewsLetter(RequestObj reqparam) {
@@ -479,7 +478,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
-	@Path("/updateNewsLetter")
+	@Path("/updatenewsletter")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateNewsLetter(RequestObj reqparam) {
@@ -506,7 +505,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
-	@Path("/fetchNewsLetter")
+	@Path("/fetchnewsletter")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
