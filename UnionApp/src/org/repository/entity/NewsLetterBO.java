@@ -1,13 +1,20 @@
 package org.repository.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class NewsLetterBO {
+@Entity
+@Table(name = "newsletter")
+public class NewsLetterBO implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	@Column(name = "subject")
 	private String subject;
 	

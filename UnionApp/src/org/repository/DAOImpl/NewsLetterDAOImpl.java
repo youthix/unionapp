@@ -20,18 +20,18 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public void createNewsLetter(NewsLetterBO NewsLetterBO) {
+	public void createNewsLetter(NewsLetterBO newsLetterBO) {
 		try {
-			System.out.println("InDAOCreateMeet");
-			manager.persist(NewsLetterBO);
-			System.out.println("DoneDAOCreateMeet");
+			System.out.println("In createNewsLetter");
+			manager.persist(newsLetterBO);
+			System.out.println("Done createNewsLetter");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
 
-	public void update(NewsLetterBO NewsLetterBO) {
+	public void update(NewsLetterBO newsLetterBO) {
 		try {
 			System.out.println("InDAOAddUser");
 
@@ -42,7 +42,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 			 * query.executeUpdate();
 			 */
 
-			manager.merge(NewsLetterBO);
+			manager.merge(newsLetterBO);
 
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
