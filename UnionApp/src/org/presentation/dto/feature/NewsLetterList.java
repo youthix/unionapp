@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "activitylist")
+@XmlRootElement(name = "newsletterlist")
 public class NewsLetterList {
 	
 	private List<NewsLetterDTO> newsletterdtoLs;
