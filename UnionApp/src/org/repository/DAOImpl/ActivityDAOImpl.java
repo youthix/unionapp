@@ -91,6 +91,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno) {
 
 		System.out.println("InDAOFetchUser");
@@ -119,7 +120,6 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 					String searchCriteria = "";
 					int index = -1;
-					int pageListSize;
 					if (null != criteriaObj.getFetchActivityCriteriaObj().getValue()
 							&& criteriaObj.getFetchActivityCriteriaObj().getValue() != "") {
 
