@@ -10,22 +10,26 @@ import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.FetchActivityCriteria;
 import org.presentation.dto.criteria.FetchMeetingCriteria;
+import org.presentation.dto.criteria.FetchNewsLetterCriteria;
 import org.presentation.dto.criteria.FetchUserCriteria;
 import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
-import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
+import org.presentation.dto.feature.NewsLetterDTO;
+import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
 import org.repository.DAOInterface.IMeetingDAO;
+import org.repository.DAOInterface.INewsLetterDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.MeetingBO;
+import org.repository.entity.NewsLetterBO;
 import org.repository.entity.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,6 +47,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	IActivityDAO activitydao;
+	
+	@Autowired
+	INewsLetterDAO newsletterdao;
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -635,6 +642,38 @@ public class RepositoryDelegator {
 
 		return activityListObjResp;
 	}
+	
+	public NewsLetterList createNewsLetter(NewsLetterList newsLetterListObj) {
+		System.out.println("In createNewsLetter");
+
+		ArrayList<NewsLetterDTO> NewsLetterList = (ArrayList<NewsLetterDTO>) newsLetterListObj.getNewsletterdtoLs();
+		NewsLetterList NewsLetterListObjResp = new NewsLetterList();
+
+		if (NewsLetterList.size() > 0) {
+			Iterator<NewsLetterDTO> NewsLetterListIterator = NewsLetterList.iterator();
+
+			while (NewsLetterListIterator.hasNext()) {
+
+				NewsLetterDTO NewsLetterdtoObj = NewsLetterListIterator.next();
+
+				NewsLetterBO NewsLetterBOObj = new NewsLetterBO();
+
+				populateCreateNewsLetterBO(NewsLetterdtoObj, NewsLetterBOObj);
+				newsletterdao.createNewsLetter(NewsLetterBOObj);
+				populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return NewsLetterListObjResp;
+	}
+
 
 	public ResponseObj fetchactivity(RequestObj reqparam) {
 		System.out.println("InRDFetch");
@@ -722,6 +761,63 @@ public class RepositoryDelegator {
 		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
+	
+	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+
+		NewsLetterList NewsLetterListObj = new NewsLetterList();
+		ArrayList<NewsLetterDTO> NewsLetterDTOList = new ArrayList<NewsLetterDTO>();
+
+		ArrayList<NewsLetterBO> NewsLetterBOList;
+
+		NewsLetterBO NewsLetterBOObj;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+		
+		NewsLetterBOList = newsletterdao.fetchNewsLetter(criteriaObj, reqparam.getPageno());
+
+		// To get the count of total Active Users. This count would be used to
+		// determine no of users who have not responded to a NewsLetter.
+
+		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+		fetchUserCriteriaObj.setName("status");
+		fetchUserCriteriaObj.setValue("A");
+		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+
+		Criteria criteriaUserObj = new Criteria();
+		criteriaUserObj.setCriteria("TRUE");
+		userdao.fetchUser(criteriaObj);
+
+
+		if (null != NewsLetterBOList && NewsLetterBOList.size() > 0) {
+
+			Iterator<NewsLetterBO> litr = NewsLetterBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				NewsLetterBOObj = litr.next();
+				NewsLetterDTO NewsLetterDTOObj = new NewsLetterDTO();
+				populateNewsLetterDTO(NewsLetterDTOObj, NewsLetterBOObj);					
+				NewsLetterDTOList.add(NewsLetterDTOObj);
+			}
+
+			NewsLetterListObj.setNewsletterdtoLs(NewsLetterDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setNewsLetterListObj(NewsLetterListObj);
+		int totalrecordcount = newsletterdao.totalRecordCount();
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
+	}
+
 
 	public ResponseObj acceptdenyactivity(RequestObj reqparam) {
 		System.out.println("InRDFetch");
@@ -945,6 +1041,90 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	
+	public ResponseObj updateNewsLetter(RequestObj reqparam) {
+		System.out.println("In updateNewsLetter");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the NewsLetter from the DB basis the id coming in the
+		 * request Then update teh fields of the NewsLetterBo fetched from DB with
+		 * those received in the input
+		 */
+		NewsLetterList newsLetterListObj = reqparam.getNewsLetterListObj();
+
+		ArrayList<NewsLetterDTO> NewsLetterList = (ArrayList<NewsLetterDTO>) newsLetterListObj.getNewsletterdtoLs();
+
+		ArrayList<NewsLetterBO> NewsLetterBOList;
+
+		NewsLetterBO NewsLetterBOObj = null;
+		
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		Criteria criteriaNewsLetterObj = new Criteria();
+		criteriaNewsLetterObj.setCriteria("TRUE");
+
+		FetchNewsLetterCriteria fetchNewsLetterCriteriaObj = new FetchNewsLetterCriteria();
+
+		fetchNewsLetterCriteriaObj.setName("NewsLetterid");
+
+		if (NewsLetterList.size() > 0) { 
+
+			NewsLetterDTO NewsLetterdtoObj = NewsLetterList.get(0);
+
+			fetchNewsLetterCriteriaObj.setValue(NewsLetterdtoObj.getNlid());
+			criteriaNewsLetterObj.setFetchNewsLetterCriteriaObj(fetchNewsLetterCriteriaObj);
+
+			NewsLetterBOList = newsletterdao.fetchNewsLetter(criteriaNewsLetterObj, "1");
+
+			try {
+				if (null != NewsLetterBOList && NewsLetterBOList.size() > 0) {
+
+					NewsLetterBOObj = NewsLetterBOList.get(0);
+					if(NewsLetterdtoObj.getStatus().equalsIgnoreCase("Delete")){
+						newsletterdao.deleteOnCriteria(NewsLetterBOObj, null);
+					}
+					else {
+
+					// update the NewsLetterBO fetched from DB
+
+					NewsLetterBOObj.setCreator(NewsLetterdtoObj.getCreator());
+					NewsLetterBOObj.setDetail(NewsLetterdtoObj.getDetail());
+					NewsLetterBOObj.setStatus(NewsLetterdtoObj.getStatus());
+					NewsLetterBOObj.setSubject(NewsLetterdtoObj.getSubject());
+					NewsLetterBOObj.setNldate(dateformatter.parse(NewsLetterdtoObj.getNldate()
+							+" "+ NewsLetterdtoObj.getNltime()));					
+
+					// merge this UpdateBO back in DB
+					newsletterdao.update(NewsLetterBOObj);
+					}
+				}
+
+				else {
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
+				}
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+				throw serviceExceptionObj;
+			}
+
+			populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("NewsLetterList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setNewsLetterListObj(newsLetterListObj);
+
+		return responseObj;
+	}
+
+
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
 		userBOObj.setUsname(userObj.getUsNa());
@@ -1117,6 +1297,41 @@ public class RepositoryDelegator {
 		activitydtoObj.setVenue(activityBOObj.getVenue());
 
 	}
+	
+	private void populateCreateNewsLetterBO(NewsLetterDTO newsLetterdtoObj, NewsLetterBO newsLetterBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		try {
+			newsLetterBOObj.setCreator(newsLetterdtoObj.getCreator());
+			newsLetterBOObj.setDetail(newsLetterdtoObj.getDetail());
+			newsLetterBOObj.setNldate(dateformatter.parse(newsLetterdtoObj.getNldate() 
+					+" "+newsLetterdtoObj.getNltime()));			
+			newsLetterBOObj.setStatus(newsLetterdtoObj.getStatus());
+			newsLetterBOObj.setSubject(newsLetterdtoObj.getSubject());			
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populateNewsLetterDTO(NewsLetterDTO newsLetterdtoObj, NewsLetterBO newsLetterBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		
+		newsLetterdtoObj.setCreator(newsLetterBOObj.getCreator());
+		newsLetterdtoObj.setDetail(newsLetterBOObj.getDetail());
+		newsLetterdtoObj.setNldate(dateformatter.format(newsLetterBOObj.getNldate()));
+		newsLetterdtoObj.setNltime(timeformatter.format(newsLetterBOObj.getNldate()));
+		newsLetterdtoObj.setNlid(newsLetterBOObj.getNlid().toString());
+		newsLetterdtoObj.setStatus(newsLetterBOObj.getStatus());
+		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());		
+
+	}
+
 
 	private int getTotalPageCount(int totalrecordcount) {
 		int pagesize = 6;
