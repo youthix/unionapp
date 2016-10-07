@@ -10,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
-@Table(name = "newsletter")
+@Table(name = "newsletterdetail")
+
 public class NewsLetterBO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -22,11 +25,12 @@ public class NewsLetterBO implements Serializable {
 	private Date nldate;
 	
 	@Column(name = "detail")
+	@Type(type="text")
 	private String detail;
 	
 	@Column(name = "creator")
 	private String creator;
-	 
+	
 	@Column(name = "status")
 	private String status;
 		
