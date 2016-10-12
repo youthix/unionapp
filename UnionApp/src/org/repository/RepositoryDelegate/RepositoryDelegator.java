@@ -780,7 +780,7 @@ public class RepositoryDelegator {
 		// To get the count of total Active Users. This count would be used to
 		// determine no of users who have not responded to a NewsLetter.
 
-		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+/*		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
 
 		fetchUserCriteriaObj.setName("status");
 		fetchUserCriteriaObj.setValue("A");
@@ -788,7 +788,7 @@ public class RepositoryDelegator {
 
 		Criteria criteriaUserObj = new Criteria();
 		criteriaUserObj.setCriteria("TRUE");
-		userdao.fetchUser(criteriaObj);
+		userdao.fetchUser(criteriaObj);*/
 
 
 		if (null != NewsLetterBOList && NewsLetterBOList.size() > 0) {
@@ -810,7 +810,7 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 		responseObj.setNewsLetterListObj(NewsLetterListObj);
-		int totalrecordcount = newsletterdao.totalRecordCount();
+		int totalrecordcount = newsletterdao.totalRecordCount(criteriaObj);
 
 		int totalPage = getTotalPageCount(totalrecordcount);
 

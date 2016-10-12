@@ -115,7 +115,8 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + NewsLetterBO.class.getName() + " m where status not in ('delete') order by m.nldate asc ";
+				String SQL = "select m from " + NewsLetterBO.class.getName()
+						+ " m where status not in ('delete') order by m.nldate asc ";
 				NewsLetterBOList = (ArrayList<NewsLetterBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -129,20 +130,69 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 		return NewsLetterBOList;
 	}
-	public Integer totalRecordCount() {
-		
+
+	public Integer totalRecordCount(Criteria criteriaObj) {
+
 		int count = 0;
-		String SQL = "select a from " + NewsLetterBO.class.getName() + "  a where status not in ('delete') ";
-		
-		 if(null!= manager.createQuery(SQL).getResultList())	
-		 {
-			  count = manager.createQuery(SQL).getResultList().size();
-		 }
-		
-		return count ;
-		
+		String SQL = "";
+
+		try {
+
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getFetchNewsLetterCriteriaObj() != null) {
+
+					String searchCriteria = "";
+					int index = -1;
+					if (null != criteriaObj.getFetchNewsLetterCriteriaObj().getValue()
+							&& criteriaObj.getFetchNewsLetterCriteriaObj().getValue() != "") {
+
+						if (criteriaObj.getFetchNewsLetterCriteriaObj().getValue().contains(",")) {
+
+							String[] idList = criteriaObj.getFetchNewsLetterCriteriaObj().getValue().split(",");
+
+							for (String id : idList) {
+								searchCriteria = searchCriteria + "'" + id + "',";
+							}
+
+							index = searchCriteria.lastIndexOf(",");
+							if (index != -1) {
+								searchCriteria = searchCriteria.substring(0, index);
+							}
+
+						} else {
+							searchCriteria = "'" + criteriaObj.getFetchNewsLetterCriteriaObj().getValue() + "'";
+						}
+
+						SQL = "select m from " + NewsLetterBO.class.getName() + " m where "
+								+ criteriaObj.getFetchNewsLetterCriteriaObj().getName() + " in (" + searchCriteria
+								+ ") ";
+
+					}
+
+				} else {
+
+					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					throw serviceExceptionObj;
+				}
+			} else {
+				SQL = "select m from " + NewsLetterBO.class.getName()
+						+ " m where status not in ('delete') ";
+
+			}
+
+			if (null != manager.createQuery(SQL).getResultList()) {
+				count = manager.createQuery(SQL).getResultList().size();
+			}
+
+			System.out.println("DoneDAOFetchUser");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+		return count;
+
 	}
-	
 
 	public EntityManager getManager() {
 		return manager;
@@ -156,8 +206,9 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 	public void deleteOnCriteria(NewsLetterBO newsLetterBO, Criteria criteriaObj) {
 		try {
 
-			String SQL  = "delete from " + NewsLetterBO.class.getName() + " where nlid = '" + newsLetterBO.getNlid() + "'";
-					
+			String SQL = "delete from " + NewsLetterBO.class.getName() + " where nlid = '" + newsLetterBO.getNlid()
+					+ "'";
+
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 
