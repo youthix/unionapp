@@ -20,6 +20,8 @@ public class RequestObj {
 	
 	private String bid;
 	
+	private String channel;
+	
 	private String pageno;
 	
 	public String getPageno() {
@@ -80,4 +82,13 @@ public class RequestObj {
 	public void setNewsLetterListObj(NewsLetterList newsLetterListObj) {
 		NewsLetterListObj = newsLetterListObj;
 	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+	
 }

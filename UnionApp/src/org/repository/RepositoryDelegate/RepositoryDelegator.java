@@ -765,7 +765,7 @@ public class RepositoryDelegator {
 	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
 		System.out.println("InRDFetch");
 		ResponseObj responseObj = new ResponseObj();
-
+		String channel=reqparam.getChannel();
 		NewsLetterList NewsLetterListObj = new NewsLetterList();
 		ArrayList<NewsLetterDTO> NewsLetterDTOList = new ArrayList<NewsLetterDTO>();
 
@@ -777,20 +777,6 @@ public class RepositoryDelegator {
 		
 		newsLetterBOList = newsletterdao.fetchNewsLetter(criteriaObj, reqparam.getPageno());
 
-		// To get the count of total Active Users. This count would be used to
-		// determine no of users who have not responded to a NewsLetter.
-
-/*		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
-
-		fetchUserCriteriaObj.setName("status");
-		fetchUserCriteriaObj.setValue("A");
-		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
-
-		Criteria criteriaUserObj = new Criteria();
-		criteriaUserObj.setCriteria("TRUE");
-		userdao.fetchUser(criteriaObj);*/
-
-
 		if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
 
 			Iterator<NewsLetterBO> litr = newsLetterBOList.iterator();
@@ -799,7 +785,10 @@ public class RepositoryDelegator {
 
 				NewsLetterBOObj = litr.next();
 				NewsLetterDTO NewsLetterDTOObj = new NewsLetterDTO();
-				populateNewsLetterDTO(NewsLetterDTOObj, NewsLetterBOObj);					
+				populateNewsLetterDTO(NewsLetterDTOObj, NewsLetterBOObj);	
+				if(null !=  channel && "app".equalsIgnoreCase(channel)){
+					NewsLetterDTOObj.setDetail("");
+				}
 				NewsLetterDTOList.add(NewsLetterDTOObj);
 			}
 

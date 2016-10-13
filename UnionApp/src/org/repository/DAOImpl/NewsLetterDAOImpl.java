@@ -130,6 +130,27 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 		return NewsLetterBOList;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<NewsLetterBO> fetchNewsLetterById(String id) {
+
+		System.out.println("In fetchNewsLetterById");
+		ArrayList<NewsLetterBO> newsLetterBOList = null;
+		
+		try {
+
+			String SQL = "select m from " + NewsLetterBO.class.getName() + " m where nlid in (" 
+						+ id + ") order by m.nldate asc";
+			newsLetterBOList = (ArrayList<NewsLetterBO>) manager.createQuery(SQL).getResultList();			
+
+			
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+		System.out.println("Done fetchNewsLetterById");
+		return newsLetterBOList;
+	}
 
 	public Integer totalRecordCount(Criteria criteriaObj) {
 

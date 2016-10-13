@@ -16,5 +16,7 @@ public interface INewsLetterDAO {
 	ArrayList<NewsLetterBO> fetchNewsLetter(Criteria criteriaObj, String pageno);
 	
 	Integer totalRecordCount(Criteria criteriaObj);
+	
+	ArrayList<NewsLetterBO> fetchNewsLetterById(String id);
 
 }
