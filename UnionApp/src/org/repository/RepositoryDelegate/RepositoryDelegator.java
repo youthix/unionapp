@@ -377,7 +377,7 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 		responseObj.setMeetingListObj(meetingListObj);
-		int totalrecordcount = meetingdao.totalRecordCount();
+		int totalrecordcount = meetingdao.totalRecordCount(criteriaObj);
 
 		int totalPage = getTotalPageCount(totalrecordcount);
 
@@ -754,7 +754,7 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 		responseObj.setActivityListObj(activityListObj);
-		int totalrecordcount = activitydao.totalRecordCount();
+		int totalrecordcount = activitydao.totalRecordCount(criteriaObj);
 
 		int totalPage = getTotalPageCount(totalrecordcount);
 

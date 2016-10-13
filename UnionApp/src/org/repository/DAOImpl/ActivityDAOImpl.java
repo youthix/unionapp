@@ -76,11 +76,12 @@ public class ActivityDAOImpl implements IActivityDAO {
 			throw serviceExceptionObj;
 		}
 	}
-	
+
 	public void deleteCron(String beforeLimit) {
 		try {
 
-			String SQL = "delete from " + ActivityBO.class.getName() + " where DATEDIFF(sysdate(),actdate) > "+beforeLimit;					
+			String SQL = "delete from " + ActivityBO.class.getName() + " where DATEDIFF(sysdate(),actdate) > "
+					+ beforeLimit;
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 
@@ -90,7 +91,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 			throw serviceExceptionObj;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno) {
 
@@ -157,7 +158,8 @@ public class ActivityDAOImpl implements IActivityDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + ActivityBO.class.getName() + " m where status not in ('delete') order by m.actdate asc ";
+				String SQL = "select m from " + ActivityBO.class.getName()
+						+ " m where status not in ('delete') order by m.actdate asc ";
 				activityBOList = (ArrayList<ActivityBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -171,20 +173,64 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 		return activityBOList;
 	}
-	public Integer totalRecordCount() {
-		
+
+	public Integer totalRecordCount(Criteria criteriaObj) {
+
 		int count = 0;
-		String SQL = "select a from " + ActivityBO.class.getName() + "  a where status not in ('delete') ";
-		
-		 if(null!= manager.createQuery(SQL).getResultList())	
-		 {
-			  count = manager.createQuery(SQL).getResultList().size();
-		 }
-		
-		return count ;
-		
+		String SQL = "";
+
+		try {
+
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getFetchActivityCriteriaObj() != null) {
+
+					String searchCriteria = "";
+					int index = -1;
+					if (null != criteriaObj.getFetchActivityCriteriaObj().getValue()
+							&& criteriaObj.getFetchActivityCriteriaObj().getValue() != "") {
+
+						if (criteriaObj.getFetchActivityCriteriaObj().getValue().contains(",")) {
+
+							String[] idList = criteriaObj.getFetchActivityCriteriaObj().getValue().split(",");
+
+							for (String id : idList) {
+								searchCriteria = searchCriteria + "'" + id + "',";
+							}
+
+							index = searchCriteria.lastIndexOf(",");
+							if (index != -1) {
+								searchCriteria = searchCriteria.substring(0, index);
+							}
+
+						} else {
+							searchCriteria = "'" + criteriaObj.getFetchActivityCriteriaObj().getValue() + "'";
+						}
+
+						SQL = "select m from " + ActivityBO.class.getName() + " m where "
+								+ criteriaObj.getFetchActivityCriteriaObj().getName() + " in (" + searchCriteria + ") ";
+
+					}
+
+				} else {
+
+					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					throw serviceExceptionObj;
+				}
+			} else {
+				SQL = "select m from " + ActivityBO.class.getName() + " m where status not in ('delete') ";
+			}
+
+			if (null != manager.createQuery(SQL).getResultList()) {
+				count = manager.createQuery(SQL).getResultList().size();
+			}
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+		return count;
+
 	}
-	
 
 	public EntityManager getManager() {
 		return manager;
@@ -198,8 +244,9 @@ public class ActivityDAOImpl implements IActivityDAO {
 	public void deleteOnCriteria(ActivityBO activityBO, Criteria criteriaObj) {
 		try {
 
-			String SQL  = "delete from " + ActivityBO.class.getName() + " where activityid = '" + activityBO.getActivityid() + "'";
-					
+			String SQL = "delete from " + ActivityBO.class.getName() + " where activityid = '"
+					+ activityBO.getActivityid() + "'";
+
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 

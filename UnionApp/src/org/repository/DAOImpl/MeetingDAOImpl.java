@@ -77,12 +77,13 @@ public class MeetingDAOImpl implements IMeetingDAO {
 			throw serviceExceptionObj;
 		}
 	}
-	
+
 	public void deleteOnCriteria(MeetingBO meetingBO, Criteria criteriaObj) {
 		try {
 
-			String SQL  = "delete from " + MeetingBO.class.getName() + " where meetingid = '" + meetingBO.getMeetingid() + "'";					
-				
+			String SQL = "delete from " + MeetingBO.class.getName() + " where meetingid = '" + meetingBO.getMeetingid()
+					+ "'";
+
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 
@@ -92,11 +93,12 @@ public class MeetingDAOImpl implements IMeetingDAO {
 			throw serviceExceptionObj;
 		}
 	}
-	
+
 	public void deleteCron(String beforeLimit) {
 		try {
 
-			String SQL = "delete from " + MeetingBO.class.getName() + " where DATEDIFF(sysdate(),meetdate) > "+beforeLimit;					
+			String SQL = "delete from " + MeetingBO.class.getName() + " where DATEDIFF(sysdate(),meetdate) > "
+					+ beforeLimit;
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
 
@@ -173,7 +175,8 @@ public class MeetingDAOImpl implements IMeetingDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + MeetingBO.class.getName() + " m where status not in ('delete') order by m.meetdate asc ";
+				String SQL = "select m from " + MeetingBO.class.getName()
+						+ " m where status not in ('delete') order by m.meetdate asc ";
 				meetingBOList = (ArrayList<MeetingBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -187,19 +190,62 @@ public class MeetingDAOImpl implements IMeetingDAO {
 
 		return meetingBOList;
 	}
-	
-	public Integer totalRecordCount() {
-		
-		int count = 0 ;
-		String SQL = "select m from " + MeetingBO.class.getName() + "  m where status not in ('delete') ";
-		
-		 if(null!= manager.createQuery(SQL).getResultList())	
-		 {
-			  count = manager.createQuery(SQL).getResultList().size();
-		 }
-		return count ;
-		
-	}	
+
+	public Integer totalRecordCount(Criteria criteriaObj) {
+
+		int count = 0;
+		String SQL = "";
+		try {
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getFetchMeetingCriteriaObj() != null) {
+
+					String searchCriteria = "";
+					int index = -1;
+					int pageListSize;
+					if (null != criteriaObj.getFetchMeetingCriteriaObj().getValue()
+							&& criteriaObj.getFetchMeetingCriteriaObj().getValue() != "") {
+
+						if (criteriaObj.getFetchMeetingCriteriaObj().getValue().contains(",")) {
+
+							String[] idList = criteriaObj.getFetchMeetingCriteriaObj().getValue().split(",");
+
+							for (String id : idList) {
+								searchCriteria = searchCriteria + "'" + id + "',";
+							}
+
+							index = searchCriteria.lastIndexOf(",");
+							if (index != -1) {
+								searchCriteria = searchCriteria.substring(0, index);
+							}
+
+						} else {
+							searchCriteria = "'" + criteriaObj.getFetchMeetingCriteriaObj().getValue() + "'";
+						}
+
+						SQL = "select m from " + MeetingBO.class.getName() + " m where "
+								+ criteriaObj.getFetchMeetingCriteriaObj().getName() + " in (" + searchCriteria + ") ";
+
+					}
+
+				} else {
+
+					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					throw serviceExceptionObj;
+				}
+			} else {
+				SQL = "select m from " + MeetingBO.class.getName() + " m where status not in ('delete') ";
+
+			}
+			if (null != manager.createQuery(SQL).getResultList()) {
+				count = manager.createQuery(SQL).getResultList().size();
+			}
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+		return count;
+
+	}
 
 	public EntityManager getManager() {
 		return manager;
