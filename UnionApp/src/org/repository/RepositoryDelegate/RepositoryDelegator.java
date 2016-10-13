@@ -769,13 +769,13 @@ public class RepositoryDelegator {
 		NewsLetterList NewsLetterListObj = new NewsLetterList();
 		ArrayList<NewsLetterDTO> NewsLetterDTOList = new ArrayList<NewsLetterDTO>();
 
-		ArrayList<NewsLetterBO> NewsLetterBOList;
+		ArrayList<NewsLetterBO> newsLetterBOList;
 
 		NewsLetterBO NewsLetterBOObj;
 
 		Criteria criteriaObj = reqparam.getCriteria();
 		
-		NewsLetterBOList = newsletterdao.fetchNewsLetter(criteriaObj, reqparam.getPageno());
+		newsLetterBOList = newsletterdao.fetchNewsLetter(criteriaObj, reqparam.getPageno());
 
 		// To get the count of total Active Users. This count would be used to
 		// determine no of users who have not responded to a NewsLetter.
@@ -791,9 +791,9 @@ public class RepositoryDelegator {
 		userdao.fetchUser(criteriaObj);*/
 
 
-		if (null != NewsLetterBOList && NewsLetterBOList.size() > 0) {
+		if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
 
-			Iterator<NewsLetterBO> litr = NewsLetterBOList.iterator();
+			Iterator<NewsLetterBO> litr = newsLetterBOList.iterator();
 
 			while (litr.hasNext()) {
 
@@ -1319,15 +1319,17 @@ public class RepositoryDelegator {
 	private void populateNewsLetterDTO(NewsLetterDTO newsLetterdtoObj, NewsLetterBO newsLetterBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
-
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		String status="";
 		
 		newsLetterdtoObj.setCreator(newsLetterBOObj.getCreator());
 		newsLetterdtoObj.setDetail(newsLetterBOObj.getDetail());
 		newsLetterdtoObj.setNldate(dateformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNltime(timeformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNlid(newsLetterBOObj.getNlid().toString());
-		newsLetterdtoObj.setStatus(newsLetterBOObj.getStatus());
+		if(null !=newsLetterBOObj.getStatus() && !"".equalsIgnoreCase(newsLetterBOObj.getStatus()))
+		status=newsLetterBOObj.getStatus().toLowerCase();
+		newsLetterdtoObj.setStatus(status);
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());		
 
 	}
