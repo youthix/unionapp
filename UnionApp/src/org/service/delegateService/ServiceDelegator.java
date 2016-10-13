@@ -450,6 +450,23 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
+	public String fetchNewsLetterById(String id) {
+
+		String responseObj = "";
+		
+		if (null != id) {
+
+			responseObj = repositoryDelegator.fetchNewsLetterById(id);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	
 	public ResponseObj updateNewsLetter(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();

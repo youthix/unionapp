@@ -762,6 +762,25 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 	
+	public String fetchNewsLetterById(String id) {
+		System.out.println("In fetchNewsLetterById");
+		String responseObj="";
+		
+		ArrayList<NewsLetterBO> newsLetterBOList = 
+				newsletterdao.fetchNewsLetterById(id);
+
+		if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
+
+			Iterator<NewsLetterBO> litr = newsLetterBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				NewsLetterBO newsLetterBOObj = litr.next();
+				responseObj=newsLetterBOObj.getDetail();
+			}
+		}
+		return responseObj;
+	}
 	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
 		System.out.println("InRDFetch");
 		ResponseObj responseObj = new ResponseObj();
@@ -806,7 +825,6 @@ public class RepositoryDelegator {
 		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
-
 
 	public ResponseObj acceptdenyactivity(RequestObj reqparam) {
 		System.out.println("InRDFetch");
