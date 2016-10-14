@@ -12,6 +12,7 @@ import org.presentation.dto.criteria.FetchActivityCriteria;
 import org.presentation.dto.criteria.FetchMeetingCriteria;
 import org.presentation.dto.criteria.FetchNewsLetterCriteria;
 import org.presentation.dto.criteria.FetchSuggestionIdeaCriteria;
+import org.presentation.dto.criteria.FetchSummaryCriteria;
 import org.presentation.dto.criteria.FetchUserCriteria;
 import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
@@ -23,6 +24,8 @@ import org.presentation.dto.feature.NewsLetterDTO;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.SuggestionIdeaDTO;
 import org.presentation.dto.feature.SuggestionIdeaList;
+import org.presentation.dto.feature.SummaryDTO;
+import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -30,11 +33,13 @@ import org.repository.DAOInterface.IActivityDAO;
 import org.repository.DAOInterface.IMeetingDAO;
 import org.repository.DAOInterface.INewsLetterDAO;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
+import org.repository.DAOInterface.ISummaryDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.MeetingBO;
 import org.repository.entity.NewsLetterBO;
 import org.repository.entity.SuggestionIdeaBO;
+import org.repository.entity.SummaryBO;
 import org.repository.entity.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -55,6 +60,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	INewsLetterDAO newsletterdao;
+	
+	@Autowired
+	ISummaryDAO summarydao;
 
 	@Autowired
 	ISuggestionIdeaDAO suggestionIdeadao;
@@ -1124,6 +1132,184 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
+	
+	public SummaryList createSummary(SummaryList SummaryListObj) {
+		System.out.println("In createSummary");
+
+		ArrayList<SummaryDTO> SummaryList = (ArrayList<SummaryDTO>) SummaryListObj.getSummarydtoLs();
+		SummaryList SummaryListObjResp = new SummaryList();
+
+		if (SummaryList.size() > 0) {
+			Iterator<SummaryDTO> SummaryListIterator = SummaryList.iterator();
+
+			while (SummaryListIterator.hasNext()) {
+
+				SummaryDTO SummarydtoObj = SummaryListIterator.next();
+
+				SummaryBO SummaryBOObj = new SummaryBO();
+
+				populateCreateSummaryBO(SummarydtoObj, SummaryBOObj);
+				summarydao.createSummary(SummaryBOObj);
+				populateSummaryDTO(SummarydtoObj, SummaryBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return SummaryListObjResp;
+	}
+
+
+public ResponseObj fetchSummary(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+		String channel = reqparam.getChannel();
+		SummaryList SummaryListObj = new SummaryList();
+		ArrayList<SummaryDTO> SummaryDTOList = new ArrayList<SummaryDTO>();
+
+		ArrayList<SummaryBO> SummaryBOList;
+
+		SummaryBO SummaryBOObj;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		SummaryBOList = summarydao.fetchSummary(criteriaObj, reqparam.getPageno());
+
+		if (null != SummaryBOList && SummaryBOList.size() > 0) {
+
+			Iterator<SummaryBO> litr = SummaryBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				SummaryBOObj = litr.next();
+				SummaryDTO SummaryDTOObj = new SummaryDTO();
+				populateSummaryDTO(SummaryDTOObj, SummaryBOObj);
+				if (null != channel && "app".equalsIgnoreCase(channel)) {
+					SummaryDTOObj.setDetail("");
+				}
+				SummaryDTOList.add(SummaryDTOObj);
+			}
+
+			SummaryListObj.setSummarydtoLs(SummaryDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setSummaryListObj(SummaryListObj);
+		int totalrecordcount = summarydao.totalRecordCount(criteriaObj);
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
+	}
+
+	public String fetchSummaryById(String id) {
+		System.out.println("In fetchSummaryById");
+		String responseObj = "";
+
+		ArrayList<SummaryBO> SummaryBOList = summarydao.fetchSummaryById(id);
+
+		if (null != SummaryBOList && SummaryBOList.size() > 0) {
+
+			Iterator<SummaryBO> litr = SummaryBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				SummaryBO SummaryBOObj = litr.next();
+				responseObj = SummaryBOObj.getDetail();
+			}
+		}
+		return responseObj;
+	}
+
+	public ResponseObj updateSummary(RequestObj reqparam) {
+		System.out.println("In updateSummary");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the Summary from the DB basis the id coming in the
+		 * request Then update teh fields of the SummaryBo fetched from DB
+		 * with those received in the input
+		 */
+		SummaryList SummaryListObj = reqparam.getSummaryListObj();
+
+		ArrayList<SummaryDTO> SummaryList = (ArrayList<SummaryDTO>) SummaryListObj.getSummarydtoLs();
+
+		ArrayList<SummaryBO> SummaryBOList;
+
+		SummaryBO SummaryBOObj = null;
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		Criteria criteriaSummaryObj = new Criteria();
+		criteriaSummaryObj.setCriteria("TRUE");
+
+		FetchSummaryCriteria fetchSummaryCriteriaObj = new FetchSummaryCriteria();
+
+		fetchSummaryCriteriaObj.setName("nlid");
+
+		if (SummaryList.size() > 0) {
+
+			SummaryDTO SummarydtoObj = SummaryList.get(0);
+
+			fetchSummaryCriteriaObj.setValue(SummarydtoObj.getSumid());
+			criteriaSummaryObj.setFetchSummaryCriteriaObj(fetchSummaryCriteriaObj);
+
+			SummaryBOList = summarydao.fetchSummary(criteriaSummaryObj, "1");
+
+			try {
+				if (null != SummaryBOList && SummaryBOList.size() > 0) {
+
+					SummaryBOObj = SummaryBOList.get(0);
+					if (SummarydtoObj.getStatus().equalsIgnoreCase("Delete")) {
+						summarydao.deleteOnCriteria(SummaryBOObj, null);
+					} else {
+
+						// update the SummaryBO fetched from DB
+
+						SummaryBOObj.setCreator(SummarydtoObj.getCreator());
+						SummaryBOObj.setDetail(SummarydtoObj.getDetail());
+						SummaryBOObj.setStatus(SummarydtoObj.getStatus());
+						SummaryBOObj.setSubject(SummarydtoObj.getSubject());
+						SummaryBOObj.setSumdate(
+								dateformatter.parse(SummarydtoObj.getSumdate() + " " + SummarydtoObj.getSumtime()));
+
+						// merge this UpdateBO back in DB
+						summarydao.update(SummaryBOObj);
+					}
+				}
+
+				else {
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
+				}
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+				throw serviceExceptionObj;
+			}
+
+			populateSummaryDTO(SummarydtoObj, SummaryBOObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("SummaryList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setSummaryListObj(SummaryListObj);
+
+		return responseObj;
+	}
+
 
 	public SuggestionIdeaList createsuggestionidea(SuggestionIdeaList suggestionIdeaListObj) {
 		System.out.println("InRDRegister");
@@ -1491,6 +1677,43 @@ public class RepositoryDelegator {
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
 
 	}
+	
+	private void populateCreateSummaryBO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		try {
+			SummaryBOObj.setCreator(SummarydtoObj.getCreator());
+			SummaryBOObj.setDetail(SummarydtoObj.getDetail());
+			SummaryBOObj
+					.setSumdate(dateformatter.parse(SummarydtoObj.getSumdate() + " " + SummarydtoObj.getSumtime()));
+			SummaryBOObj.setStatus(SummarydtoObj.getStatus());
+			SummaryBOObj.setSubject(SummarydtoObj.getSubject());
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populateSummaryDTO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		String status = "";
+
+		SummarydtoObj.setCreator(SummaryBOObj.getCreator());
+		SummarydtoObj.setDetail(SummaryBOObj.getDetail());
+		SummarydtoObj.setSumdate(dateformatter.format(SummaryBOObj.getSumdate()));
+		SummarydtoObj.setSumtime(timeformatter.format(SummaryBOObj.getSumdate()));
+		SummarydtoObj.setSumid(SummaryBOObj.getSumid().toString());
+		if (null != SummaryBOObj.getStatus() && !"".equalsIgnoreCase(SummaryBOObj.getStatus()))
+			status = SummaryBOObj.getStatus().toLowerCase();
+		SummarydtoObj.setStatus(status);
+		SummarydtoObj.setSubject(SummaryBOObj.getSubject());
+
+	}
+
 
 	private void populateCreateSuggestionIdeaBO(SuggestionIdeaDTO suggestionIdeadtoObj,
 			SuggestionIdeaBO suggestionIdeaBOObj) {

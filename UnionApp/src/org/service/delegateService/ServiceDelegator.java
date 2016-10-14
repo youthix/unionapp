@@ -12,6 +12,7 @@ import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.SuggestionIdeaList;
+import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -486,6 +487,79 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
+	public ResponseObj createSummary(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		SummaryList SummaryListObj = reqparam.getSummaryListObj();
+
+		if (null != SummaryListObj) {
+
+			repositoryDelegator.createSummary(SummaryListObj);
+			responseObj.setSummaryListObj(SummaryListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("SummaryList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchSummary(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
+
+			responseObj = repositoryDelegator.fetchSummary(reqparam);
+
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public String fetchSummaryById(String id) {
+
+		String responseObj = "";
+
+		if (null != id) {
+
+			responseObj = repositoryDelegator.fetchSummaryById(id);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updateSummary(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		SummaryList SummaryListObj = reqparam.getSummaryListObj();
+
+		if (null != SummaryListObj) {
+
+			responseObj = repositoryDelegator.updateSummary(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("SummaryList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	
 	public ResponseObj createsuggestionidea(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();

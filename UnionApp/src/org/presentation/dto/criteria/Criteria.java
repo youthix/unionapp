@@ -1,7 +1,5 @@
 package org.presentation.dto.criteria;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -29,6 +27,8 @@ public class Criteria {
 	private FetchSuggestionIdeaCriteria fetchSuggestionIdeaCriteriaObj ;
 	
 	private UpdateSuggestionIdeaCriteria UpdateSuggestionIdeaCriteriaObj ;
+	
+	private FetchSummaryCriteria fetchSummaryCriteriaObj;
 
 
 	public String getCriteria() {
@@ -112,7 +112,13 @@ public class Criteria {
 		UpdateSuggestionIdeaCriteriaObj = updateSuggestionIdeaCriteriaObj;
 	}
 
+	public FetchSummaryCriteria getFetchSummaryCriteriaObj() {
+		return fetchSummaryCriteriaObj;
+	}
 
-	
-	
+	public void setFetchSummaryCriteriaObj(
+			FetchSummaryCriteria fetchSummaryCriteriaObj) {
+		this.fetchSummaryCriteriaObj = fetchSummaryCriteriaObj;
+	}
+
 }

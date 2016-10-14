@@ -560,6 +560,114 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
+	@Path("/createSummary")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj createSummary(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.createSummary(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/updateSummary")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj updateSummary(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.updateSummary(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@GET
+	@Path("/fetchSummary/{id}")
+	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
+	public String fetchSummaryById(@PathParam ("id") String id) {
+
+		String responseObj ;
+
+		try {
+			if (null != id) {
+				responseObj = serviceDelegator.fetchSummaryById(id);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj).toString();
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/fetchSummary")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchSummary(RequestObj reqparam) {
+
+		ResponseObj responseObj ;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.fetchSummary(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	
+	@Override
+	@POST
 	@Path("/createsuggestionidea")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)

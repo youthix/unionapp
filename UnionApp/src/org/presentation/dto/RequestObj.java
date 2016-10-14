@@ -7,6 +7,7 @@ import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.SuggestionIdeaList;
+import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "reqparam")
 public class RequestObj {
@@ -18,6 +19,8 @@ public class RequestObj {
 	private ActivityList ActivityListObj;
 	
 	private NewsLetterList NewsLetterListObj;
+	
+	private SummaryList SummaryListObj;
 	
 	private SuggestionIdeaList SuggestionIdeaListObj;
 	
@@ -101,7 +104,12 @@ public class RequestObj {
 	public void setSuggestionIdeaListObj(SuggestionIdeaList suggestionIdeaListObj) {
 		SuggestionIdeaListObj = suggestionIdeaListObj;
 	}
-	
-	
-	
+
+	public SummaryList getSummaryListObj() {
+		return SummaryListObj;
+	}
+
+	public void setSummaryListObj(SummaryList summaryListObj) {
+		SummaryListObj = summaryListObj;
+	}	
 }
