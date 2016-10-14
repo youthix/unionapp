@@ -25,6 +25,10 @@ public class Criteria {
 	private UpdateActivityCriteria UpdateActivityCriteriaObj ;
 	
 	private FetchNewsLetterCriteria fetchNewsLetterCriteriaObj;
+	
+	private FetchActivityCriteria fetchSuggestionIdeaCriteriaObj ;
+	
+	private UpdateActivityCriteria UpdateSuggestionIdeaCriteriaObj ;
 
 
 	public String getCriteria() {
@@ -91,4 +95,22 @@ public class Criteria {
 			FetchNewsLetterCriteria fetchNewsLetterCriteriaObj) {
 		this.fetchNewsLetterCriteriaObj = fetchNewsLetterCriteriaObj;
 	}
+
+	public FetchActivityCriteria getFetchSuggestionIdeaCriteriaObj() {
+		return fetchSuggestionIdeaCriteriaObj;
+	}
+
+	public void setFetchSuggestionIdeaCriteriaObj(FetchActivityCriteria fetchSuggestionIdeaCriteriaObj) {
+		this.fetchSuggestionIdeaCriteriaObj = fetchSuggestionIdeaCriteriaObj;
+	}
+
+	public UpdateActivityCriteria getUpdateSuggestionIdeaCriteriaObj() {
+		return UpdateSuggestionIdeaCriteriaObj;
+	}
+
+	public void setUpdateSuggestionIdeaCriteriaObj(UpdateActivityCriteria updateSuggestionIdeaCriteriaObj) {
+		UpdateSuggestionIdeaCriteriaObj = updateSuggestionIdeaCriteriaObj;
+	}
+	
+	
 }
