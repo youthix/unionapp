@@ -1233,7 +1233,7 @@ public class RepositoryDelegator {
 
 			SuggestionIdeaDTO suggestionIdeadtoObj = suggestionIdeaList.get(0);
 
-			fetchSuggestionIdeaCriteriaObj.setValue(suggestionIdeadtoObj.get());
+			//fetchSuggestionIdeaCriteriaObj.setValue(suggestionIdeadtoObj.get);
 			criteriaSuggestionIdeaObj.setFetchSuggestionIdeaCriteriaObj(fetchSuggestionIdeaCriteriaObj);
 
 			suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdea(criteriaSuggestionIdeaObj, "1");

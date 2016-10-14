@@ -6,7 +6,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @XmlRootElement(name = "updatemeetingcriteria")
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class UpdateActivityCriteria {
+public class UpdateSuggestionIdeaCriteria {
 
 	private String name;
 
