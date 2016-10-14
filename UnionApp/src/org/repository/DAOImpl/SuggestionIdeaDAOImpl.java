@@ -23,9 +23,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 	public void createSuggestionIdea(SuggestionIdeaBO suggestionIdeaBO) {
 		try {
-			System.out.println("InDAOCreateMeet");
 			manager.persist(suggestionIdeaBO);
-			System.out.println("DoneDAOCreateMeet");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
@@ -34,8 +32,6 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 	public void update(SuggestionIdeaBO suggestionIdeaBO) {
 		try {
-			System.out.println("InDAOAddUser");
-
 			/*
 			 * String SQL = "update " + UserBO.class.getName() +
 			 * " u Set u.status='"+ userBO.getStatus()+"' where usname = '" +
@@ -43,35 +39,8 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 			 * query.executeUpdate();
 			 */
 
-			manager.merge(activityBO);
+			manager.merge(suggestionIdeaBO);
 
-			System.out.println("DoneDAOAddUser");
-		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
-			throw serviceExceptionObj;
-		}
-	}
-
-	public void updateOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj) {
-		try {
-
-			String SQL = "";
-
-			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getUpdateActivityCriteriaObj() != null) {
-
-					if (criteriaObj.getUpdateActivityCriteriaObj().getName().equalsIgnoreCase("acceptdecline")) {
-						SQL = "update " + ActivityBO.class.getName() + " m Set m.acceptid='" + activityBO.getAcceptid()
-								+ "' , m.acceptcount='" + activityBO.getAcceptcount() + "' , m.declineid='"
-								+ activityBO.getDeclineid() + "' , m.declinecount='" + activityBO.getDeclinecount()
-								+ "' where activityid = '" + activityBO.getActivityid() + "'";
-					}
-				}
-			}
-			Query query = manager.createQuery(SQL);
-			query.executeUpdate();
-
-			System.out.println("DoneDAOUpdateLoginStatus");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
@@ -96,8 +65,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<SuggestionIdeaBO> fetchSuggestionIdea(Criteria criteriaObj, String pageno) {
 
-		System.out.println("InDAOFetchUser");
-		ArrayList<ActivityBO> activityBOList = null;
+		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList = null;
 
 		/* int pageno = pageno.v */
 
@@ -118,16 +86,16 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 		try {
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getFetchActivityCriteriaObj() != null) {
+				if (criteriaObj.getFetchSuggestionIdeaCriteriaObj() != null) {
 
 					String searchCriteria = "";
 					int index = -1;
-					if (null != criteriaObj.getFetchActivityCriteriaObj().getValue()
-							&& criteriaObj.getFetchActivityCriteriaObj().getValue() != "") {
+					if (null != criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue()
+							&& criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue() != "") {
 
-						if (criteriaObj.getFetchActivityCriteriaObj().getValue().contains(",")) {
+						if (criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue().contains(",")) {
 
-							String[] idList = criteriaObj.getFetchActivityCriteriaObj().getValue().split(",");
+							String[] idList = criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue().split(",");
 
 							for (String id : idList) {
 								searchCriteria = searchCriteria + "'" + id + "',";
@@ -139,14 +107,14 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 							}
 
 						} else {
-							searchCriteria = "'" + criteriaObj.getFetchActivityCriteriaObj().getValue() + "'";
+							searchCriteria = "'" + criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue() + "'";
 						}
 
-						String SQL = "select m from " + ActivityBO.class.getName() + " m where "
-								+ criteriaObj.getFetchActivityCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.actdate asc";
+						String SQL = "select s from " + SuggestionIdeaBO.class.getName() + " s where "
+								+ criteriaObj.getFetchSuggestionIdeaCriteriaObj().getName() + " in (" + searchCriteria
+								+ ") order by s.date asc";
 
-						activityBOList = (ArrayList<ActivityBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+						suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
 								.getResultList();
 						;
@@ -159,9 +127,9 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				String SQL = "select m from " + ActivityBO.class.getName()
+				String SQL = "select m from " + SuggestionIdeaBO.class.getName()
 						+ " m where status not in ('delete') order by m.actdate asc ";
-				activityBOList = (ArrayList<ActivityBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+				suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
 			}
@@ -172,7 +140,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 			throw serviceExceptionObj;
 		}
 
-		return activityBOList;
+		return suggestionIdeaBOList;
 	}
 
 	public Integer totalRecordCount(Criteria criteriaObj) {
@@ -183,16 +151,16 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 		try {
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getFetchActivityCriteriaObj() != null) {
+				if (criteriaObj.getFetchSuggestionIdeaCriteriaObj() != null) {
 
 					String searchCriteria = "";
 					int index = -1;
-					if (null != criteriaObj.getFetchActivityCriteriaObj().getValue()
-							&& criteriaObj.getFetchActivityCriteriaObj().getValue() != "") {
+					if (null != criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue()
+							&& criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue() != "") {
 
-						if (criteriaObj.getFetchActivityCriteriaObj().getValue().contains(",")) {
+						if (criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue().contains(",")) {
 
-							String[] idList = criteriaObj.getFetchActivityCriteriaObj().getValue().split(",");
+							String[] idList = criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue().split(",");
 
 							for (String id : idList) {
 								searchCriteria = searchCriteria + "'" + id + "',";
@@ -204,11 +172,11 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 							}
 
 						} else {
-							searchCriteria = "'" + criteriaObj.getFetchActivityCriteriaObj().getValue() + "'";
+							searchCriteria = "'" + criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue() + "'";
 						}
 
 						SQL = "select m from " + ActivityBO.class.getName() + " m where "
-								+ criteriaObj.getFetchActivityCriteriaObj().getName() + " in (" + searchCriteria + ") ";
+								+ criteriaObj.getFetchSuggestionIdeaCriteriaObj().getName() + " in (" + searchCriteria + ") ";
 
 					}
 
@@ -218,7 +186,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				SQL = "select m from " + ActivityBO.class.getName() + " m where status not in ('delete') ";
+				SQL = "select m from " + SuggestionIdeaBO.class.getName() + " m where status not in ('delete') ";
 			}
 
 			if (null != manager.createQuery(SQL).getResultList()) {

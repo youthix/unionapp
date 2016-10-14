@@ -11,8 +11,6 @@ public interface ISuggestionIdeaDAO {
 	
 	public void update(SuggestionIdeaBO suggestionIdeaBO);
 
-	public void updateOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj);
-	
 	public void deleteOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj);
 
 	public ArrayList<SuggestionIdeaBO> fetchSuggestionIdea(Criteria criteriaObj, String pageno);
