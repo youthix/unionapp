@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
-import org.repository.entity.ActivityBO;
 import org.repository.entity.SuggestionIdeaBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,21 +40,6 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 			manager.merge(suggestionIdeaBO);
 
-		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
-			throw serviceExceptionObj;
-		}
-	}
-
-	public void deleteCron(String beforeLimit) {
-		try {
-
-			String SQL = "delete from " + ActivityBO.class.getName() + " where DATEDIFF(sysdate(),actdate) > "
-					+ beforeLimit;
-			Query query = manager.createQuery(SQL);
-			query.executeUpdate();
-
-			System.out.println("Done Activity deleteCron !!");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
 			throw serviceExceptionObj;
@@ -114,7 +98,8 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 								+ criteriaObj.getFetchSuggestionIdeaCriteriaObj().getName() + " in (" + searchCriteria
 								+ ") order by s.date asc";
 
-						suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+						suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL)
+								.setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
 								.getResultList();
 						;
@@ -175,8 +160,9 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 							searchCriteria = "'" + criteriaObj.getFetchSuggestionIdeaCriteriaObj().getValue() + "'";
 						}
 
-						SQL = "select m from " + ActivityBO.class.getName() + " m where "
-								+ criteriaObj.getFetchSuggestionIdeaCriteriaObj().getName() + " in (" + searchCriteria + ") ";
+						SQL = "select m from " + SuggestionIdeaBO.class.getName() + " m where "
+								+ criteriaObj.getFetchSuggestionIdeaCriteriaObj().getName() + " in (" + searchCriteria
+								+ ") ";
 
 					}
 
@@ -213,7 +199,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 	public void deleteOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj) {
 		try {
 
-			String SQL = "delete from " + ActivityBO.class.getName() + " where activityid = '"
+			String SQL = "delete from " + SuggestionIdeaBO.class.getName() + " where activityid = '"
 					+ suggestionIdeaBO.getActivityid() + "'";
 
 			Query query = manager.createQuery(SQL);

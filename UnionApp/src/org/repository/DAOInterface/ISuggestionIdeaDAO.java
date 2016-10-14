@@ -17,6 +17,4 @@ public interface ISuggestionIdeaDAO {
 	
 	public Integer totalRecordCount(Criteria criteriaObj);
 	
-	public void deleteCron(String beforeLimit);
-
 }
