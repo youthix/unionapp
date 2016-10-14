@@ -4,9 +4,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-@XmlRootElement(name = "fetchactivitycriteria")
+@XmlRootElement(name = "fetchsuggestionideacriteria")
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class FetchActivityCriteria {
+public class FetchSuggestionIdeaCriteria {
 
 	private String name;
 	private String value;

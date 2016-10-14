@@ -29,6 +29,9 @@
 	<bean id="newsletterdao" class="org.repository.DAOImpl.NewsLetterDAOImpl">
 	</bean>	
 	
+	<bean id="suggestionIdeadao" class="org.repository.DAOImpl.SuggestionIdeaDAOImpl">
+	</bean>		
+	
     <bean id="restfulService" 
       class="org.presentation.controller.Impl.RESTfulServiceImpl">
       <!-- <property name="serviceDelegator" ref="serviceDelegator" /> -->

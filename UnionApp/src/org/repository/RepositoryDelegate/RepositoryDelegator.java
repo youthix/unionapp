@@ -11,6 +11,7 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.FetchActivityCriteria;
 import org.presentation.dto.criteria.FetchMeetingCriteria;
 import org.presentation.dto.criteria.FetchNewsLetterCriteria;
+import org.presentation.dto.criteria.FetchSuggestionIdeaCriteria;
 import org.presentation.dto.criteria.FetchUserCriteria;
 import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
@@ -1205,59 +1206,57 @@ public class RepositoryDelegator {
 		ResponseObj responseObj = new ResponseObj();
 
 		/*
-		 * First fetch the activity from the DB basis the id coming in the
-		 * request Then update teh fields of the activityBo fetched from DB with
+		 * First fetch the suggestionIdea from the DB basis the id coming in the
+		 * request Then update teh fields of the suggestionIdeaBO fetched from DB with
 		 * those received in the input
 		 */
-		ActivityList activityListObj = reqparam.getActivityListObj();
+		SuggestionIdeaList suggestionIdeaListObj = reqparam.getSuggestionIdeaListObj();
 
-		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
+		ArrayList<SuggestionIdeaDTO> suggestionIdeaList = (ArrayList<SuggestionIdeaDTO>) suggestionIdeaListObj.getSuggestionideadtoLs();
 
-		ArrayList<ActivityBO> activityBOList;
+		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList;
 
-		ActivityBO activityBOObj = null;
+		SuggestionIdeaBO suggestionIdeaBOObj = null;
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
-		Criteria criteriaactivityObj = new Criteria();
-		criteriaactivityObj.setCriteria("TRUE");
+		Criteria criteriaSuggestionIdeaObj = new Criteria();
+		criteriaSuggestionIdeaObj.setCriteria("TRUE");
 
-		FetchActivityCriteria fetchActivityCriteriaObj = new FetchActivityCriteria();
+		FetchSuggestionIdeaCriteria fetchSuggestionIdeaCriteriaObj = new FetchSuggestionIdeaCriteria();
 
-		fetchActivityCriteriaObj.setName("activityid");
+		fetchSuggestionIdeaCriteriaObj.setName("suggestionideaid");
 
-		if (activityList.size() > 0) {
+		if (suggestionIdeaList.size() > 0) {
 
-			ActivityDTO activitydtoObj = activityList.get(0);
+			SuggestionIdeaDTO suggestionIdeadtoObj = suggestionIdeaList.get(0);
 
-			fetchActivityCriteriaObj.setValue(activitydtoObj.getActivityid());
-			criteriaactivityObj.setFetchActivityCriteriaObj(fetchActivityCriteriaObj);
+			fetchSuggestionIdeaCriteriaObj.setValue(suggestionIdeadtoObj.get());
+			criteriaSuggestionIdeaObj.setFetchSuggestionIdeaCriteriaObj(fetchSuggestionIdeaCriteriaObj);
 
-			activityBOList = activitydao.fetchActivity(criteriaactivityObj, "1");
+			suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdea(criteriaSuggestionIdeaObj, "1");
 
 			try {
-				if (null != activityBOList && activityBOList.size() > 0) {
+				if (null != suggestionIdeaBOList && suggestionIdeaBOList.size() > 0) {
 
-					activityBOObj = activityBOList.get(0);
-					if (activitydtoObj.getStatus().equalsIgnoreCase("Delete")) {
-						activitydao.deleteOnCriteria(activityBOObj, null);
+					suggestionIdeaBOObj = suggestionIdeaBOList.get(0);
+					if (suggestionIdeadtoObj.getStatus().equalsIgnoreCase("Delete")) {
+						suggestionIdeadao.deleteOnCriteria(suggestionIdeaBOObj, null);
 					} else {
 
 						// update the activityBO fetched from DB
 
-						activityBOObj.setCreator(activitydtoObj.getCreator());
-						activityBOObj.setDetail(activitydtoObj.getDetail());
-						activityBOObj.setStatus(activitydtoObj.getStatus());
-						activityBOObj.setSubject(activitydtoObj.getSubject());
-						activityBOObj.setVenue(activitydtoObj.getVenue());
-						activityBOObj.setActdate(
-								dateformatter.parse(activitydtoObj.getActdate() + " " + activitydtoObj.getActtime()));
-						// activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
-
+						suggestionIdeaBOObj.setCreator(suggestionIdeadtoObj.getCreator());
+						suggestionIdeaBOObj.setDetail(suggestionIdeadtoObj.getDetail());
+						suggestionIdeaBOObj.setStatus(suggestionIdeadtoObj.getStatus());
+						suggestionIdeaBOObj.setSubject(suggestionIdeadtoObj.getSubject());
+						suggestionIdeaBOObj.setVenue(suggestionIdeadtoObj.getVenue());
+						suggestionIdeaBOObj.setActdate(
+								dateformatter.parse(suggestionIdeadtoObj.getActdate() + " " + suggestionIdeadtoObj.getActtime()));
 						// merge this UpdateBO back in DB
-						activitydao.update(activityBOObj);
+						suggestionIdeadao.update(suggestionIdeaBOObj);
 					}
 				}
 
@@ -1270,7 +1269,7 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateActivityDTO(activitydtoObj, activityBOObj);
+			populateSuggestionIdeaDTO(suggestionIdeadtoObj, suggestionIdeaBOObj);
 
 		}
 
@@ -1279,7 +1278,7 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 
-		responseObj.setActivityListObj(activityListObj);
+		responseObj.setSuggestionIdeaListObj(suggestionIdeaListObj);
 
 		return responseObj;
 	}

@@ -509,8 +509,7 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 
-		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
-				&& reqparam.getUserListObj().getUl().size() > 0) {
+		if (null != reqparam.getCriteria()) {
 
 			responseObj = repositoryDelegator.fetchsuggestionidea(reqparam);
 
@@ -527,9 +526,9 @@ public class ServiceDelegator {
 	public ResponseObj updatesuggestionidea(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		ActivityList activityListObj = reqparam.getActivityListObj();
+		SuggestionIdeaList suggestionIdeaListObj = reqparam.getSuggestionIdeaListObj();
 
-		if (null != activityListObj) {
+		if (null != suggestionIdeaListObj) {
 
 			responseObj = repositoryDelegator.updatesuggestionidea(reqparam);
 			setResponse(responseObj);
