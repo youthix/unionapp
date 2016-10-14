@@ -44,5 +44,11 @@ public interface RESTfulServiceInterface {
 	ResponseObj createNewsLetter(RequestObj reqparam);
 
 	String fetchNewsLetterById(String id);
+	
+	ResponseObj createsuggestionidea(RequestObj reqparam);
+	
+	ResponseObj updatesuggestionidea(RequestObj reqparam);	
+	
+	ResponseObj fetchsuggestionidea(RequestObj reqparam);
 
 }

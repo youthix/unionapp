@@ -484,6 +484,61 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj createsuggestionidea(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		ActivityList activityListObj = reqparam.getActivityListObj();
+
+		if (null != activityListObj) {
+
+			repositoryDelegator.createsuggestionidea(activityListObj);
+			responseObj.setActivityListObj(activityListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("List is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchsuggestionidea(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
+
+			responseObj = repositoryDelegator.fetchsuggestionidea(reqparam);
+			
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updatesuggestionidea(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		ActivityList activityListObj = reqparam.getActivityListObj();
+
+		if (null != activityListObj) {
+
+			responseObj = repositoryDelegator.updatesuggestionidea(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("List is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
 
 	
 	private String generatepwd() {

@@ -6,6 +6,7 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "reqparam")
 public class RequestObj {
@@ -17,6 +18,8 @@ public class RequestObj {
 	private ActivityList ActivityListObj;
 	
 	private NewsLetterList NewsLetterListObj;
+	
+	private SuggestionIdeaList SuggestionIdeaListObj;
 	
 	private String bid;
 	
@@ -90,5 +93,15 @@ public class RequestObj {
 	public void setChannel(String channel) {
 		this.channel = channel;
 	}
+
+	public SuggestionIdeaList getSuggestionIdeaListObj() {
+		return SuggestionIdeaListObj;
+	}
+
+	public void setSuggestionIdeaListObj(SuggestionIdeaList suggestionIdeaListObj) {
+		SuggestionIdeaListObj = suggestionIdeaListObj;
+	}
+	
+	
 	
 }

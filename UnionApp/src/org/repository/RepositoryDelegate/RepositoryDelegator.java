@@ -47,7 +47,7 @@ public class RepositoryDelegator {
 
 	@Autowired
 	IActivityDAO activitydao;
-	
+
 	@Autowired
 	INewsLetterDAO newsletterdao;
 
@@ -432,14 +432,12 @@ public class RepositoryDelegator {
 			if (null != userBOList && userBOList.size() > 0) {
 				UserBO userBOObj = userBOList.get(0);
 
-
 				for (MeetingDTO meetingDTOObj : meetingDTOList) {
 
 					/*
 					 * fetch and update the meetingTable with the list of user
-					 * who accepted or declined. This is
-					 * stored in comman separated list hence creating the String
-					 * below.
+					 * who accepted or declined. This is stored in comman
+					 * separated list hence creating the String below.
 					 */
 					ArrayList<MeetingBO> meetingBOList;
 					MeetingBO meetingBOObj;
@@ -456,11 +454,9 @@ public class RepositoryDelegator {
 					String declineuserid = meetingBOObj.getDeclineid();
 					int acceptcount = meetingBOObj.getAcceptcount();
 					int declinecount = meetingBOObj.getDeclinecount();
-					if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("delete")){
+					if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("delete")) {
 						meetingdao.deleteOnCriteria(meetingBOObj, criteriaObj);
-					}
-					else if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
-
+					} else if (meetingDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
 
 						// for meeting table
 
@@ -474,7 +470,6 @@ public class RepositoryDelegator {
 						acceptcount = acceptcount + 1;
 
 					} else {
-
 
 						// for meeting table
 
@@ -506,7 +501,6 @@ public class RepositoryDelegator {
 					populateMeetingDTO(meetingDTOObj, meetingBOObj);
 
 				}
-
 
 				populateUserDTO(userObj, userBOObj);
 			} else {
@@ -544,10 +538,10 @@ public class RepositoryDelegator {
 		ArrayList<MeetingBO> meetingBOList;
 
 		MeetingBO meetingBOObj = null;
-		
+
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		Criteria criteriameetingObj = new Criteria();
 		criteriameetingObj.setCriteria("TRUE");
@@ -570,21 +564,20 @@ public class RepositoryDelegator {
 					meetingBOObj = meetingBOList.get(0);
 
 					// update the meetingBO fetched from DB
-					if(meetingdtoObj.getStatus().equalsIgnoreCase("Delete")){
+					if (meetingdtoObj.getStatus().equalsIgnoreCase("Delete")) {
 						meetingdao.deleteOnCriteria(meetingBOObj, null);
-					}
-					else {
-					meetingBOObj.setCreator(meetingdtoObj.getCreator());
-					meetingBOObj.setDetail(meetingdtoObj.getDetail());
-					meetingBOObj.setStatus(meetingdtoObj.getStatus());
-					meetingBOObj.setSubject(meetingdtoObj.getSubject());
-					meetingBOObj.setVenue(meetingdtoObj.getVenue());
-					meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()
-							+" "+meetingdtoObj.getMeettime()));
-					//meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
+					} else {
+						meetingBOObj.setCreator(meetingdtoObj.getCreator());
+						meetingBOObj.setDetail(meetingdtoObj.getDetail());
+						meetingBOObj.setStatus(meetingdtoObj.getStatus());
+						meetingBOObj.setSubject(meetingdtoObj.getSubject());
+						meetingBOObj.setVenue(meetingdtoObj.getVenue());
+						meetingBOObj.setMeetdate(
+								dateformatter.parse(meetingdtoObj.getMeetdate() + " " + meetingdtoObj.getMeettime()));
+						// meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
 
-					// merge this UpdateBO back in DB
-					meetingdao.update(meetingBOObj);
+						// merge this UpdateBO back in DB
+						meetingdao.update(meetingBOObj);
 					}
 
 				}
@@ -642,38 +635,6 @@ public class RepositoryDelegator {
 
 		return activityListObjResp;
 	}
-	
-	public NewsLetterList createNewsLetter(NewsLetterList newsLetterListObj) {
-		System.out.println("In createNewsLetter");
-
-		ArrayList<NewsLetterDTO> NewsLetterList = (ArrayList<NewsLetterDTO>) newsLetterListObj.getNewsletterdtoLs();
-		NewsLetterList NewsLetterListObjResp = new NewsLetterList();
-
-		if (NewsLetterList.size() > 0) {
-			Iterator<NewsLetterDTO> NewsLetterListIterator = NewsLetterList.iterator();
-
-			while (NewsLetterListIterator.hasNext()) {
-
-				NewsLetterDTO NewsLetterdtoObj = NewsLetterListIterator.next();
-
-				NewsLetterBO NewsLetterBOObj = new NewsLetterBO();
-
-				populateCreateNewsLetterBO(NewsLetterdtoObj, NewsLetterBOObj);
-				newsletterdao.createNewsLetter(NewsLetterBOObj);
-				populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
-
-			}
-
-		}
-
-		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
-			throw serviceExceptionObj;
-		}
-
-		return NewsLetterListObjResp;
-	}
-
 
 	public ResponseObj fetchactivity(RequestObj reqparam) {
 		System.out.println("InRDFetch");
@@ -761,68 +722,89 @@ public class RepositoryDelegator {
 		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
-	
-	public String fetchNewsLetterById(String id) {
-		System.out.println("In fetchNewsLetterById");
-		String responseObj="";
-		
-		ArrayList<NewsLetterBO> newsLetterBOList = 
-				newsletterdao.fetchNewsLetterById(id);
 
-		if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
+	public ResponseObj updateactivity(RequestObj reqparam) {
+		System.out.println("InRDUpdate");
 
-			Iterator<NewsLetterBO> litr = newsLetterBOList.iterator();
-
-			while (litr.hasNext()) {
-
-				NewsLetterBO newsLetterBOObj = litr.next();
-				responseObj=newsLetterBOObj.getDetail();
-			}
-		}
-		return responseObj;
-	}
-	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
-		System.out.println("InRDFetch");
 		ResponseObj responseObj = new ResponseObj();
-		String channel=reqparam.getChannel();
-		NewsLetterList NewsLetterListObj = new NewsLetterList();
-		ArrayList<NewsLetterDTO> NewsLetterDTOList = new ArrayList<NewsLetterDTO>();
 
-		ArrayList<NewsLetterBO> newsLetterBOList;
+		/*
+		 * First fetch the activity from the DB basis the id coming in the
+		 * request Then update teh fields of the activityBo fetched from DB with
+		 * those received in the input
+		 */
+		ActivityList activityListObj = reqparam.getActivityListObj();
 
-		NewsLetterBO NewsLetterBOObj;
+		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
 
-		Criteria criteriaObj = reqparam.getCriteria();
-		
-		newsLetterBOList = newsletterdao.fetchNewsLetter(criteriaObj, reqparam.getPageno());
+		ArrayList<ActivityBO> activityBOList;
 
-		if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
+		ActivityBO activityBOObj = null;
 
-			Iterator<NewsLetterBO> litr = newsLetterBOList.iterator();
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 
-			while (litr.hasNext()) {
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
-				NewsLetterBOObj = litr.next();
-				NewsLetterDTO NewsLetterDTOObj = new NewsLetterDTO();
-				populateNewsLetterDTO(NewsLetterDTOObj, NewsLetterBOObj);	
-				if(null !=  channel && "app".equalsIgnoreCase(channel)){
-					NewsLetterDTOObj.setDetail("");
+		Criteria criteriaactivityObj = new Criteria();
+		criteriaactivityObj.setCriteria("TRUE");
+
+		FetchActivityCriteria fetchActivityCriteriaObj = new FetchActivityCriteria();
+
+		fetchActivityCriteriaObj.setName("activityid");
+
+		if (activityList.size() > 0) {
+
+			ActivityDTO activitydtoObj = activityList.get(0);
+
+			fetchActivityCriteriaObj.setValue(activitydtoObj.getActivityid());
+			criteriaactivityObj.setFetchActivityCriteriaObj(fetchActivityCriteriaObj);
+
+			activityBOList = activitydao.fetchActivity(criteriaactivityObj, "1");
+
+			try {
+				if (null != activityBOList && activityBOList.size() > 0) {
+
+					activityBOObj = activityBOList.get(0);
+					if (activitydtoObj.getStatus().equalsIgnoreCase("Delete")) {
+						activitydao.deleteOnCriteria(activityBOObj, null);
+					} else {
+
+						// update the activityBO fetched from DB
+
+						activityBOObj.setCreator(activitydtoObj.getCreator());
+						activityBOObj.setDetail(activitydtoObj.getDetail());
+						activityBOObj.setStatus(activitydtoObj.getStatus());
+						activityBOObj.setSubject(activitydtoObj.getSubject());
+						activityBOObj.setVenue(activitydtoObj.getVenue());
+						activityBOObj.setActdate(
+								dateformatter.parse(activitydtoObj.getActdate() + " " + activitydtoObj.getActtime()));
+						// activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
+
+						// merge this UpdateBO back in DB
+						activitydao.update(activityBOObj);
+					}
 				}
-				NewsLetterDTOList.add(NewsLetterDTOObj);
+
+				else {
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
+				}
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+				throw serviceExceptionObj;
 			}
 
-			NewsLetterListObj.setNewsletterdtoLs(NewsLetterDTOList);
+			populateActivityDTO(activitydtoObj, activityBOObj);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
 			throw serviceExceptionObj;
 		}
-		responseObj.setNewsLetterListObj(NewsLetterListObj);
-		int totalrecordcount = newsletterdao.totalRecordCount(criteriaObj);
 
-		int totalPage = getTotalPageCount(totalrecordcount);
+		responseObj.setActivityListObj(activityListObj);
 
-		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
 
@@ -894,12 +876,10 @@ public class RepositoryDelegator {
 					String declineuserid = activityBOObj.getDeclineid();
 					int acceptcount = activityBOObj.getAcceptcount();
 					int declinecount = activityBOObj.getDeclinecount();
-					
-					if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("delete")){
-						activitydao.deleteOnCriteria(activityBOObj, criteriaObj);
-					}
-					else if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
 
+					if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("delete")) {
+						activitydao.deleteOnCriteria(activityBOObj, criteriaObj);
+					} else if (activityDTOObj.getAcceptdenyind().equalsIgnoreCase("accept")) {
 
 						// for Activity table
 
@@ -913,7 +893,6 @@ public class RepositoryDelegator {
 						acceptcount = acceptcount + 1;
 
 					} else {
-
 
 						// for Activity table
 
@@ -962,93 +941,101 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	public ResponseObj updateactivity(RequestObj reqparam) {
-		System.out.println("InRDUpdate");
+	public NewsLetterList createNewsLetter(NewsLetterList newsLetterListObj) {
+		System.out.println("In createNewsLetter");
 
-		ResponseObj responseObj = new ResponseObj();
+		ArrayList<NewsLetterDTO> NewsLetterList = (ArrayList<NewsLetterDTO>) newsLetterListObj.getNewsletterdtoLs();
+		NewsLetterList NewsLetterListObjResp = new NewsLetterList();
 
-		/*
-		 * First fetch the activity from the DB basis the id coming in the
-		 * request Then update teh fields of the activityBo fetched from DB with
-		 * those received in the input
-		 */
-		ActivityList activityListObj = reqparam.getActivityListObj();
+		if (NewsLetterList.size() > 0) {
+			Iterator<NewsLetterDTO> NewsLetterListIterator = NewsLetterList.iterator();
 
-		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
+			while (NewsLetterListIterator.hasNext()) {
 
-		ArrayList<ActivityBO> activityBOList;
+				NewsLetterDTO NewsLetterdtoObj = NewsLetterListIterator.next();
 
-		ActivityBO activityBOObj = null;
-		
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+				NewsLetterBO NewsLetterBOObj = new NewsLetterBO();
 
-		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+				populateCreateNewsLetterBO(NewsLetterdtoObj, NewsLetterBOObj);
+				newsletterdao.createNewsLetter(NewsLetterBOObj);
+				populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
 
-		Criteria criteriaactivityObj = new Criteria();
-		criteriaactivityObj.setCriteria("TRUE");
-
-		FetchActivityCriteria fetchActivityCriteriaObj = new FetchActivityCriteria();
-
-		fetchActivityCriteriaObj.setName("activityid");
-
-		if (activityList.size() > 0) { 
-
-			ActivityDTO activitydtoObj = activityList.get(0);
-
-			fetchActivityCriteriaObj.setValue(activitydtoObj.getActivityid());
-			criteriaactivityObj.setFetchActivityCriteriaObj(fetchActivityCriteriaObj);
-
-			activityBOList = activitydao.fetchActivity(criteriaactivityObj, "1");
-
-			try {
-				if (null != activityBOList && activityBOList.size() > 0) {
-
-					activityBOObj = activityBOList.get(0);
-					if(activitydtoObj.getStatus().equalsIgnoreCase("Delete")){
-						activitydao.deleteOnCriteria(activityBOObj, null);
-					}
-					else {
-
-					// update the activityBO fetched from DB
-
-					activityBOObj.setCreator(activitydtoObj.getCreator());
-					activityBOObj.setDetail(activitydtoObj.getDetail());
-					activityBOObj.setStatus(activitydtoObj.getStatus());
-					activityBOObj.setSubject(activitydtoObj.getSubject());
-					activityBOObj.setVenue(activitydtoObj.getVenue());
-					activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate()
-							+" "+ activitydtoObj.getActtime()));
-					//activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
-
-					// merge this UpdateBO back in DB
-					activitydao.update(activityBOObj);
-					}
-				}
-
-				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
-					throw serviceExceptionObj;
-				}
-			} catch (ParseException e) {
-				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
-				throw serviceExceptionObj;
 			}
-
-			populateActivityDTO(activitydtoObj, activityBOObj);
 
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
 			throw serviceExceptionObj;
 		}
 
-		responseObj.setActivityListObj(activityListObj);
+		return NewsLetterListObjResp;
+	}
 
+	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+		String channel = reqparam.getChannel();
+		NewsLetterList NewsLetterListObj = new NewsLetterList();
+		ArrayList<NewsLetterDTO> NewsLetterDTOList = new ArrayList<NewsLetterDTO>();
+
+		ArrayList<NewsLetterBO> newsLetterBOList;
+
+		NewsLetterBO NewsLetterBOObj;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		newsLetterBOList = newsletterdao.fetchNewsLetter(criteriaObj, reqparam.getPageno());
+
+		if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
+
+			Iterator<NewsLetterBO> litr = newsLetterBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				NewsLetterBOObj = litr.next();
+				NewsLetterDTO NewsLetterDTOObj = new NewsLetterDTO();
+				populateNewsLetterDTO(NewsLetterDTOObj, NewsLetterBOObj);
+				if (null != channel && "app".equalsIgnoreCase(channel)) {
+					NewsLetterDTOObj.setDetail("");
+				}
+				NewsLetterDTOList.add(NewsLetterDTOObj);
+			}
+
+			NewsLetterListObj.setNewsletterdtoLs(NewsLetterDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setNewsLetterListObj(NewsLetterListObj);
+		int totalrecordcount = newsletterdao.totalRecordCount(criteriaObj);
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
 
-	
+	public String fetchNewsLetterById(String id) {
+		System.out.println("In fetchNewsLetterById");
+		String responseObj = "";
+
+		ArrayList<NewsLetterBO> newsLetterBOList = newsletterdao.fetchNewsLetterById(id);
+
+		if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
+
+			Iterator<NewsLetterBO> litr = newsLetterBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				NewsLetterBO newsLetterBOObj = litr.next();
+				responseObj = newsLetterBOObj.getDetail();
+			}
+		}
+		return responseObj;
+	}
+
 	public ResponseObj updateNewsLetter(RequestObj reqparam) {
 		System.out.println("In updateNewsLetter");
 
@@ -1056,8 +1043,8 @@ public class RepositoryDelegator {
 
 		/*
 		 * First fetch the NewsLetter from the DB basis the id coming in the
-		 * request Then update teh fields of the NewsLetterBo fetched from DB with
-		 * those received in the input
+		 * request Then update teh fields of the NewsLetterBo fetched from DB
+		 * with those received in the input
 		 */
 		NewsLetterList newsLetterListObj = reqparam.getNewsLetterListObj();
 
@@ -1066,7 +1053,7 @@ public class RepositoryDelegator {
 		ArrayList<NewsLetterBO> NewsLetterBOList;
 
 		NewsLetterBO NewsLetterBOObj = null;
-		
+
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		Criteria criteriaNewsLetterObj = new Criteria();
@@ -1076,7 +1063,7 @@ public class RepositoryDelegator {
 
 		fetchNewsLetterCriteriaObj.setName("nlid");
 
-		if (NewsLetterList.size() > 0) { 
+		if (NewsLetterList.size() > 0) {
 
 			NewsLetterDTO NewsLetterdtoObj = NewsLetterList.get(0);
 
@@ -1089,22 +1076,21 @@ public class RepositoryDelegator {
 				if (null != NewsLetterBOList && NewsLetterBOList.size() > 0) {
 
 					NewsLetterBOObj = NewsLetterBOList.get(0);
-					if(NewsLetterdtoObj.getStatus().equalsIgnoreCase("Delete")){
+					if (NewsLetterdtoObj.getStatus().equalsIgnoreCase("Delete")) {
 						newsletterdao.deleteOnCriteria(NewsLetterBOObj, null);
-					}
-					else {
+					} else {
 
-					// update the NewsLetterBO fetched from DB
+						// update the NewsLetterBO fetched from DB
 
-					NewsLetterBOObj.setCreator(NewsLetterdtoObj.getCreator());
-					NewsLetterBOObj.setDetail(NewsLetterdtoObj.getDetail());
-					NewsLetterBOObj.setStatus(NewsLetterdtoObj.getStatus());
-					NewsLetterBOObj.setSubject(NewsLetterdtoObj.getSubject());
-					NewsLetterBOObj.setNldate(dateformatter.parse(NewsLetterdtoObj.getNldate()
-							+" "+ NewsLetterdtoObj.getNltime()));					
+						NewsLetterBOObj.setCreator(NewsLetterdtoObj.getCreator());
+						NewsLetterBOObj.setDetail(NewsLetterdtoObj.getDetail());
+						NewsLetterBOObj.setStatus(NewsLetterdtoObj.getStatus());
+						NewsLetterBOObj.setSubject(NewsLetterdtoObj.getSubject());
+						NewsLetterBOObj.setNldate(
+								dateformatter.parse(NewsLetterdtoObj.getNldate() + " " + NewsLetterdtoObj.getNltime()));
 
-					// merge this UpdateBO back in DB
-					newsletterdao.update(NewsLetterBOObj);
+						// merge this UpdateBO back in DB
+						newsletterdao.update(NewsLetterBOObj);
 					}
 				}
 
@@ -1130,7 +1116,210 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
+	
+	
+	public ActivityList createsuggestionidea(ActivityList activityListObj) {
+		System.out.println("InRDRegister");
 
+		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
+		ActivityList activityListObjResp = new ActivityList();
+
+		if (activityList.size() > 0) {
+			Iterator<ActivityDTO> activityListIterator = activityList.iterator();
+
+			while (activityListIterator.hasNext()) {
+
+				ActivityDTO activitydtoObj = activityListIterator.next();
+
+				ActivityBO activityBOObj = new ActivityBO();
+
+				populateCreateActivityBO(activitydtoObj, activityBOObj);
+				activitydao.createActivity(activityBOObj);
+				populateActivityDTO(activitydtoObj, activityBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return activityListObjResp;
+	}
+
+	public ResponseObj fetchsuggestionidea(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+
+		ActivityList activityListObj = new ActivityList();
+		ArrayList<ActivityDTO> activityDTOList = new ArrayList<ActivityDTO>();
+
+		ArrayList<ActivityBO> activityBOList;
+
+		ActivityBO activityBOObj;
+
+		ArrayList<UserBO> userBOList;
+
+		int totalActUserCount = 0;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		UserList userListObj = reqparam.getUserListObj();
+
+		activityBOList = activitydao.fetchActivity(criteriaObj, reqparam.getPageno());
+
+		// To get the count of total Active Users. This count would be used to
+		// determine no of users who have not responded to a Activity.
+
+		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+		fetchUserCriteriaObj.setName("status");
+		fetchUserCriteriaObj.setValue("A");
+		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+
+		Criteria criteriaUserObj = new Criteria();
+		criteriaUserObj.setCriteria("TRUE");
+		userBOList = userdao.fetchUser(criteriaObj);
+
+		if (null != userBOList) {
+			totalActUserCount = userBOList.size();
+		}
+
+		if (null != activityBOList && activityBOList.size() > 0) {
+
+			Iterator<ActivityBO> litr = activityBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				activityBOObj = litr.next();
+				ActivityDTO activityDTOObj = new ActivityDTO();
+				populateActivityDTO(activityDTOObj, activityBOObj);
+
+				// set the no of users who did not responded by subtracting the
+				// accept + deny from the total no of users calculated above.
+				activityDTOObj.setNoresponsecount(String.valueOf(
+						(totalActUserCount - (activityBOObj.getAcceptcount() + activityBOObj.getDeclinecount()))));
+
+				// for a particular user who is requesting this fetch Activity,
+				// the accept or decline status of all the Activitys needs to be
+				// populated in the return obj
+				String acceptids = activityBOObj.getAcceptid();
+				String declineids = activityBOObj.getDeclineid();
+
+				if (null != acceptids && acceptids.contains(userListObj.getUl().get(0).getUsNa())) {
+
+					activityDTOObj.setAcceptdenyind("accept");
+
+				} else if (null != declineids && declineids.contains(userListObj.getUl().get(0).getUsNa())) {
+
+					activityDTOObj.setAcceptdenyind("deny");
+
+				}
+				activityDTOList.add(activityDTOObj);
+
+			}
+
+			activityListObj.setActivitydtoLs(activityDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setActivityListObj(activityListObj);
+		int totalrecordcount = activitydao.totalRecordCount(criteriaObj);
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
+	}
+
+	public ResponseObj updatesuggestionidea(RequestObj reqparam) {
+		System.out.println("InRDUpdate");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the activity from the DB basis the id coming in the
+		 * request Then update teh fields of the activityBo fetched from DB with
+		 * those received in the input
+		 */
+		ActivityList activityListObj = reqparam.getActivityListObj();
+
+		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
+
+		ArrayList<ActivityBO> activityBOList;
+
+		ActivityBO activityBOObj = null;
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+
+		Criteria criteriaactivityObj = new Criteria();
+		criteriaactivityObj.setCriteria("TRUE");
+
+		FetchActivityCriteria fetchActivityCriteriaObj = new FetchActivityCriteria();
+
+		fetchActivityCriteriaObj.setName("activityid");
+
+		if (activityList.size() > 0) {
+
+			ActivityDTO activitydtoObj = activityList.get(0);
+
+			fetchActivityCriteriaObj.setValue(activitydtoObj.getActivityid());
+			criteriaactivityObj.setFetchActivityCriteriaObj(fetchActivityCriteriaObj);
+
+			activityBOList = activitydao.fetchActivity(criteriaactivityObj, "1");
+
+			try {
+				if (null != activityBOList && activityBOList.size() > 0) {
+
+					activityBOObj = activityBOList.get(0);
+					if (activitydtoObj.getStatus().equalsIgnoreCase("Delete")) {
+						activitydao.deleteOnCriteria(activityBOObj, null);
+					} else {
+
+						// update the activityBO fetched from DB
+
+						activityBOObj.setCreator(activitydtoObj.getCreator());
+						activityBOObj.setDetail(activitydtoObj.getDetail());
+						activityBOObj.setStatus(activitydtoObj.getStatus());
+						activityBOObj.setSubject(activitydtoObj.getSubject());
+						activityBOObj.setVenue(activitydtoObj.getVenue());
+						activityBOObj.setActdate(
+								dateformatter.parse(activitydtoObj.getActdate() + " " + activitydtoObj.getActtime()));
+						// activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
+
+						// merge this UpdateBO back in DB
+						activitydao.update(activityBOObj);
+					}
+				}
+
+				else {
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
+				}
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+				throw serviceExceptionObj;
+			}
+
+			populateActivityDTO(activitydtoObj, activityBOObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setActivityListObj(activityListObj);
+
+		return responseObj;
+	}	
 
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
@@ -1191,7 +1380,7 @@ public class RepositoryDelegator {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		try {
 			meetingBOObj.setAcceptid(meetingdtoObj.getAcceptid());
@@ -1213,10 +1402,10 @@ public class RepositoryDelegator {
 
 			meetingBOObj.setCreator(meetingdtoObj.getCreator());
 			meetingBOObj.setDetail(meetingdtoObj.getDetail());
-			meetingBOObj.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate()
-					+" "+meetingdtoObj.getMeettime()));
+			meetingBOObj
+					.setMeetdate(dateformatter.parse(meetingdtoObj.getMeetdate() + " " + meetingdtoObj.getMeettime()));
 			// meetingBOObj.setMeetingid(meetingdtoObj.getMeetingid());
-			//meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
+			// meetingBOObj.setMeettime(timeformatter.parse(meetingdtoObj.getMeettime()));
 			meetingBOObj.setStatus(meetingdtoObj.getStatus());
 			meetingBOObj.setSubject(meetingdtoObj.getSubject());
 			meetingBOObj.setVenue(meetingdtoObj.getVenue());
@@ -1250,7 +1439,7 @@ public class RepositoryDelegator {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-		//SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		try {
 			activityBOObj.setAcceptid(activitydtoObj.getAcceptid());
@@ -1272,10 +1461,10 @@ public class RepositoryDelegator {
 
 			activityBOObj.setCreator(activitydtoObj.getCreator());
 			activityBOObj.setDetail(activitydtoObj.getDetail());
-			activityBOObj.setActdate(dateformatter.parse(activitydtoObj.getActdate() 
-					+" "+activitydtoObj.getActtime()));
+			activityBOObj
+					.setActdate(dateformatter.parse(activitydtoObj.getActdate() + " " + activitydtoObj.getActtime()));
 			// activityBOObj.setactivityid(activitydtoObj.getactivityid());
-			//activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
+			// activityBOObj.setActtime(timeformatter.parse(activitydtoObj.getActtime()));
 			activityBOObj.setStatus(activitydtoObj.getStatus());
 			activityBOObj.setSubject(activitydtoObj.getSubject());
 			activityBOObj.setVenue(activitydtoObj.getVenue());
@@ -1304,7 +1493,7 @@ public class RepositoryDelegator {
 		activitydtoObj.setVenue(activityBOObj.getVenue());
 
 	}
-	
+
 	private void populateCreateNewsLetterBO(NewsLetterDTO newsLetterdtoObj, NewsLetterBO newsLetterBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -1312,10 +1501,10 @@ public class RepositoryDelegator {
 		try {
 			newsLetterBOObj.setCreator(newsLetterdtoObj.getCreator());
 			newsLetterBOObj.setDetail(newsLetterdtoObj.getDetail());
-			newsLetterBOObj.setNldate(dateformatter.parse(newsLetterdtoObj.getNldate() 
-					+" "+newsLetterdtoObj.getNltime()));			
+			newsLetterBOObj
+					.setNldate(dateformatter.parse(newsLetterdtoObj.getNldate() + " " + newsLetterdtoObj.getNltime()));
 			newsLetterBOObj.setStatus(newsLetterdtoObj.getStatus());
-			newsLetterBOObj.setSubject(newsLetterdtoObj.getSubject());			
+			newsLetterBOObj.setSubject(newsLetterdtoObj.getSubject());
 		} catch (ParseException e) {
 			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
 			throw serviceExceptionObj;
@@ -1327,28 +1516,27 @@ public class RepositoryDelegator {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
-		String status="";
-		
+		String status = "";
+
 		newsLetterdtoObj.setCreator(newsLetterBOObj.getCreator());
 		newsLetterdtoObj.setDetail(newsLetterBOObj.getDetail());
 		newsLetterdtoObj.setNldate(dateformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNltime(timeformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNlid(newsLetterBOObj.getNlid().toString());
-		if(null !=newsLetterBOObj.getStatus() && !"".equalsIgnoreCase(newsLetterBOObj.getStatus()))
-		status=newsLetterBOObj.getStatus().toLowerCase();
+		if (null != newsLetterBOObj.getStatus() && !"".equalsIgnoreCase(newsLetterBOObj.getStatus()))
+			status = newsLetterBOObj.getStatus().toLowerCase();
 		newsLetterdtoObj.setStatus(status);
-		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());		
+		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
 
 	}
-
 
 	private int getTotalPageCount(int totalrecordcount) {
 		int pagesize = 6;
 
 		int totalPage = 0;
-		
-		if(totalrecordcount > 0){
-			
+
+		if (totalrecordcount > 0) {
+
 			if (totalrecordcount % pagesize == 0) {
 
 				totalPage = totalrecordcount / pagesize;
@@ -1356,19 +1544,18 @@ public class RepositoryDelegator {
 			} else {
 				totalPage = totalrecordcount / pagesize + 1;
 			}
-			
-		}
 
+		}
 
 		return totalPage;
 	}
-	
-	public void deleteMeetingCron(String beforeLimit){
-		meetingdao.deleteCron(beforeLimit);			
+
+	public void deleteMeetingCron(String beforeLimit) {
+		meetingdao.deleteCron(beforeLimit);
 	}
-	
-	public void deleteActivityCron(String beforeLimit){		
-		activitydao.deleteCron(beforeLimit);		
+
+	public void deleteActivityCron(String beforeLimit) {
+		activitydao.deleteCron(beforeLimit);
 	}
 
 }
