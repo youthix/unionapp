@@ -560,7 +560,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
-	@Path("/createSummary")
+	@Path("/createsummary")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createSummary(RequestObj reqparam) {
@@ -587,7 +587,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
-	@Path("/updateSummary")
+	@Path("/updatesummary")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateSummary(RequestObj reqparam) {
@@ -614,7 +614,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@GET
-	@Path("/fetchSummary/{id}")
+	@Path("/fetchsummary/{id}")
 	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
 	public String fetchSummaryById(@PathParam ("id") String id) {
 
@@ -640,7 +640,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
-	@Path("/fetchSummary")
+	@Path("/fetchsummary")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchSummary(RequestObj reqparam) {
