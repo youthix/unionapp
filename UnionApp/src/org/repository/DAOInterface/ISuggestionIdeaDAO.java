@@ -3,19 +3,19 @@ package org.repository.DAOInterface;
 import java.util.ArrayList;
 
 import org.presentation.dto.criteria.Criteria;
-import org.repository.entity.ActivityBO;
+import org.repository.entity.SuggestionIdeaBO;
 
 public interface ISuggestionIdeaDAO {
 
-	public void createActivity(ActivityBO activityBO);
+	public void createSuggestionIdea(SuggestionIdeaBO suggestionIdeaBO);
 	
-	public void update(ActivityBO activityBO);
+	public void update(SuggestionIdeaBO suggestionIdeaBO);
 
-	public void updateOnCriteria(ActivityBO activityBO, Criteria criteriaObj);
+	public void updateOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj);
 	
-	public void deleteOnCriteria(ActivityBO activityBO, Criteria criteriaObj);
+	public void deleteOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj);
 
-	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno);
+	public ArrayList<SuggestionIdeaBO> fetchSuggestionIdea(Criteria criteriaObj, String pageno);
 	
 	public Integer totalRecordCount(Criteria criteriaObj);
 	

@@ -10,6 +10,7 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
 import org.repository.entity.ActivityBO;
+import org.repository.entity.SuggestionIdeaBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +21,10 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public void createActivity(ActivityBO activityBO) {
+	public void createSuggestionIdea(SuggestionIdeaBO suggestionIdeaBO) {
 		try {
 			System.out.println("InDAOCreateMeet");
-			manager.persist(activityBO);
+			manager.persist(suggestionIdeaBO);
 			System.out.println("DoneDAOCreateMeet");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
@@ -31,7 +32,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 		}
 	}
 
-	public void update(ActivityBO activityBO) {
+	public void update(SuggestionIdeaBO suggestionIdeaBO) {
 		try {
 			System.out.println("InDAOAddUser");
 
@@ -51,7 +52,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 		}
 	}
 
-	public void updateOnCriteria(ActivityBO activityBO, Criteria criteriaObj) {
+	public void updateOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj) {
 		try {
 
 			String SQL = "";
@@ -93,7 +94,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<ActivityBO> fetchActivity(Criteria criteriaObj, String pageno) {
+	public ArrayList<SuggestionIdeaBO> fetchSuggestionIdea(Criteria criteriaObj, String pageno) {
 
 		System.out.println("InDAOFetchUser");
 		ArrayList<ActivityBO> activityBOList = null;
@@ -241,11 +242,11 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 	}
 
 	@Override
-	public void deleteOnCriteria(ActivityBO activityBO, Criteria criteriaObj) {
+	public void deleteOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj) {
 		try {
 
 			String SQL = "delete from " + ActivityBO.class.getName() + " where activityid = '"
-					+ activityBO.getActivityid() + "'";
+					+ suggestionIdeaBO.getActivityid() + "'";
 
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();
