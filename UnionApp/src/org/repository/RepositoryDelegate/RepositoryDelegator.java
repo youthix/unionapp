@@ -20,16 +20,20 @@ import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterDTO;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.SuggestionIdeaDTO;
+import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
 import org.repository.DAOInterface.IMeetingDAO;
 import org.repository.DAOInterface.INewsLetterDAO;
+import org.repository.DAOInterface.ISuggestionIdeaDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.MeetingBO;
 import org.repository.entity.NewsLetterBO;
+import org.repository.entity.SuggestionIdeaBO;
 import org.repository.entity.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,6 +54,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	INewsLetterDAO newsletterdao;
+	
+	@Autowired
+	ISuggestionIdeaDAO suggestionIdeadao;	
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -1116,9 +1123,8 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
-	
-	
-	public ActivityList createsuggestionidea(ActivityList activityListObj) {
+
+	public ActivityList createsuggestionidea(SuggestionIdeaList suggestionIdeaListObj) {
 		System.out.println("InRDRegister");
 
 		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
@@ -1134,7 +1140,7 @@ public class RepositoryDelegator {
 				ActivityBO activityBOObj = new ActivityBO();
 
 				populateCreateActivityBO(activitydtoObj, activityBOObj);
-				activitydao.createActivity(activityBOObj);
+				suggestionIdeadao.createActivity(activityBOObj);
 				populateActivityDTO(activitydtoObj, activityBOObj);
 
 			}
@@ -1153,12 +1159,12 @@ public class RepositoryDelegator {
 		System.out.println("InRDFetch");
 		ResponseObj responseObj = new ResponseObj();
 
-		ActivityList activityListObj = new ActivityList();
-		ArrayList<ActivityDTO> activityDTOList = new ArrayList<ActivityDTO>();
+		SuggestionIdeaList suggestionIdeaListObj = new SuggestionIdeaList();
+		ArrayList<SuggestionIdeaDTO> suggestionIdeaDTOList = new ArrayList<SuggestionIdeaDTO>();
 
-		ArrayList<ActivityBO> activityBOList;
+		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList;
 
-		ActivityBO activityBOObj;
+		SuggestionIdeaBO suggestionIdeaBOObj;
 
 		ArrayList<UserBO> userBOList;
 
@@ -1168,67 +1174,29 @@ public class RepositoryDelegator {
 
 		UserList userListObj = reqparam.getUserListObj();
 
-		activityBOList = activitydao.fetchActivity(criteriaObj, reqparam.getPageno());
+		suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdea(criteriaObj, reqparam.getPageno());
 
-		// To get the count of total Active Users. This count would be used to
-		// determine no of users who have not responded to a Activity.
+		if (null != suggestionIdeaBOList && suggestionIdeaBOList.size() > 0) {
 
-		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
-
-		fetchUserCriteriaObj.setName("status");
-		fetchUserCriteriaObj.setValue("A");
-		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
-
-		Criteria criteriaUserObj = new Criteria();
-		criteriaUserObj.setCriteria("TRUE");
-		userBOList = userdao.fetchUser(criteriaObj);
-
-		if (null != userBOList) {
-			totalActUserCount = userBOList.size();
-		}
-
-		if (null != activityBOList && activityBOList.size() > 0) {
-
-			Iterator<ActivityBO> litr = activityBOList.iterator();
+			Iterator<SuggestionIdeaBO> litr = suggestionIdeaBOList.iterator();
 
 			while (litr.hasNext()) {
 
-				activityBOObj = litr.next();
-				ActivityDTO activityDTOObj = new ActivityDTO();
-				populateActivityDTO(activityDTOObj, activityBOObj);
-
-				// set the no of users who did not responded by subtracting the
-				// accept + deny from the total no of users calculated above.
-				activityDTOObj.setNoresponsecount(String.valueOf(
-						(totalActUserCount - (activityBOObj.getAcceptcount() + activityBOObj.getDeclinecount()))));
-
-				// for a particular user who is requesting this fetch Activity,
-				// the accept or decline status of all the Activitys needs to be
-				// populated in the return obj
-				String acceptids = activityBOObj.getAcceptid();
-				String declineids = activityBOObj.getDeclineid();
-
-				if (null != acceptids && acceptids.contains(userListObj.getUl().get(0).getUsNa())) {
-
-					activityDTOObj.setAcceptdenyind("accept");
-
-				} else if (null != declineids && declineids.contains(userListObj.getUl().get(0).getUsNa())) {
-
-					activityDTOObj.setAcceptdenyind("deny");
-
-				}
-				activityDTOList.add(activityDTOObj);
+				suggestionIdeaBOObj = litr.next();
+				SuggestionIdeaDTO suggestionIdeaDTOObj = new SuggestionIdeaDTO();
+				populateActivityDTO(activityDTOObj, suggestionIdeaBOObj);
+				suggestionIdeaDTOList.add(suggestionIdeaDTOObj);
 
 			}
 
-			activityListObj.setActivitydtoLs(activityDTOList);
-
+			suggestionIdeaListObj.setSuggestionideadtoLs(suggestionIdeaDTOList);
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
 			throw serviceExceptionObj;
 		}
-		responseObj.setActivityListObj(activityListObj);
-		int totalrecordcount = activitydao.totalRecordCount(criteriaObj);
+
+		responseObj.setSuggestionIdeaListObj(suggestionIdeaListObj);
+		int totalrecordcount = suggestionIdeadao.totalRecordCount(criteriaObj);
 
 		int totalPage = getTotalPageCount(totalrecordcount);
 
@@ -1319,7 +1287,7 @@ public class RepositoryDelegator {
 		responseObj.setActivityListObj(activityListObj);
 
 		return responseObj;
-	}	
+	}
 
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 

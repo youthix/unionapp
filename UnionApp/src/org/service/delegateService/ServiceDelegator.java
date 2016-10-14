@@ -11,6 +11,7 @@ import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -488,12 +489,12 @@ public class ServiceDelegator {
 	public ResponseObj createsuggestionidea(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		ActivityList activityListObj = reqparam.getActivityListObj();
+		SuggestionIdeaList suggestionIdeaListObj = reqparam.getSuggestionIdeaListObj()();
 
-		if (null != activityListObj) {
+		if (null != suggestionIdeaListObj) {
 
-			repositoryDelegator.createsuggestionidea(activityListObj);
-			responseObj.setActivityListObj(activityListObj);
+			repositoryDelegator.createsuggestionidea(suggestionIdeaListObj);
+			responseObj.setSuggestionIdeaListObj(suggestionIdeaListObj);
 			setResponse(responseObj);
 
 		} else {
