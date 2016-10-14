@@ -86,7 +86,6 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			
 			// Update the Login status
 			userListObj.getUl().get(0).setLoginstatus("F");
 			Criteria criteriaObj = new Criteria();
@@ -163,7 +162,7 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
+
 	public ResponseObj updateuserprofile(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -180,7 +179,7 @@ public class ServiceDelegator {
 		}
 
 		return responseObj;
-	}	
+	}
 
 	public ResponseObj updatepwd(RequestObj reqparam) {
 
@@ -306,11 +305,11 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 
-		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
 
 			responseObj = repositoryDelegator.fetchmeeting(reqparam);
 
-			
 			setResponse(responseObj);
 
 		} else {
@@ -371,11 +370,12 @@ public class ServiceDelegator {
 	public ResponseObj fetchactivity(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		
-		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
 
 			responseObj = repositoryDelegator.fetchactivity(reqparam);
-			
+
 			setResponse(responseObj);
 
 		} else {
@@ -413,7 +413,7 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
+
 	public ResponseObj createNewsLetter(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -436,11 +436,12 @@ public class ServiceDelegator {
 	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		
-		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
 
 			responseObj = repositoryDelegator.fetchNewsLetter(reqparam);
-			
+
 			setResponse(responseObj);
 
 		} else {
@@ -454,7 +455,7 @@ public class ServiceDelegator {
 	public String fetchNewsLetterById(String id) {
 
 		String responseObj = "";
-		
+
 		if (null != id) {
 
 			responseObj = repositoryDelegator.fetchNewsLetterById(id);
@@ -467,7 +468,6 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-	
 	public ResponseObj updateNewsLetter(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -485,11 +485,11 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
+
 	public ResponseObj createsuggestionidea(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		SuggestionIdeaList suggestionIdeaListObj = reqparam.getSuggestionIdeaListObj()();
+		SuggestionIdeaList suggestionIdeaListObj = reqparam.getSuggestionIdeaListObj();
 
 		if (null != suggestionIdeaListObj) {
 
@@ -508,11 +508,12 @@ public class ServiceDelegator {
 	public ResponseObj fetchsuggestionidea(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		
-		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj() && reqparam.getUserListObj().getUl().size()>0) {
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
 
 			responseObj = repositoryDelegator.fetchsuggestionidea(reqparam);
-			
+
 			setResponse(responseObj);
 
 		} else {
@@ -539,9 +540,8 @@ public class ServiceDelegator {
 		}
 
 		return responseObj;
-	}	
+	}
 
-	
 	private String generatepwd() {
 
 		String newPwd = UUID.randomUUID().toString();

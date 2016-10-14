@@ -54,9 +54,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	INewsLetterDAO newsletterdao;
-	
+
 	@Autowired
-	ISuggestionIdeaDAO suggestionIdeadao;	
+	ISuggestionIdeaDAO suggestionIdeadao;
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -1124,24 +1124,25 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	public ActivityList createsuggestionidea(SuggestionIdeaList suggestionIdeaListObj) {
+	public SuggestionIdeaList createsuggestionidea(SuggestionIdeaList suggestionIdeaListObj) {
 		System.out.println("InRDRegister");
 
-		ArrayList<ActivityDTO> activityList = (ArrayList<ActivityDTO>) activityListObj.getActivitydtoLs();
-		ActivityList activityListObjResp = new ActivityList();
+		ArrayList<SuggestionIdeaDTO> suggestionIdeaList = (ArrayList<SuggestionIdeaDTO>) suggestionIdeaListObj
+				.getSuggestionideadtoLs();
+		SuggestionIdeaList suggestionIdeaListObjResp = new SuggestionIdeaList();
 
-		if (activityList.size() > 0) {
-			Iterator<ActivityDTO> activityListIterator = activityList.iterator();
+		if (suggestionIdeaList.size() > 0) {
+			Iterator<SuggestionIdeaDTO> suggestionIdeaListIterator = suggestionIdeaList.iterator();
 
-			while (activityListIterator.hasNext()) {
+			while (suggestionIdeaListIterator.hasNext()) {
 
-				ActivityDTO activitydtoObj = activityListIterator.next();
+				SuggestionIdeaDTO suggestionIdeadtoObj = suggestionIdeaListIterator.next();
 
-				ActivityBO activityBOObj = new ActivityBO();
+				SuggestionIdeaBO suggestionIdeaBOObj = new SuggestionIdeaBO();
 
-				populateCreateActivityBO(activitydtoObj, activityBOObj);
-				suggestionIdeadao.createActivity(activityBOObj);
-				populateActivityDTO(activitydtoObj, activityBOObj);
+				populateCreateSuggestionIdeaBO(suggestionIdeadtoObj, suggestionIdeaBOObj);
+				suggestionIdeadao.createSuggestionIdea(suggestionIdeaBOObj);
+				populateSuggestionIdeaDTO(suggestionIdeadtoObj, suggestionIdeaBOObj);
 
 			}
 
@@ -1152,7 +1153,7 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 
-		return activityListObjResp;
+		return suggestionIdeaListObjResp;
 	}
 
 	public ResponseObj fetchsuggestionidea(RequestObj reqparam) {
@@ -1166,13 +1167,7 @@ public class RepositoryDelegator {
 
 		SuggestionIdeaBO suggestionIdeaBOObj;
 
-		ArrayList<UserBO> userBOList;
-
-		int totalActUserCount = 0;
-
 		Criteria criteriaObj = reqparam.getCriteria();
-
-		UserList userListObj = reqparam.getUserListObj();
 
 		suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdea(criteriaObj, reqparam.getPageno());
 
@@ -1184,7 +1179,7 @@ public class RepositoryDelegator {
 
 				suggestionIdeaBOObj = litr.next();
 				SuggestionIdeaDTO suggestionIdeaDTOObj = new SuggestionIdeaDTO();
-				populateActivityDTO(activityDTOObj, suggestionIdeaBOObj);
+				populateSuggestionIdeaDTO(suggestionIdeaDTOObj, suggestionIdeaBOObj);
 				suggestionIdeaDTOList.add(suggestionIdeaDTOObj);
 
 			}
@@ -1495,6 +1490,45 @@ public class RepositoryDelegator {
 			status = newsLetterBOObj.getStatus().toLowerCase();
 		newsLetterdtoObj.setStatus(status);
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
+
+	}
+
+	private void populateCreateSuggestionIdeaBO(SuggestionIdeaDTO suggestionIdeadtoObj,
+			SuggestionIdeaBO suggestionIdeaBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		try {
+
+			suggestionIdeaBOObj.setCreator(suggestionIdeadtoObj.getCreator());
+			suggestionIdeaBOObj.setDetail(suggestionIdeadtoObj.getDetail());
+			suggestionIdeaBOObj.setActdate(
+					dateformatter.parse(suggestionIdeadtoObj.getActdate() + " " + suggestionIdeadtoObj.getActtime()));
+
+			suggestionIdeaBOObj.setStatus(suggestionIdeadtoObj.getStatus());
+			suggestionIdeaBOObj.setSubject(suggestionIdeadtoObj.getSubject());
+			suggestionIdeaBOObj.setVenue(suggestionIdeadtoObj.getVenue());
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populateSuggestionIdeaDTO(SuggestionIdeaDTO suggestionIdeadtoObj,
+			SuggestionIdeaBO suggestionIdeaBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+
+		suggestionIdeadtoObj.setCreator(suggestionIdeaBOObj.getCreator());
+		suggestionIdeadtoObj.setDetail(suggestionIdeaBOObj.getDetail());
+		suggestionIdeadtoObj.setActdate(dateformatter.format(suggestionIdeaBOObj.getActdate()));
+		suggestionIdeadtoObj.setActtime(timeformatter.format(suggestionIdeaBOObj.getActdate()));
+		suggestionIdeadtoObj.setActivityid(suggestionIdeaBOObj.getActivityid().toString());
+		suggestionIdeadtoObj.setStatus(suggestionIdeaBOObj.getStatus());
+		suggestionIdeadtoObj.setSubject(suggestionIdeaBOObj.getSubject());
 
 	}
 
