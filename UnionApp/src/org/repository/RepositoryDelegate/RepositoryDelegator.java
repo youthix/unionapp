@@ -1254,7 +1254,7 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 		FetchSummaryCriteria fetchSummaryCriteriaObj = new FetchSummaryCriteria();
 
-		fetchSummaryCriteriaObj.setName("nlid");
+		fetchSummaryCriteriaObj.setName("sumid");
 
 		if (SummaryList.size() > 0) {
 
