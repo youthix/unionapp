@@ -8,31 +8,17 @@ public class SuggestionIdeaDTO {
 
 	private String subject;
 
-	private String actdate;
+	private String suggideadate;
 
-	private String acttime;
+	private String suggideatime;
 
 	private String detail;
 
 	private String creator;
 
-	private String venue;
-
 	private String status;
 
-	private String acceptid;
-
-	private String acceptcount;
-
-	private String declineid;
-
-	private String declinecount;
-
-	private String noresponsecount;
-
-	private String activityid;
-
-	private String acceptdenyind;
+	private String suggideaid;
 
 	public String getSubject() {
 		return subject;
@@ -40,6 +26,22 @@ public class SuggestionIdeaDTO {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public String getSuggideadate() {
+		return suggideadate;
+	}
+
+	public void setSuggideadate(String suggideadate) {
+		this.suggideadate = suggideadate;
+	}
+
+	public String getSuggideatime() {
+		return suggideatime;
+	}
+
+	public void setSuggideatime(String suggideatime) {
+		this.suggideatime = suggideatime;
 	}
 
 	public String getDetail() {
@@ -58,14 +60,6 @@ public class SuggestionIdeaDTO {
 		this.creator = creator;
 	}
 
-	public String getVenue() {
-		return venue;
-	}
-
-	public void setVenue(String venue) {
-		this.venue = venue;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -74,76 +68,14 @@ public class SuggestionIdeaDTO {
 		this.status = status;
 	}
 
-	public String getAcceptid() {
-		return acceptid;
+	public String getSuggideaid() {
+		return suggideaid;
 	}
 
-	public void setAcceptid(String acceptid) {
-		this.acceptid = acceptid;
+	public void setSuggideaid(String suggideaid) {
+		this.suggideaid = suggideaid;
 	}
 
-	public String getAcceptcount() {
-		return acceptcount;
-	}
 
-	public void setAcceptcount(String acceptcount) {
-		this.acceptcount = acceptcount;
-	}
-
-	public String getDeclineid() {
-		return declineid;
-	}
-
-	public void setDeclineid(String declineid) {
-		this.declineid = declineid;
-	}
-
-	public String getDeclinecount() {
-		return declinecount;
-	}
-
-	public void setDeclinecount(String declinecount) {
-		this.declinecount = declinecount;
-	}
-
-	public String getAcceptdenyind() {
-		return acceptdenyind;
-	}
-
-	public void setAcceptdenyind(String acceptdenyind) {
-		this.acceptdenyind = acceptdenyind;
-	}
-
-	public String getNoresponsecount() {
-		return noresponsecount;
-	}
-
-	public void setNoresponsecount(String noresponsecount) {
-		this.noresponsecount = noresponsecount;
-	}
-
-	public String getActdate() {
-		return actdate;
-	}
-
-	public void setActdate(String actdate) {
-		this.actdate = actdate;
-	}
-
-	public String getActtime() {
-		return acttime;
-	}
-
-	public void setActtime(String acttime) {
-		this.acttime = acttime;
-	}
-
-	public String getActivityid() {
-		return activityid;
-	}
-
-	public void setActivityid(String activityid) {
-		this.activityid = activityid;
-	}
 
 }

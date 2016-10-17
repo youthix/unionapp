@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "suggestionideadetail")
 public class SuggestionIdeaBO implements Serializable {
@@ -23,46 +25,35 @@ public class SuggestionIdeaBO implements Serializable {
 	@Column(name = "subject")
 	private String subject;
 	
-	@Column(name = "actdate")
-	private Date actdate;
+	@Column(name = "suggideadate")
+	private Date suggideadate;
 	
 	@Column(name = "detail")
+	@Type(type="text")
 	private String detail;
 	
 	@Column(name = "creator")
 	private String creator;
 	
-	@Column(name = "venue")
-	private String venue;
-	
 	@Column(name = "status")
 	private String status;
 	
-	@Column(name = "acceptid")
-	private String acceptid;
-	
-	@Column(name = "acceptcount")
-	private Integer acceptcount;
-	
-	@Column(name = "declineid")
-	private String declineid;	
-	
-	@Column(name = "declinecount")
-	private Integer declinecount;	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "activityid")
-	private Integer activityid;
+	@Column(name = "suggideaid")
+	private Integer suggideaid;
 
 	public String getSubject() {
 		return subject;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public Date getSuggideadate() {
+		return suggideadate;
 	}
 
+	public void setSuggideadate(Date suggideadate) {
+		this.suggideadate = suggideadate;
+	}
 
 	public String getDetail() {
 		return detail;
@@ -80,14 +71,6 @@ public class SuggestionIdeaBO implements Serializable {
 		this.creator = creator;
 	}
 
-	public String getVenue() {
-		return venue;
-	}
-
-	public void setVenue(String venue) {
-		this.venue = venue;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -96,63 +79,21 @@ public class SuggestionIdeaBO implements Serializable {
 		this.status = status;
 	}
 
+	public Integer getSuggideaid() {
+		return suggideaid;
+	}
 
+	public void setSuggideaid(Integer suggideaid) {
+		this.suggideaid = suggideaid;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-
-	public String getAcceptid() {
-		return acceptid;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
-
-	public void setAcceptid(String acceptid) {
-		this.acceptid = acceptid;
-	}
-
-
-	public String getDeclineid() {
-		return declineid;
-	}
-
-	public void setDeclineid(String declineid) {
-		this.declineid = declineid;
-	}
-
-	public Integer getAcceptcount() {
-		return acceptcount;
-	}
-
-	public void setAcceptcount(Integer acceptcount) {
-		this.acceptcount = acceptcount;
-	}
-
-	public Integer getDeclinecount() {
-		return declinecount;
-	}
-
-	public void setDeclinecount(Integer declinecount) {
-		this.declinecount = declinecount;
-	}
-
-
-	public Date getActdate() {
-		return actdate;
-	}
-
-	public void setActdate(Date actdate) {
-		this.actdate = actdate;
-	}
-
-	public Integer getActivityid() {
-		return activityid;
-	}
-
-	public void setActivityid(Integer activityid) {
-		this.activityid = activityid;
-	}
-
 
 
 

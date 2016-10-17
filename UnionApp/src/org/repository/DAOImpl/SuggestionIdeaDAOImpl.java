@@ -96,7 +96,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 						String SQL = "select s from " + SuggestionIdeaBO.class.getName() + " s where "
 								+ criteriaObj.getFetchSuggestionIdeaCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by s.date asc";
+								+ ") order by s.suggideadate asc";
 
 						suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL)
 								.setFirstResult(offsetno) // offset
@@ -113,7 +113,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 				}
 			} else {
 				String SQL = "select m from " + SuggestionIdeaBO.class.getName()
-						+ " m where status not in ('delete') order by m.actdate asc ";
+						+ " m where status not in ('delete') order by m.suggideadate asc ";
 				suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -199,8 +199,8 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 	public void deleteOnCriteria(SuggestionIdeaBO suggestionIdeaBO, Criteria criteriaObj) {
 		try {
 
-			String SQL = "delete from " + SuggestionIdeaBO.class.getName() + " where activityid = '"
-					+ suggestionIdeaBO.getActivityid() + "'";
+			String SQL = "delete from " + SuggestionIdeaBO.class.getName() + " where suggideaid = '"
+					+ suggestionIdeaBO.getSuggideaid() + "'";
 
 			Query query = manager.createQuery(SQL);
 			query.executeUpdate();

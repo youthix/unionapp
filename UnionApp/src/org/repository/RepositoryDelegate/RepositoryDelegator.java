@@ -60,7 +60,7 @@ public class RepositoryDelegator {
 
 	@Autowired
 	INewsLetterDAO newsletterdao;
-	
+
 	@Autowired
 	ISummaryDAO summarydao;
 
@@ -1132,7 +1132,7 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
-	
+
 	public SummaryList createSummary(SummaryList SummaryListObj) {
 		System.out.println("In createSummary");
 
@@ -1164,8 +1164,7 @@ public class RepositoryDelegator {
 		return SummaryListObjResp;
 	}
 
-
-public ResponseObj fetchSummary(RequestObj reqparam) {
+	public ResponseObj fetchSummary(RequestObj reqparam) {
 		System.out.println("InRDFetch");
 		ResponseObj responseObj = new ResponseObj();
 		String channel = reqparam.getChannel();
@@ -1236,8 +1235,8 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 		/*
 		 * First fetch the Summary from the DB basis the id coming in the
-		 * request Then update teh fields of the SummaryBo fetched from DB
-		 * with those received in the input
+		 * request Then update teh fields of the SummaryBo fetched from DB with
+		 * those received in the input
 		 */
 		SummaryList SummaryListObj = reqparam.getSummaryListObj();
 
@@ -1309,7 +1308,6 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 		return responseObj;
 	}
-
 
 	public SuggestionIdeaList createsuggestionidea(SuggestionIdeaList suggestionIdeaListObj) {
 		System.out.println("InRDRegister");
@@ -1393,12 +1391,13 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 		/*
 		 * First fetch the suggestionIdea from the DB basis the id coming in the
-		 * request Then update teh fields of the suggestionIdeaBO fetched from DB with
-		 * those received in the input
+		 * request Then update teh fields of the suggestionIdeaBO fetched from
+		 * DB with those received in the input
 		 */
 		SuggestionIdeaList suggestionIdeaListObj = reqparam.getSuggestionIdeaListObj();
 
-		ArrayList<SuggestionIdeaDTO> suggestionIdeaList = (ArrayList<SuggestionIdeaDTO>) suggestionIdeaListObj.getSuggestionideadtoLs();
+		ArrayList<SuggestionIdeaDTO> suggestionIdeaList = (ArrayList<SuggestionIdeaDTO>) suggestionIdeaListObj
+				.getSuggestionideadtoLs();
 
 		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList;
 
@@ -1419,7 +1418,7 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 			SuggestionIdeaDTO suggestionIdeadtoObj = suggestionIdeaList.get(0);
 
-			//fetchSuggestionIdeaCriteriaObj.setValue(suggestionIdeadtoObj.get);
+			// fetchSuggestionIdeaCriteriaObj.setValue(suggestionIdeadtoObj.get);
 			criteriaSuggestionIdeaObj.setFetchSuggestionIdeaCriteriaObj(fetchSuggestionIdeaCriteriaObj);
 
 			suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdea(criteriaSuggestionIdeaObj, "1");
@@ -1438,9 +1437,8 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 						suggestionIdeaBOObj.setDetail(suggestionIdeadtoObj.getDetail());
 						suggestionIdeaBOObj.setStatus(suggestionIdeadtoObj.getStatus());
 						suggestionIdeaBOObj.setSubject(suggestionIdeadtoObj.getSubject());
-						suggestionIdeaBOObj.setVenue(suggestionIdeadtoObj.getVenue());
-						suggestionIdeaBOObj.setActdate(
-								dateformatter.parse(suggestionIdeadtoObj.getActdate() + " " + suggestionIdeadtoObj.getActtime()));
+						suggestionIdeaBOObj.setSuggideadate(dateformatter
+								.parse(suggestionIdeadtoObj.getSuggideadate() + " " + suggestionIdeadtoObj.getSuggideatime()));
 						// merge this UpdateBO back in DB
 						suggestionIdeadao.update(suggestionIdeaBOObj);
 					}
@@ -1677,7 +1675,7 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
 
 	}
-	
+
 	private void populateCreateSummaryBO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -1685,8 +1683,7 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 		try {
 			SummaryBOObj.setCreator(SummarydtoObj.getCreator());
 			SummaryBOObj.setDetail(SummarydtoObj.getDetail());
-			SummaryBOObj
-					.setSumdate(dateformatter.parse(SummarydtoObj.getSumdate() + " " + SummarydtoObj.getSumtime()));
+			SummaryBOObj.setSumdate(dateformatter.parse(SummarydtoObj.getSumdate() + " " + SummarydtoObj.getSumtime()));
 			SummaryBOObj.setStatus(SummarydtoObj.getStatus());
 			SummaryBOObj.setSubject(SummarydtoObj.getSubject());
 		} catch (ParseException e) {
@@ -1714,7 +1711,6 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 	}
 
-
 	private void populateCreateSuggestionIdeaBO(SuggestionIdeaDTO suggestionIdeadtoObj,
 			SuggestionIdeaBO suggestionIdeaBOObj) {
 
@@ -1724,12 +1720,12 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 			suggestionIdeaBOObj.setCreator(suggestionIdeadtoObj.getCreator());
 			suggestionIdeaBOObj.setDetail(suggestionIdeadtoObj.getDetail());
-			suggestionIdeaBOObj.setActdate(
-					dateformatter.parse(suggestionIdeadtoObj.getActdate() + " " + suggestionIdeadtoObj.getActtime()));
+			suggestionIdeaBOObj.setSuggideadate(dateformatter
+					.parse(suggestionIdeadtoObj.getSuggideadate() + " " + suggestionIdeadtoObj.getSuggideatime()));
 
 			suggestionIdeaBOObj.setStatus(suggestionIdeadtoObj.getStatus());
 			suggestionIdeaBOObj.setSubject(suggestionIdeadtoObj.getSubject());
-			suggestionIdeaBOObj.setVenue(suggestionIdeadtoObj.getVenue());
+
 		} catch (ParseException e) {
 			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
 			throw serviceExceptionObj;
@@ -1746,9 +1742,9 @@ public ResponseObj fetchSummary(RequestObj reqparam) {
 
 		suggestionIdeadtoObj.setCreator(suggestionIdeaBOObj.getCreator());
 		suggestionIdeadtoObj.setDetail(suggestionIdeaBOObj.getDetail());
-		suggestionIdeadtoObj.setActdate(dateformatter.format(suggestionIdeaBOObj.getActdate()));
-		suggestionIdeadtoObj.setActtime(timeformatter.format(suggestionIdeaBOObj.getActdate()));
-		suggestionIdeadtoObj.setActivityid(suggestionIdeaBOObj.getActivityid().toString());
+		suggestionIdeadtoObj.setSuggideadate(dateformatter.format(suggestionIdeaBOObj.getSuggideadate()));
+		suggestionIdeadtoObj.setSuggideatime(timeformatter.format(suggestionIdeaBOObj.getSuggideadate()));
+		suggestionIdeadtoObj.setSuggideaid(suggestionIdeaBOObj.getSuggideaid().toString());
 		suggestionIdeadtoObj.setStatus(suggestionIdeaBOObj.getStatus());
 		suggestionIdeadtoObj.setSubject(suggestionIdeaBOObj.getSubject());
 
