@@ -29,6 +29,8 @@ public class Criteria {
 	private UpdateSuggestionIdeaCriteria UpdateSuggestionIdeaCriteriaObj ;
 	
 	private FetchSummaryCriteria fetchSummaryCriteriaObj;
+	
+	private FetchAgreementCriteria fetchAgreementCriteriaObj;
 
 
 	public String getCriteria() {
@@ -121,4 +123,13 @@ public class Criteria {
 		this.fetchSummaryCriteriaObj = fetchSummaryCriteriaObj;
 	}
 
+	public FetchAgreementCriteria getFetchAgreementCriteriaObj() {
+		return fetchAgreementCriteriaObj;
+	}
+
+	public void setFetchAgreementCriteriaObj(
+			FetchAgreementCriteria fetchAgreementCriteriaObj) {
+		this.fetchAgreementCriteriaObj = fetchAgreementCriteriaObj;
+	}
+	
 }

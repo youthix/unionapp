@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.feature.ActivityList;
+import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.SuggestionIdeaList;
@@ -23,6 +24,8 @@ public class RequestObj {
 	private SummaryList SummaryListObj;
 	
 	private SuggestionIdeaList SuggestionIdeaListObj;
+	
+	private AgreementList AgreementDTOObj;
 	
 	private String bid;
 	
@@ -111,5 +114,13 @@ public class RequestObj {
 
 	public void setSummaryListObj(SummaryList summaryListObj) {
 		SummaryListObj = summaryListObj;
-	}	
+	}
+
+	public AgreementList getAgreementDTOObj() {
+		return AgreementDTOObj;
+	}
+
+	public void setAgreementDTOObj(AgreementList agreementDTOObj) {
+		AgreementDTOObj = agreementDTOObj;
+	}
 }

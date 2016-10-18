@@ -3,6 +3,7 @@ package org.presentation.dto;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.presentation.dto.feature.ActivityList;
+import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.SuggestionIdeaList;
@@ -24,6 +25,8 @@ public class ResponseObj {
 	private SummaryList summaryListObj;
 	
 	private SuggestionIdeaList suggestionIdeaListObj;
+	
+	private AgreementList agreementListObj;
 	
 	private String totalPage;
 	
@@ -93,5 +96,13 @@ public class ResponseObj {
 
 	public void setSummaryListObj(SummaryList summaryListObj) {
 		this.summaryListObj = summaryListObj;
-	}	
+	}
+
+	public AgreementList getAgreementListObj() {
+		return agreementListObj;
+	}
+
+	public void setAgreementListObj(AgreementList agreementListObj) {
+		this.agreementListObj = agreementListObj;
+	}
 }
