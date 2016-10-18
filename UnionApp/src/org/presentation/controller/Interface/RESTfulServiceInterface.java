@@ -58,5 +58,7 @@ public interface RESTfulServiceInterface {
 	ResponseObj updatesuggestionidea(RequestObj reqparam);	
 	
 	ResponseObj fetchsuggestionidea(RequestObj reqparam);
+	
+	String fetchsuggestionideaById(String id);
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.presentation.dto.criteria.Criteria;
 import org.repository.entity.SuggestionIdeaBO;
+import org.repository.entity.SummaryBO;
 
 public interface ISuggestionIdeaDAO {
 
@@ -16,5 +17,7 @@ public interface ISuggestionIdeaDAO {
 	public ArrayList<SuggestionIdeaBO> fetchSuggestionIdea(Criteria criteriaObj, String pageno);
 	
 	public Integer totalRecordCount(Criteria criteriaObj);
+	
+	ArrayList<SuggestionIdeaBO> fetchSuggestionIdeaById(String id);
 	
 }

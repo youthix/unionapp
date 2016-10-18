@@ -1341,6 +1341,25 @@ public class RepositoryDelegator {
 		return suggestionIdeaListObjResp;
 	}
 
+	public String fetchsuggestionideaById(String id) {
+		System.out.println("In fetchsuggestionideaById");
+		String responseObj = "";
+
+		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdeaById(id);
+
+		if (null != suggestionIdeaBOList && suggestionIdeaBOList.size() > 0) {
+
+			Iterator<SuggestionIdeaBO> litr = suggestionIdeaBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				SuggestionIdeaBO suggestionIdeaBOObj = litr.next();
+				responseObj = suggestionIdeaBOObj.getDetail();
+			}
+		}
+		return responseObj;
+	}
+
 	public ResponseObj fetchsuggestionidea(RequestObj reqparam) {
 		System.out.println("InRDFetch");
 		ResponseObj responseObj = new ResponseObj();
@@ -1351,6 +1370,8 @@ public class RepositoryDelegator {
 		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList;
 
 		SuggestionIdeaBO suggestionIdeaBOObj;
+		
+		String channel = reqparam.getChannel();
 
 		Criteria criteriaObj = reqparam.getCriteria();
 
@@ -1365,6 +1386,10 @@ public class RepositoryDelegator {
 				suggestionIdeaBOObj = litr.next();
 				SuggestionIdeaDTO suggestionIdeaDTOObj = new SuggestionIdeaDTO();
 				populateSuggestionIdeaDTO(suggestionIdeaDTOObj, suggestionIdeaBOObj);
+				if (null != channel && "app".equalsIgnoreCase(channel)) {
+					suggestionIdeaDTOObj.setDetail("");
+				}
+
 				suggestionIdeaDTOList.add(suggestionIdeaDTOObj);
 
 			}
@@ -1437,8 +1462,8 @@ public class RepositoryDelegator {
 						suggestionIdeaBOObj.setDetail(suggestionIdeadtoObj.getDetail());
 						suggestionIdeaBOObj.setStatus(suggestionIdeadtoObj.getStatus());
 						suggestionIdeaBOObj.setSubject(suggestionIdeadtoObj.getSubject());
-						suggestionIdeaBOObj.setSuggideadate(dateformatter
-								.parse(suggestionIdeadtoObj.getSuggideadate() + " " + suggestionIdeadtoObj.getSuggideatime()));
+						suggestionIdeaBOObj.setSuggideadate(dateformatter.parse(
+								suggestionIdeadtoObj.getSuggideadate() + " " + suggestionIdeadtoObj.getSuggideatime()));
 						// merge this UpdateBO back in DB
 						suggestionIdeadao.update(suggestionIdeaBOObj);
 					}

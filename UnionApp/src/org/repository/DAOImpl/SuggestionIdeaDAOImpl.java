@@ -10,6 +10,7 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
 import org.repository.entity.SuggestionIdeaBO;
+import org.repository.entity.SummaryBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -125,6 +126,26 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 			throw serviceExceptionObj;
 		}
 
+		return suggestionIdeaBOList;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<SuggestionIdeaBO> fetchSuggestionIdeaById(String id) {
+
+		System.out.println("In fetchSuggestionIdeaById");
+		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList = null;
+
+		try {
+
+			String SQL = "select m from " + SuggestionIdeaBO.class.getName() + " m where suggideaid in (" + id
+					+ ") order by m.suggideadate asc";
+			suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).getResultList();
+
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+		System.out.println("Done fetchSuggestionIdeaById");
 		return suggestionIdeaBOList;
 	}
 

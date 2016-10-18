@@ -596,6 +596,22 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public String fetchsuggestionideaById(String id) {
+
+		String responseObj = "";
+
+		if (null != id) {
+
+			responseObj = repositoryDelegator.fetchsuggestionideaById(id);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
 
 	public ResponseObj updatesuggestionidea(RequestObj reqparam) {
 

@@ -746,6 +746,32 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
+	
+	@Override
+	@GET
+	@Path("/fetchsuggestionidea/{id}")
+	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
+	public String fetchsuggestionideaById(@PathParam ("id") String id) {
+
+		String responseObj ;
+
+		try {
+			if (null != id) {
+				responseObj = serviceDelegator.fetchsuggestionideaById(id);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj).toString();
+		}
+
+		return responseObj;
+
+	}	
 
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;
