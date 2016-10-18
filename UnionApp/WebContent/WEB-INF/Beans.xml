@@ -29,6 +29,9 @@
 	<bean id="newsletterdao" class="org.repository.DAOImpl.NewsLetterDAOImpl">
 	</bean>	
 	
+	<bean id="agreementdao" class="org.repository.DAOImpl.AgreementDAOImpl">
+	</bean>	
+	
 	<bean id="summarydao" class="org.repository.DAOImpl.SummaryDAOImpl">
 	</bean>	
 	
