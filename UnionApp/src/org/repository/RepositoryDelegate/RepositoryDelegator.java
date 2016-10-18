@@ -9,6 +9,7 @@ import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.FetchActivityCriteria;
+import org.presentation.dto.criteria.FetchAgreementCriteria;
 import org.presentation.dto.criteria.FetchMeetingCriteria;
 import org.presentation.dto.criteria.FetchNewsLetterCriteria;
 import org.presentation.dto.criteria.FetchSuggestionIdeaCriteria;
@@ -18,6 +19,8 @@ import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
 import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
+import org.presentation.dto.feature.AgreementDTO;
+import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterDTO;
@@ -30,12 +33,14 @@ import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
+import org.repository.DAOInterface.IAgreementDAO;
 import org.repository.DAOInterface.IMeetingDAO;
 import org.repository.DAOInterface.INewsLetterDAO;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
 import org.repository.DAOInterface.ISummaryDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActivityBO;
+import org.repository.entity.AgreementBO;
 import org.repository.entity.MeetingBO;
 import org.repository.entity.NewsLetterBO;
 import org.repository.entity.SuggestionIdeaBO;
@@ -66,6 +71,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	ISuggestionIdeaDAO suggestionIdeadao;
+	
+	@Autowired
+	IAgreementDAO agreementdao;
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -1133,6 +1141,183 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	public AgreementList createAgreement(AgreementList AgreementListObj) {
+		System.out.println("In createAgreement");
+
+		ArrayList<AgreementDTO> AgreementList = (ArrayList<AgreementDTO>) AgreementListObj.getAgreementdtoLs();
+		AgreementList AgreementListObjResp = new AgreementList();
+
+		if (AgreementList.size() > 0) {
+			Iterator<AgreementDTO> AgreementListIterator = AgreementList.iterator();
+
+			while (AgreementListIterator.hasNext()) {
+
+				AgreementDTO AgreementdtoObj = AgreementListIterator.next();
+
+				AgreementBO AgreementBOObj = new AgreementBO();
+
+				populateCreateAgreementBO(AgreementdtoObj, AgreementBOObj);
+				agreementdao.createAgreement(AgreementBOObj);
+				populateAgreementDTO(AgreementdtoObj, AgreementBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return AgreementListObjResp;
+	}
+
+	public ResponseObj fetchAgreement(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+		String channel = reqparam.getChannel();
+		AgreementList AgreementListObj = new AgreementList();
+		ArrayList<AgreementDTO> AgreementDTOList = new ArrayList<AgreementDTO>();
+
+		ArrayList<AgreementBO> AgreementBOList;
+
+		AgreementBO AgreementBOObj;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		AgreementBOList = agreementdao.fetchAgreement(criteriaObj, reqparam.getPageno());
+
+		if (null != AgreementBOList && AgreementBOList.size() > 0) {
+
+			Iterator<AgreementBO> litr = AgreementBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				AgreementBOObj = litr.next();
+				AgreementDTO AgreementDTOObj = new AgreementDTO();
+				populateAgreementDTO(AgreementDTOObj, AgreementBOObj);
+				if (null != channel && "app".equalsIgnoreCase(channel)) {
+					AgreementDTOObj.setDetail("");
+				}
+				AgreementDTOList.add(AgreementDTOObj);
+			}
+
+			AgreementListObj.setAgreementdtoLs(AgreementDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setAgreementListObj(AgreementListObj);
+		int totalrecordcount = agreementdao.totalRecordCount(criteriaObj);
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
+	}
+
+	public String fetchAgreementById(String id) {
+		System.out.println("In fetchAgreementById");
+		String responseObj = "";
+
+		ArrayList<AgreementBO> AgreementBOList = agreementdao.fetchAgreementById(id);
+
+		if (null != AgreementBOList && AgreementBOList.size() > 0) {
+
+			Iterator<AgreementBO> litr = AgreementBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				AgreementBO AgreementBOObj = litr.next();
+				responseObj = AgreementBOObj.getDetail();
+			}
+		}
+		return responseObj;
+	}
+
+	public ResponseObj updateAgreement(RequestObj reqparam) {
+		System.out.println("In updateAgreement");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the Agreement from the DB basis the id coming in the
+		 * request Then update teh fields of the AgreementBo fetched from DB
+		 * with those received in the input
+		 */
+		AgreementList AgreementListObj = reqparam.getAgreementListObj();
+
+		ArrayList<AgreementDTO> AgreementList = (ArrayList<AgreementDTO>) AgreementListObj.getAgreementdtoLs();
+
+		ArrayList<AgreementBO> AgreementBOList;
+
+		AgreementBO AgreementBOObj = null;
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		Criteria criteriaAgreementObj = new Criteria();
+		criteriaAgreementObj.setCriteria("TRUE");
+
+		FetchAgreementCriteria fetchAgreementCriteriaObj = new FetchAgreementCriteria();
+
+		fetchAgreementCriteriaObj.setName("armid");
+
+		if (AgreementList.size() > 0) {
+
+			AgreementDTO AgreementdtoObj = AgreementList.get(0);
+
+			fetchAgreementCriteriaObj.setValue(AgreementdtoObj.getArmid());
+			criteriaAgreementObj.setFetchAgreementCriteriaObj(fetchAgreementCriteriaObj);
+
+			AgreementBOList = agreementdao.fetchAgreement(criteriaAgreementObj, "1");
+
+			try {
+				if (null != AgreementBOList && AgreementBOList.size() > 0) {
+
+					AgreementBOObj = AgreementBOList.get(0);
+					if (AgreementdtoObj.getStatus().equalsIgnoreCase("Delete")) {
+						agreementdao.deleteOnCriteria(AgreementBOObj, null);
+					} else {
+
+						// update the AgreementBO fetched from DB
+
+						AgreementBOObj.setCreator(AgreementdtoObj.getCreator());
+						AgreementBOObj.setDetail(AgreementdtoObj.getDetail());
+						AgreementBOObj.setStatus(AgreementdtoObj.getStatus());
+						AgreementBOObj.setSubject(AgreementdtoObj.getSubject());
+						AgreementBOObj.setArmdate(
+								dateformatter.parse(AgreementdtoObj.getArmdate() + " " + AgreementdtoObj.getArmtime()));
+
+						// merge this UpdateBO back in DB
+						agreementdao.update(AgreementBOObj);
+					}
+				}
+
+				else {
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
+				}
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+				throw serviceExceptionObj;
+			}
+
+			populateAgreementDTO(AgreementdtoObj, AgreementBOObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("AgreementList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setAgreementListObj(AgreementListObj);
+
+		return responseObj;
+	}
+
+	
 	public SummaryList createSummary(SummaryList SummaryListObj) {
 		System.out.println("In createSummary");
 
@@ -1700,6 +1885,43 @@ public class RepositoryDelegator {
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
 
 	}
+	
+	private void populateCreateAgreementBO(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		try {
+			agreementBOObj.setCreator(agreementdtoObj.getCreator());
+			agreementBOObj.setDetail(agreementdtoObj.getDetail());
+			agreementBOObj
+					.setArmdate(dateformatter.parse(agreementdtoObj.getArmdate() + " " + agreementdtoObj.getArmtime()));
+			agreementBOObj.setStatus(agreementdtoObj.getStatus());
+			agreementBOObj.setSubject(agreementdtoObj.getSubject());
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populateAgreementDTO(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		String status = "";
+
+		agreementdtoObj.setCreator(agreementBOObj.getCreator());
+		agreementdtoObj.setDetail(agreementBOObj.getDetail());
+		agreementdtoObj.setArmdate(dateformatter.format(agreementBOObj.getArmdate()));
+		agreementdtoObj.setArmtime(timeformatter.format(agreementBOObj.getArmdate()));
+		agreementdtoObj.setArmid(agreementBOObj.getArmid().toString());
+		if (null != agreementBOObj.getStatus() && !"".equalsIgnoreCase(agreementBOObj.getStatus()))
+			status = agreementBOObj.getStatus().toLowerCase();
+		agreementdtoObj.setStatus(status);
+		agreementdtoObj.setSubject(agreementBOObj.getSubject());
+
+	}
+
 
 	private void populateCreateSummaryBO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
 

@@ -7,7 +7,7 @@ public class AgreementDTO {
 	private String detail;
 	private String creator;
 	private String status;
-	private String argmid;
+	private String armid;
 	public String getSubject() {
 		return subject;
 	}
@@ -45,10 +45,10 @@ public class AgreementDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getArgmid() {
-		return argmid;
+	public String getArmid() {
+		return armid;
 	}
-	public void setArgmid(String argmid) {
-		this.argmid = argmid;
+	public void setArmid(String armid) {
+		this.armid = armid;
 	}
 }

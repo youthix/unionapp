@@ -25,7 +25,7 @@ public class RequestObj {
 	
 	private SuggestionIdeaList SuggestionIdeaListObj;
 	
-	private AgreementList AgreementDTOObj;
+	private AgreementList AgreementListObj;
 	
 	private String bid;
 	
@@ -116,11 +116,11 @@ public class RequestObj {
 		SummaryListObj = summaryListObj;
 	}
 
-	public AgreementList getAgreementDTOObj() {
-		return AgreementDTOObj;
+	public AgreementList getAgreementListObj() {
+		return AgreementListObj;
 	}
 
-	public void setAgreementDTOObj(AgreementList agreementDTOObj) {
-		AgreementDTOObj = agreementDTOObj;
+	public void setAgreementListObj(AgreementList agreementListObj) {
+		AgreementListObj = agreementListObj;
 	}
 }

@@ -9,6 +9,7 @@ import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActivityList;
+import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.SuggestionIdeaList;
@@ -486,6 +487,79 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj createAgreement(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		AgreementList AgreementListObj = reqparam.getAgreementListObj();
+
+		if (null != AgreementListObj) {
+
+			repositoryDelegator.createAgreement(AgreementListObj);
+			responseObj.setAgreementListObj(AgreementListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("AgreementList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchAgreement(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
+
+			responseObj = repositoryDelegator.fetchAgreement(reqparam);
+
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public String fetchAgreementById(String id) {
+
+		String responseObj = "";
+
+		if (null != id) {
+
+			responseObj = repositoryDelegator.fetchAgreementById(id);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updateAgreement(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		AgreementList AgreementListObj = reqparam.getAgreementListObj();
+
+		if (null != AgreementListObj) {
+
+			responseObj = repositoryDelegator.updateAgreement(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("AgreementList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
 
 	public ResponseObj createSummary(RequestObj reqparam) {
 
