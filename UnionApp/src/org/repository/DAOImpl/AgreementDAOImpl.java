@@ -93,7 +93,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 						String SQL = "select m from " + AgreementBO.class.getName() + " m where "
 								+ criteriaObj.getFetchAgreementCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.nldate asc";
+								+ ") order by m.armdate asc";
 
 						AgreementBOList = (ArrayList<AgreementBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
