@@ -21,6 +21,8 @@ import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementDTO;
 import org.presentation.dto.feature.AgreementList;
+import org.presentation.dto.feature.AttachmentDTO;
+import org.presentation.dto.feature.AttachmentList;
 import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterDTO;
@@ -1203,6 +1205,7 @@ public class RepositoryDelegator {
 			}
 
 			AgreementListObj.setAgreementdtoLs(AgreementDTOList);
+			setAttachments(AgreementListObj);
 
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
@@ -1215,6 +1218,17 @@ public class RepositoryDelegator {
 
 		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
+	}
+	
+	private void setAttachments(AgreementList agreementListObj){
+		AgreementDTO agrm= agreementListObj.getAgreementdtoLs().get(0);
+		AttachmentList al=new AttachmentList();
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Docx File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("PDF File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Excel File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Text File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt"));
+		agrm.setAttachmentlist(al);		
 	}
 
 	public String fetchAgreementById(String id) {

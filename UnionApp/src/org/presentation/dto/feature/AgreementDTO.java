@@ -8,6 +8,7 @@ public class AgreementDTO {
 	private String creator;
 	private String status;
 	private String armid;
+	private AttachmentList attachmentlist;
 	public String getSubject() {
 		return subject;
 	}
@@ -51,4 +52,10 @@ public class AgreementDTO {
 	public void setArmid(String armid) {
 		this.armid = armid;
 	}
+	public AttachmentList getAttachmentlist() {
+		return attachmentlist;
+	}
+	public void setAttachmentlist(AttachmentList attachmentlist) {
+		this.attachmentlist = attachmentlist;
+	}	
 }
