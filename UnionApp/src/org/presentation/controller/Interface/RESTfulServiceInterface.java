@@ -45,6 +45,23 @@ public interface RESTfulServiceInterface {
 
 	String fetchNewsLetterById(String id);
 	
+	ResponseObj fetchAmr(RequestObj reqparam);
+
+	ResponseObj updateAmr(RequestObj reqparam);
+
+	ResponseObj createAmr(RequestObj reqparam);
+
+	String fetchAmrById(String id);
+	
+	ResponseObj fetchPayrate(RequestObj reqparam);
+
+	ResponseObj updatePayrate(RequestObj reqparam);
+
+	ResponseObj createPayrate(RequestObj reqparam);
+
+	String fetchPayrateById(String id);
+
+	
 	ResponseObj fetchAgreement(RequestObj reqparam);
 
 	ResponseObj updateAgreement(RequestObj reqparam);

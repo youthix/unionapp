@@ -560,6 +560,221 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
+	@Path("/createpayrate")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj createPayrate(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.createPayrate(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/updatepayrate")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj updatePayrate(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.updatePayrate(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@GET
+	@Path("/fetchpayrate/{id}")
+	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
+	public String fetchPayrateById(@PathParam ("id") String id) {
+
+		String responseObj ;
+
+		try {
+			if (null != id) {
+				responseObj = serviceDelegator.fetchPayrateById(id);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj).toString();
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/fetchpayrate")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchPayrate(RequestObj reqparam) {
+
+		ResponseObj responseObj ;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.fetchPayrate(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/createamr")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj createAmr(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.createAmr(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/updateamr")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj updateAmr(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.updateAmr(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@GET
+	@Path("/fetchamr/{id}")
+	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
+	public String fetchAmrById(@PathParam ("id") String id) {
+
+		String responseObj ;
+
+		try {
+			if (null != id) {
+				responseObj = serviceDelegator.fetchAmrById(id);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj).toString();
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/fetchamr")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchAmr(RequestObj reqparam) {
+
+		ResponseObj responseObj ;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.fetchAmr(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+
+	@Override
+	@POST
 	@Path("/createagreement")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
