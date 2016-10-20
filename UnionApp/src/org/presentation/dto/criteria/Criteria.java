@@ -31,6 +31,10 @@ public class Criteria {
 	private FetchSummaryCriteria fetchSummaryCriteriaObj;
 	
 	private FetchAgreementCriteria fetchAgreementCriteriaObj;
+	
+	private FetchAmrCriteria fetchAmrCriteriaObj;
+	
+	private FetchPayrateCriteria fetchPayrateCriteriaObj;
 
 
 	public String getCriteria() {
@@ -131,5 +135,21 @@ public class Criteria {
 			FetchAgreementCriteria fetchAgreementCriteriaObj) {
 		this.fetchAgreementCriteriaObj = fetchAgreementCriteriaObj;
 	}
-	
+
+	public FetchAmrCriteria getFetchAmrCriteriaObj() {
+		return fetchAmrCriteriaObj;
+	}
+
+	public void setFetchAmrCriteriaObj(FetchAmrCriteria fetchAmrCriteriaObj) {
+		this.fetchAmrCriteriaObj = fetchAmrCriteriaObj;
+	}
+
+	public FetchPayrateCriteria getFetchPayrateCriteriaObj() {
+		return fetchPayrateCriteriaObj;
+	}
+
+	public void setFetchPayrateCriteriaObj(
+			FetchPayrateCriteria fetchPayrateCriteriaObj) {
+		this.fetchPayrateCriteriaObj = fetchPayrateCriteriaObj;
+	}
 }

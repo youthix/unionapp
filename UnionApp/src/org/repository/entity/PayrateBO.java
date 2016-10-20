@@ -39,4 +39,52 @@ public class PayrateBO  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "payid")
 	private Integer payid;
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public Date getPaydate() {
+		return paydate;
+	}
+
+	public void setPaydate(Date paydate) {
+		this.paydate = paydate;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Integer getPayid() {
+		return payid;
+	}
+
+	public void setPayid(Integer payid) {
+		this.payid = payid;
+	}	
 }
