@@ -1223,11 +1223,16 @@ public class RepositoryDelegator {
 	private void setAttachments(AgreementList agreementListObj){
 		AgreementDTO agrm= agreementListObj.getAgreementdtoLs().get(0);
 		AttachmentList al=new AttachmentList();
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Docx File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("PDF File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Excel File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Text File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Docx File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx","doc"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("PDF File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf","doc"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Excel File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx","doc"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Text File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt","doc"));	
+		al.setListSize(5);
+		for(int i=1;i<agreementListObj.getAgreementdtoLs().size();i++){
+			agreementListObj.getAgreementdtoLs().get(i).getAttachmentlist().setListSize(0);
+		}
+	
 		agrm.setAttachmentlist(al);		
 	}
 

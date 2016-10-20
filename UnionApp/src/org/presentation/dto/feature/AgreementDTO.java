@@ -53,6 +53,9 @@ public class AgreementDTO {
 		this.armid = armid;
 	}
 	public AttachmentList getAttachmentlist() {
+		if(null==this.attachmentlist){
+			this.attachmentlist=new AttachmentList();
+		}
 		return attachmentlist;
 	}
 	public void setAttachmentlist(AttachmentList attachmentlist) {
