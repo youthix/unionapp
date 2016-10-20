@@ -1,7 +1,14 @@
 package org.presentation.controller.Interface;
 
+import java.io.InputStream;
+
+import javax.ws.rs.core.Response;
+
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
+
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 
 public interface RESTfulServiceInterface {
 
@@ -68,5 +75,9 @@ public interface RESTfulServiceInterface {
 	ResponseObj fetchsuggestionidea(RequestObj reqparam);
 	
 	String fetchsuggestionideaById(String id);
+	
+	String uploadFile(  
+            @FormDataParam("file") InputStream uploadedInputStream,  
+            @FormDataParam("file") FormDataContentDisposition fileDetail);
 
 }
