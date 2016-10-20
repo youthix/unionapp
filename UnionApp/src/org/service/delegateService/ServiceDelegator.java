@@ -10,8 +10,10 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
+import org.presentation.dto.feature.AmrList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.PayrateList;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.user.User;
@@ -488,6 +490,151 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 	
+	
+	public ResponseObj createPayrate(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		PayrateList PayrateListObj = reqparam.getPayrateListObj();
+
+		if (null != PayrateListObj) {
+
+			repositoryDelegator.createPayrate(PayrateListObj);
+			responseObj.setPayrateListObj(PayrateListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("PayrateList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchPayrate(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
+
+			responseObj = repositoryDelegator.fetchPayrate(reqparam);
+
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public String fetchPayrateById(String id) {
+
+		String responseObj = "";
+
+		if (null != id) {
+
+			responseObj = repositoryDelegator.fetchPayrateById(id);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updatePayrate(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		PayrateList PayrateListObj = reqparam.getPayrateListObj();
+
+		if (null != PayrateListObj) {
+
+			responseObj = repositoryDelegator.updatePayrate(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("PayrateList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj createAmr(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		AmrList AmrListObj = reqparam.getAmrListObj();
+
+		if (null != AmrListObj) {
+
+			repositoryDelegator.createAmr(AmrListObj);
+			responseObj.setAmrListObj(AmrListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("AmrList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchAmr(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
+
+			responseObj = repositoryDelegator.fetchAmr(reqparam);
+
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public String fetchAmrById(String id) {
+
+		String responseObj = "";
+
+		if (null != id) {
+
+			responseObj = repositoryDelegator.fetchAmrById(id);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updateAmr(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		AmrList AmrListObj = reqparam.getAmrListObj();
+
+		if (null != AmrListObj) {
+
+			responseObj = repositoryDelegator.updateAmr(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("AmrList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
 	public ResponseObj createAgreement(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
