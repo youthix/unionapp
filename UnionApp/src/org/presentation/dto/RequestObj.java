@@ -5,8 +5,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
+import org.presentation.dto.feature.AmrList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.PayrateList;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.user.UserList;
@@ -26,6 +28,10 @@ public class RequestObj {
 	private SuggestionIdeaList SuggestionIdeaListObj;
 	
 	private AgreementList AgreementListObj;
+	
+	private AmrList AmrListObj;
+	
+	private PayrateList PayrateListObj;
 	
 	private String bid;
 	
@@ -123,4 +129,20 @@ public class RequestObj {
 	public void setAgreementListObj(AgreementList agreementListObj) {
 		AgreementListObj = agreementListObj;
 	}
+
+	public AmrList getAmrListObj() {
+		return AmrListObj;
+	}
+
+	public void setAmrListObj(AmrList amrListObj) {
+		AmrListObj = amrListObj;
+	}
+
+	public PayrateList getPayrateListObj() {
+		return PayrateListObj;
+	}
+
+	public void setPayrateListObj(PayrateList payrateListObj) {
+		PayrateListObj = payrateListObj;
+	}	
 }

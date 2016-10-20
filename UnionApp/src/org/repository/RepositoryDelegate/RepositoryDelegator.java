@@ -10,8 +10,10 @@ import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.FetchActivityCriteria;
 import org.presentation.dto.criteria.FetchAgreementCriteria;
+import org.presentation.dto.criteria.FetchAmrCriteria;
 import org.presentation.dto.criteria.FetchMeetingCriteria;
 import org.presentation.dto.criteria.FetchNewsLetterCriteria;
+import org.presentation.dto.criteria.FetchPayrateCriteria;
 import org.presentation.dto.criteria.FetchSuggestionIdeaCriteria;
 import org.presentation.dto.criteria.FetchSummaryCriteria;
 import org.presentation.dto.criteria.FetchUserCriteria;
@@ -21,12 +23,16 @@ import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementDTO;
 import org.presentation.dto.feature.AgreementList;
+import org.presentation.dto.feature.AmrDTO;
+import org.presentation.dto.feature.AmrList;
 import org.presentation.dto.feature.AttachmentDTO;
 import org.presentation.dto.feature.AttachmentList;
 import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterDTO;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.PayrateDTO;
+import org.presentation.dto.feature.PayrateList;
 import org.presentation.dto.feature.SuggestionIdeaDTO;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryDTO;
@@ -36,15 +42,19 @@ import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
 import org.repository.DAOInterface.IAgreementDAO;
+import org.repository.DAOInterface.IAmrDAO;
 import org.repository.DAOInterface.IMeetingDAO;
 import org.repository.DAOInterface.INewsLetterDAO;
+import org.repository.DAOInterface.IPayrateDAO;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
 import org.repository.DAOInterface.ISummaryDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.AgreementBO;
+import org.repository.entity.AmrBO;
 import org.repository.entity.MeetingBO;
 import org.repository.entity.NewsLetterBO;
+import org.repository.entity.PayrateBO;
 import org.repository.entity.SuggestionIdeaBO;
 import org.repository.entity.SummaryBO;
 import org.repository.entity.UserBO;
@@ -76,6 +86,12 @@ public class RepositoryDelegator {
 	
 	@Autowired
 	IAgreementDAO agreementdao;
+	
+	@Autowired
+	IAmrDAO amrdao;
+	
+	@Autowired
+	IPayrateDAO payratedao;
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -1142,6 +1158,363 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
+	
+	public PayrateList createPayrate(PayrateList PayrateListObj) {
+		System.out.println("In createPayrate");
+
+		ArrayList<PayrateDTO> PayrateList = (ArrayList<PayrateDTO>) PayrateListObj.getPayratedtoLs();
+		PayrateList PayrateListObjResp = new PayrateList();
+
+		if (PayrateList.size() > 0) {
+			Iterator<PayrateDTO> PayrateListIterator = PayrateList.iterator();
+
+			while (PayrateListIterator.hasNext()) {
+
+				PayrateDTO PayratedtoObj = PayrateListIterator.next();
+
+				PayrateBO PayrateBOObj = new PayrateBO();
+
+				populateCreatePayrateBO(PayratedtoObj, PayrateBOObj);
+				payratedao.createPayrate(PayrateBOObj);
+				populatePayrateDTO(PayratedtoObj, PayrateBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return PayrateListObjResp;
+	}
+
+	public ResponseObj fetchPayrate(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+		String channel = reqparam.getChannel();
+		PayrateList PayrateListObj = new PayrateList();
+		ArrayList<PayrateDTO> PayrateDTOList = new ArrayList<PayrateDTO>();
+
+		ArrayList<PayrateBO> PayrateBOList;
+
+		PayrateBO PayrateBOObj;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		PayrateBOList = payratedao.fetchPayrate(criteriaObj, reqparam.getPageno());
+
+		if (null != PayrateBOList && PayrateBOList.size() > 0) {
+
+			Iterator<PayrateBO> litr = PayrateBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				PayrateBOObj = litr.next();
+				PayrateDTO PayrateDTOObj = new PayrateDTO();
+				populatePayrateDTO(PayrateDTOObj, PayrateBOObj);
+				if (null != channel && "app".equalsIgnoreCase(channel)) {
+					PayrateDTOObj.setDetail("");
+				}
+				PayrateDTOList.add(PayrateDTOObj);
+			}
+
+			PayrateListObj.setPayratedtoLs(PayrateDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setPayrateListObj(PayrateListObj);
+		int totalrecordcount = payratedao.totalRecordCount(criteriaObj);
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
+	}
+
+	public String fetchPayrateById(String id) {
+		System.out.println("In fetchPayrateById");
+		String responseObj = "";
+
+		ArrayList<PayrateBO> PayrateBOList = payratedao.fetchPayrateById(id);
+
+		if (null != PayrateBOList && PayrateBOList.size() > 0) {
+
+			Iterator<PayrateBO> litr = PayrateBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				PayrateBO PayrateBOObj = litr.next();
+				responseObj = PayrateBOObj.getDetail();
+			}
+		}
+		return responseObj;
+	}
+
+	public ResponseObj updatePayrate(RequestObj reqparam) {
+		System.out.println("In updatePayrate");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the Payrate from the DB basis the id coming in the
+		 * request Then update teh fields of the PayrateBo fetched from DB
+		 * with those received in the input
+		 */
+		PayrateList PayrateListObj = reqparam.getPayrateListObj();
+
+		ArrayList<PayrateDTO> PayrateList = (ArrayList<PayrateDTO>) PayrateListObj.getPayratedtoLs();
+
+		ArrayList<PayrateBO> PayrateBOList;
+
+		PayrateBO PayrateBOObj = null;
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		Criteria criteriaPayrateObj = new Criteria();
+		criteriaPayrateObj.setCriteria("TRUE");
+
+		FetchPayrateCriteria fetchPayrateCriteriaObj = new FetchPayrateCriteria();
+
+		fetchPayrateCriteriaObj.setName("payid");
+
+		if (PayrateList.size() > 0) {
+
+			PayrateDTO PayratedtoObj = PayrateList.get(0);
+
+			fetchPayrateCriteriaObj.setValue(PayratedtoObj.getPayid());
+			criteriaPayrateObj.setFetchPayrateCriteriaObj(fetchPayrateCriteriaObj);
+
+			PayrateBOList = payratedao.fetchPayrate(criteriaPayrateObj, "1");
+
+			try {
+				if (null != PayrateBOList && PayrateBOList.size() > 0) {
+
+					PayrateBOObj = PayrateBOList.get(0);
+					if (PayratedtoObj.getStatus().equalsIgnoreCase("Delete")) {
+						payratedao.deleteOnCriteria(PayrateBOObj, null);
+					} else {
+
+						// update the PayrateBO fetched from DB
+
+						PayrateBOObj.setCreator(PayratedtoObj.getCreator());
+						PayrateBOObj.setDetail(PayratedtoObj.getDetail());
+						PayrateBOObj.setStatus(PayratedtoObj.getStatus());
+						PayrateBOObj.setSubject(PayratedtoObj.getSubject());
+						PayrateBOObj.setPaydate(
+								dateformatter.parse(PayratedtoObj.getPayate() + " " + PayratedtoObj.getPaytime()));
+
+						// merge this UpdateBO back in DB
+						payratedao.update(PayrateBOObj);
+					}
+				}
+
+				else {
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
+				}
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+				throw serviceExceptionObj;
+			}
+
+			populatePayrateDTO(PayratedtoObj, PayrateBOObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("PayrateList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setPayrateListObj(PayrateListObj);
+
+		return responseObj;
+	}
+	
+
+	
+	public AmrList createAmr(AmrList AmrListObj) {
+		System.out.println("In createAmr");
+
+		ArrayList<AmrDTO> AmrList = (ArrayList<AmrDTO>) AmrListObj.getAmrdtoLs();
+		AmrList AmrListObjResp = new AmrList();
+
+		if (AmrList.size() > 0) {
+			Iterator<AmrDTO> AmrListIterator = AmrList.iterator();
+
+			while (AmrListIterator.hasNext()) {
+
+				AmrDTO AmrdtoObj = AmrListIterator.next();
+
+				AmrBO AmrBOObj = new AmrBO();
+
+				populateCreateAmrBO(AmrdtoObj, AmrBOObj);
+				amrdao.createAmr(AmrBOObj);
+				populateAmrDTO(AmrdtoObj, AmrBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return AmrListObjResp;
+	}
+
+	public ResponseObj fetchAmr(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+		String channel = reqparam.getChannel();
+		AmrList AmrListObj = new AmrList();
+		ArrayList<AmrDTO> AmrDTOList = new ArrayList<AmrDTO>();
+
+		ArrayList<AmrBO> AmrBOList;
+
+		AmrBO AmrBOObj;
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		AmrBOList = amrdao.fetchAmr(criteriaObj, reqparam.getPageno());
+
+		if (null != AmrBOList && AmrBOList.size() > 0) {
+
+			Iterator<AmrBO> litr = AmrBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				AmrBOObj = litr.next();
+				AmrDTO AmrDTOObj = new AmrDTO();
+				populateAmrDTO(AmrDTOObj, AmrBOObj);
+				if (null != channel && "app".equalsIgnoreCase(channel)) {
+					AmrDTOObj.setDetail("");
+				}
+				AmrDTOList.add(AmrDTOObj);
+			}
+
+			AmrListObj.setAmrdtoLs(AmrDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+		responseObj.setAmrListObj(AmrListObj);
+		int totalrecordcount = amrdao.totalRecordCount(criteriaObj);
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
+	}
+
+	public String fetchAmrById(String id) {
+		System.out.println("In fetchAmrById");
+		String responseObj = "";
+
+		ArrayList<AmrBO> AmrBOList = amrdao.fetchAmrById(id);
+
+		if (null != AmrBOList && AmrBOList.size() > 0) {
+
+			Iterator<AmrBO> litr = AmrBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				AmrBO AmrBOObj = litr.next();
+				responseObj = AmrBOObj.getDetail();
+			}
+		}
+		return responseObj;
+	}
+
+	public ResponseObj updateAmr(RequestObj reqparam) {
+		System.out.println("In updateAmr");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the Amr from the DB basis the id coming in the
+		 * request Then update teh fields of the AmrBo fetched from DB
+		 * with those received in the input
+		 */
+		AmrList AmrListObj = reqparam.getAmrListObj();
+
+		ArrayList<AmrDTO> AmrList = (ArrayList<AmrDTO>) AmrListObj.getAmrdtoLs();
+
+		ArrayList<AmrBO> AmrBOList;
+
+		AmrBO AmrBOObj = null;
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		Criteria criteriaAmrObj = new Criteria();
+		criteriaAmrObj.setCriteria("TRUE");
+
+		FetchAmrCriteria fetchAmrCriteriaObj = new FetchAmrCriteria();
+
+		fetchAmrCriteriaObj.setName("amrid");
+
+		if (AmrList.size() > 0) {
+
+			AmrDTO AmrdtoObj = AmrList.get(0);
+
+			fetchAmrCriteriaObj.setValue(AmrdtoObj.getAmrid());
+			criteriaAmrObj.setFetchAmrCriteriaObj(fetchAmrCriteriaObj);
+
+			AmrBOList = amrdao.fetchAmr(criteriaAmrObj, "1");
+
+			try {
+				if (null != AmrBOList && AmrBOList.size() > 0) {
+
+					AmrBOObj = AmrBOList.get(0);
+					if (AmrdtoObj.getStatus().equalsIgnoreCase("Delete")) {
+						amrdao.deleteOnCriteria(AmrBOObj, null);
+					} else {
+
+						// update the AmrBO fetched from DB
+
+						AmrBOObj.setCreator(AmrdtoObj.getCreator());
+						AmrBOObj.setDetail(AmrdtoObj.getDetail());
+						AmrBOObj.setStatus(AmrdtoObj.getStatus());
+						AmrBOObj.setSubject(AmrdtoObj.getSubject());
+						AmrBOObj.setAmrdate(
+								dateformatter.parse(AmrdtoObj.getAmrdate() + " " + AmrdtoObj.getAmrtime()));
+
+						// merge this UpdateBO back in DB
+						amrdao.update(AmrBOObj);
+					}
+				}
+
+				else {
+					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					throw serviceExceptionObj;
+				}
+			} catch (ParseException e) {
+				ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+				throw serviceExceptionObj;
+			}
+
+			populateAmrDTO(AmrdtoObj, AmrBOObj);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("AmrList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setAmrListObj(AmrListObj);
+
+		return responseObj;
+	}
+
+
+	
 
 	public AgreementList createAgreement(AgreementList AgreementListObj) {
 		System.out.println("In createAgreement");
@@ -1223,11 +1596,19 @@ public class RepositoryDelegator {
 	private void setAttachments(AgreementList agreementListObj){
 		AgreementDTO agrm= agreementListObj.getAgreementdtoLs().get(0);
 		AttachmentList al=new AttachmentList();
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Docx File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("PDF File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Excel File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Text File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Docx File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx","doc"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("PDF File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf","doc"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File PNG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPEG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpeg","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File GIF","http://codeplay-dev6.cloud.cms500.com/attachments/demo.gif","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpg","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Excel File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx","doc"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Text File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt","doc"));	
+		al.setListSize(8);
+		for(int i=1;i<agreementListObj.getAgreementdtoLs().size();i++){
+			agreementListObj.getAgreementdtoLs().get(i).getAttachmentlist().setListSize(0);
+		}
+	
 		agrm.setAttachmentlist(al);		
 	}
 
@@ -1899,6 +2280,80 @@ public class RepositoryDelegator {
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
 
 	}
+	
+	private void populateCreateAmrBO(AmrDTO AmrdtoObj, AmrBO AmrBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		try {
+			AmrBOObj.setCreator(AmrdtoObj.getCreator());
+			AmrBOObj.setDetail(AmrdtoObj.getDetail());
+			AmrBOObj
+					.setAmrdate(dateformatter.parse(AmrdtoObj.getAmrdate() + " " + AmrdtoObj.getAmrtime()));
+			AmrBOObj.setStatus(AmrdtoObj.getStatus());
+			AmrBOObj.setSubject(AmrdtoObj.getSubject());
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populateAmrDTO(AmrDTO AmrdtoObj, AmrBO AmrBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		String status = "";
+
+		AmrdtoObj.setCreator(AmrBOObj.getCreator());
+		AmrdtoObj.setDetail(AmrBOObj.getDetail());
+		AmrdtoObj.setAmrdate(dateformatter.format(AmrBOObj.getAmrdate()));
+		AmrdtoObj.setAmrtime(timeformatter.format(AmrBOObj.getAmrdate()));
+		AmrdtoObj.setAmrid(AmrBOObj.getAmrid().toString());
+		if (null != AmrBOObj.getStatus() && !"".equalsIgnoreCase(AmrBOObj.getStatus()))
+			status = AmrBOObj.getStatus().toLowerCase();
+		AmrdtoObj.setStatus(status);
+		AmrdtoObj.setSubject(AmrBOObj.getSubject());
+
+	}
+	
+	private void populateCreatePayrateBO(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		try {
+			PayrateBOObj.setCreator(PayratedtoObj.getCreator());
+			PayrateBOObj.setDetail(PayratedtoObj.getDetail());
+			PayrateBOObj
+					.setPaydate(dateformatter.parse(PayratedtoObj.getPayate() + " " + PayratedtoObj.getPaytime()));
+			PayrateBOObj.setStatus(PayratedtoObj.getStatus());
+			PayrateBOObj.setSubject(PayratedtoObj.getSubject());
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populatePayrateDTO(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
+		String status = "";
+
+		PayratedtoObj.setCreator(PayrateBOObj.getCreator());
+		PayratedtoObj.setDetail(PayrateBOObj.getDetail());
+		PayratedtoObj.setPayate(dateformatter.format(PayrateBOObj.getPaydate()));
+		PayratedtoObj.setPaytime(timeformatter.format(PayrateBOObj.getPaydate()));
+		PayratedtoObj.setPayid(PayrateBOObj.getPayid().toString());
+		if (null != PayrateBOObj.getStatus() && !"".equalsIgnoreCase(PayrateBOObj.getStatus()))
+			status = PayrateBOObj.getStatus().toLowerCase();
+		PayratedtoObj.setStatus(status);
+		PayratedtoObj.setSubject(PayrateBOObj.getSubject());
+
+	}
+
+
 	
 	private void populateCreateAgreementBO(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
 

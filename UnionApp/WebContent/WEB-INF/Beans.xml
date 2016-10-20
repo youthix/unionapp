@@ -30,6 +30,12 @@
 	</bean>	
 	
 	<bean id="agreementdao" class="org.repository.DAOImpl.AgreementDAOImpl">
+	</bean>
+	
+	<bean id="payratedao" class="org.repository.DAOImpl.PayrateDAOImpl">
+	</bean>
+	
+	<bean id="amrdao" class="org.repository.DAOImpl.AmrDAOImpl">
 	</bean>	
 	
 	<bean id="summarydao" class="org.repository.DAOImpl.SummaryDAOImpl">

@@ -1,13 +1,13 @@
 package org.presentation.dto.feature;
 
-public class AgreementDTO {
+public class PayrateDTO {
 	private String subject;
-	private String armdate;
-	private String armtime;
+	private String payate;
+	private String paytime;
 	private String detail;
 	private String creator;
 	private String status;
-	private String armid;
+	private String payid;
 	private AttachmentList attachmentlist;
 	public String getSubject() {
 		return subject;
@@ -15,18 +15,17 @@ public class AgreementDTO {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
-	public String getArmdate() {
-		return armdate;
+	public String getPayate() {
+		return payate;
 	}
-	public void setArmdate(String armdate) {
-		this.armdate = armdate;
+	public void setPayate(String payate) {
+		this.payate = payate;
 	}
-	public String getArmtime() {
-		return armtime;
+	public String getPaytime() {
+		return paytime;
 	}
-	public void setArmtime(String armtime) {
-		this.armtime = armtime;
+	public void setPaytime(String paytime) {
+		this.paytime = paytime;
 	}
 	public String getDetail() {
 		return detail;
@@ -46,19 +45,20 @@ public class AgreementDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getArmid() {
-		return armid;
+	public String getPayid() {
+		return payid;
 	}
-	public void setArmid(String armid) {
-		this.armid = armid;
+	public void setPayid(String payid) {
+		this.payid = payid;
 	}
 	public AttachmentList getAttachmentlist() {
-		if(null==this.attachmentlist){
+		if(null==this.getAttachmentlist())
+		{
 			this.attachmentlist=new AttachmentList();
 		}
 		return attachmentlist;
 	}
 	public void setAttachmentlist(AttachmentList attachmentlist) {
 		this.attachmentlist = attachmentlist;
-	}	
+	}
 }

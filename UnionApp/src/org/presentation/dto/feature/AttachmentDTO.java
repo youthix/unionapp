@@ -3,10 +3,12 @@ package org.presentation.dto.feature;
 public class AttachmentDTO {
 	private String url;
 	private String title;
+	private String type;
 	
-	public AttachmentDTO(String title,String url){
+	public AttachmentDTO(String title,String url,String type){
 		this.url=url;
 		this.title=title;
+		this.type=type;
 	}
 	
 	public String getUrl() {
@@ -21,4 +23,12 @@ public class AttachmentDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}	
 }
