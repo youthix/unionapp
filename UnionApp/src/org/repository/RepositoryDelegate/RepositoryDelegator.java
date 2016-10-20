@@ -1225,11 +1225,10 @@ public class RepositoryDelegator {
 		AttachmentList al=new AttachmentList();
 		al.getAttachmentdtoLs().add(new AttachmentDTO("Docx File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx","doc"));
 		al.getAttachmentdtoLs().add(new AttachmentDTO("PDF File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf","doc"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpeg","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.gif","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpg","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File PNG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPEG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpeg","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File GIF","http://codeplay-dev6.cloud.cms500.com/attachments/demo.gif","image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpg","image"));
 		al.getAttachmentdtoLs().add(new AttachmentDTO("Excel File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx","doc"));
 		al.getAttachmentdtoLs().add(new AttachmentDTO("Text File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt","doc"));	
 		al.setListSize(8);
