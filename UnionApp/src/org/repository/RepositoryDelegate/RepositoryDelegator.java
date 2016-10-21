@@ -1305,7 +1305,7 @@ public class RepositoryDelegator {
 						PayrateBOObj.setStatus(PayratedtoObj.getStatus());
 						PayrateBOObj.setSubject(PayratedtoObj.getSubject());
 						PayrateBOObj.setPaydate(
-								dateformatter.parse(PayratedtoObj.getPayate() + " " + PayratedtoObj.getPaytime()));
+								dateformatter.parse(PayratedtoObj.getPaydate() + " " + PayratedtoObj.getPaytime()));
 
 						// merge this UpdateBO back in DB
 						payratedao.update(PayrateBOObj);
@@ -2325,7 +2325,7 @@ public class RepositoryDelegator {
 			PayrateBOObj.setCreator(PayratedtoObj.getCreator());
 			PayrateBOObj.setDetail(PayratedtoObj.getDetail());
 			PayrateBOObj
-					.setPaydate(dateformatter.parse(PayratedtoObj.getPayate() + " " + PayratedtoObj.getPaytime()));
+					.setPaydate(dateformatter.parse(PayratedtoObj.getPaydate() + " " + PayratedtoObj.getPaytime()));
 			PayrateBOObj.setStatus(PayratedtoObj.getStatus());
 			PayrateBOObj.setSubject(PayratedtoObj.getSubject());
 		} catch (ParseException e) {
@@ -2343,7 +2343,7 @@ public class RepositoryDelegator {
 
 		PayratedtoObj.setCreator(PayrateBOObj.getCreator());
 		PayratedtoObj.setDetail(PayrateBOObj.getDetail());
-		PayratedtoObj.setPayate(dateformatter.format(PayrateBOObj.getPaydate()));
+		PayratedtoObj.setPaydate(dateformatter.format(PayrateBOObj.getPaydate()));
 		PayratedtoObj.setPaytime(timeformatter.format(PayrateBOObj.getPaydate()));
 		PayratedtoObj.setPayid(PayrateBOObj.getPayid().toString());
 		if (null != PayrateBOObj.getStatus() && !"".equalsIgnoreCase(PayrateBOObj.getStatus()))
