@@ -2,7 +2,7 @@ package org.presentation.dto.feature;
 
 public class PayrateDTO {
 	private String subject;
-	private String payate;
+	private String paydate;
 	private String paytime;
 	private String detail;
 	private String creator;
@@ -15,11 +15,12 @@ public class PayrateDTO {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public String getPayate() {
-		return payate;
+	
+	public String getPaydate() {
+		return paydate;
 	}
-	public void setPayate(String payate) {
-		this.payate = payate;
+	public void setPaydate(String paydate) {
+		this.paydate = paydate;
 	}
 	public String getPaytime() {
 		return paytime;
