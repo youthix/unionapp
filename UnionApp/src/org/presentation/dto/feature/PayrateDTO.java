@@ -53,7 +53,7 @@ public class PayrateDTO {
 		this.payid = payid;
 	}
 	public AttachmentList getAttachmentlist() {
-		if(null==this.getAttachmentlist())
+		if(null==this.attachmentlist)
 		{
 			this.attachmentlist=new AttachmentList();
 		}
