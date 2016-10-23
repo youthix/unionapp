@@ -1626,7 +1626,6 @@ public class RepositoryDelegator {
 
 				AgreementBO AgreementBOObj = litr.next();
 				responseObj = AgreementBOObj.getDetail();
-				responseObj=responseObj+"<br><br><b>Suggested By : "+AgreementBOObj.getCreator()+"</b>";
 			}
 		}
 		return responseObj;
@@ -1936,6 +1935,8 @@ public class RepositoryDelegator {
 
 				SuggestionIdeaBO suggestionIdeaBOObj = litr.next();
 				responseObj = suggestionIdeaBOObj.getDetail();
+				responseObj=responseObj+"<br><br><b>Suggested By : "+suggestionIdeaBOObj.getCreator()+"</b>";
+			
 			}
 		}
 		return responseObj;
