@@ -6,6 +6,7 @@ import javax.ws.rs.core.Response;
 
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -95,6 +96,7 @@ public interface RESTfulServiceInterface {
 	
 	String uploadFile(  
             @FormDataParam("file") InputStream uploadedInputStream,  
-            @FormDataParam("file") FormDataContentDisposition fileDetail);
+            @FormDataParam("file") FormDataContentDisposition fileDetail,
+            @RequestHeader(value="feature") String feature);
 
 }

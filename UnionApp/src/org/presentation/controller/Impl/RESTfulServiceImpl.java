@@ -1,7 +1,6 @@
 package org.presentation.controller.Impl;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -20,6 +19,7 @@ import org.presentation.util.ServiceException;
 import org.presentation.util.ServiceExceptionMapper;
 import org.service.delegateService.ServiceDelegator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -82,7 +82,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/logout")
@@ -107,7 +107,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
+	}
 
 	@Override
 	@POST
@@ -162,7 +162,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/updateuserprofile")
@@ -188,7 +188,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
+	}
 
 	@Override
 	@POST
@@ -351,7 +351,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/createactivity")
@@ -413,7 +413,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchactivity(RequestObj reqparam) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		try {
 			if (null != reqparam) {
@@ -459,7 +459,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/createnewsletter")
@@ -518,9 +518,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@GET
 	@Path("/fetchnewsletter/{id}")
 	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-	public String fetchNewsLetterById(@PathParam ("id") String id) {
+	public String fetchNewsLetterById(@PathParam("id") String id) {
 
-		String responseObj ;
+		String responseObj;
 
 		try {
 			if (null != id) {
@@ -547,7 +547,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		try {
 			if (null != reqparam) {
@@ -625,9 +625,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@GET
 	@Path("/fetchpayrate/{id}")
 	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-	public String fetchPayrateById(@PathParam ("id") String id) {
+	public String fetchPayrateById(@PathParam("id") String id) {
 
-		String responseObj ;
+		String responseObj;
 
 		try {
 			if (null != id) {
@@ -654,7 +654,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchPayrate(RequestObj reqparam) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		try {
 			if (null != reqparam) {
@@ -732,9 +732,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@GET
 	@Path("/fetchamr/{id}")
 	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-	public String fetchAmrById(@PathParam ("id") String id) {
+	public String fetchAmrById(@PathParam("id") String id) {
 
-		String responseObj ;
+		String responseObj;
 
 		try {
 			if (null != id) {
@@ -761,7 +761,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchAmr(RequestObj reqparam) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		try {
 			if (null != reqparam) {
@@ -780,7 +780,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-
 
 	@Override
 	@POST
@@ -840,9 +839,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@GET
 	@Path("/fetchagreement/{id}")
 	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-	public String fetchAgreementById(@PathParam ("id") String id) {
+	public String fetchAgreementById(@PathParam("id") String id) {
 
-		String responseObj ;
+		String responseObj;
 
 		try {
 			if (null != id) {
@@ -869,7 +868,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchAgreement(RequestObj reqparam) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		try {
 			if (null != reqparam) {
@@ -889,7 +888,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
-	
 	@Override
 	@POST
 	@Path("/createsummary")
@@ -948,9 +946,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@GET
 	@Path("/fetchsummary/{id}")
 	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-	public String fetchSummaryById(@PathParam ("id") String id) {
+	public String fetchSummaryById(@PathParam("id") String id) {
 
-		String responseObj ;
+		String responseObj;
 
 		try {
 			if (null != id) {
@@ -977,7 +975,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchSummary(RequestObj reqparam) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		try {
 			if (null != reqparam) {
@@ -997,7 +995,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
-	
 	@Override
 	@POST
 	@Path("/createsuggestionidea")
@@ -1059,7 +1056,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchsuggestionidea(RequestObj reqparam) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		try {
 			if (null != reqparam) {
@@ -1078,14 +1075,14 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@GET
 	@Path("/fetchsuggestionidea/{id}")
 	@Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-	public String fetchsuggestionideaById(@PathParam ("id") String id) {
+	public String fetchsuggestionideaById(@PathParam("id") String id) {
 
-		String responseObj ;
+		String responseObj;
 
 		try {
 			if (null != id) {
@@ -1103,33 +1100,64 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
-	
-	@Override
-	@POST  
-    @Path("/upload")  
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+	}
+
+	//@Override
+	@POST
+	@Path("/upload")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(javax.ws.rs.core.MediaType.TEXT_PLAIN)
-	 public String uploadFile(  
-	            @FormDataParam("file") InputStream uploadedInputStream,  
-	            @FormDataParam("file") FormDataContentDisposition fileDetail) {  
-	            String fileLocation = "c://Saurabh//" + fileDetail.getFileName();  
-	                    //saving file  
-	            try {  
-	                FileOutputStream out = new FileOutputStream(new File(fileLocation));  
-	                int read = 0;  
-	                byte[] bytes = new byte[1024];  
-	                out = new FileOutputStream(new File(fileLocation));  
-	                while ((read = uploadedInputStream.read(bytes)) != -1) {  
-	                    out.write(bytes, 0, read);  
-	                }  
-	                out.flush();  
-	                out.close();  
-	            } catch (IOException e) {e.printStackTrace();}  
-	            String output = "File successfully uploaded to : " + fileLocation;  
-	            //return Response.status(200).entity(output).build();  
-	            return output;
-	        }  	
+	public String uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail,
+			@RequestHeader(value="feature") String feature) {
+
+		String featureType = feature;
+		System.out.println("featureType = "+ featureType);
+		String featureId = "1234";
+		String attachmentType = "doc";
+
+		//String path = "/C:/Saurabh/Images";
+		String path = "../../" +featureType+"/" + featureId + "/" + attachmentType;
+		
+		
+		File filePath = new File(path);
+		if (!filePath.isDirectory()) {
+			boolean success = filePath.mkdirs();
+			if (success) {
+				System.out.println("Created path: " + filePath.getPath());
+			} else {
+				System.out.println("Could not create path: " + filePath.getPath());
+			}
+		} else {
+			System.out.println("Path exists: " + filePath.getPath());
+
+		}
+		//String fileLocation = filePath+ "/" + fileDetail.getFileName();
+		
+		String fileLocation = filePath+ "/" + "testfile.txt";
+		// saving file
+		try {
+			filePath = new File(fileLocation);
+			  if (!filePath.exists()) {
+				  filePath.createNewFile();
+				  }
+			/*
+			FileOutputStream out = new FileOutputStream(new File(fileLocation));
+			int read = 0;
+			byte[] bytes = new byte[1024];
+			out = new FileOutputStream(new File(fileLocation));
+			while ((read = uploadedInputStream.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+			out.flush();
+			out.close();
+		*/} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String output = "File successfully uploaded to : " + fileLocation;
+		// return Response.status(200).entity(output).build();
+		return output;
+	}
 
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;
