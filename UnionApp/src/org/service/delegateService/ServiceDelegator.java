@@ -489,8 +489,7 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
-	
+
 	public ResponseObj createPayrate(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -707,7 +706,6 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-
 	public ResponseObj createSummary(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -780,7 +778,6 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-	
 	public ResponseObj createsuggestionidea(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -817,7 +814,7 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
+
 	public String fetchsuggestionideaById(String id) {
 
 		String responseObj = "";
@@ -832,7 +829,7 @@ public class ServiceDelegator {
 		}
 
 		return responseObj;
-	}	
+	}
 
 	public ResponseObj updatesuggestionidea(RequestObj reqparam) {
 
@@ -848,6 +845,16 @@ public class ServiceDelegator {
 			ServiceException serviceExceptionObj = new ServiceException("List is NULL");
 			throw serviceExceptionObj;
 		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updateAttachmentStatus(String featureType, String featureId) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		responseObj = repositoryDelegator.updateAttachmentStatus(featureType, featureId);
+		setResponse(responseObj);
 
 		return responseObj;
 	}

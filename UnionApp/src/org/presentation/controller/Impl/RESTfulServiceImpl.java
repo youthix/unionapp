@@ -1,11 +1,13 @@
 package org.presentation.controller.Impl;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,7 +21,6 @@ import org.presentation.util.ServiceException;
 import org.presentation.util.ServiceExceptionMapper;
 import org.service.delegateService.ServiceDelegator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -1102,24 +1103,27 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
-	//@Override
+	// @Override
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(javax.ws.rs.core.MediaType.TEXT_PLAIN)
 	public String uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@RequestHeader(value="feature") String feature) {
+			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureID") String featureId,
+			@HeaderParam(value = "attachmentType") String attachmentType) {
 
-		String featureType = feature;
-		System.out.println("featureType = "+ featureType);
-		String featureId = "1234";
-		String attachmentType = "doc";
+		/*
+		 * String featureType = feature; System.out.println("featureType = "+
+		 * featureType); String featureId = "1234"; String attachmentType =
+		 * "doc";
+		 */
 
-		//String path = "/C:/Saurabh/Images";
-		String path = "../../" +featureType+"/" + featureId + "/" + attachmentType;
-		
-		
+		// String path = "/C:/Saurabh/Images";
+
+		// Create Directory if not already Exists
+		String path = "../../" + featureType + "/" + featureId + "/" + attachmentType;
+
 		File filePath = new File(path);
 		if (!filePath.isDirectory()) {
 			boolean success = filePath.mkdirs();
@@ -1132,16 +1136,18 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			System.out.println("Path exists: " + filePath.getPath());
 
 		}
-		//String fileLocation = filePath+ "/" + fileDetail.getFileName();
-		
-		String fileLocation = filePath+ "/" + "testfile.txt";
+
 		// saving file
+		String fileLocation = filePath + "/" + fileDetail.getFileName();
+
+		// String fileLocation = filePath + "/" + "testfile.txt";
+
 		try {
-			filePath = new File(fileLocation);
-			  if (!filePath.exists()) {
-				  filePath.createNewFile();
-				  }
 			/*
+			 * filePath = new File(fileLocation); if (!filePath.exists()) {
+			 * filePath.createNewFile(); }
+			 */
+
 			FileOutputStream out = new FileOutputStream(new File(fileLocation));
 			int read = 0;
 			byte[] bytes = new byte[1024];
@@ -1151,8 +1157,12 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			}
 			out.flush();
 			out.close();
-		*/} catch (IOException e) {
-			e.printStackTrace();
+
+			// Update the DB Attachment Status
+			
+			serviceDelegator.updateAttachmentStatus(featureType, featureId);
+		} catch (Exception exceptionObj) {
+			return ServiceExceptionMapper.toResponse(exceptionObj).toString();
 		}
 		String output = "File successfully uploaded to : " + fileLocation;
 		// return Response.status(200).entity(output).build();

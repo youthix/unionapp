@@ -2074,6 +2074,28 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	public String fetchsuggestionideaById(String id) {
+		System.out.println("In fetchsuggestionideaById");
+		String responseObj = "";
+
+		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdeaById(id);
+
+		if (null != suggestionIdeaBOList && suggestionIdeaBOList.size() > 0) {
+
+			Iterator<SuggestionIdeaBO> litr = suggestionIdeaBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				SuggestionIdeaBO suggestionIdeaBOObj = litr.next();
+				responseObj = suggestionIdeaBOObj.getDetail();
+				responseObj=responseObj+"<br><br><b>Suggested By : "+suggestionIdeaBOObj.getCreator()+"</b>";
+			
+			}
+		}
+		return responseObj;
+	}
+	
+	
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
 		userBOObj.setUsname(userObj.getUsNa());
