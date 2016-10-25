@@ -1110,7 +1110,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureID") String featureId,
+			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureId") String featureId,
 			@HeaderParam(value = "attachmentType") String attachmentType) {
 		
 		ResponseObj responseObj;
