@@ -2,6 +2,7 @@ package org.presentation.controller.Interface;
 
 import java.io.InputStream;
 
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.core.Response;
 
 import org.presentation.dto.RequestObj;
@@ -94,9 +95,9 @@ public interface RESTfulServiceInterface {
 	
 	String fetchsuggestionideaById(String id);
 	
-	String uploadFile(  
-            @FormDataParam("file") InputStream uploadedInputStream,  
-            @FormDataParam("file") FormDataContentDisposition fileDetail,
-            @RequestHeader(value="feature") String feature);
+	ResponseObj uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail,
+			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureID") String featureId,
+			@HeaderParam(value = "attachmentType") String attachmentType);
 
 }

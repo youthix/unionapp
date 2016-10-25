@@ -83,13 +83,13 @@ public class RepositoryDelegator {
 
 	@Autowired
 	ISuggestionIdeaDAO suggestionIdeadao;
-	
+
 	@Autowired
 	IAgreementDAO agreementdao;
-	
+
 	@Autowired
 	IAmrDAO amrdao;
-	
+
 	@Autowired
 	IPayrateDAO payratedao;
 
@@ -1158,7 +1158,7 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
-	
+
 	public PayrateList createPayrate(PayrateList PayrateListObj) {
 		System.out.println("In createPayrate");
 
@@ -1261,8 +1261,8 @@ public class RepositoryDelegator {
 
 		/*
 		 * First fetch the Payrate from the DB basis the id coming in the
-		 * request Then update teh fields of the PayrateBo fetched from DB
-		 * with those received in the input
+		 * request Then update teh fields of the PayrateBo fetched from DB with
+		 * those received in the input
 		 */
 		PayrateList PayrateListObj = reqparam.getPayrateListObj();
 
@@ -1334,9 +1334,7 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
-	
 
-	
 	public AmrList createAmr(AmrList AmrListObj) {
 		System.out.println("In createAmr");
 
@@ -1438,9 +1436,9 @@ public class RepositoryDelegator {
 		ResponseObj responseObj = new ResponseObj();
 
 		/*
-		 * First fetch the Amr from the DB basis the id coming in the
-		 * request Then update teh fields of the AmrBo fetched from DB
-		 * with those received in the input
+		 * First fetch the Amr from the DB basis the id coming in the request
+		 * Then update teh fields of the AmrBo fetched from DB with those
+		 * received in the input
 		 */
 		AmrList AmrListObj = reqparam.getAmrListObj();
 
@@ -1482,8 +1480,7 @@ public class RepositoryDelegator {
 						AmrBOObj.setDetail(AmrdtoObj.getDetail());
 						AmrBOObj.setStatus(AmrdtoObj.getStatus());
 						AmrBOObj.setSubject(AmrdtoObj.getSubject());
-						AmrBOObj.setAmrdate(
-								dateformatter.parse(AmrdtoObj.getAmrdate() + " " + AmrdtoObj.getAmrtime()));
+						AmrBOObj.setAmrdate(dateformatter.parse(AmrdtoObj.getAmrdate() + " " + AmrdtoObj.getAmrtime()));
 
 						// merge this UpdateBO back in DB
 						amrdao.update(AmrBOObj);
@@ -1512,9 +1509,6 @@ public class RepositoryDelegator {
 
 		return responseObj;
 	}
-
-
-	
 
 	public AgreementList createAgreement(AgreementList AgreementListObj) {
 		System.out.println("In createAgreement");
@@ -1592,24 +1586,32 @@ public class RepositoryDelegator {
 		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
-	
-	private void setAttachments(AgreementList agreementListObj){
-		AgreementDTO agrm= agreementListObj.getAgreementdtoLs().get(0);
-		AttachmentList al=new AttachmentList();
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Docx File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx","doc"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("PDF File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf","doc"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File PNG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPEG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpeg","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File GIF","http://codeplay-dev6.cloud.cms500.com/attachments/demo.gif","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPG","http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpg","image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Excel File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx","doc"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Text File","http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt","doc"));	
+
+	private void setAttachments(AgreementList agreementListObj) {
+		AgreementDTO agrm = agreementListObj.getAgreementdtoLs().get(0);
+		AttachmentList al = new AttachmentList();
+		al.getAttachmentdtoLs().add(
+				new AttachmentDTO("Docx File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx", "doc"));
+		al.getAttachmentdtoLs().add(
+				new AttachmentDTO("PDF File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf", "doc"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File PNG",
+				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG", "image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPEG",
+				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpeg", "image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File GIF",
+				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.gif", "image"));
+		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPG",
+				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpg", "image"));
+		al.getAttachmentdtoLs().add(
+				new AttachmentDTO("Excel File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx", "doc"));
+		al.getAttachmentdtoLs().add(
+				new AttachmentDTO("Text File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt", "doc"));
 		al.setListSize(8);
-		for(int i=1;i<agreementListObj.getAgreementdtoLs().size();i++){
+		for (int i = 1; i < agreementListObj.getAgreementdtoLs().size(); i++) {
 			agreementListObj.getAgreementdtoLs().get(i).getAttachmentlist().setListSize(0);
 		}
-	
-		agrm.setAttachmentlist(al);		
+
+		agrm.setAttachmentlist(al);
 	}
 
 	public String fetchAgreementById(String id) {
@@ -1712,7 +1714,6 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	
 	public SummaryList createSummary(SummaryList SummaryListObj) {
 		System.out.println("In createSummary");
 
@@ -1935,8 +1936,8 @@ public class RepositoryDelegator {
 
 				SuggestionIdeaBO suggestionIdeaBOObj = litr.next();
 				responseObj = suggestionIdeaBOObj.getDetail();
-				responseObj=responseObj+"<br><br><b>Suggested By : "+suggestionIdeaBOObj.getCreator()+"</b>";
-			
+				responseObj = responseObj + "<br><br><b>Suggested By : " + suggestionIdeaBOObj.getCreator() + "</b>";
+
 			}
 		}
 		return responseObj;
@@ -1952,7 +1953,7 @@ public class RepositoryDelegator {
 		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList;
 
 		SuggestionIdeaBO suggestionIdeaBOObj;
-		
+
 		String channel = reqparam.getChannel();
 
 		Criteria criteriaObj = reqparam.getCriteria();
@@ -2074,28 +2075,79 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	public String fetchsuggestionideaById(String id) {
-		System.out.println("In fetchsuggestionideaById");
-		String responseObj = "";
+	public ResponseObj updateAttachmentDetail(String featureType, String featureId, String fileName) {
 
-		ArrayList<SuggestionIdeaBO> suggestionIdeaBOList = suggestionIdeadao.fetchSuggestionIdeaById(id);
+		ResponseObj responseObj = new ResponseObj();
 
-		if (null != suggestionIdeaBOList && suggestionIdeaBOList.size() > 0) {
+		if (featureType.equalsIgnoreCase("newsletter")) {
 
-			Iterator<SuggestionIdeaBO> litr = suggestionIdeaBOList.iterator();
+			updateNLAttachmentDet(featureId, fileName);
 
-			while (litr.hasNext()) {
+		} else if (featureType.equalsIgnoreCase("agreement")) {
 
-				SuggestionIdeaBO suggestionIdeaBOObj = litr.next();
-				responseObj = suggestionIdeaBOObj.getDetail();
-				responseObj=responseObj+"<br><br><b>Suggested By : "+suggestionIdeaBOObj.getCreator()+"</b>";
-			
-			}
+		} else if (featureType.equalsIgnoreCase("payrate")) {
+
 		}
+
 		return responseObj;
 	}
-	
-	
+
+	private void updateNLAttachmentDet(String featureId, String fileName) {
+		ArrayList<NewsLetterBO> newsLetterBOList;
+
+		NewsLetterBO newsLetterBOObj = null;
+		Criteria criteriaNewsLetterObj = new Criteria();
+		criteriaNewsLetterObj.setCriteria("TRUE");
+
+		FetchNewsLetterCriteria fetchNewsLetterCriteriaObj = new FetchNewsLetterCriteria();
+
+		fetchNewsLetterCriteriaObj.setName("nlid");
+
+		fetchNewsLetterCriteriaObj.setValue(featureId);
+		criteriaNewsLetterObj.setFetchNewsLetterCriteriaObj(fetchNewsLetterCriteriaObj);
+
+		newsLetterBOList = newsletterdao.fetchNewsLetter(criteriaNewsLetterObj, "1");
+
+		try {
+			if (null != newsLetterBOList && newsLetterBOList.size() > 0) {
+
+				newsLetterBOObj = newsLetterBOList.get(0);
+
+				// update the NewsLetterBO fetched from DB
+
+				newsLetterBOObj.setAttachmentstatus("true");
+
+				if (newsLetterBOObj.getDocattachment() != null || newsLetterBOObj.getDocattachment() != "") {
+					String docattachment = newsLetterBOObj.getDocattachment();
+					newsLetterBOObj.setDocattachment(docattachment + "," + fileName);
+				} else {
+
+					newsLetterBOObj.setDocattachment(fileName);
+				}
+
+				if (newsLetterBOObj.getImgattachment() != null || newsLetterBOObj.getImgattachment() != "") {
+					String imgattachment = newsLetterBOObj.getImgattachment();
+					newsLetterBOObj.setImgattachment(imgattachment + "," + fileName);
+				} else {
+
+					newsLetterBOObj.setImgattachment(fileName);
+				}
+
+				// merge this UpdateBO back in DB
+				newsletterdao.update(newsLetterBOObj);
+
+			}
+
+			else {
+				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				throw serviceExceptionObj;
+			}
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
 		userBOObj.setUsname(userObj.getUsNa());
@@ -2304,7 +2356,7 @@ public class RepositoryDelegator {
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
 
 	}
-	
+
 	private void populateCreateAmrBO(AmrDTO AmrdtoObj, AmrBO AmrBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -2312,8 +2364,7 @@ public class RepositoryDelegator {
 		try {
 			AmrBOObj.setCreator(AmrdtoObj.getCreator());
 			AmrBOObj.setDetail(AmrdtoObj.getDetail());
-			AmrBOObj
-					.setAmrdate(dateformatter.parse(AmrdtoObj.getAmrdate() + " " + AmrdtoObj.getAmrtime()));
+			AmrBOObj.setAmrdate(dateformatter.parse(AmrdtoObj.getAmrdate() + " " + AmrdtoObj.getAmrtime()));
 			AmrBOObj.setStatus(AmrdtoObj.getStatus());
 			AmrBOObj.setSubject(AmrdtoObj.getSubject());
 		} catch (ParseException e) {
@@ -2340,7 +2391,7 @@ public class RepositoryDelegator {
 		AmrdtoObj.setSubject(AmrBOObj.getSubject());
 
 	}
-	
+
 	private void populateCreatePayrateBO(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -2348,8 +2399,7 @@ public class RepositoryDelegator {
 		try {
 			PayrateBOObj.setCreator(PayratedtoObj.getCreator());
 			PayrateBOObj.setDetail(PayratedtoObj.getDetail());
-			PayrateBOObj
-					.setPaydate(dateformatter.parse(PayratedtoObj.getPaydate() + " " + PayratedtoObj.getPaytime()));
+			PayrateBOObj.setPaydate(dateformatter.parse(PayratedtoObj.getPaydate() + " " + PayratedtoObj.getPaytime()));
 			PayrateBOObj.setStatus(PayratedtoObj.getStatus());
 			PayrateBOObj.setSubject(PayratedtoObj.getSubject());
 		} catch (ParseException e) {
@@ -2377,8 +2427,6 @@ public class RepositoryDelegator {
 
 	}
 
-
-	
 	private void populateCreateAgreementBO(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -2414,7 +2462,6 @@ public class RepositoryDelegator {
 		agreementdtoObj.setSubject(agreementBOObj.getSubject());
 
 	}
-
 
 	private void populateCreateSummaryBO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
 

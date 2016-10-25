@@ -1107,11 +1107,13 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces(javax.ws.rs.core.MediaType.TEXT_PLAIN)
-	public String uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureID") String featureId,
 			@HeaderParam(value = "attachmentType") String attachmentType) {
+		
+		ResponseObj responseObj;
 
 		/*
 		 * String featureType = feature; System.out.println("featureType = "+
@@ -1122,7 +1124,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		// String path = "/C:/Saurabh/Images";
 
 		// Create Directory if not already Exists
-		String path = "../../" + featureType + "/" + featureId + "/" + attachmentType;
+		String path = "/../" + featureType + "/" + featureId + "/" + attachmentType;
 
 		File filePath = new File(path);
 		if (!filePath.isDirectory()) {
@@ -1138,7 +1140,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		}
 
 		// saving file
-		String fileLocation = filePath + "/" + fileDetail.getFileName();
+		String fileName = fileDetail.getFileName();
+		String fileLocation = filePath + "/" + fileName;
 
 		// String fileLocation = filePath + "/" + "testfile.txt";
 
@@ -1160,13 +1163,13 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 			// Update the DB Attachment Status
 			
-			serviceDelegator.updateAttachmentStatus(featureType, featureId);
+			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId,fileName);
 		} catch (Exception exceptionObj) {
-			return ServiceExceptionMapper.toResponse(exceptionObj).toString();
+			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}
 		String output = "File successfully uploaded to : " + fileLocation;
 		// return Response.status(200).entity(output).build();
-		return output;
+		return responseObj;
 	}
 
 	public ServiceDelegator getServiceDelegator() {

@@ -849,11 +849,11 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-	public ResponseObj updateAttachmentStatus(String featureType, String featureId) {
+	public ResponseObj updateAttachmentDetail(String featureType, String featureId, String fileName) {
 
-		ResponseObj responseObj = new ResponseObj();
+		ResponseObj responseObj ;
 
-		responseObj = repositoryDelegator.updateAttachmentStatus(featureType, featureId);
+		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName);
 		setResponse(responseObj);
 
 		return responseObj;

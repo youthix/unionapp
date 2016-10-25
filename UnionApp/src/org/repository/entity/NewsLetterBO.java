@@ -16,28 +16,40 @@ import org.hibernate.annotations.Type;
 @Table(name = "newsletterdetail")
 
 public class NewsLetterBO implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	@Column(name = "subject")
 	private String subject;
-	
+
 	@Column(name = "nldate")
 	private Date nldate;
-	
+
 	@Column(name = "detail")
-	@Type(type="text")
+	@Type(type = "text")
 	private String detail;
-	
+
 	@Column(name = "creator")
 	private String creator;
-	
+
 	@Column(name = "status")
 	private String status;
-		
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "nlid")
 	private Integer nlid;
+	
+	@Column(name = "attachmentstatus")
+	@Type(type = "text")
+	private String attachmentstatus;	
+	
+	@Column(name = "docattachment")
+	@Type(type = "text")
+	private String docattachment;
+	
+	@Column(name = "imgattachment")
+	@Type(type = "text")
+	private String imgattachment;	
 
 	public String getSubject() {
 		return subject;
@@ -86,4 +98,30 @@ public class NewsLetterBO implements Serializable {
 	public void setNldate(Date nldate) {
 		this.nldate = nldate;
 	}
+
+	public String getAttachmentstatus() {
+		return attachmentstatus;
+	}
+
+	public void setAttachmentstatus(String attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
+	}
+
+	public String getDocattachment() {
+		return docattachment;
+	}
+
+	public void setDocattachment(String docattachment) {
+		this.docattachment = docattachment;
+	}
+
+	public String getImgattachment() {
+		return imgattachment;
+	}
+
+	public void setImgattachment(String imgattachment) {
+		this.imgattachment = imgattachment;
+	}
+	
+	
 }
