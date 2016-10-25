@@ -40,7 +40,6 @@ public class NewsLetterBO implements Serializable {
 	private Integer nlid;
 	
 	@Column(name = "attachmentstatus")
-	@Type(type = "text")
 	private String attachmentstatus;	
 	
 	@Column(name = "docattachment")
