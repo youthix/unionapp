@@ -33,31 +33,19 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 	public ArrayList<CategoryBO> fetchCategory(Criteria criteriaObj) {
 
-/*		ArrayList<CategoryBO> categoryBOList = null;
+		ArrayList<CategoryBO> categoryBOList = null;
 
 		try {
 
-			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getFetchUserCriteriaObj() != null) {
-
-					String SQL = "select u from " + UserBO.class.getName() + " u where "
-							+ criteriaObj.getFetchUserCriteriaObj().getName() + " = '"
-							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "'";
-
-					userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
-
-				}
-			} else {
-				String SQL = "select u from " + UserBO.class.getName() + " u";
-				userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
-			}
+			String SQL = "select u from " + CategoryBO.class.getName() + " u";
+			categoryBOList = (ArrayList<CategoryBO>) manager.createQuery(SQL).getResultList();
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
 			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
 			throw serviceExceptionObj;
 		}
-*/
+
 		return null;
 	}
 

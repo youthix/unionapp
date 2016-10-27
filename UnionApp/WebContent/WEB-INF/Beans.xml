@@ -42,7 +42,10 @@
 	</bean>	
 	
 	<bean id="suggestionIdeadao" class="org.repository.DAOImpl.SuggestionIdeaDAOImpl">
-	</bean>		
+	</bean>
+	
+		<bean id="categorydao" class="org.repository.DAOImpl.CategoryDAOImpl">
+	</bean>			
 	
     <bean id="restfulService" 
       class="org.presentation.controller.Impl.RESTfulServiceImpl">

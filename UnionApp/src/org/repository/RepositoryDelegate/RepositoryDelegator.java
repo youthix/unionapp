@@ -45,6 +45,7 @@ import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
 import org.repository.DAOInterface.IAgreementDAO;
 import org.repository.DAOInterface.IAmrDAO;
+import org.repository.DAOInterface.ICategoryDAO;
 import org.repository.DAOInterface.IMeetingDAO;
 import org.repository.DAOInterface.INewsLetterDAO;
 import org.repository.DAOInterface.IPayrateDAO;
@@ -95,6 +96,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	IPayrateDAO payratedao;
+
+	@Autowired
+	ICategoryDAO categorydao;
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -2134,7 +2138,7 @@ public class RepositoryDelegator {
 
 		ArrayList<CategoryBO> categoryBOList;
 
-		categoryBOList = categorydao.fetchCateoryg(criteriaObj);
+		categoryBOList = categorydao.fetchCategory(criteriaObj);
 
 		if (null != categoryBOList && categoryBOList.size() > 0) {
 
