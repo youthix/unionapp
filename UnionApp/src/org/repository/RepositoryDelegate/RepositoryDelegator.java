@@ -1572,7 +1572,7 @@ public class RepositoryDelegator {
 			}
 
 			AgreementListObj.setAgreementdtoLs(AgreementDTOList);
-			setAttachments(AgreementListObj);
+			//setAttachments(AgreementListObj);
 
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
@@ -1587,7 +1587,7 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	private void setAttachments(AgreementList agreementListObj) {
+	/*private void setAttachments(AgreementList agreementListObj) {
 		AgreementDTO agrm = agreementListObj.getAgreementdtoLs().get(0);
 		AttachmentList al = new AttachmentList();
 		al.getAttachmentdtoLs().add(
@@ -1612,9 +1612,8 @@ public class RepositoryDelegator {
 		}
 
 		agrm.setAttachmentlist(al);
-	}
-
-	public String fetchAgreementById(String id) {
+	}*/
+		public String fetchAgreementById(String id) {
 		System.out.println("In fetchAgreementById");
 		String responseObj = "";
 
@@ -2354,7 +2353,7 @@ public class RepositoryDelegator {
 			status = newsLetterBOObj.getStatus().toLowerCase();
 		newsLetterdtoObj.setStatus(status);
 		newsLetterdtoObj.setSubject(newsLetterBOObj.getSubject());
-
+		populateAttachments(newsLetterdtoObj, newsLetterBOObj);
 	}
 
 	private void populateCreateAmrBO(AmrDTO AmrdtoObj, AmrBO AmrBOObj) {
@@ -2424,7 +2423,7 @@ public class RepositoryDelegator {
 			status = PayrateBOObj.getStatus().toLowerCase();
 		PayratedtoObj.setStatus(status);
 		PayratedtoObj.setSubject(PayrateBOObj.getSubject());
-
+		populateAttachments(PayratedtoObj, PayrateBOObj);
 	}
 
 	private void populateCreateAgreementBO(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
@@ -2460,9 +2459,74 @@ public class RepositoryDelegator {
 			status = agreementBOObj.getStatus().toLowerCase();
 		agreementdtoObj.setStatus(status);
 		agreementdtoObj.setSubject(agreementBOObj.getSubject());
+		populateAttachments(agreementdtoObj, agreementBOObj);
 
 	}
 
+	private void populateAttachments(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
+		AttachmentList al = new AttachmentList();
+		int counter=0;
+		if (null != agreementBOObj.getAttachmentstatus() 
+				&& !"false".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())
+					&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())){			
+			String[] imgAttachments=agreementBOObj.getImgattachment().split(",");
+			for(String img:imgAttachments){				
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image",img,"image"));
+				counter++;
+			}
+			String[] docAttachments=agreementBOObj.getDocattachment().split(",");
+			for(String doc:docAttachments){				
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc",doc,"doc"));
+				counter++;
+			}
+		}
+		al.setListSize(counter);
+		agreementdtoObj.setAttachmentlist(al);
+	}
+	
+	private void populateAttachments(NewsLetterDTO NewsLetterdtoObj, NewsLetterBO NewsLetterBOObj) {
+		AttachmentList al = new AttachmentList();
+		int counter=0;
+		if (null != NewsLetterBOObj.getAttachmentstatus() 
+				&& !"false".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())
+					&& !"".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())){			
+			String[] imgAttachments=NewsLetterBOObj.getImgattachment().split(",");
+			for(String img:imgAttachments){				
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image",img,"image"));
+				counter++;
+			}
+			String[] docAttachments=NewsLetterBOObj.getDocattachment().split(",");
+			for(String doc:docAttachments){				
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc",doc,"doc"));
+				counter++;
+			}
+		}
+		al.setListSize(counter);
+		NewsLetterdtoObj.setAttachmentlist(al);
+	}
+	
+	private void populateAttachments(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
+		AttachmentList al = new AttachmentList();
+		int counter=0;
+		if (null != PayrateBOObj.getAttachmentstatus() 
+				&& !"false".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())
+					&& !"".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())){			
+			String[] imgAttachments=PayrateBOObj.getImgattachment().split(",");
+			for(String img:imgAttachments){				
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image",img,"image"));
+				counter++;
+			}
+			String[] docAttachments=PayrateBOObj.getDocattachment().split(",");
+			for(String doc:docAttachments){				
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc",doc,"doc"));
+				counter++;
+			}
+		}
+		al.setListSize(counter);
+		PayratedtoObj.setAttachmentlist(al);
+	}
+
+	
 	private void populateCreateSummaryBO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
