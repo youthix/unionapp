@@ -9,6 +9,7 @@ public class NewsLetterDTO {
 	private String creator;
 	private String status;
 	private String nlid;
+	private AttachmentList attachmentlist;
 	public String getSubject() {
 		return subject;
 	}
@@ -50,5 +51,15 @@ public class NewsLetterDTO {
 	}
 	public void setNlid(String nlid) {
 		this.nlid = nlid;
+	}
+	public AttachmentList getAttachmentlist() {
+		if(null==this.attachmentlist)
+		{
+			this.attachmentlist=new AttachmentList();
+		}
+		return attachmentlist;
+	}
+	public void setAttachmentlist(AttachmentList attachmentlist) {
+		this.attachmentlist = attachmentlist;
 	}
 }
