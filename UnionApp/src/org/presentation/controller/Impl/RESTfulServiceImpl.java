@@ -1110,7 +1110,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	public ResponseObj uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureId") String featureId,
-			@HeaderParam(value = "attachmentType") String attachmentType) {
+			@HeaderParam(value = "attachmentType") String attachmentType,
+			@HeaderParam(value = "attachmentTitle") String attachmentTitle) {
 		
 		ResponseObj responseObj;
 
@@ -1141,6 +1142,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		// saving file
 		String fileName = fileDetail.getFileName();
 		String fileLocation = filePath + "/" + fileName;
+		
+		String filelocationtitle = fileLocation + "~~" + attachmentTitle;
 
 		// String fileLocation = filePath + "/" + "testfile.txt";
 
@@ -1162,7 +1165,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 			// Update the DB Attachment Status
 			
-			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId,fileLocation);
+			
+			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId,filelocationtitle);
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}
