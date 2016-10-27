@@ -39,6 +39,17 @@ public class PayrateBO  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "payid")
 	private Integer payid;
+	
+	@Column(name = "attachmentstatus")
+	private String attachmentstatus;	
+	
+	@Column(name = "docattachment")
+	@Type(type = "text")
+	private String docattachment;
+	
+	@Column(name = "imgattachment")
+	@Type(type = "text")
+	private String imgattachment;
 
 	public String getSubject() {
 		return subject;
@@ -86,5 +97,29 @@ public class PayrateBO  implements Serializable{
 
 	public void setPayid(Integer payid) {
 		this.payid = payid;
+	}
+
+	public String getAttachmentstatus() {
+		return attachmentstatus;
+	}
+
+	public void setAttachmentstatus(String attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
+	}
+
+	public String getDocattachment() {
+		return docattachment;
+	}
+
+	public void setDocattachment(String docattachment) {
+		this.docattachment = docattachment;
+	}
+
+	public String getImgattachment() {
+		return imgattachment;
+	}
+
+	public void setImgattachment(String imgattachment) {
+		this.imgattachment = imgattachment;
 	}	
 }

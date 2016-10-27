@@ -38,6 +38,17 @@ public class AgreementBO  implements Serializable{
 	@Column(name = "armid")
 	private Integer armid;
 
+	@Column(name = "attachmentstatus")
+	private String attachmentstatus;	
+	
+	@Column(name = "docattachment")
+	@Type(type = "text")
+	private String docattachment;
+	
+	@Column(name = "imgattachment")
+	@Type(type = "text")
+	private String imgattachment;
+	
 	public String getSubject() {
 		return subject;
 	}
@@ -85,4 +96,28 @@ public class AgreementBO  implements Serializable{
 	public void setArmid(Integer armid) {
 		this.armid = armid;
 	}
+
+	public String getAttachmentstatus() {
+		return attachmentstatus;
+	}
+
+	public void setAttachmentstatus(String attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
+	}
+
+	public String getDocattachment() {
+		return docattachment;
+	}
+
+	public void setDocattachment(String docattachment) {
+		this.docattachment = docattachment;
+	}
+
+	public String getImgattachment() {
+		return imgattachment;
+	}
+
+	public void setImgattachment(String imgattachment) {
+		this.imgattachment = imgattachment;
+	}	
 }
