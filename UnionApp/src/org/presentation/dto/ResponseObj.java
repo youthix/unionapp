@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
+import org.presentation.dto.feature.CategoryList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
@@ -33,6 +34,8 @@ public class ResponseObj {
 	private AmrList amrListObj;
 	
 	private PayrateList payrateListObj;
+	
+	private CategoryList CategoryListObj;
 	
 	private String totalPage;
 	
@@ -126,5 +129,15 @@ public class ResponseObj {
 
 	public void setPayrateListObj(PayrateList payrateListObj) {
 		this.payrateListObj = payrateListObj;
+	}
+
+	public CategoryList getCategoryListObj() {
+		return CategoryListObj;
+	}
+
+	public void setCategoryListObj(CategoryList categoryListObj) {
+		CategoryListObj = categoryListObj;
 	}	
+	
+	
 }

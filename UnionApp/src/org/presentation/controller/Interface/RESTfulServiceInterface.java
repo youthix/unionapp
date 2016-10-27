@@ -95,6 +95,10 @@ public interface RESTfulServiceInterface {
 	
 	String fetchsuggestionideaById(String id);
 	
+	ResponseObj addcategory(RequestObj reqparam) ;
+	
+	ResponseObj fetchcategory(RequestObj reqparam);
+	
 	ResponseObj uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureID") String featureId,

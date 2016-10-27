@@ -6,6 +6,7 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
+import org.presentation.dto.feature.CategoryList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
@@ -32,6 +33,8 @@ public class RequestObj {
 	private AmrList AmrListObj;
 	
 	private PayrateList PayrateListObj;
+	
+	private CategoryList CategoryListObj;
 	
 	private String bid;
 	
@@ -144,5 +147,15 @@ public class RequestObj {
 
 	public void setPayrateListObj(PayrateList payrateListObj) {
 		PayrateListObj = payrateListObj;
-	}	
+	}
+
+	public CategoryList getCategoryListObj() {
+		return CategoryListObj;
+	}
+
+	public void setCategoryListObj(CategoryList categoryListObj) {
+		CategoryListObj = categoryListObj;
+	}
+	
+	
 }

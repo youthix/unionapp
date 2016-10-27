@@ -11,6 +11,7 @@ import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
+import org.presentation.dto.feature.CategoryList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
@@ -851,7 +852,7 @@ public class ServiceDelegator {
 
 	public ResponseObj updateAttachmentDetail(String featureType, String featureId, String fileName) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
 		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName);
 		setResponse(responseObj);
@@ -866,6 +867,44 @@ public class ServiceDelegator {
 		newPwd = newPwd.substring(0, 7);
 
 		return newPwd;
+	}
+
+	public ResponseObj addcategory(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		CategoryList categoryListObj = reqparam.getCategoryListObj();
+
+		if (null != categoryListObj) {
+
+			repositoryDelegator.addcategory(categoryListObj);
+			responseObj.setCategoryListObj(categoryListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchcategory(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		CategoryList categoryListObj;
+
+		if (null != reqparam.getCriteria()) {
+
+			categoryListObj = repositoryDelegator.fetchcategory(reqparam.getCriteria());
+			responseObj.setCategoryListObj(categoryListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
 	}
 
 	public void hello() {

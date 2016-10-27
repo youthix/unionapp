@@ -27,6 +27,8 @@ import org.presentation.dto.feature.AmrDTO;
 import org.presentation.dto.feature.AmrList;
 import org.presentation.dto.feature.AttachmentDTO;
 import org.presentation.dto.feature.AttachmentList;
+import org.presentation.dto.feature.CategoryDTO;
+import org.presentation.dto.feature.CategoryList;
 import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterDTO;
@@ -52,6 +54,7 @@ import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.AgreementBO;
 import org.repository.entity.AmrBO;
+import org.repository.entity.CategoryBO;
 import org.repository.entity.MeetingBO;
 import org.repository.entity.NewsLetterBO;
 import org.repository.entity.PayrateBO;
@@ -1572,7 +1575,7 @@ public class RepositoryDelegator {
 			}
 
 			AgreementListObj.setAgreementdtoLs(AgreementDTOList);
-			//setAttachments(AgreementListObj);
+			// setAttachments(AgreementListObj);
 
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
@@ -1587,33 +1590,34 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
-	/*private void setAttachments(AgreementList agreementListObj) {
-		AgreementDTO agrm = agreementListObj.getAgreementdtoLs().get(0);
-		AttachmentList al = new AttachmentList();
-		al.getAttachmentdtoLs().add(
-				new AttachmentDTO("Docx File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx", "doc"));
-		al.getAttachmentdtoLs().add(
-				new AttachmentDTO("PDF File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf", "doc"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File PNG",
-				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG", "image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPEG",
-				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpeg", "image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File GIF",
-				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.gif", "image"));
-		al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPG",
-				"http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpg", "image"));
-		al.getAttachmentdtoLs().add(
-				new AttachmentDTO("Excel File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx", "doc"));
-		al.getAttachmentdtoLs().add(
-				new AttachmentDTO("Text File", "http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt", "doc"));
-		al.setListSize(8);
-		for (int i = 1; i < agreementListObj.getAgreementdtoLs().size(); i++) {
-			agreementListObj.getAgreementdtoLs().get(i).getAttachmentlist().setListSize(0);
-		}
-
-		agrm.setAttachmentlist(al);
-	}*/
-		public String fetchAgreementById(String id) {
+	/*
+	 * private void setAttachments(AgreementList agreementListObj) {
+	 * AgreementDTO agrm = agreementListObj.getAgreementdtoLs().get(0);
+	 * AttachmentList al = new AttachmentList(); al.getAttachmentdtoLs().add(
+	 * new AttachmentDTO("Docx File",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.docx", "doc"));
+	 * al.getAttachmentdtoLs().add( new AttachmentDTO("PDF File",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.pdf", "doc"));
+	 * al.getAttachmentdtoLs().add(new AttachmentDTO("Image File PNG",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.PNG", "image"));
+	 * al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPEG",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpeg", "image"));
+	 * al.getAttachmentdtoLs().add(new AttachmentDTO("Image File GIF",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.gif", "image"));
+	 * al.getAttachmentdtoLs().add(new AttachmentDTO("Image File JPG",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.jpg", "image"));
+	 * al.getAttachmentdtoLs().add( new AttachmentDTO("Excel File",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.xlsx", "doc"));
+	 * al.getAttachmentdtoLs().add( new AttachmentDTO("Text File",
+	 * "http://codeplay-dev6.cloud.cms500.com/attachments/demo.txt", "doc"));
+	 * al.setListSize(8); for (int i = 1; i <
+	 * agreementListObj.getAgreementdtoLs().size(); i++) {
+	 * agreementListObj.getAgreementdtoLs().get(i).getAttachmentlist().
+	 * setListSize(0); }
+	 * 
+	 * agrm.setAttachmentlist(al); }
+	 */
+	public String fetchAgreementById(String id) {
 		System.out.println("In fetchAgreementById");
 		String responseObj = "";
 
@@ -2091,6 +2095,68 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	public CategoryList addcategory(CategoryList categoryListObj) {
+		System.out.println("InRDRegister");
+
+		ArrayList<CategoryDTO> categoryDTOList = (ArrayList<CategoryDTO>) categoryListObj.getCategorydtoLs();
+		CategoryList categoryListObjResp = new CategoryList();
+
+		if (categoryDTOList.size() > 0) {
+			Iterator<CategoryDTO> categoryDTOListIterator = categoryDTOList.iterator();
+
+			while (categoryDTOListIterator.hasNext()) {
+
+				CategoryDTO categoryDTOObj = categoryDTOListIterator.next();
+
+				CategoryBO categoryBOObj = new CategoryBO();
+
+				populateCreateCatBO(categoryDTOObj, categoryBOObj);
+				categorydao.addCategory(categoryBOObj);
+				populateCategoryDTO(categoryDTOObj, categoryBOObj);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("CategoryList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return categoryListObjResp;
+	}
+
+	public CategoryList fetchcategory(Criteria criteriaObj) {
+		System.out.println("InRDFetch");
+
+		CategoryList categoryListObjResp = new CategoryList();
+		ArrayList<CategoryDTO> categoryDTOList = new ArrayList<CategoryDTO>();
+
+		ArrayList<CategoryBO> categoryBOList;
+
+		categoryBOList = categorydao.fetchCateoryg(criteriaObj);
+
+		if (null != categoryBOList && categoryBOList.size() > 0) {
+
+			Iterator<CategoryBO> litr = categoryBOList.iterator();
+
+			while (litr.hasNext()) {
+				CategoryDTO categoryDTOObj = new CategoryDTO();
+				populateCategoryDTO(categoryDTOObj, litr.next());
+				categoryDTOList.add(categoryDTOObj);
+
+			}
+
+			categoryListObjResp.setCategorydtoLs(categoryDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+
+		return categoryListObjResp;
+	}
+
 	private void updateNLAttachmentDet(String featureId, String fileName) {
 		ArrayList<NewsLetterBO> newsLetterBOList;
 
@@ -2465,60 +2531,59 @@ public class RepositoryDelegator {
 
 	private void populateAttachments(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
 		AttachmentList al = new AttachmentList();
-		int counter=0;
-		if (null != agreementBOObj.getAttachmentstatus() 
+		int counter = 0;
+		if (null != agreementBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())
-					&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())){			
-			String[] imgAttachments=agreementBOObj.getImgattachment().split(",");
-			for(String img:imgAttachments){				
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image",img,"image"));
+				&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())) {
+			String[] imgAttachments = agreementBOObj.getImgattachment().split(",");
+			for (String img : imgAttachments) {
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image", img, "image"));
 				counter++;
 			}
-			String[] docAttachments=agreementBOObj.getDocattachment().split(",");
-			for(String doc:docAttachments){				
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc",doc,"doc"));
+			String[] docAttachments = agreementBOObj.getDocattachment().split(",");
+			for (String doc : docAttachments) {
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc", doc, "doc"));
 				counter++;
 			}
 		}
 		al.setListSize(counter);
 		agreementdtoObj.setAttachmentlist(al);
 	}
-	
+
 	private void populateAttachments(NewsLetterDTO NewsLetterdtoObj, NewsLetterBO NewsLetterBOObj) {
 		AttachmentList al = new AttachmentList();
-		int counter=0;
-		if (null != NewsLetterBOObj.getAttachmentstatus() 
+		int counter = 0;
+		if (null != NewsLetterBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())
-					&& !"".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())){			
-			String[] imgAttachments=NewsLetterBOObj.getImgattachment().split(",");
-			for(String img:imgAttachments){				
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image",img,"image"));
+				&& !"".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())) {
+			String[] imgAttachments = NewsLetterBOObj.getImgattachment().split(",");
+			for (String img : imgAttachments) {
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image", img, "image"));
 				counter++;
 			}
-			String[] docAttachments=NewsLetterBOObj.getDocattachment().split(",");
-			for(String doc:docAttachments){				
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc",doc,"doc"));
+			String[] docAttachments = NewsLetterBOObj.getDocattachment().split(",");
+			for (String doc : docAttachments) {
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc", doc, "doc"));
 				counter++;
 			}
 		}
 		al.setListSize(counter);
 		NewsLetterdtoObj.setAttachmentlist(al);
 	}
-	
+
 	private void populateAttachments(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
 		AttachmentList al = new AttachmentList();
-		int counter=0;
-		if (null != PayrateBOObj.getAttachmentstatus() 
-				&& !"false".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())
-					&& !"".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())){			
-			String[] imgAttachments=PayrateBOObj.getImgattachment().split(",");
-			for(String img:imgAttachments){				
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image",img,"image"));
+		int counter = 0;
+		if (null != PayrateBOObj.getAttachmentstatus() && !"false".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())
+				&& !"".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())) {
+			String[] imgAttachments = PayrateBOObj.getImgattachment().split(",");
+			for (String img : imgAttachments) {
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image", img, "image"));
 				counter++;
 			}
-			String[] docAttachments=PayrateBOObj.getDocattachment().split(",");
-			for(String doc:docAttachments){				
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc",doc,"doc"));
+			String[] docAttachments = PayrateBOObj.getDocattachment().split(",");
+			for (String doc : docAttachments) {
+				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc", doc, "doc"));
 				counter++;
 			}
 		}
@@ -2526,7 +2591,6 @@ public class RepositoryDelegator {
 		PayratedtoObj.setAttachmentlist(al);
 	}
 
-	
 	private void populateCreateSummaryBO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -2598,6 +2662,18 @@ public class RepositoryDelegator {
 		suggestionIdeadtoObj.setSuggideaid(suggestionIdeaBOObj.getSuggideaid().toString());
 		suggestionIdeadtoObj.setStatus(suggestionIdeaBOObj.getStatus());
 		suggestionIdeadtoObj.setSubject(suggestionIdeaBOObj.getSubject());
+
+	}
+
+	private void populateCreateCatBO(CategoryDTO catDTOObj, CategoryBO catBOObj) {
+
+		catBOObj.setCatname(catDTOObj.getCatname());
+	}
+
+	private void populateCategoryDTO(CategoryDTO catDTOObj, CategoryBO catBOObj) {
+
+		catDTOObj.setCatid(catBOObj.getCatid());
+		catDTOObj.setCatname(catBOObj.getCatname());
 
 	}
 
