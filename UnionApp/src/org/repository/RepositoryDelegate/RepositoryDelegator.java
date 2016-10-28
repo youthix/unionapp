@@ -2091,11 +2091,14 @@ public class RepositoryDelegator {
 			updateNLAttachmentDet(featureId, fileName);
 
 		} else if (featureType.equalsIgnoreCase("agreement")) {
+			updateAgreementAttachmentDet(featureId, fileName);
 
 		} else if (featureType.equalsIgnoreCase("payrate")) {
-
+			updatePayrateAttachmentDet(featureId, fileName);
 		}
-
+		else if (featureType.equalsIgnoreCase("profile")) {
+			
+		}
 		return responseObj;
 	}
 
@@ -2204,6 +2207,121 @@ public class RepositoryDelegator {
 
 				// merge this UpdateBO back in DB
 				newsletterdao.update(newsLetterBOObj);
+
+			}
+
+			else {
+				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				throw serviceExceptionObj;
+			}
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+
+
+	private void updateAgreementAttachmentDet(String featureId, String fileName) {
+		ArrayList<AgreementBO> AgreementBOList;
+
+		AgreementBO AgreementBOObj = null;
+		Criteria criteriaAgreementObj = new Criteria();
+		criteriaAgreementObj.setCriteria("TRUE");
+
+		FetchAgreementCriteria fetchAgreementCriteriaObj = new FetchAgreementCriteria();
+
+		fetchAgreementCriteriaObj.setName("nlid");
+
+		fetchAgreementCriteriaObj.setValue(featureId);
+		criteriaAgreementObj.setFetchAgreementCriteriaObj(fetchAgreementCriteriaObj);
+
+		AgreementBOList = agreementdao.fetchAgreement(criteriaAgreementObj, "1");
+
+		try {
+			if (null != AgreementBOList && AgreementBOList.size() > 0) {
+
+				AgreementBOObj = AgreementBOList.get(0);
+
+				// update the AgreementBO fetched from DB
+
+				AgreementBOObj.setAttachmentstatus("true");
+
+				if (AgreementBOObj.getDocattachment() != null || AgreementBOObj.getDocattachment() != "") {
+					String docattachment = AgreementBOObj.getDocattachment();
+					AgreementBOObj.setDocattachment(docattachment + "," + fileName);
+				} else {
+
+					AgreementBOObj.setDocattachment(fileName);
+				}
+
+				if (AgreementBOObj.getImgattachment() != null || AgreementBOObj.getImgattachment() != "") {
+					String imgattachment = AgreementBOObj.getImgattachment();
+					AgreementBOObj.setImgattachment(imgattachment + "," + fileName);
+				} else {
+
+					AgreementBOObj.setImgattachment(fileName);
+				}
+
+				// merge this UpdateBO back in DB
+				agreementdao.update(AgreementBOObj);
+
+			}
+
+			else {
+				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				throw serviceExceptionObj;
+			}
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+
+	
+	
+	private void updatePayrateAttachmentDet(String featureId, String fileName) {
+		ArrayList<PayrateBO> PayrateBOList;
+
+		PayrateBO PayrateBOObj = null;
+		Criteria criteriaPayrateObj = new Criteria();
+		criteriaPayrateObj.setCriteria("TRUE");
+
+		FetchPayrateCriteria fetchPayrateCriteriaObj = new FetchPayrateCriteria();
+
+		fetchPayrateCriteriaObj.setName("payid");
+
+		fetchPayrateCriteriaObj.setValue(featureId);
+		criteriaPayrateObj.setFetchPayrateCriteriaObj(fetchPayrateCriteriaObj);
+
+		PayrateBOList = payratedao.fetchPayrate(criteriaPayrateObj, "1");
+
+		try {
+			if (null != PayrateBOList && PayrateBOList.size() > 0) {
+
+				PayrateBOObj = PayrateBOList.get(0);
+
+				// update the PayrateBO fetched from DB
+
+				PayrateBOObj.setAttachmentstatus("true");
+
+				if (PayrateBOObj.getDocattachment() != null || PayrateBOObj.getDocattachment() != "") {
+					String docattachment = PayrateBOObj.getDocattachment();
+					PayrateBOObj.setDocattachment(docattachment + "," + fileName);
+				} else {
+
+					PayrateBOObj.setDocattachment(fileName);
+				}
+
+				if (PayrateBOObj.getImgattachment() != null || PayrateBOObj.getImgattachment() != "") {
+					String imgattachment = PayrateBOObj.getImgattachment();
+					PayrateBOObj.setImgattachment(imgattachment + "," + fileName);
+				} else {
+
+					PayrateBOObj.setImgattachment(fileName);
+				}
+
+				// merge this UpdateBO back in DB
+				payratedao.update(PayrateBOObj);
 
 			}
 
@@ -2533,6 +2651,15 @@ public class RepositoryDelegator {
 
 	}
 
+	private String [] splitTitle(String url){
+		String[] sarr= {"",""};
+		String[] sarrDummy= {url,"Attachment"};
+		sarr=url.split("~~~");
+		if(sarr.length<2)
+			return sarrDummy;
+		return sarr;
+	}
+	
 	private void populateAttachments(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
 		AttachmentList al = new AttachmentList();
 		int counter = 0;
@@ -2541,12 +2668,14 @@ public class RepositoryDelegator {
 				&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())) {
 			String[] imgAttachments = agreementBOObj.getImgattachment().split(",");
 			for (String img : imgAttachments) {
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image", img, "image"));
+				String s []=splitTitle(img);
+				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
 				counter++;
 			}
 			String[] docAttachments = agreementBOObj.getDocattachment().split(",");
 			for (String doc : docAttachments) {
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc", doc, "doc"));
+				String s []=splitTitle(doc);
+				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
 				counter++;
 			}
 		}
@@ -2562,12 +2691,14 @@ public class RepositoryDelegator {
 				&& !"".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())) {
 			String[] imgAttachments = NewsLetterBOObj.getImgattachment().split(",");
 			for (String img : imgAttachments) {
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image", img, "image"));
+				String s []=splitTitle(img);
+				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
 				counter++;
 			}
 			String[] docAttachments = NewsLetterBOObj.getDocattachment().split(",");
 			for (String doc : docAttachments) {
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc", doc, "doc"));
+				String s []=splitTitle(doc);
+				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
 				counter++;
 			}
 		}
@@ -2582,12 +2713,14 @@ public class RepositoryDelegator {
 				&& !"".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())) {
 			String[] imgAttachments = PayrateBOObj.getImgattachment().split(",");
 			for (String img : imgAttachments) {
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy image", img, "image"));
+				String s []=splitTitle(img);
+				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
 				counter++;
 			}
 			String[] docAttachments = PayrateBOObj.getDocattachment().split(",");
 			for (String doc : docAttachments) {
-				al.getAttachmentdtoLs().add(new AttachmentDTO("dummy doc", doc, "doc"));
+				String s []=splitTitle(doc);
+				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
 				counter++;
 			}
 		}
@@ -2676,7 +2809,7 @@ public class RepositoryDelegator {
 
 	private void populateCategoryDTO(CategoryDTO catDTOObj, CategoryBO catBOObj) {
 
-		catDTOObj.setCatid(catBOObj.getCatid());
+		catDTOObj.setCatid(catBOObj.getCatid().toString());
 		catDTOObj.setCatname(catBOObj.getCatname());
 
 	}

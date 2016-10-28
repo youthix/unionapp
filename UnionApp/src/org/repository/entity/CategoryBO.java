@@ -24,7 +24,7 @@ public class CategoryBO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "catid")
-	private String catid;
+	private Integer catid;
 
 	public String getCatname() {
 		return catname;
@@ -34,13 +34,13 @@ public class CategoryBO implements Serializable {
 		this.catname = catname;
 	}
 
-	public String getCatid() {
+	public Integer getCatid() {
 		return catid;
 	}
 
-	public void setCatid(String catid) {
+	public void setCatid(Integer catid) {
 		this.catid = catid;
 	}
 	
-
+	
 }
