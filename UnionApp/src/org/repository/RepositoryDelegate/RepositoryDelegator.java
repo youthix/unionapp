@@ -2230,7 +2230,7 @@ public class RepositoryDelegator {
 
 		FetchAgreementCriteria fetchAgreementCriteriaObj = new FetchAgreementCriteria();
 
-		fetchAgreementCriteriaObj.setName("nlid");
+		fetchAgreementCriteriaObj.setName("armid");
 
 		fetchAgreementCriteriaObj.setValue(featureId);
 		criteriaAgreementObj.setFetchAgreementCriteriaObj(fetchAgreementCriteriaObj);
