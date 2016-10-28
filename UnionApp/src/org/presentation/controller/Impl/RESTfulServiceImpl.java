@@ -1166,7 +1166,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			// Update the DB Attachment Status
 			
 			
-			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId,filelocationtitle);
+			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId,filelocationtitle,attachmentType);
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}

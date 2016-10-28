@@ -8,81 +8,90 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "userdetail")
 public class UserBO implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Column(name = "usname")
 	private String usname;
-	
+
 	@Column(name = "pwd")
 	private String pwd;
-	
+
 	@Column(name = "fname")
 	private String fn;
-	
+
 	@Column(name = "lname")
 	private String ln;
-	
+
 	@Column(name = "joindt")
 	private String joindt;
-	
+
 	@Column(name = "age")
 	private String age;
-	
+
 	@Column(name = "gender")
 	private String gen;
-	
+
 	@Column(name = "address")
 	private String add;
-	
+
 	@Column(name = "connumber")
 	private String conNu;
 
 	@Id
 	@Column(name = "emailid")
 	private String emailid;
-	
-	
+
 	@Column(name = "status")
 	private String status;
-	
+
 	@Column(name = "role")
 	private String role;
-	
+
 	@Column(name = "loginstatus")
 	private String loginstatus;
-	
+
 	@Column(name = "deviceid")
 	private String deviceid;
-	
+
 	@Column(name = "devicetype")
-	private String devicetype;	
-	
+	private String devicetype;
+
 	@Column(name = "city")
 	private String city;
-	
+
 	@Column(name = "zipcode")
-	private String zipcode;	
-	
+	private String zipcode;
+
 	@Column(name = "acceptmeetingid")
 	private String acceptmeetingid;
-	
+
 	@Column(name = "declinemeetingid")
 	private String declinemeetingid;
-	
+
 	@Column(name = "acceptactivityid")
 	private String acceptactivityid;
-	
+
 	@Column(name = "declineactivityid")
-	private String declineactivityid;	
-	
+	private String declineactivityid;
+
+	@Column(name = "imgattachment")
+	@Type(type = "text")
+	private String imgattachment;
+
+	@Column(name = "category")
+	private String category;
+
+	@Column(name = "title")
+	private String title;
 
 	public String getUsname() {
 		return usname;
@@ -164,7 +173,6 @@ public class UserBO implements Serializable {
 		this.emailid = emailid;
 	}
 
-
 	public String getStatus() {
 		return status;
 	}
@@ -217,8 +225,6 @@ public class UserBO implements Serializable {
 		this.zipcode = zipcode;
 	}
 
-
-
 	public String getDevicetype() {
 		return devicetype;
 	}
@@ -259,5 +265,28 @@ public class UserBO implements Serializable {
 		this.declineactivityid = declineactivityid;
 	}
 
+	public String getImgattachment() {
+		return imgattachment;
+	}
+
+	public void setImgattachment(String imgattachment) {
+		this.imgattachment = imgattachment;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 }

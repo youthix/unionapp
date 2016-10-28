@@ -2,10 +2,8 @@ package org.presentation.dto.user;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 @XmlRootElement(name = "user")
-//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+// @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class User {
 
 	private String usNa;
@@ -29,6 +27,9 @@ public class User {
 	private String zipcode;
 	private String acceptmeetingid;
 	private String declinemeetingid;
+	private String title;
+	private String category;
+	private String imageurl;
 
 	public String getPwd() {
 		return pwd;
@@ -198,7 +199,28 @@ public class User {
 		this.declinemeetingid = declinemeetingid;
 	}
 
+	public String getTitle() {
+		return title;
+	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getImageurl() {
+		return imageurl;
+	}
+
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
+
 }
