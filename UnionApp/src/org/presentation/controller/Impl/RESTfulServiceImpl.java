@@ -1143,7 +1143,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		String fileName = fileDetail.getFileName();
 		String fileLocation = filePath + "/" + fileName;
 		
-		String filelocationtitle = fileLocation + "~~" + attachmentTitle;
+		String filelocationtitle = fileLocation + "~~~" + attachmentTitle;
 
 		// String fileLocation = filePath + "/" + "testfile.txt";
 
@@ -1170,7 +1170,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}
-		String output = "File successfully uploaded to : " + fileLocation;
+		//String output = "File successfully uploaded to : " + fileLocation;
 		// return Response.status(200).entity(output).build();
 		return responseObj;
 	}
