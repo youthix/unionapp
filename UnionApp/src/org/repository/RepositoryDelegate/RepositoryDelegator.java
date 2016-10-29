@@ -292,8 +292,8 @@ public class RepositoryDelegator {
 				userBOObj.setGen(userdtoObj.getGen());
 				userBOObj.setLn(userdtoObj.getLn());
 				userBOObj.setZipcode(userdtoObj.getZipcode());
-				userBOObj.setCategory(userObj.getCategory());
-				userBOObj.setTitle(userObj.getTitle());
+				userBOObj.setCategory(userdtoObj.getCategory());
+				userBOObj.setTitle(userdtoObj.getTitle());
 
 				// merge this UpdateBO back in DB
 				userdao.update(userBOObj);
