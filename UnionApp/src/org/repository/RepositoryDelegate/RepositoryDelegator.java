@@ -2195,7 +2195,7 @@ public class RepositoryDelegator {
 
 				if (attachmentType.equalsIgnoreCase("document")) {
 
-					if (newsLetterBOObj.getDocattachment() != null || newsLetterBOObj.getDocattachment() != "") {
+					if (newsLetterBOObj.getDocattachment() != null && newsLetterBOObj.getDocattachment() != "") {
 						String docattachment = newsLetterBOObj.getDocattachment();
 						newsLetterBOObj.setDocattachment(docattachment + "," + fileName);
 					} else {
@@ -2207,7 +2207,7 @@ public class RepositoryDelegator {
 
 				else if (attachmentType.equalsIgnoreCase("image")) {
 
-					if (newsLetterBOObj.getImgattachment() != null || newsLetterBOObj.getImgattachment() != "") {
+					if (newsLetterBOObj.getImgattachment() != null && newsLetterBOObj.getImgattachment() != "") {
 						String imgattachment = newsLetterBOObj.getImgattachment();
 						newsLetterBOObj.setImgattachment(imgattachment + "," + fileName);
 					} else {
@@ -2259,7 +2259,7 @@ public class RepositoryDelegator {
 
 				if (attachmentType.equalsIgnoreCase("document")) {
 
-					if (AgreementBOObj.getDocattachment() != null || AgreementBOObj.getDocattachment() != "") {
+					if (AgreementBOObj.getDocattachment() != null && AgreementBOObj.getDocattachment() != "") {
 						String docattachment = AgreementBOObj.getDocattachment();
 						AgreementBOObj.setDocattachment(docattachment + "," + fileName);
 					} else {
@@ -2269,7 +2269,7 @@ public class RepositoryDelegator {
 
 				} else if (attachmentType.equalsIgnoreCase("image")) {
 
-					if (AgreementBOObj.getImgattachment() != null || AgreementBOObj.getImgattachment() != "") {
+					if (AgreementBOObj.getImgattachment() != null && AgreementBOObj.getImgattachment() != "") {
 						String imgattachment = AgreementBOObj.getImgattachment();
 						AgreementBOObj.setImgattachment(imgattachment + "," + fileName);
 					} else {
@@ -2321,7 +2321,7 @@ public class RepositoryDelegator {
 
 				if (attachmentType.equalsIgnoreCase("document")) {
 
-					if (PayrateBOObj.getDocattachment() != null || PayrateBOObj.getDocattachment() != "") {
+					if (PayrateBOObj.getDocattachment() != null && PayrateBOObj.getDocattachment() != "") {
 						String docattachment = PayrateBOObj.getDocattachment();
 						PayrateBOObj.setDocattachment(docattachment + "," + fileName);
 					} else {
@@ -2333,7 +2333,7 @@ public class RepositoryDelegator {
 
 				else if (attachmentType.equalsIgnoreCase("image")) {
 
-					if (PayrateBOObj.getImgattachment() != null || PayrateBOObj.getImgattachment() != "") {
+					if (PayrateBOObj.getImgattachment() != null && PayrateBOObj.getImgattachment() != "") {
 						String imgattachment = PayrateBOObj.getImgattachment();
 						PayrateBOObj.setImgattachment(imgattachment + "," + fileName);
 					} else {
@@ -2362,24 +2362,25 @@ public class RepositoryDelegator {
 		ArrayList<UserBO> UserBOList;
 
 		UserBO UserBOObj = null;
-		Criteria criteriaPayrateObj = new Criteria();
-		criteriaPayrateObj.setCriteria("TRUE");
+		Criteria criteriaObj = new Criteria();
+		criteriaObj.setCriteria("TRUE");
+		
+		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
 
-		FetchPayrateCriteria fetchPayrateCriteriaObj = new FetchPayrateCriteria();
+		fetchUserCriteriaObj.setName("emailid");
+		fetchUserCriteriaObj.setValue(featureId);
+		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
-		fetchPayrateCriteriaObj.setName("emailid");
 
-		fetchPayrateCriteriaObj.setValue(featureId);
-		criteriaPayrateObj.setFetchPayrateCriteriaObj(fetchPayrateCriteriaObj);
 
-		UserBOList = userdao.fetchUser(criteriaPayrateObj);
+		UserBOList = userdao.fetchUser(criteriaObj);
 
 		try {
 			if (null != UserBOList && UserBOList.size() > 0) {
 
 				UserBOObj = UserBOList.get(0);
 
-				if (UserBOObj.getImgattachment() != null || UserBOObj.getImgattachment() != "") {
+				if (UserBOObj.getImgattachment() != null && UserBOObj.getImgattachment() != "") {
 					String imgattachment = UserBOObj.getImgattachment();
 					UserBOObj.setImgattachment(imgattachment + "," + fileName);
 				} else {
@@ -2736,18 +2737,24 @@ public class RepositoryDelegator {
 		if (null != agreementBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())) {
+			if (null != agreementBOObj.getDocattachment()) {
+
+			}
 			String[] imgAttachments = agreementBOObj.getImgattachment().split(",");
 			for (String img : imgAttachments) {
 				String s[] = splitTitle(img);
 				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
 				counter++;
 			}
-			String[] docAttachments = agreementBOObj.getDocattachment().split(",");
-			for (String doc : docAttachments) {
-				String s[] = splitTitle(doc);
-				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
-				counter++;
+			if (null != agreementBOObj.getDocattachment()) {
+				String[] docAttachments = agreementBOObj.getDocattachment().split(",");
+				for (String doc : docAttachments) {
+					String s[] = splitTitle(doc);
+					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
+					counter++;
+				}
 			}
+
 		}
 		al.setListSize(counter);
 		agreementdtoObj.setAttachmentlist(al);
@@ -2759,18 +2766,28 @@ public class RepositoryDelegator {
 		if (null != NewsLetterBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())) {
-			String[] imgAttachments = NewsLetterBOObj.getImgattachment().split(",");
-			for (String img : imgAttachments) {
-				String s[] = splitTitle(img);
-				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
-				counter++;
+			if (null != NewsLetterBOObj.getImgattachment()) {
+
+				String[] imgAttachments = NewsLetterBOObj.getImgattachment().split(",");
+				for (String img : imgAttachments) {
+					String s[] = splitTitle(img);
+					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
+					counter++;
+				}
+
 			}
-			String[] docAttachments = NewsLetterBOObj.getDocattachment().split(",");
-			for (String doc : docAttachments) {
-				String s[] = splitTitle(doc);
-				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
-				counter++;
+
+			if (null != NewsLetterBOObj.getDocattachment()) {
+
+				String[] docAttachments = NewsLetterBOObj.getDocattachment().split(",");
+				for (String doc : docAttachments) {
+					String s[] = splitTitle(doc);
+					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
+					counter++;
+				}
+
 			}
+
 		}
 		al.setListSize(counter);
 		NewsLetterdtoObj.setAttachmentlist(al);
@@ -2781,18 +2798,26 @@ public class RepositoryDelegator {
 		int counter = 0;
 		if (null != PayrateBOObj.getAttachmentstatus() && !"false".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())) {
-			String[] imgAttachments = PayrateBOObj.getImgattachment().split(",");
-			for (String img : imgAttachments) {
-				String s[] = splitTitle(img);
-				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
-				counter++;
+
+			if (null != PayrateBOObj.getImgattachment()) {
+				String[] imgAttachments = PayrateBOObj.getImgattachment().split(",");
+				for (String img : imgAttachments) {
+					String s[] = splitTitle(img);
+					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
+					counter++;
+				}
 			}
-			String[] docAttachments = PayrateBOObj.getDocattachment().split(",");
-			for (String doc : docAttachments) {
-				String s[] = splitTitle(doc);
-				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
-				counter++;
+			if (null != PayrateBOObj.getDocattachment()) {
+
+				String[] docAttachments = PayrateBOObj.getDocattachment().split(",");
+				for (String doc : docAttachments) {
+					String s[] = splitTitle(doc);
+					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
+					counter++;
+				}
+
 			}
+
 		}
 		al.setListSize(counter);
 		PayratedtoObj.setAttachmentlist(al);

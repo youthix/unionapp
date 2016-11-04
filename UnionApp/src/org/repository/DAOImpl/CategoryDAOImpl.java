@@ -46,7 +46,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 			throw serviceExceptionObj;
 		}
 
-		return null;
+		return categoryBOList;
 	}
 
 	public EntityManager getManager() {

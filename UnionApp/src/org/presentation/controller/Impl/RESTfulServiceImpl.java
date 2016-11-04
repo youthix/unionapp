@@ -1111,7 +1111,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureId") String featureId,
 			@HeaderParam(value = "attachmentType") String attachmentType,
-			@HeaderParam(value = "attachmentTitle") String attachmentTitle) {
+			@HeaderParam(value = "attachmentTitle") String attachmentTitle,
+			@HeaderParam(value = "attachmentName") String attachmentName) {
 		
 		ResponseObj responseObj;
 
@@ -1121,10 +1122,11 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		 * "doc";
 		 */
 
-		// String path = "/C:/Saurabh/Images";
+		 //String path = "/C:/Saurabh/Images/" + featureType + "/" + featureId + "/" + attachmentType;
 
 		// Create Directory if not already Exists
-		String path = "/../" + featureType + "/" + featureId + "/" + attachmentType;
+		//String path = "/../" + featureType + "/" + featureId + "/" + attachmentType;
+		String path = "/opt/tomcat/webapps/attachments/" + featureType + "/" + featureId + "/" + attachmentType;
 
 		File filePath = new File(path);
 		if (!filePath.isDirectory()) {
@@ -1140,7 +1142,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		}
 
 		// saving file
-		String fileName = fileDetail.getFileName();
+		String fileName = attachmentName;
 		String fileLocation = filePath + "/" + fileName;
 		
 		String filelocationtitle = fileLocation + "~~~" + attachmentTitle;
@@ -1186,7 +1188,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		try {
 			if (null != reqparam) {
-				responseObj = serviceDelegator.fetchcategory(reqparam);
+				responseObj = serviceDelegator.addcategory(reqparam);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");

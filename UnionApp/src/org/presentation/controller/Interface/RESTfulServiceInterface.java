@@ -102,6 +102,7 @@ public interface RESTfulServiceInterface {
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureID") String featureId,
 			@HeaderParam(value = "attachmentType") String attachmentType,
-			@HeaderParam(value = "attachmentTitle") String attachmentTitle);
+			@HeaderParam(value = "attachmentTitle") String attachmentTitle,
+			@HeaderParam(value = "attachmentName") String attachmentName);
 
 }
