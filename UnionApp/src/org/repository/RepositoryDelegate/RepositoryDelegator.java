@@ -2458,7 +2458,7 @@ public class RepositoryDelegator {
 		userObj.setDevicetype(userBOObj.getDevicetype());
 		userObj.setCategory(userBOObj.getCategory());
 		userObj.setTitle(userBOObj.getTitle());
-		userObj.setImageurl(userBOObj.getImgattachment());
+		userObj.setImageurl(splitUrl(userBOObj.getImgattachment()));
 
 	}
 
@@ -2736,6 +2736,21 @@ public class RepositoryDelegator {
 			sarr[0]=urlV;
 		}
 		return sarr;
+	}
+	
+	private String splitUrl(String url) {
+		String[] sarr = { "", "" };
+		String[] sarrDummy = { url, "Attachment" };
+		sarr = url.split("~~~");
+		
+		if (sarr.length < 2)
+			return sarrDummy[0];
+		else{
+			String urlV=sarr[0];
+			urlV=urlV.replace(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
+			sarr[0]=urlV;
+		}
+		return sarr[0];
 	}
 
 	private void populateAttachments(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
