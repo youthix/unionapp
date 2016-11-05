@@ -2747,7 +2747,7 @@ public class RepositoryDelegator {
 			return sarrDummy[0];
 		else{
 			String urlV=sarr[0];
-			urlV=urlV.replace(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
+			urlV=urlV.replaceAll(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
 			sarr[0]=urlV;
 		}
 		return sarr[0];
