@@ -2739,6 +2739,8 @@ public class RepositoryDelegator {
 	}
 	
 	private String splitUrl(String url) {
+		if(null==url)
+			url="";
 		String[] sarr = { "", "" };
 		String[] sarrDummy = { url, "Attachment" };
 		sarr = url.split("~~~");
