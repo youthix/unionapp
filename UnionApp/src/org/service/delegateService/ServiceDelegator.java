@@ -137,8 +137,8 @@ public class ServiceDelegator {
 
 		if (null != reqparam.getCriteria()) {
 
-			userListObj = repositoryDelegator.fetch(reqparam.getCriteria());
-			responseObj.setUserListObj(userListObj);
+			responseObj = repositoryDelegator.fetch(reqparam);
+
 			setResponse(responseObj);
 
 		} else {

@@ -136,6 +136,7 @@ public class RepositoryDelegator {
 		System.out.println("InRDLogin");
 
 		UserBO userBOObj = null;
+		String pageNo = "1";
 
 		Criteria criteriaObj = new Criteria();
 		criteriaObj.setCriteria("TRUE");
@@ -154,7 +155,7 @@ public class RepositoryDelegator {
 			fetchUserCriteriaObj.setValue(userObj.getUsNa());
 			criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
-			userBOList = userdao.fetchUser(criteriaObj);
+			userBOList = userdao.fetchUser(criteriaObj, pageNo);
 
 			userBOObj = userBOList.get(0);
 
@@ -168,7 +169,11 @@ public class RepositoryDelegator {
 		return userBOObj;
 	}
 
-	public UserList fetch(Criteria criteriaObj) {
+	public ResponseObj fetch(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		Criteria criteriaObj = reqparam.getCriteria();
+
 		System.out.println("InRDFetch");
 
 		UserList userListObj = new UserList();
@@ -176,7 +181,7 @@ public class RepositoryDelegator {
 
 		ArrayList<UserBO> userBOList;
 
-		userBOList = userdao.fetchUser(criteriaObj);
+		userBOList = userdao.fetchUser(criteriaObj, reqparam.getPageno());
 
 		if (null != userBOList && userBOList.size() > 0) {
 
@@ -196,7 +201,18 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 
-		return userListObj;
+		responseObj.setUserListObj(userListObj);
+		userBOList = userdao.fetchAllUser(criteriaObj);
+		int totalrecordcount = 0;
+		if (null != userBOList) {
+
+			totalrecordcount = userBOList.size();
+		}
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
 	}
 
 	public UserList update(UserList userListObj, Criteria criteriaObj) {
@@ -250,6 +266,8 @@ public class RepositoryDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 
+		String pageNo = "1";
+
 		/*
 		 * First fetch the user from the DB basis the id coming in the request
 		 * Then update the fields of the UserBO fetched from DB with those
@@ -277,7 +295,7 @@ public class RepositoryDelegator {
 			fetchUserCriteriaObj.setValue(userdtoObj.getUsNa());
 			criteriaUserObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
-			userBOList = userdao.fetchUser(criteriaUserObj);
+			userBOList = userdao.fetchUser(criteriaUserObj, pageNo);
 
 			if (null != userBOList && userBOList.size() > 0) {
 
@@ -383,7 +401,7 @@ public class RepositoryDelegator {
 
 		Criteria criteriaUserObj = new Criteria();
 		criteriaUserObj.setCriteria("TRUE");
-		userBOList = userdao.fetchUser(criteriaObj);
+		userBOList = userdao.fetchAllUser(criteriaObj);
 
 		if (null != userBOList) {
 			totalActUserCount = userBOList.size();
@@ -480,7 +498,7 @@ public class RepositoryDelegator {
 
 			ArrayList<UserBO> userBOList;
 
-			userBOList = userdao.fetchUser(criteriaObj);
+			userBOList = userdao.fetchUser(criteriaObj, pageno);
 
 			if (null != userBOList && userBOList.size() > 0) {
 				UserBO userBOObj = userBOList.get(0);
@@ -721,7 +739,7 @@ public class RepositoryDelegator {
 
 		Criteria criteriaUserObj = new Criteria();
 		criteriaUserObj.setCriteria("TRUE");
-		userBOList = userdao.fetchUser(criteriaObj);
+		userBOList = userdao.fetchAllUser(criteriaObj);
 
 		if (null != userBOList) {
 			totalActUserCount = userBOList.size();
@@ -903,7 +921,7 @@ public class RepositoryDelegator {
 
 			ArrayList<UserBO> userBOList;
 
-			userBOList = userdao.fetchUser(criteriaObj);
+			userBOList = userdao.fetchUser(criteriaObj, pageno);
 
 			if (null != userBOList && userBOList.size() > 0) {
 				UserBO userBOObj = userBOList.get(0);
@@ -2361,20 +2379,19 @@ public class RepositoryDelegator {
 
 	private void updateProfileAttachmentDet(String featureId, String fileName, String attachmentType) {
 		ArrayList<UserBO> UserBOList;
+		String pageno = "1";
 
 		UserBO UserBOObj = null;
 		Criteria criteriaObj = new Criteria();
 		criteriaObj.setCriteria("TRUE");
-		
+
 		FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
 
 		fetchUserCriteriaObj.setName("emailid");
 		fetchUserCriteriaObj.setValue(featureId);
 		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
-
-
-		UserBOList = userdao.fetchUser(criteriaObj);
+		UserBOList = userdao.fetchUser(criteriaObj, pageno);
 
 		try {
 			if (null != UserBOList && UserBOList.size() > 0) {
@@ -2727,28 +2744,28 @@ public class RepositoryDelegator {
 		String[] sarr = { "", "" };
 		String[] sarrDummy = { url, "Attachment" };
 		sarr = url.split("~~~");
-		
+
 		if (sarr.length < 2)
 			return sarrDummy;
-		else{
-			String urlV=sarr[0];
-			urlV=urlV.replace(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
-			sarr[0]=urlV;
+		else {
+			String urlV = sarr[0];
+			urlV = urlV.replace(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
+			sarr[0] = urlV;
 		}
 		return sarr;
 	}
-	
+
 	private String splitUrl(String url) {
 		String[] sarr = { "", "" };
 		String[] sarrDummy = { url, "Attachment" };
 		sarr = url.split("~~~");
-		
+
 		if (sarr.length < 2)
 			return sarrDummy[0];
-		else{
-			String urlV=sarr[0];
-			urlV=urlV.replaceAll(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
-			sarr[0]=urlV;
+		else {
+			String urlV = sarr[0];
+			urlV = urlV.replaceAll(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
+			sarr[0] = urlV;
 		}
 		return sarr[0];
 	}

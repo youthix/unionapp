@@ -1114,7 +1114,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			@HeaderParam(value = "attachmentType") String attachmentType,
 			@HeaderParam(value = "attachmentTitle") String attachmentTitle,
 			@HeaderParam(value = "attachmentName") String attachmentName) {
-		
+
 		ResponseObj responseObj;
 
 		/*
@@ -1123,10 +1123,12 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		 * "doc";
 		 */
 
-		 //String path = "/C:/Saurabh/Images/" + featureType + "/" + featureId + "/" + attachmentType;
+		// String path = "/C:/Saurabh/Images/" + featureType + "/" + featureId +
+		// "/" + attachmentType;
 
 		// Create Directory if not already Exists
-		//String path = "/../" + featureType + "/" + featureId + "/" + attachmentType;
+		// String path = "/../" + featureType + "/" + featureId + "/" +
+		// attachmentType;
 		String path = UnionAppConstants.serverAbsPath + featureType + "/" + featureId + "/" + attachmentType;
 
 		File filePath = new File(path);
@@ -1145,7 +1147,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		// saving file
 		String fileName = attachmentName;
 		String fileLocation = filePath + "/" + fileName;
-		
+
 		String filelocationtitle = fileLocation + "~~~" + attachmentTitle;
 
 		// String fileLocation = filePath + "/" + "testfile.txt";
@@ -1167,17 +1169,17 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			out.close();
 
 			// Update the DB Attachment Status
-			
-			
-			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId,filelocationtitle,attachmentType);
+
+			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
+					attachmentType);
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}
-		//String output = "File successfully uploaded to : " + fileLocation;
+		// String output = "File successfully uploaded to : " + fileLocation;
 		// return Response.status(200).entity(output).build();
 		return responseObj;
 	}
-	
+
 	@Override
 	@POST
 	@Path("/addcategory")
@@ -1203,7 +1205,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
+	}
+
 	@Override
 	@POST
 	@Path("/fetchcategory")
@@ -1229,7 +1232,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
+	}
 
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;

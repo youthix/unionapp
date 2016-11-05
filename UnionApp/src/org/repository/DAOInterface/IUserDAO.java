@@ -19,6 +19,8 @@ public interface IUserDAO {
 	
 	public void updateDeviceId(UserBO userBO);*/
 
-	public ArrayList<UserBO> fetchUser(Criteria criteriaObj);
+	public ArrayList<UserBO> fetchUser(Criteria criteriaObj,  String pageno);
+	
+	public ArrayList<UserBO> fetchAllUser(Criteria criteriaObj);
 
 }

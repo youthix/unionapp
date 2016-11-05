@@ -70,18 +70,19 @@ public class UserDAOImpl implements IUserDAO {
 								+ "' where usname = '" + userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.deviceid='" + userBO.getDeviceid()
-								+ "' , u.devicetype='" +userBO.getDevicetype() +"' where usname = '" + userBO.getUsname() + "'";
+								+ "' , u.devicetype='" + userBO.getDevicetype() + "' where usname = '"
+								+ userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
 								+ "' where usname = '" + userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.pwd='" + userBO.getPwd()
 								+ "' where usname = '" + userBO.getUsname() + "'";
+					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("meeting")) {
+						SQL = "update " + UserBO.class.getName() + " u Set u.acceptmeetingid='"
+								+ userBO.getAcceptmeetingid() + "' , u.declinemeetingid='"
+								+ userBO.getDeclinemeetingid() + "' where usname = '" + userBO.getUsname() + "'";
 					}
-					else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("meeting")) {
-						SQL = "update " + UserBO.class.getName() + " u Set u.acceptmeetingid='" + userBO.getAcceptmeetingid()
-						+ "' , u.declinemeetingid='" +userBO.getDeclinemeetingid() + "' where usname = '" + userBO.getUsname() + "'";
-					}					
 				}
 			}
 			Query query = manager.createQuery(SQL);
@@ -94,52 +95,69 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
-	public ArrayList<UserBO> fetchUser(Criteria criteriaObj) {
+	public ArrayList<UserBO> fetchUser(Criteria criteriaObj, String pageno) {
+
+		System.out.println("InDAOFetchUser");
+		ArrayList<UserBO> userBOList = null;
+
+		if (null == pageno || pageno == "") {
+
+			pageno = "1";
+
+		}
+
+		int offsetno;
+
+		int pageSize = 6;
+
+		int pageNo = Integer.parseInt(pageno);
+
+		if (null != pageno && pageno != "" && pageNo > 1) {
+
+			offsetno = (pageNo - 1) * pageSize;
+		} else {
+			offsetno = 0;
+
+		}
+
+		try {
+
+			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
+				if (criteriaObj.getFetchUserCriteriaObj() != null) {
+
+					String SQL = "select u from " + UserBO.class.getName() + " u where "
+							+ criteriaObj.getFetchUserCriteriaObj().getName() + " = '"
+							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "'";
+
+					userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+							.setMaxResults(pageSize) // limit
+							.getResultList();
+					;
+
+				}
+			} else {
+				String SQL = "select u from " + UserBO.class.getName() + " u";
+				userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+						.setMaxResults(pageSize) // limit
+						.getResultList();
+				;
+			}
+
+			System.out.println("DoneDAOFetchUser");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+		return userBOList;
+	}
+
+	public ArrayList<UserBO> fetchAllUser(Criteria criteriaObj) {
 
 		System.out.println("InDAOFetchUser");
 		ArrayList<UserBO> userBOList = null;
 
 		try {
-
-			/*
-			 * CriteriaBuilder cb = manager.getCriteriaBuilder();
-			 * CriteriaQuery<UserBO> cq = cb.createQuery(UserBO.class);
-			 * 
-			 * Root<UserBO> c = cq.from(UserBO.class); cq.select(c);
-			 * 
-			 * 
-			 * if (null != criteriaObj.getSetCriteria() &&
-			 * criteriaObj.getSetCriteria().equalsIgnoreCase("True")) { if (null
-			 * != criteriaObj.getEmailid() && criteriaObj.getEmailid() != "") {
-			 * 
-			 * cq.where(cb.equal(c.get("emailid"), criteriaObj.getEmailid()));
-			 * 
-			 * }
-			 * 
-			 * if (null != criteriaObj.getRole() && criteriaObj.getRole() != "")
-			 * {
-			 * 
-			 * cq.where(cb.equal(c.get("role"), criteriaObj.getRole()));
-			 * 
-			 * }
-			 * 
-			 * if (null != criteriaObj.getStatus() && criteriaObj.getStatus() !=
-			 * "") {
-			 * 
-			 * cq.where(cb.equal(c.get("status"), criteriaObj.getStatus()));
-			 * 
-			 * }
-			 * 
-			 * if (null != criteriaObj.getLoginstatus() &&
-			 * criteriaObj.getLoginstatus() != "") {
-			 * 
-			 * cq.where(cb.equal(c.get("loginstatus"),
-			 * criteriaObj.getLoginstatus()));
-			 * 
-			 * }
-			 * 
-			 * }
-			 */
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
 				if (criteriaObj.getFetchUserCriteriaObj() != null) {
@@ -149,12 +167,13 @@ public class UserDAOImpl implements IUserDAO {
 							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "'";
 
 					userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
+					;
 
-				} 
-			}
-			else {
+				}
+			} else {
 				String SQL = "select u from " + UserBO.class.getName() + " u";
 				userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
+				;
 			}
 
 			System.out.println("DoneDAOFetchUser");
