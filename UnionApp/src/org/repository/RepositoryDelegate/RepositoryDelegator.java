@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.common.UnionAppConstants;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
@@ -2726,8 +2727,14 @@ public class RepositoryDelegator {
 		String[] sarr = { "", "" };
 		String[] sarrDummy = { url, "Attachment" };
 		sarr = url.split("~~~");
+		
 		if (sarr.length < 2)
 			return sarrDummy;
+		else{
+			String urlV=sarr[0];
+			urlV=urlV.replace(UnionAppConstants.serverAbsPath, UnionAppConstants.serverUriPath);
+			sarr[0]=urlV;
+		}
 		return sarr;
 	}
 

@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.common.UnionAppConstants;
 import org.presentation.controller.Interface.RESTfulServiceInterface;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
@@ -1126,7 +1127,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		// Create Directory if not already Exists
 		//String path = "/../" + featureType + "/" + featureId + "/" + attachmentType;
-		String path = "/opt/tomcat/webapps/attachments/" + featureType + "/" + featureId + "/" + attachmentType;
+		String path = UnionAppConstants.serverAbsPath + featureType + "/" + featureId + "/" + attachmentType;
 
 		File filePath = new File(path);
 		if (!filePath.isDirectory()) {
