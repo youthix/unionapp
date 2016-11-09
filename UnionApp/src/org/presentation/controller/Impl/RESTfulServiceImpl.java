@@ -3,6 +3,8 @@ package org.presentation.controller.Impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,6 +19,9 @@ import org.common.UnionAppConstants;
 import org.presentation.controller.Interface.RESTfulServiceInterface;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
+import org.presentation.dto.feature.OptionDTO;
+import org.presentation.dto.feature.QuestionDTO;
+import org.presentation.dto.feature.SurveyDTO;
 import org.presentation.util.ServiceException;
 import org.presentation.util.ServiceExceptionMapper;
 import org.service.delegateService.ServiceDelegator;
@@ -1229,6 +1234,63 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/hello")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public SurveyDTO hello(RequestObj reqparam) {
+
+		SurveyDTO responseObj = new SurveyDTO();
+
+		QuestionDTO questionDTOObj1 = new QuestionDTO();
+		
+		questionDTOObj1.setDetail("TestQuestion1");
+		questionDTOObj1.setSubject("Test1");
+		
+
+		QuestionDTO questionDTOObj2 = new QuestionDTO();
+		
+		questionDTOObj2.setDetail("TestQuestion2");
+		questionDTOObj2.setSubject("Test2");
+
+		OptionDTO optionDTOObj1 = new OptionDTO();
+		optionDTOObj1.setDetail("Yes");
+		optionDTOObj1.setRespondentcount("2");
+
+		OptionDTO optionDTOObj2 = new OptionDTO();
+
+		optionDTOObj2.setDetail("No");
+		optionDTOObj2.setRespondentcount("4");
+
+		OptionDTO optionDTOObj3 = new OptionDTO();
+
+		optionDTOObj3.setDetail("MayBe");
+		optionDTOObj3.setRespondentcount("4");
+
+		List<OptionDTO> opotionDTOObjLs1 = new ArrayList<OptionDTO>();
+		opotionDTOObjLs1.add(optionDTOObj1);
+		opotionDTOObjLs1.add(optionDTOObj2);
+
+		List<OptionDTO> opotionDTOObjLs2 = new ArrayList<OptionDTO>();
+		opotionDTOObjLs2.add(optionDTOObj1);
+		opotionDTOObjLs2.add(optionDTOObj2);
+		opotionDTOObjLs2.add(optionDTOObj3);
+
+		questionDTOObj1.setOptiondtoLs(opotionDTOObjLs1);
+
+		questionDTOObj2.setOptiondtoLs(opotionDTOObjLs2);
+
+		List<QuestionDTO> questionDTOObjLs = new ArrayList<QuestionDTO>();
+		questionDTOObjLs.add(questionDTOObj1);
+		questionDTOObjLs.add(questionDTOObj2);
+
+		responseObj.setQuestiondtoLs(questionDTOObjLs);
 
 		return responseObj;
 

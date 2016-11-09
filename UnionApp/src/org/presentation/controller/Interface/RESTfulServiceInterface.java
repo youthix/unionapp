@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
+import org.presentation.dto.feature.SurveyDTO;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -104,5 +105,7 @@ public interface RESTfulServiceInterface {
 			@HeaderParam(value = "attachmentType") String attachmentType,
 			@HeaderParam(value = "attachmentTitle") String attachmentTitle,
 			@HeaderParam(value = "attachmentName") String attachmentName);
+
+	SurveyDTO hello(RequestObj reqparam);
 
 }
