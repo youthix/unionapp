@@ -106,6 +106,14 @@ public interface RESTfulServiceInterface {
 			@HeaderParam(value = "attachmentTitle") String attachmentTitle,
 			@HeaderParam(value = "attachmentName") String attachmentName);
 
-	SurveyDTO hello(RequestObj reqparam);
+	ResponseObj helloSurvey(RequestObj reqparam);
+	
+	ResponseObj fetchSurvey(RequestObj reqparam);
+
+	ResponseObj updateSurvey(RequestObj reqparam);
+
+	ResponseObj createSurvey(RequestObj reqparam);
+
+	ResponseObj fetchSurveyById(String id);
 
 }

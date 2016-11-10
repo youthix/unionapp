@@ -11,9 +11,9 @@ public class OptionDTO {
 
 	private String detail;
 
-	private String respondentid;
+	private String responseid;
 
-	private String respondentcount;
+	private String responsecount;
 
 	private String optionid;
 
@@ -25,28 +25,28 @@ public class OptionDTO {
 		this.detail = detail;
 	}
 
-	public String getRespondentid() {
-		return respondentid;
-	}
-
-	public void setRespondentid(String respondentid) {
-		this.respondentid = respondentid;
-	}
-
-	public String getRespondentcount() {
-		return respondentcount;
-	}
-
-	public void setRespondentcount(String respondentcount) {
-		this.respondentcount = respondentcount;
-	}
-
 	public String getOptionid() {
 		return optionid;
 	}
 
 	public void setOptionid(String optionid) {
 		this.optionid = optionid;
+	}
+
+	public String getResponseid() {
+		return responseid;
+	}
+
+	public void setResponseid(String responseid) {
+		this.responseid = responseid;
+	}
+
+	public String getResponsecount() {
+		return responsecount;
+	}
+
+	public void setResponsecount(String responsecount) {
+		this.responsecount = responsecount;
 	}
 
 }

@@ -25,11 +25,13 @@ public class SurveyDTO {
 
 	private String status;
 
-	private String acceptid;
+	private String responseid;
 
-	private String acceptcount;
+	private String responsecount;
 
 	private String noresponsecount;
+
+	private String userresponsestatus;
 
 	private String surveyid;
 
@@ -99,22 +101,6 @@ public class SurveyDTO {
 		this.status = status;
 	}
 
-	public String getAcceptid() {
-		return acceptid;
-	}
-
-	public void setAcceptid(String acceptid) {
-		this.acceptid = acceptid;
-	}
-
-	public String getAcceptcount() {
-		return acceptcount;
-	}
-
-	public void setAcceptcount(String acceptcount) {
-		this.acceptcount = acceptcount;
-	}
-
 	public String getNoresponsecount() {
 		return noresponsecount;
 	}
@@ -142,4 +128,29 @@ public class SurveyDTO {
 		this.questiondtoLs = questiondtoLs;
 	}
 
+	public String getResponseid() {
+		return responseid;
+	}
+
+	public void setResponseid(String responseid) {
+		this.responseid = responseid;
+	}
+
+	public String getResponsecount() {
+		return responsecount;
+	}
+
+	public void setResponsecount(String responsecount) {
+		this.responsecount = responsecount;
+	}
+
+	public String getUserresponsestatus() {
+		return userresponsestatus;
+	}
+
+	public void setUserresponsestatus(String userresponsestatus) {
+		this.userresponsestatus = userresponsestatus;
+	}
+
+	
 }

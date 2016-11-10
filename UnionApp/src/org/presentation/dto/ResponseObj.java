@@ -11,6 +11,7 @@ import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
+import org.presentation.dto.feature.SurveyList;
 import org.presentation.dto.user.UserList;
 @XmlRootElement(name = "resparam")
 //@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
@@ -36,6 +37,8 @@ public class ResponseObj {
 	private PayrateList payrateListObj;
 	
 	private CategoryList CategoryListObj;
+	
+	private SurveyList SurveyListObj;
 	
 	private String totalPage;
 	
@@ -137,6 +140,14 @@ public class ResponseObj {
 
 	public void setCategoryListObj(CategoryList categoryListObj) {
 		CategoryListObj = categoryListObj;
+	}
+
+	public SurveyList getSurveyListObj() {
+		return SurveyListObj;
+	}
+
+	public void setSurveyListObj(SurveyList surveyListObj) {
+		SurveyListObj = surveyListObj;
 	}	
 	
 	

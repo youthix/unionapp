@@ -19,14 +19,17 @@ import org.common.UnionAppConstants;
 import org.presentation.controller.Interface.RESTfulServiceInterface;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
+import org.presentation.dto.feature.AgreementDTO;
 import org.presentation.dto.feature.OptionDTO;
 import org.presentation.dto.feature.QuestionDTO;
 import org.presentation.dto.feature.SurveyDTO;
+import org.presentation.dto.feature.SurveyList;
 import org.presentation.util.ServiceException;
 import org.presentation.util.ServiceExceptionMapper;
 import org.service.delegateService.ServiceDelegator;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.Gson;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -1241,37 +1244,42 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@POST
-	@Path("/hello")
+	@Path("/hellosurvey")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-	public SurveyDTO hello(RequestObj reqparam) {
+	public ResponseObj helloSurvey(RequestObj reqparam) {
 
-		SurveyDTO responseObj = new SurveyDTO();
+		ResponseObj responseObj = new ResponseObj();
+		
+		SurveyList surveyListObj = new SurveyList() ;
+
+		ArrayList<SurveyDTO> surveyDTOList = new ArrayList<SurveyDTO>();
+
+		SurveyDTO surveyDTOObj1 = new SurveyDTO();
 
 		QuestionDTO questionDTOObj1 = new QuestionDTO();
-		
+
 		questionDTOObj1.setDetail("TestQuestion1");
 		questionDTOObj1.setSubject("Test1");
-		
 
 		QuestionDTO questionDTOObj2 = new QuestionDTO();
-		
+
 		questionDTOObj2.setDetail("TestQuestion2");
 		questionDTOObj2.setSubject("Test2");
 
 		OptionDTO optionDTOObj1 = new OptionDTO();
 		optionDTOObj1.setDetail("Yes");
-		optionDTOObj1.setRespondentcount("2");
+		optionDTOObj1.setResponsecount("4");
 
 		OptionDTO optionDTOObj2 = new OptionDTO();
 
 		optionDTOObj2.setDetail("No");
-		optionDTOObj2.setRespondentcount("4");
+		optionDTOObj2.setResponsecount("4");
 
 		OptionDTO optionDTOObj3 = new OptionDTO();
 
 		optionDTOObj3.setDetail("MayBe");
-		optionDTOObj3.setRespondentcount("4");
+		optionDTOObj3.setResponsecount("4");
 
 		List<OptionDTO> opotionDTOObjLs1 = new ArrayList<OptionDTO>();
 		opotionDTOObjLs1.add(optionDTOObj1);
@@ -1290,7 +1298,128 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		questionDTOObjLs.add(questionDTOObj1);
 		questionDTOObjLs.add(questionDTOObj2);
 
-		responseObj.setQuestiondtoLs(questionDTOObjLs);
+		surveyDTOObj1.setQuestiondtoLs(questionDTOObjLs);
+
+		// 1. Convert object to JSON string
+		Gson gson = new Gson();
+		String json = gson.toJson(surveyDTOObj1);
+		System.out.println(json);
+		SurveyDTO surveyDTOObj2 = new SurveyDTO();
+		surveyDTOObj2 = gson.fromJson(json, SurveyDTO.class);
+
+		surveyDTOList.add(surveyDTOObj1);
+		surveyDTOList.add(surveyDTOObj2);
+		
+		surveyListObj.setSurveydtoLs(surveyDTOList);
+		
+		responseObj.setSurveyListObj(surveyListObj);
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/createsurvey")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj createSurvey(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.createAgreement(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@POST
+	@Path("/updatesurvey")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj updateSurvey(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.updateAgreement(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	@Override
+	@GET
+	@Path("/fetchsurvey/{id}")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchSurveyById(@PathParam("id") String id) {
+
+		String responseObj;
+
+		try {
+			if (null != id) {
+				responseObj = serviceDelegator.fetchAgreementById(id);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return null;
+
+	}
+
+	@Override
+	@POST
+	@Path("/fetchsurvey")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchSurvey(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.fetchAgreement(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
 
 		return responseObj;
 
