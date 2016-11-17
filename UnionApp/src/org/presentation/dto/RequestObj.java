@@ -12,36 +12,40 @@ import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
+import org.presentation.dto.feature.SurveyList;
 import org.presentation.dto.user.UserList;
+
 @XmlRootElement(name = "reqparam")
 public class RequestObj {
-	
+
 	private UserList UserListObj;
-	
+
 	private MeetingList MeetingListObj;
-	
+
 	private ActivityList ActivityListObj;
-	
+
 	private NewsLetterList NewsLetterListObj;
-	
+
 	private SummaryList SummaryListObj;
-	
+
 	private SuggestionIdeaList SuggestionIdeaListObj;
-	
+
 	private AgreementList AgreementListObj;
-	
+
 	private AmrList AmrListObj;
-	
+
 	private PayrateList PayrateListObj;
-	
+
 	private CategoryList CategoryListObj;
-	
+
+	private SurveyList SurveyListObj;
+
 	private String bid;
-	
+
 	private String channel;
-	
+
 	private String pageno;
-	
+
 	public String getPageno() {
 		return pageno;
 	}
@@ -51,7 +55,6 @@ public class RequestObj {
 	}
 
 	private Criteria criteria;
-
 
 	public UserList getUserListObj() {
 		return UserListObj;
@@ -156,6 +159,13 @@ public class RequestObj {
 	public void setCategoryListObj(CategoryList categoryListObj) {
 		CategoryListObj = categoryListObj;
 	}
-	
-	
+
+	public SurveyList getSurveyListObj() {
+		return SurveyListObj;
+	}
+
+	public void setSurveyListObj(SurveyList surveyListObj) {
+		SurveyListObj = surveyListObj;
+	}
+
 }

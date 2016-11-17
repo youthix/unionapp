@@ -19,7 +19,6 @@ import org.common.UnionAppConstants;
 import org.presentation.controller.Interface.RESTfulServiceInterface;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
-import org.presentation.dto.feature.AgreementDTO;
 import org.presentation.dto.feature.OptionDTO;
 import org.presentation.dto.feature.QuestionDTO;
 import org.presentation.dto.feature.SurveyDTO;
@@ -28,7 +27,16 @@ import org.presentation.util.ServiceException;
 import org.presentation.util.ServiceExceptionMapper;
 import org.service.delegateService.ServiceDelegator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpHeaders;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpResponseException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonObjectParser;
 import com.google.gson.Gson;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -1329,7 +1337,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		try {
 			if (null != reqparam) {
-				responseObj = serviceDelegator.createAgreement(reqparam);
+				responseObj = serviceDelegator.createSurvey(reqparam);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
@@ -1356,7 +1364,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		try {
 			if (null != reqparam) {
-				responseObj = serviceDelegator.updateAgreement(reqparam);
+				responseObj = serviceDelegator.updateSurvey(reqparam);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
@@ -1374,42 +1382,15 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	@Override
 	@GET
-	@Path("/fetchsurvey/{id}")
+	@Path("/fetchsurvey/{surveyid}/{userid}")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-	public ResponseObj fetchSurveyById(@PathParam("id") String id) {
-
-		String responseObj;
-
-		try {
-			if (null != id) {
-				responseObj = serviceDelegator.fetchAgreementById(id);
-
-			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
-				throw serviceExceptionObj;
-
-			}
-		} catch (Exception exceptionObj) {
-
-			return ServiceExceptionMapper.toResponse(exceptionObj);
-		}
-
-		return null;
-
-	}
-
-	@Override
-	@POST
-	@Path("/fetchsurvey")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-	public ResponseObj fetchSurvey(RequestObj reqparam) {
+	public ResponseObj fetchSurveyById(@PathParam("surveyid") String surveyid,@PathParam("userid") String userid) {
 
 		ResponseObj responseObj;
 
 		try {
-			if (null != reqparam) {
-				responseObj = serviceDelegator.fetchAgreement(reqparam);
+			if (null != surveyid && null != userid) {
+				responseObj = serviceDelegator.fetchSurveyById(surveyid, userid);
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
@@ -1425,6 +1406,34 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
+	@Override
+	@POST
+	@Path("/fetchsurvey")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchSurvey(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.fetchSurvey(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
+	
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;
 	}

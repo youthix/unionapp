@@ -17,6 +17,7 @@ import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
+import org.presentation.dto.feature.SurveyList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -859,6 +860,79 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj createSurvey(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		SurveyList surveyListObj = reqparam.getSurveyListObj();
+
+		if (null != surveyListObj) {
+
+			responseObj = repositoryDelegator.createSurvey(surveyListObj);
+			
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Incorrect Request");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchSurvey(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		if (null != reqparam.getCriteria() && null != reqparam.getUserListObj()
+				&& reqparam.getUserListObj().getUl().size() > 0) {
+
+			responseObj = repositoryDelegator.fetchSurvey(reqparam);
+
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj fetchSurveyById(String surveyid, String userid) {
+
+		ResponseObj responseObj ;
+
+		if (null != surveyid && null!=userid) {
+
+			responseObj = repositoryDelegator.fetchSurveyById(surveyid, userid);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj updateSurvey(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		SurveyList surveyListObj = reqparam.getSurveyListObj();
+
+		if (null != surveyListObj) {
+
+			responseObj = repositoryDelegator.updateSurvey(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+	
 
 	private String generatepwd() {
 

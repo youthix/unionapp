@@ -9,33 +9,34 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public class Criteria {
 
 	private String criteria;
-	
-	private FetchUserCriteria fetchUserCriteriaObj ;
-	
-	private UpdateUserCriteria UpdateUserCriteriaObj ;
-	
-	private FetchMeetingCriteria fetchMeetingCriteriaObj ;
-	
-	private UpdateMeetingCriteria UpdateMeetingCriteriaObj ;
-	
-	private FetchActivityCriteria fetchActivityCriteriaObj ;
-	
-	private UpdateActivityCriteria UpdateActivityCriteriaObj ;
-	
+
+	private FetchUserCriteria fetchUserCriteriaObj;
+
+	private UpdateUserCriteria UpdateUserCriteriaObj;
+
+	private FetchMeetingCriteria fetchMeetingCriteriaObj;
+
+	private UpdateMeetingCriteria UpdateMeetingCriteriaObj;
+
+	private FetchActivityCriteria fetchActivityCriteriaObj;
+
+	private UpdateActivityCriteria UpdateActivityCriteriaObj;
+
 	private FetchNewsLetterCriteria fetchNewsLetterCriteriaObj;
-	
-	private FetchSuggestionIdeaCriteria fetchSuggestionIdeaCriteriaObj ;
-	
-	private UpdateSuggestionIdeaCriteria UpdateSuggestionIdeaCriteriaObj ;
-	
+
+	private FetchSuggestionIdeaCriteria fetchSuggestionIdeaCriteriaObj;
+
+	private UpdateSuggestionIdeaCriteria UpdateSuggestionIdeaCriteriaObj;
+
 	private FetchSummaryCriteria fetchSummaryCriteriaObj;
-	
+
 	private FetchAgreementCriteria fetchAgreementCriteriaObj;
-	
+
 	private FetchAmrCriteria fetchAmrCriteriaObj;
-	
+
 	private FetchPayrateCriteria fetchPayrateCriteriaObj;
 
+	private FetchSurveyCriteria fetchSurveyCriteriaObj;
 
 	public String getCriteria() {
 		return criteria;
@@ -97,8 +98,7 @@ public class Criteria {
 		return fetchNewsLetterCriteriaObj;
 	}
 
-	public void setFetchNewsLetterCriteriaObj(
-			FetchNewsLetterCriteria fetchNewsLetterCriteriaObj) {
+	public void setFetchNewsLetterCriteriaObj(FetchNewsLetterCriteria fetchNewsLetterCriteriaObj) {
 		this.fetchNewsLetterCriteriaObj = fetchNewsLetterCriteriaObj;
 	}
 
@@ -122,8 +122,7 @@ public class Criteria {
 		return fetchSummaryCriteriaObj;
 	}
 
-	public void setFetchSummaryCriteriaObj(
-			FetchSummaryCriteria fetchSummaryCriteriaObj) {
+	public void setFetchSummaryCriteriaObj(FetchSummaryCriteria fetchSummaryCriteriaObj) {
 		this.fetchSummaryCriteriaObj = fetchSummaryCriteriaObj;
 	}
 
@@ -131,8 +130,7 @@ public class Criteria {
 		return fetchAgreementCriteriaObj;
 	}
 
-	public void setFetchAgreementCriteriaObj(
-			FetchAgreementCriteria fetchAgreementCriteriaObj) {
+	public void setFetchAgreementCriteriaObj(FetchAgreementCriteria fetchAgreementCriteriaObj) {
 		this.fetchAgreementCriteriaObj = fetchAgreementCriteriaObj;
 	}
 
@@ -148,8 +146,17 @@ public class Criteria {
 		return fetchPayrateCriteriaObj;
 	}
 
-	public void setFetchPayrateCriteriaObj(
-			FetchPayrateCriteria fetchPayrateCriteriaObj) {
+	public void setFetchPayrateCriteriaObj(FetchPayrateCriteria fetchPayrateCriteriaObj) {
 		this.fetchPayrateCriteriaObj = fetchPayrateCriteriaObj;
 	}
+
+	public FetchSurveyCriteria getFetchSurveyCriteriaObj() {
+		return fetchSurveyCriteriaObj;
+	}
+
+	public void setFetchSurveyCriteriaObj(FetchSurveyCriteria fetchSurveyCriteriaObj) {
+		this.fetchSurveyCriteriaObj = fetchSurveyCriteriaObj;
+	}
+	
+	
 }

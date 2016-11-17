@@ -17,6 +17,7 @@ import org.presentation.dto.criteria.FetchNewsLetterCriteria;
 import org.presentation.dto.criteria.FetchPayrateCriteria;
 import org.presentation.dto.criteria.FetchSuggestionIdeaCriteria;
 import org.presentation.dto.criteria.FetchSummaryCriteria;
+import org.presentation.dto.criteria.FetchSurveyCriteria;
 import org.presentation.dto.criteria.FetchUserCriteria;
 import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
@@ -34,12 +35,16 @@ import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterDTO;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.OptionDTO;
 import org.presentation.dto.feature.PayrateDTO;
 import org.presentation.dto.feature.PayrateList;
+import org.presentation.dto.feature.QuestionDTO;
 import org.presentation.dto.feature.SuggestionIdeaDTO;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryDTO;
 import org.presentation.dto.feature.SummaryList;
+import org.presentation.dto.feature.SurveyDTO;
+import org.presentation.dto.feature.SurveyList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -52,6 +57,7 @@ import org.repository.DAOInterface.INewsLetterDAO;
 import org.repository.DAOInterface.IPayrateDAO;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
 import org.repository.DAOInterface.ISummaryDAO;
+import org.repository.DAOInterface.ISurveyDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.AgreementBO;
@@ -62,8 +68,11 @@ import org.repository.entity.NewsLetterBO;
 import org.repository.entity.PayrateBO;
 import org.repository.entity.SuggestionIdeaBO;
 import org.repository.entity.SummaryBO;
+import org.repository.entity.SurveyBO;
 import org.repository.entity.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.gson.Gson;
 
 public class RepositoryDelegator {
 
@@ -100,6 +109,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	ICategoryDAO categorydao;
+
+	@Autowired
+	ISurveyDAO surveydao;
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -2251,6 +2263,282 @@ public class RepositoryDelegator {
 		}
 	}
 
+	public ResponseObj createSurvey(SurveyList surveyListObj) {
+		System.out.println("InRDRegister");
+
+		ResponseObj responseObj = new ResponseObj();
+		ArrayList<SurveyDTO> surveyList = (ArrayList<SurveyDTO>) surveyListObj.getSurveydtoLs();
+
+		if (surveyList.size() > 0) {
+			Iterator<SurveyDTO> surveyListIterator = surveyList.iterator();
+
+			while (surveyListIterator.hasNext()) {
+
+				SurveyDTO surveydtoObj = surveyListIterator.next();
+
+				SurveyBO surveyBOObj = new SurveyBO();
+
+				populateCreateSurveyBO(surveydtoObj, surveyBOObj);
+				surveydao.createSurvey(surveyBOObj);
+				populateSurveyDTO(surveydtoObj, surveyBOObj);
+				surveydtoObj.setQuestiondtoLs(null);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("SurveyList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setSurveyListObj(surveyListObj);
+		return responseObj;
+	}
+
+	public ResponseObj fetchSurveyById(String surveyid, String userid) {
+		System.out.println("InRDRegister");
+
+		ResponseObj responseObj = new ResponseObj();
+		SurveyList surveyListObj = new SurveyList();
+		ArrayList<SurveyDTO> surveyList = new ArrayList<SurveyDTO>();
+
+		if (null != surveyid && surveyid != "") {
+
+			ArrayList<SurveyBO> surveyBOObj = new ArrayList<SurveyBO>();
+			SurveyDTO surveydtoObj = new SurveyDTO();
+
+			surveyBOObj = surveydao.fetchSurveyById(surveyid);
+
+			if (surveyBOObj != null && surveyBOObj.size() > 0) {
+
+				surveydtoObj = populateSurveyDTO(surveydtoObj, surveyBOObj.get(0));
+				if (surveydtoObj != null && surveydtoObj.getResponseid() != null
+						&& surveydtoObj.getResponseid().contains(userid)) {
+					surveydtoObj.setUserresponsestatus("true");
+
+				}
+
+				surveyList.add(surveydtoObj);
+				surveyListObj.setSurveydtoLs(surveyList);
+
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("ID is NULL or Empty");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setSurveyListObj(surveyListObj);
+		return responseObj;
+	}
+
+	public ResponseObj fetchSurvey(RequestObj reqparam) {
+		System.out.println("InRDFetch");
+		ResponseObj responseObj = new ResponseObj();
+
+		SurveyList surveyListObj = new SurveyList();
+		ArrayList<SurveyDTO> surveyDTOList = new ArrayList<SurveyDTO>();
+
+		ArrayList<SurveyBO> surveyBOList;
+
+		SurveyBO surveyBOObj;
+
+		String channel = reqparam.getChannel();
+
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		surveyBOList = surveydao.fetchSurvey(criteriaObj, reqparam.getPageno());
+
+		if (null != surveyBOList && surveyBOList.size() > 0) {
+
+			Iterator<SurveyBO> litr = surveyBOList.iterator();
+
+			while (litr.hasNext()) {
+
+				surveyBOObj = litr.next();
+				SurveyDTO surveyDTOObj = new SurveyDTO();
+				surveyDTOObj = populateSurveyDTO(surveyDTOObj, surveyBOObj);
+				if (null != channel && "app".equalsIgnoreCase(channel)) {
+					surveyDTOObj.setQuestiondtoLs(null);
+				}
+
+				surveyDTOList.add(surveyDTOObj);
+
+			}
+
+			surveyListObj.setSurveydtoLs(surveyDTOList);
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setSurveyListObj(surveyListObj);
+		int totalrecordcount = surveydao.totalRecordCount(criteriaObj);
+
+		int totalPage = getTotalPageCount(totalrecordcount);
+
+		responseObj.setTotalPage(String.valueOf(totalPage));
+		return responseObj;
+	}
+
+	public ResponseObj updateSurvey(RequestObj reqparam) {
+		System.out.println("InRDUpdate");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		Gson gson = new Gson();
+
+		SurveyList surveyListObj = reqparam.getSurveyListObj();
+
+		ArrayList<SurveyDTO> surveyList = (ArrayList<SurveyDTO>) surveyListObj.getSurveydtoLs();
+
+		ArrayList<SurveyDTO> surveyListResp = new ArrayList<SurveyDTO>();
+
+		SurveyList surveyListObjResp = new SurveyList();
+
+		ArrayList<SurveyBO> surveyBOList;
+
+		SurveyBO surveyBOObj = null;
+
+		Criteria criteriaSurveyObj = new Criteria();
+		criteriaSurveyObj.setCriteria("TRUE");
+
+		FetchSurveyCriteria fetchSurveyCriteriaObj = new FetchSurveyCriteria();
+
+		fetchSurveyCriteriaObj.setName("surveyid");
+
+		if (surveyList.size() > 0) {
+
+			SurveyDTO surveydtoObj = surveyList.get(0);
+
+			fetchSurveyCriteriaObj.setValue(surveydtoObj.getSurveyid());
+			criteriaSurveyObj.setFetchSurveyCriteriaObj(fetchSurveyCriteriaObj);
+
+			surveyBOList = surveydao.fetchSurvey(criteriaSurveyObj, "1");
+
+			if (null != surveyBOList && surveyBOList.size() > 0) {
+
+				surveyBOObj = surveyBOList.get(0);
+				if (surveydtoObj.getStatus() != null && surveydtoObj.getStatus().equalsIgnoreCase("Delete")) {
+					surveydao.deleteOnCriteria(surveyBOObj, null);
+				} else {
+
+					String surveyBOJson = surveyBOObj.getSurveyjson();
+					// String json = gson.toJson(surveyDTOObj1);
+					// System.out.println(json);
+					SurveyDTO surveyBO_DTOObj = new SurveyDTO();
+					surveyBO_DTOObj = gson.fromJson(surveyBOJson, SurveyDTO.class);
+
+					// Updating the SurveyResponsecount and the Response
+					// userIds.
+					if (surveydtoObj.getUserresponsestatus() != null
+							&& surveydtoObj.getUserresponsestatus().equalsIgnoreCase("true")) {
+						surveyBO_DTOObj.setUserresponsestatus("true");
+						String oldresponsecount = surveyBO_DTOObj.getResponsecount();
+						if (oldresponsecount == null || oldresponsecount.equalsIgnoreCase("")) {
+
+							oldresponsecount = "0";
+						}
+						String oldresponseid = surveyBO_DTOObj.getResponseid();
+						surveyBO_DTOObj.setResponsecount(String.valueOf(Integer.parseInt(oldresponsecount) + 1));
+						if (oldresponseid == null || oldresponseid.equals("")) {
+
+							surveyBO_DTOObj.setResponseid(surveydtoObj.getResponseid());
+
+						} else {
+							surveyBO_DTOObj.setResponseid(oldresponseid + "~~~" + surveydtoObj.getResponseid());
+						}
+
+					}
+
+					// update the total ActiveUserCount:
+
+					Criteria criteriaObj = new Criteria();
+					criteriaObj.setCriteria("TRUE");
+
+					FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+					fetchUserCriteriaObj.setName("status");
+					fetchUserCriteriaObj.setValue("A");
+					criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+
+					ArrayList<UserBO> userBOList = userdao.fetchAllUser(criteriaObj);
+
+					if (null != userBOList) {
+						int totalActUserCount = userBOList.size();
+						surveyBO_DTOObj.setTotalusercount(String.valueOf(totalActUserCount));
+					}
+
+					// Update the Questions Option Count
+					ArrayList<QuestionDTO> questiondtoLs = (ArrayList<QuestionDTO>) surveydtoObj.getQuestiondtoLs();
+					ArrayList<QuestionDTO> questiondtoLsBODTO = (ArrayList<QuestionDTO>) surveyBO_DTOObj
+							.getQuestiondtoLs();
+
+					Iterator<QuestionDTO> litrquesDTO = questiondtoLs.iterator();
+					Iterator<QuestionDTO> litrquesBODTO = questiondtoLsBODTO.iterator();
+
+					while (litrquesDTO.hasNext() && litrquesBODTO.hasNext()) {
+
+						QuestionDTO surveyQuDTOObj = litrquesDTO.next();
+						QuestionDTO surveyQuBODTOObj = litrquesBODTO.next();
+
+						ArrayList<OptionDTO> optiondtoLs = (ArrayList<OptionDTO>) surveyQuDTOObj.getOptiondtoLs();
+						ArrayList<OptionDTO> optiondtoLsBODTO = (ArrayList<OptionDTO>) surveyQuBODTOObj
+								.getOptiondtoLs();
+
+						Iterator<OptionDTO> litrOptionDTO = optiondtoLs.iterator();
+						Iterator<OptionDTO> litrOptionBODTO = optiondtoLsBODTO.iterator();
+						while (litrOptionDTO.hasNext() && litrOptionBODTO.hasNext()) {
+
+							OptionDTO optionDTOObj = litrOptionDTO.next();
+							OptionDTO optionBODTOObj = litrOptionBODTO.next();
+
+							if (optionDTOObj.getResponsecount() != null
+									&& optionDTOObj.getResponsecount().equalsIgnoreCase("true")) {
+								String oldresponsecount = optionBODTOObj.getResponsecount();
+								if (oldresponsecount == null || oldresponsecount.equalsIgnoreCase("")) {
+
+									oldresponsecount = "0";
+								}
+								optionBODTOObj
+										.setResponsecount(String.valueOf(Integer.parseInt(oldresponsecount) + 1));
+							}
+
+						}
+
+					}
+					String json = gson.toJson(surveyBO_DTOObj);
+					surveyBOObj.setSurveyjson(json);
+
+					// merge this UpdateBO back in DB
+					surveydao.update(surveyBOObj);
+				}
+			}
+
+			else {
+				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				throw serviceExceptionObj;
+			}
+
+			surveydtoObj = populateSurveyDTO(surveydtoObj, surveyBOObj);
+			surveyListResp.add(surveydtoObj);
+			surveyListObjResp.setSurveydtoLs(surveyListResp);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setSurveyListObj(surveyListObjResp);
+
+		return responseObj;
+	}
+
 	private void updateAgreementAttachmentDet(String featureId, String fileName, String attachmentType) {
 		ArrayList<AgreementBO> AgreementBOList;
 
@@ -2756,8 +3044,8 @@ public class RepositoryDelegator {
 	}
 
 	private String splitUrl(String url) {
-		if(null==url)
-			url="";
+		if (null == url)
+			url = "";
 		String[] sarr = { "", "" };
 		String[] sarrDummy = { url, "Attachment" };
 		sarr = url.split("~~~");
@@ -2778,15 +3066,16 @@ public class RepositoryDelegator {
 		if (null != agreementBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())) {
-			if (null != agreementBOObj.getDocattachment()) {
+			if (null != agreementBOObj.getImgattachment()) {
+				String[] imgAttachments = agreementBOObj.getImgattachment().split(",");
+				for (String img : imgAttachments) {
+					String s[] = splitTitle(img);
+					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
+					counter++;
+				}
 
 			}
-			String[] imgAttachments = agreementBOObj.getImgattachment().split(",");
-			for (String img : imgAttachments) {
-				String s[] = splitTitle(img);
-				al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
-				counter++;
-			}
+
 			if (null != agreementBOObj.getDocattachment()) {
 				String[] docAttachments = agreementBOObj.getDocattachment().split(",");
 				for (String doc : docAttachments) {
@@ -2947,6 +3236,26 @@ public class RepositoryDelegator {
 
 		catDTOObj.setCatid(catBOObj.getCatid().toString());
 		catDTOObj.setCatname(catBOObj.getCatname());
+
+	}
+
+	private void populateCreateSurveyBO(SurveyDTO surveydtoObj, SurveyBO surveyBOObj) {
+
+		Gson gson = new Gson();
+		String json = gson.toJson(surveydtoObj);
+		System.out.println(json);
+		surveyBOObj.setSurveyjson(json);
+
+	}
+
+	private SurveyDTO populateSurveyDTO(SurveyDTO surveydtoObj, SurveyBO surveyBOObj) {
+
+		String surveyJSON = surveyBOObj.getSurveyjson();
+		Integer surveyid = surveyBOObj.getSurveyid();
+		Gson gson = new Gson();
+		surveydtoObj = gson.fromJson(surveyJSON, SurveyDTO.class);
+		surveydtoObj.setSurveyid(surveyid.toString());
+		return surveydtoObj;
 
 	}
 

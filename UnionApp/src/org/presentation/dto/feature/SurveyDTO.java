@@ -29,7 +29,7 @@ public class SurveyDTO {
 
 	private String responsecount;
 
-	private String noresponsecount;
+	private String totalusercount;
 
 	private String userresponsestatus;
 
@@ -101,14 +101,6 @@ public class SurveyDTO {
 		this.status = status;
 	}
 
-	public String getNoresponsecount() {
-		return noresponsecount;
-	}
-
-	public void setNoresponsecount(String noresponsecount) {
-		this.noresponsecount = noresponsecount;
-	}
-
 	public String getSurveyid() {
 		return surveyid;
 	}
@@ -152,5 +144,12 @@ public class SurveyDTO {
 		this.userresponsestatus = userresponsestatus;
 	}
 
-	
+	public String getTotalusercount() {
+		return totalusercount;
+	}
+
+	public void setTotalusercount(String totalusercount) {
+		this.totalusercount = totalusercount;
+	}
+
 }

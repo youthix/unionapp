@@ -20,6 +20,7 @@ public class ServiceExceptionMapper {
 			resStatusObj.setMsg(exceptionObj.getMessage());
 
 		} else {
+			exceptionObj.printStackTrace();
 
 			resStatusObj.setMsg(ServiceConstant.GENERIC_ERROR);
 
