@@ -58,7 +58,11 @@ public class ServiceDelegator {
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
 					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
 					throw serviceExceptionObj;
-				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
+				} 
+				else if (userBOObj.getLoginstatus().equalsIgnoreCase("T")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Already Logged In");
+					throw serviceExceptionObj;
+				}else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 					setResponse(responseObj);
 					// Update the Login status
 					userListObj.getUl().get(0).setLoginstatus("T");
