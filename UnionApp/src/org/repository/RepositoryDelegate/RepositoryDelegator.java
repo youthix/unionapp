@@ -2910,7 +2910,7 @@ public class RepositoryDelegator {
 		String status = "";
 
 		newsLetterdtoObj.setCreator(newsLetterBOObj.getCreator());
-		newsLetterdtoObj.setDetail(newsLetterBOObj.getDetail());
+		//newsLetterdtoObj.setDetail(newsLetterBOObj.getDetail());
 		newsLetterdtoObj.setNldate(dateformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNltime(timeformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNlid(newsLetterBOObj.getNlid().toString());
@@ -2945,7 +2945,7 @@ public class RepositoryDelegator {
 		String status = "";
 
 		AmrdtoObj.setCreator(AmrBOObj.getCreator());
-		AmrdtoObj.setDetail(AmrBOObj.getDetail());
+		//AmrdtoObj.setDetail(AmrBOObj.getDetail());
 		AmrdtoObj.setAmrdate(dateformatter.format(AmrBOObj.getAmrdate()));
 		AmrdtoObj.setAmrtime(timeformatter.format(AmrBOObj.getAmrdate()));
 		AmrdtoObj.setAmrid(AmrBOObj.getAmrid().toString());
@@ -2980,7 +2980,7 @@ public class RepositoryDelegator {
 		String status = "";
 
 		PayratedtoObj.setCreator(PayrateBOObj.getCreator());
-		PayratedtoObj.setDetail(PayrateBOObj.getDetail());
+		//PayratedtoObj.setDetail(PayrateBOObj.getDetail());
 		PayratedtoObj.setPaydate(dateformatter.format(PayrateBOObj.getPaydate()));
 		PayratedtoObj.setPaytime(timeformatter.format(PayrateBOObj.getPaydate()));
 		PayratedtoObj.setPayid(PayrateBOObj.getPayid().toString());
@@ -3016,7 +3016,7 @@ public class RepositoryDelegator {
 		String status = "";
 
 		agreementdtoObj.setCreator(agreementBOObj.getCreator());
-		agreementdtoObj.setDetail(agreementBOObj.getDetail());
+		//agreementdtoObj.setDetail(agreementBOObj.getDetail());
 		agreementdtoObj.setArmdate(dateformatter.format(agreementBOObj.getArmdate()));
 		agreementdtoObj.setArmtime(timeformatter.format(agreementBOObj.getArmdate()));
 		agreementdtoObj.setArmid(agreementBOObj.getArmid().toString());
@@ -3177,7 +3177,7 @@ public class RepositoryDelegator {
 		String status = "";
 
 		SummarydtoObj.setCreator(SummaryBOObj.getCreator());
-		SummarydtoObj.setDetail(SummaryBOObj.getDetail());
+		//SummarydtoObj.setDetail(SummaryBOObj.getDetail());
 		SummarydtoObj.setSumdate(dateformatter.format(SummaryBOObj.getSumdate()));
 		SummarydtoObj.setSumtime(timeformatter.format(SummaryBOObj.getSumdate()));
 		SummarydtoObj.setSumid(SummaryBOObj.getSumid().toString());
@@ -3218,7 +3218,7 @@ public class RepositoryDelegator {
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		suggestionIdeadtoObj.setCreator(suggestionIdeaBOObj.getCreator());
-		suggestionIdeadtoObj.setDetail(suggestionIdeaBOObj.getDetail());
+		//suggestionIdeadtoObj.setDetail(suggestionIdeaBOObj.getDetail());
 		suggestionIdeadtoObj.setSuggideadate(dateformatter.format(suggestionIdeaBOObj.getSuggideadate()));
 		suggestionIdeadtoObj.setSuggideatime(timeformatter.format(suggestionIdeaBOObj.getSuggideadate()));
 		suggestionIdeadtoObj.setSuggideaid(suggestionIdeaBOObj.getSuggideaid().toString());
