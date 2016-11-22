@@ -409,10 +409,11 @@ public class RepositoryDelegator {
 
 		fetchUserCriteriaObj.setName("status");
 		fetchUserCriteriaObj.setValue("A");
-		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+		//criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
 		Criteria criteriaUserObj = new Criteria();
 		criteriaUserObj.setCriteria("TRUE");
+		criteriaUserObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 		userBOList = userdao.fetchAllUser(criteriaObj);
 
 		if (null != userBOList) {
@@ -622,7 +623,7 @@ public class RepositoryDelegator {
 
 		MeetingBO meetingBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
@@ -747,10 +748,11 @@ public class RepositoryDelegator {
 
 		fetchUserCriteriaObj.setName("status");
 		fetchUserCriteriaObj.setValue("A");
-		criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+		//criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
 		Criteria criteriaUserObj = new Criteria();
 		criteriaUserObj.setCriteria("TRUE");
+		criteriaUserObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 		userBOList = userdao.fetchAllUser(criteriaObj);
 
 		if (null != userBOList) {
@@ -824,7 +826,7 @@ public class RepositoryDelegator {
 
 		ActivityBO activityBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
@@ -1137,7 +1139,7 @@ public class RepositoryDelegator {
 
 		NewsLetterBO NewsLetterBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		Criteria criteriaNewsLetterObj = new Criteria();
 		criteriaNewsLetterObj.setCriteria("TRUE");
@@ -1313,7 +1315,7 @@ public class RepositoryDelegator {
 
 		PayrateBO PayrateBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		Criteria criteriaPayrateObj = new Criteria();
 		criteriaPayrateObj.setCriteria("TRUE");
@@ -1489,7 +1491,7 @@ public class RepositoryDelegator {
 
 		AmrBO AmrBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		Criteria criteriaAmrObj = new Criteria();
 		criteriaAmrObj.setCriteria("TRUE");
@@ -1692,7 +1694,7 @@ public class RepositoryDelegator {
 
 		AgreementBO AgreementBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		Criteria criteriaAgreementObj = new Criteria();
 		criteriaAgreementObj.setCriteria("TRUE");
@@ -1868,7 +1870,7 @@ public class RepositoryDelegator {
 
 		SummaryBO SummaryBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		Criteria criteriaSummaryObj = new Criteria();
 		criteriaSummaryObj.setCriteria("TRUE");
@@ -2052,7 +2054,7 @@ public class RepositoryDelegator {
 
 		SuggestionIdeaBO suggestionIdeaBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
@@ -2769,7 +2771,7 @@ public class RepositoryDelegator {
 
 	private void populateCreateMeetingBO(MeetingDTO meetingdtoObj, MeetingBO meetingBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
@@ -2809,7 +2811,7 @@ public class RepositoryDelegator {
 
 	private void populateMeetingDTO(MeetingDTO meetingdtoObj, MeetingBO meetingBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
@@ -2828,7 +2830,7 @@ public class RepositoryDelegator {
 
 	private void populateCreateActivityBO(ActivityDTO activitydtoObj, ActivityBO activityBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
@@ -2868,7 +2870,7 @@ public class RepositoryDelegator {
 
 	private void populateActivityDTO(ActivityDTO activitydtoObj, ActivityBO activityBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
@@ -2887,7 +2889,7 @@ public class RepositoryDelegator {
 
 	private void populateCreateNewsLetterBO(NewsLetterDTO newsLetterdtoObj, NewsLetterBO newsLetterBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		try {
 			newsLetterBOObj.setCreator(newsLetterdtoObj.getCreator());
@@ -2905,12 +2907,12 @@ public class RepositoryDelegator {
 
 	private void populateNewsLetterDTO(NewsLetterDTO newsLetterdtoObj, NewsLetterBO newsLetterBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 		String status = "";
 
 		newsLetterdtoObj.setCreator(newsLetterBOObj.getCreator());
-		//newsLetterdtoObj.setDetail(newsLetterBOObj.getDetail());
+		newsLetterdtoObj.setDetail(newsLetterBOObj.getDetail());
 		newsLetterdtoObj.setNldate(dateformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNltime(timeformatter.format(newsLetterBOObj.getNldate()));
 		newsLetterdtoObj.setNlid(newsLetterBOObj.getNlid().toString());
@@ -2923,7 +2925,7 @@ public class RepositoryDelegator {
 
 	private void populateCreateAmrBO(AmrDTO AmrdtoObj, AmrBO AmrBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		try {
 			AmrBOObj.setCreator(AmrdtoObj.getCreator());
@@ -2940,12 +2942,12 @@ public class RepositoryDelegator {
 
 	private void populateAmrDTO(AmrDTO AmrdtoObj, AmrBO AmrBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 		String status = "";
 
 		AmrdtoObj.setCreator(AmrBOObj.getCreator());
-		//AmrdtoObj.setDetail(AmrBOObj.getDetail());
+		AmrdtoObj.setDetail(AmrBOObj.getDetail());
 		AmrdtoObj.setAmrdate(dateformatter.format(AmrBOObj.getAmrdate()));
 		AmrdtoObj.setAmrtime(timeformatter.format(AmrBOObj.getAmrdate()));
 		AmrdtoObj.setAmrid(AmrBOObj.getAmrid().toString());
@@ -2958,7 +2960,7 @@ public class RepositoryDelegator {
 
 	private void populateCreatePayrateBO(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		try {
 			PayrateBOObj.setCreator(PayratedtoObj.getCreator());
@@ -2975,12 +2977,12 @@ public class RepositoryDelegator {
 
 	private void populatePayrateDTO(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 		String status = "";
 
 		PayratedtoObj.setCreator(PayrateBOObj.getCreator());
-		//PayratedtoObj.setDetail(PayrateBOObj.getDetail());
+		PayratedtoObj.setDetail(PayrateBOObj.getDetail());
 		PayratedtoObj.setPaydate(dateformatter.format(PayrateBOObj.getPaydate()));
 		PayratedtoObj.setPaytime(timeformatter.format(PayrateBOObj.getPaydate()));
 		PayratedtoObj.setPayid(PayrateBOObj.getPayid().toString());
@@ -2993,7 +2995,7 @@ public class RepositoryDelegator {
 
 	private void populateCreateAgreementBO(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		try {
 			agreementBOObj.setCreator(agreementdtoObj.getCreator());
@@ -3011,12 +3013,12 @@ public class RepositoryDelegator {
 
 	private void populateAgreementDTO(AgreementDTO agreementdtoObj, AgreementBO agreementBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 		String status = "";
 
 		agreementdtoObj.setCreator(agreementBOObj.getCreator());
-		//agreementdtoObj.setDetail(agreementBOObj.getDetail());
+		agreementdtoObj.setDetail(agreementBOObj.getDetail());
 		agreementdtoObj.setArmdate(dateformatter.format(agreementBOObj.getArmdate()));
 		agreementdtoObj.setArmtime(timeformatter.format(agreementBOObj.getArmdate()));
 		agreementdtoObj.setArmid(agreementBOObj.getArmid().toString());
@@ -3155,7 +3157,7 @@ public class RepositoryDelegator {
 
 	private void populateCreateSummaryBO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		try {
 			SummaryBOObj.setCreator(SummarydtoObj.getCreator());
@@ -3172,12 +3174,12 @@ public class RepositoryDelegator {
 
 	private void populateSummaryDTO(SummaryDTO SummarydtoObj, SummaryBO SummaryBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 		String status = "";
 
 		SummarydtoObj.setCreator(SummaryBOObj.getCreator());
-		//SummarydtoObj.setDetail(SummaryBOObj.getDetail());
+		SummarydtoObj.setDetail(SummaryBOObj.getDetail());
 		SummarydtoObj.setSumdate(dateformatter.format(SummaryBOObj.getSumdate()));
 		SummarydtoObj.setSumtime(timeformatter.format(SummaryBOObj.getSumdate()));
 		SummarydtoObj.setSumid(SummaryBOObj.getSumid().toString());
@@ -3191,7 +3193,7 @@ public class RepositoryDelegator {
 	private void populateCreateSuggestionIdeaBO(SuggestionIdeaDTO suggestionIdeadtoObj,
 			SuggestionIdeaBO suggestionIdeaBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 		try {
 
@@ -3213,12 +3215,12 @@ public class RepositoryDelegator {
 	private void populateSuggestionIdeaDTO(SuggestionIdeaDTO suggestionIdeadtoObj,
 			SuggestionIdeaBO suggestionIdeaBOObj) {
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		SimpleDateFormat timeformatter = new SimpleDateFormat("hh:mm:ss");
 
 		suggestionIdeadtoObj.setCreator(suggestionIdeaBOObj.getCreator());
-		//suggestionIdeadtoObj.setDetail(suggestionIdeaBOObj.getDetail());
+		suggestionIdeadtoObj.setDetail(suggestionIdeaBOObj.getDetail());
 		suggestionIdeadtoObj.setSuggideadate(dateformatter.format(suggestionIdeaBOObj.getSuggideadate()));
 		suggestionIdeadtoObj.setSuggideatime(timeformatter.format(suggestionIdeaBOObj.getSuggideadate()));
 		suggestionIdeadtoObj.setSuggideaid(suggestionIdeaBOObj.getSuggideaid().toString());

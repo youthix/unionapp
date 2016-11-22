@@ -41,6 +41,11 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 		UserList userListObj = reqparam.getUserListObj();
+		
+		/*				else if (userBOObj.getLoginstatus().equalsIgnoreCase("T")) {
+		ServiceException serviceExceptionObj = new ServiceException("User is Already Logged In");
+		throw serviceExceptionObj;
+	}*/
 
 		if (null != userListObj) {
 
@@ -58,11 +63,7 @@ public class ServiceDelegator {
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
 					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
 					throw serviceExceptionObj;
-				} 
-				else if (userBOObj.getLoginstatus().equalsIgnoreCase("T")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Already Logged In");
-					throw serviceExceptionObj;
-				}else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
+				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 					setResponse(responseObj);
 					// Update the Login status
 					userListObj.getUl().get(0).setLoginstatus("T");
@@ -855,7 +856,8 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-	public ResponseObj updateAttachmentDetail(String featureType, String featureId, String fileName, String attachmentType) {
+	public ResponseObj updateAttachmentDetail(String featureType, String featureId, String fileName,
+			String attachmentType) {
 
 		ResponseObj responseObj;
 
@@ -864,7 +866,7 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
+
 	public ResponseObj createSurvey(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -873,7 +875,7 @@ public class ServiceDelegator {
 		if (null != surveyListObj) {
 
 			responseObj = repositoryDelegator.createSurvey(surveyListObj);
-			
+
 			setResponse(responseObj);
 
 		} else {
@@ -905,9 +907,9 @@ public class ServiceDelegator {
 
 	public ResponseObj fetchSurveyById(String surveyid, String userid) {
 
-		ResponseObj responseObj ;
+		ResponseObj responseObj;
 
-		if (null != surveyid && null!=userid) {
+		if (null != surveyid && null != userid) {
 
 			responseObj = repositoryDelegator.fetchSurveyById(surveyid, userid);
 
@@ -936,7 +938,6 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
-	
 
 	private String generatepwd() {
 
