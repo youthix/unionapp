@@ -623,7 +623,7 @@ public class RepositoryDelegator {
 
 		MeetingBO meetingBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
 
@@ -826,7 +826,7 @@ public class RepositoryDelegator {
 
 		ActivityBO activityBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
 
@@ -1139,7 +1139,7 @@ public class RepositoryDelegator {
 
 		NewsLetterBO NewsLetterBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		Criteria criteriaNewsLetterObj = new Criteria();
 		criteriaNewsLetterObj.setCriteria("TRUE");
@@ -1315,7 +1315,7 @@ public class RepositoryDelegator {
 
 		PayrateBO PayrateBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		Criteria criteriaPayrateObj = new Criteria();
 		criteriaPayrateObj.setCriteria("TRUE");
@@ -1491,7 +1491,7 @@ public class RepositoryDelegator {
 
 		AmrBO AmrBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		Criteria criteriaAmrObj = new Criteria();
 		criteriaAmrObj.setCriteria("TRUE");
@@ -1694,7 +1694,7 @@ public class RepositoryDelegator {
 
 		AgreementBO AgreementBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		Criteria criteriaAgreementObj = new Criteria();
 		criteriaAgreementObj.setCriteria("TRUE");
@@ -1870,7 +1870,7 @@ public class RepositoryDelegator {
 
 		SummaryBO SummaryBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		Criteria criteriaSummaryObj = new Criteria();
 		criteriaSummaryObj.setCriteria("TRUE");
@@ -2054,7 +2054,7 @@ public class RepositoryDelegator {
 
 		SuggestionIdeaBO suggestionIdeaBOObj = null;
 
-		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 		// SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
 
