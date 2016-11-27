@@ -7,6 +7,7 @@ import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
 import org.presentation.dto.feature.CategoryList;
+import org.presentation.dto.feature.DeleteFile;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
@@ -39,6 +40,8 @@ public class RequestObj {
 	private CategoryList CategoryListObj;
 
 	private SurveyList SurveyListObj;
+	
+	private DeleteFile deleteFileObj;
 
 	private String bid;
 
@@ -167,5 +170,15 @@ public class RequestObj {
 	public void setSurveyListObj(SurveyList surveyListObj) {
 		SurveyListObj = surveyListObj;
 	}
+
+	public DeleteFile getDeleteFileObj() {
+		return deleteFileObj;
+	}
+
+	public void setDeleteFileObj(DeleteFile deleteFileObj) {
+		this.deleteFileObj = deleteFileObj;
+	}
+	
+	
 
 }

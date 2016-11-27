@@ -105,6 +105,8 @@ public interface RESTfulServiceInterface {
 			@HeaderParam(value = "attachmentType") String attachmentType,
 			@HeaderParam(value = "attachmentTitle") String attachmentTitle,
 			@HeaderParam(value = "attachmentName") String attachmentName);
+	
+	ResponseObj deleteFile(RequestObj reqparam);
 
 	ResponseObj helloSurvey(RequestObj reqparam);
 	

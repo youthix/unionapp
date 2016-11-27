@@ -861,11 +861,22 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj;
 
-		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName, attachmentType);
+		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName, attachmentType,"add");
 		setResponse(responseObj);
 
 		return responseObj;
 	}
+	
+	public ResponseObj deletefile(String featureType, String featureId, String fileName,
+			String attachmentType) {
+
+		ResponseObj responseObj;
+
+		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName, attachmentType,"delete");
+		setResponse(responseObj);
+
+		return responseObj;
+	}	
 
 	public ResponseObj createSurvey(RequestObj reqparam) {
 

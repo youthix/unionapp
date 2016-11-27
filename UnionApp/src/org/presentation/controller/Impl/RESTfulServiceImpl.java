@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import org.common.UnionAppConstants;
 import org.presentation.controller.Interface.RESTfulServiceInterface;
 import org.presentation.dto.RequestObj;
+import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.feature.OptionDTO;
 import org.presentation.dto.feature.QuestionDTO;
@@ -1131,7 +1132,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			@HeaderParam(value = "attachmentTitle") String attachmentTitle,
 			@HeaderParam(value = "attachmentName") String attachmentName) {
 
-		ResponseObj responseObj;
+		ResponseObj responseObj = new ResponseObj();
 
 		/*
 		 * String featureType = feature; System.out.println("featureType = "+
@@ -1145,6 +1146,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		// Create Directory if not already Exists
 		// String path = "/../" + featureType + "/" + featureId + "/" +
 		// attachmentType;
+		// String path = UnionAppConstants.serverAbsPath + featureType + "/" +
+		// featureId + "/" + attachmentType;
 		String path = UnionAppConstants.serverAbsPath + featureType + "/" + featureId + "/" + attachmentType;
 
 		File filePath = new File(path);
@@ -1174,6 +1177,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			 * filePath.createNewFile(); }
 			 */
 
+			filePath = new File(fileLocation);
 			FileOutputStream out = new FileOutputStream(new File(fileLocation));
 			int read = 0;
 			byte[] bytes = new byte[1024];
@@ -1186,14 +1190,59 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 			// Update the DB Attachment Status
 
-			responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
-					attachmentType);
+			if (!filePath.exists()) {
+
+				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
+						attachmentType);
+
+			} else {
+				ResStatus resStatus = new ResStatus();
+				resStatus.setCode("00");
+				resStatus.setMsg("SUCCESS");
+				responseObj.setResStatus(resStatus);
+			}
+
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}
 		// String output = "File successfully uploaded to : " + fileLocation;
 		// return Response.status(200).entity(output).build();
+		return null;
+	}
+
+	@Override
+	@POST
+	@Path("/deletefile")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj deleteFile(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam && null != reqparam.getDeleteFileObj()) {
+				String path = UnionAppConstants.serverAbsPath + reqparam.getDeleteFileObj().getFeatureType() + "/"
+						+ reqparam.getDeleteFileObj().getFeatureId() + "/"
+						+ reqparam.getDeleteFileObj().getAttachmentType() + "/"
+						+ reqparam.getDeleteFileObj().getFileName();
+				new File(path).delete();
+				
+				responseObj = serviceDelegator.deletefile(reqparam.getDeleteFileObj().getFeatureType(),
+						reqparam.getDeleteFileObj().getFeatureId(), reqparam.getDeleteFileObj().getFileName(),
+						reqparam.getDeleteFileObj().getAttachmentType());
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
 		return responseObj;
+
 	}
 
 	@Override
@@ -1258,8 +1307,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	public ResponseObj helloSurvey(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		
-		SurveyList surveyListObj = new SurveyList() ;
+
+		SurveyList surveyListObj = new SurveyList();
 
 		ArrayList<SurveyDTO> surveyDTOList = new ArrayList<SurveyDTO>();
 
@@ -1317,9 +1366,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		surveyDTOList.add(surveyDTOObj1);
 		surveyDTOList.add(surveyDTOObj2);
-		
+
 		surveyListObj.setSurveydtoLs(surveyDTOList);
-		
+
 		responseObj.setSurveyListObj(surveyListObj);
 
 		return responseObj;
@@ -1384,7 +1433,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@GET
 	@Path("/fetchsurvey/{surveyid}/{userid}")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-	public ResponseObj fetchSurveyById(@PathParam("surveyid") String surveyid,@PathParam("userid") String userid) {
+	public ResponseObj fetchSurveyById(@PathParam("surveyid") String surveyid, @PathParam("userid") String userid) {
 
 		ResponseObj responseObj;
 
@@ -1433,7 +1482,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
-	
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;
 	}
