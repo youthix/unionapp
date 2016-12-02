@@ -117,5 +117,7 @@ public interface RESTfulServiceInterface {
 	ResponseObj createSurvey(RequestObj reqparam);
 
 	ResponseObj fetchSurveyById(String surveyid, String userid);
+	
+	ResponseObj fetchActionLog(RequestObj reqparam);
 
 }

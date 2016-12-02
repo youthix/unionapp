@@ -22,6 +22,8 @@ import org.presentation.dto.criteria.FetchUserCriteria;
 import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
+import org.presentation.dto.feature.ActionLogDTO;
+import org.presentation.dto.feature.ActionLogList;
 import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementDTO;
@@ -49,6 +51,7 @@ import org.presentation.dto.feature.SurveyList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
+import org.repository.DAOInterface.IActionLogDAO;
 import org.repository.DAOInterface.IActivityDAO;
 import org.repository.DAOInterface.IAgreementDAO;
 import org.repository.DAOInterface.IAmrDAO;
@@ -60,6 +63,7 @@ import org.repository.DAOInterface.ISuggestionIdeaDAO;
 import org.repository.DAOInterface.ISummaryDAO;
 import org.repository.DAOInterface.ISurveyDAO;
 import org.repository.DAOInterface.IUserDAO;
+import org.repository.entity.ActionLogBO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.AgreementBO;
 import org.repository.entity.AmrBO;
@@ -113,6 +117,9 @@ public class RepositoryDelegator {
 
 	@Autowired
 	ISurveyDAO surveydao;
+
+	@Autowired
+	IActionLogDAO actionlogdao;
 
 	public UserList register(UserList userListObj) {
 		System.out.println("InRDRegister");
@@ -296,7 +303,6 @@ public class RepositoryDelegator {
 
 		return userBOObj;
 	}
-	
 
 	public UserList update(UserList userListObj, Criteria criteriaObj) {
 		System.out.println("InRDUpdate");
@@ -439,6 +445,10 @@ public class RepositoryDelegator {
 				populateCreateMeetingBO(meetingdtoObj, meetingBOObj);
 				meetingdao.createMeeting(meetingBOObj);
 				populateMeetingDTO(meetingdtoObj, meetingBOObj);
+
+				createActionLog(meetingdtoObj.getMeetdate(), meetingdtoObj.getMeettime(), UnionAppConstants.create,
+						meetingdtoObj.getCreator(), meetingdtoObj.getDetail(), UnionAppConstants.meeting,
+						meetingdtoObj.getSubject());
 
 			}
 
@@ -733,6 +743,9 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						meetingdao.update(meetingBOObj);
+						createActionLog(meetingdtoObj.getMeetdate(), meetingdtoObj.getMeettime(), UnionAppConstants.update,
+								meetingdtoObj.getCreator(), meetingdtoObj.getDetail(), UnionAppConstants.meeting,
+								meetingdtoObj.getSubject());
 					}
 
 				}
@@ -778,7 +791,11 @@ public class RepositoryDelegator {
 				populateCreateActivityBO(activitydtoObj, activityBOObj);
 				activitydao.createActivity(activityBOObj);
 				populateActivityDTO(activitydtoObj, activityBOObj);
+				
 
+				createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(), UnionAppConstants.create,
+						activitydtoObj.getCreator(), activitydtoObj.getDetail(), UnionAppConstants.activity,
+						activitydtoObj.getSubject());
 			}
 
 		}
@@ -938,6 +955,9 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						activitydao.update(activityBOObj);
+						createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(), UnionAppConstants.update,
+								activitydtoObj.getCreator(), activitydtoObj.getDetail(), UnionAppConstants.activity,
+								activitydtoObj.getSubject());
 					}
 				}
 
@@ -2547,6 +2567,59 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	public ResponseObj fetchActionLog(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		ActionLogList actionLogListObj = new ActionLogList();
+		ArrayList<ActionLogDTO> actionLogDTOList = new ArrayList<ActionLogDTO>();
+
+		ArrayList<ActionLogBO> actionLogBOList;
+
+		actionLogBOList = actionlogdao.fetchActionLog();
+
+		if (null != actionLogBOList && actionLogBOList.size() > 0) {
+
+			Iterator<ActionLogBO> litr = actionLogBOList.iterator();
+
+			while (litr.hasNext()) {
+				ActionLogDTO actionLogDTOObj = new ActionLogDTO();
+				populateActionLogDTO(actionLogDTOObj, litr.next());
+				actionLogDTOList.add(actionLogDTOObj);
+
+			}
+
+			actionLogListObj.setActionlogdtoLs(actionLogDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setActionLogListObj(actionLogListObj);
+
+		return responseObj;
+	}
+
+	public void createActionLog(String date, String time, String action, String creator, String detail, String module,
+			String subject) {
+
+		ActionLogDTO actionlogdtoObj = new ActionLogDTO();
+		actionlogdtoObj.setActdate(date);
+		actionlogdtoObj.setAction(action);
+		actionlogdtoObj.setActtime(time);
+		actionlogdtoObj.setCreator(creator);
+		actionlogdtoObj.setDetail(detail);
+		actionlogdtoObj.setDetail(detail);
+		actionlogdtoObj.setModule(module);
+		actionlogdtoObj.setSubject(subject);
+
+		ActionLogBO actionLogBOObj = new ActionLogBO();
+
+		populateActionLogBO(actionlogdtoObj, actionLogBOObj);
+		actionlogdao.addActionLog(actionLogBOObj);
+
+	}
+
 	private void updateNLAttachmentDet(String featureId, String fileName, String attachmentType, String status) {
 		ArrayList<NewsLetterBO> newsLetterBOList;
 
@@ -3504,6 +3577,46 @@ public class RepositoryDelegator {
 		surveydtoObj = gson.fromJson(surveyJSON, SurveyDTO.class);
 		surveydtoObj.setSurveyid(surveyid.toString());
 		return surveydtoObj;
+
+	}
+
+	private void populateActionLogBO(ActionLogDTO actionlogdtoObj, ActionLogBO actionlogBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
+
+		try {
+
+			actionlogBOObj.setAction(actionlogdtoObj.getAction());
+			actionlogBOObj.setCreator(actionlogdtoObj.getCreator());
+			actionlogBOObj.setDetail(actionlogdtoObj.getDetail());
+			actionlogBOObj.setModule(actionlogdtoObj.getModule());
+			actionlogBOObj.setSubject(actionlogdtoObj.getSubject());
+			actionlogBOObj
+					.setActdate(dateformatter.parse(actionlogdtoObj.getActdate() + " " + actionlogdtoObj.getActtime()));
+
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
+	private void populateActionLogDTO(ActionLogDTO actionlogdtoObj, ActionLogBO actionlogBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+
+		SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
+
+		actionlogdtoObj.setActdate(dateformatter.format(actionlogBOObj.getActdate()));
+		actionlogdtoObj.setAction(actionlogBOObj.getAction());
+		/* actionlogdtoObj.setActionid(actionlogBOObj.getActionid()); */
+		actionlogdtoObj.setActtime(timeformatter.format(actionlogBOObj.getActdate()));
+		actionlogdtoObj.setCreator(actionlogBOObj.getCreator());
+		actionlogdtoObj.setDetail(actionlogBOObj.getCreator());
+		actionlogdtoObj.setModule(actionlogBOObj.getCreator());
+		actionlogdtoObj.setSubject(actionlogBOObj.getSubject());
 
 	}
 

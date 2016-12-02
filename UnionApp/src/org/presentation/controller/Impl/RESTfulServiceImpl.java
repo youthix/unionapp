@@ -1485,6 +1485,33 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
+	
+	@Override
+	@POST
+	@Path("/fetchactionlog")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchActionLog(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.fetchActionLog(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}	
 
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;

@@ -3,6 +3,7 @@ package org.presentation.dto;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.presentation.dto.criteria.Criteria;
+import org.presentation.dto.feature.ActionLogList;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
@@ -40,6 +41,8 @@ public class RequestObj {
 	private CategoryList CategoryListObj;
 
 	private SurveyList SurveyListObj;
+	
+	private ActionLogList ActionLogListObj;
 	
 	private DeleteFile deleteFileObj;
 
@@ -177,6 +180,14 @@ public class RequestObj {
 
 	public void setDeleteFileObj(DeleteFile deleteFileObj) {
 		this.deleteFileObj = deleteFileObj;
+	}
+
+	public ActionLogList getActionLogListObj() {
+		return ActionLogListObj;
+	}
+
+	public void setActionLogListObj(ActionLogList actionLogListObj) {
+		ActionLogListObj = actionLogListObj;
 	}
 	
 	

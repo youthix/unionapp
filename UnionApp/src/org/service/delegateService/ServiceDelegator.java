@@ -927,6 +927,17 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
+	public ResponseObj fetchActionLog(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		responseObj = repositoryDelegator.fetchActionLog(reqparam);
+
+		setResponse(responseObj);
+
+		return responseObj;
+	}
+
 	private String generatepwd() {
 
 		String newPwd = UUID.randomUUID().toString();

@@ -2,6 +2,7 @@ package org.presentation.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.presentation.dto.feature.ActionLogList;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
@@ -13,37 +14,37 @@ import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.feature.SurveyList;
 import org.presentation.dto.user.UserList;
+
 @XmlRootElement(name = "resparam")
-//@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+// @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class ResponseObj {
 
-	
 	private UserList UserListObj;
-	
-	private MeetingList MeetingListObj;
-	
-	private ActivityList activityListObj;
-	
-	private NewsLetterList newsLetterListObj;
-	
-	private SummaryList summaryListObj;
-	
-	private SuggestionIdeaList suggestionIdeaListObj;
-	
-	private AgreementList agreementListObj;
-	
-	private AmrList amrListObj;
-	
-	private PayrateList payrateListObj;
-	
-	private CategoryList CategoryListObj;
-	
-	private SurveyList SurveyListObj;
-	
-	private String totalPage;
-	
-	ResStatus resStatus;
 
+	private MeetingList MeetingListObj;
+
+	private ActivityList activityListObj;
+
+	private NewsLetterList newsLetterListObj;
+
+	private SummaryList summaryListObj;
+
+	private SuggestionIdeaList suggestionIdeaListObj;
+
+	private AgreementList agreementListObj;
+
+	private AmrList amrListObj;
+
+	private PayrateList payrateListObj;
+
+	private CategoryList CategoryListObj;
+
+	private SurveyList SurveyListObj;
+	private ActionLogList ActionLogListObj;
+
+	private String totalPage;
+
+	ResStatus resStatus;
 
 	public ResStatus getResStatus() {
 		return resStatus;
@@ -68,7 +69,6 @@ public class ResponseObj {
 	public void setMeetingListObj(MeetingList meetingListObj) {
 		MeetingListObj = meetingListObj;
 	}
-
 
 	public ActivityList getActivityListObj() {
 		return activityListObj;
@@ -148,7 +148,14 @@ public class ResponseObj {
 
 	public void setSurveyListObj(SurveyList surveyListObj) {
 		SurveyListObj = surveyListObj;
-	}	
-	
-	
+	}
+
+	public ActionLogList getActionLogListObj() {
+		return ActionLogListObj;
+	}
+
+	public void setActionLogListObj(ActionLogList actionLogListObj) {
+		ActionLogListObj = actionLogListObj;
+	}
+
 }

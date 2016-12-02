@@ -51,6 +51,9 @@
 	<bean id="surveydao" class="org.repository.DAOImpl.SurveyDAOImpl">
 	</bean>
 
+	<bean id="actionlogdao" class="org.repository.DAOImpl.ActionLogDAOImpl">
+	</bean>
+
 	<bean id="restfulService" class="org.presentation.controller.Impl.RESTfulServiceImpl">
 		<!-- <property name="serviceDelegator" ref="serviceDelegator" /> -->
 	</bean>
