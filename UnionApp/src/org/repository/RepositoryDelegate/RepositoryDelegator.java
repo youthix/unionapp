@@ -21,6 +21,7 @@ import org.presentation.dto.criteria.FetchSurveyCriteria;
 import org.presentation.dto.criteria.FetchUserCriteria;
 import org.presentation.dto.criteria.UpdateActivityCriteria;
 import org.presentation.dto.criteria.UpdateMeetingCriteria;
+import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementDTO;
@@ -144,20 +145,22 @@ public class RepositoryDelegator {
 		return userListObjResp;
 	}
 
-	public UserBO login(UserList userListObj) {
+	public ResponseObj login(UserList userListObj) {
 		System.out.println("InRDLogin");
+
+		ResponseObj responseObj = new ResponseObj();
 
 		UserBO userBOObj = null;
 		String pageNo = "1";
-
-		Criteria criteriaObj = new Criteria();
-		criteriaObj.setCriteria("TRUE");
 
 		ArrayList<UserBO> userBOList;
 
 		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
 
 		if (userList.size() > 0) {
+
+			Criteria criteriaObj = new Criteria();
+			criteriaObj.setCriteria("TRUE");
 
 			User userObj = userList.get(0);
 
@@ -171,6 +174,34 @@ public class RepositoryDelegator {
 
 			userBOObj = userBOList.get(0);
 
+			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
+					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
+				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
+					throw serviceExceptionObj;
+				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
+					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
+					throw serviceExceptionObj;
+				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
+
+					// Update the Login status
+					userListObj.getUl().get(0).setLoginstatus("T");
+					Criteria criteriaUpdateObj = new Criteria();
+					criteriaUpdateObj.setCriteria("TRUE");
+					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+					updateUserCriteriaObj.setName("loginstatus");
+					criteriaUpdateObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
+					update(userListObj, criteriaUpdateObj);
+					populateUserDTO(userObj, userBOObj);
+				}
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException(
+						"Credentials Incorrect. No matching Object Found");
+				throw serviceExceptionObj;
+			}
+			responseObj.setUserListObj(userListObj);
+
 		}
 
 		else {
@@ -178,7 +209,7 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 
-		return userBOObj;
+		return responseObj;
 	}
 
 	public ResponseObj fetch(RequestObj reqparam) {
@@ -226,6 +257,46 @@ public class RepositoryDelegator {
 		responseObj.setTotalPage(String.valueOf(totalPage));
 		return responseObj;
 	}
+
+	public UserBO fetchUserBO(UserList userListObj) {
+		System.out.println("InRDLogin");
+
+		ResponseObj responseObj = new ResponseObj();
+
+		UserBO userBOObj = null;
+		String pageNo = "1";
+
+		ArrayList<UserBO> userBOList;
+
+		ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
+
+		if (userList.size() > 0) {
+
+			Criteria criteriaObj = new Criteria();
+			criteriaObj.setCriteria("TRUE");
+
+			User userObj = userList.get(0);
+
+			FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+			fetchUserCriteriaObj.setName("emailid");
+			fetchUserCriteriaObj.setValue(userObj.getUsNa());
+			criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+
+			userBOList = userdao.fetchUser(criteriaObj, pageNo);
+
+			userBOObj = userBOList.get(0);
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			throw serviceExceptionObj;
+		}
+
+		return userBOObj;
+	}
+	
 
 	public UserList update(UserList userListObj, Criteria criteriaObj) {
 		System.out.println("InRDUpdate");

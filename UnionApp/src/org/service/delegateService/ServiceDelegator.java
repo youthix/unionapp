@@ -41,46 +41,18 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 		UserList userListObj = reqparam.getUserListObj();
-		
-		/*				else if (userBOObj.getLoginstatus().equalsIgnoreCase("T")) {
-		ServiceException serviceExceptionObj = new ServiceException("User is Already Logged In");
-		throw serviceExceptionObj;
-	}*/
+
+		/*
+		 * else if (userBOObj.getLoginstatus().equalsIgnoreCase("T")) {
+		 * ServiceException serviceExceptionObj = new ServiceException(
+		 * "User is Already Logged In"); throw serviceExceptionObj; }
+		 */
 
 		if (null != userListObj) {
 
-			UserBO userBOObj = repositoryDelegator.login(userListObj);
+			responseObj = repositoryDelegator.login(userListObj);
 
-			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
-
-			User userObj = userList.get(0);
-
-			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
-					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
-				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
-					throw serviceExceptionObj;
-				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
-					throw serviceExceptionObj;
-				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
-					setResponse(responseObj);
-					// Update the Login status
-					userListObj.getUl().get(0).setLoginstatus("T");
-					Criteria criteriaObj = new Criteria();
-					criteriaObj.setCriteria("TRUE");
-					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
-					updateUserCriteriaObj.setName("loginstatus");
-					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
-					repositoryDelegator.update(userListObj, criteriaObj);
-				}
-
-			} else {
-				ServiceException serviceExceptionObj = new ServiceException(
-						"Credentials Incorrect. No matching Object Found");
-				throw serviceExceptionObj;
-			}
-			responseObj.setUserListObj(userListObj);
+			setResponse(responseObj);
 
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
@@ -199,7 +171,9 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			UserBO userBOObj = repositoryDelegator.login(userListObj);
+			// UserBO userBOObj = repositoryDelegator.login(userListObj);
+
+			UserBO userBOObj = repositoryDelegator.fetchUserBO(userListObj);
 
 			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
 
@@ -249,7 +223,9 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			UserBO userBOObj = repositoryDelegator.login(userListObj);
+			// UserBO userBOObj = repositoryDelegator.login(userListObj);
+
+			UserBO userBOObj = repositoryDelegator.fetchUserBO(userListObj);
 
 			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
 
@@ -861,22 +837,23 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj;
 
-		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName, attachmentType,"add");
+		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName, attachmentType,
+				"add");
 		setResponse(responseObj);
 
 		return responseObj;
 	}
-	
-	public ResponseObj deletefile(String featureType, String featureId, String fileName,
-			String attachmentType) {
+
+	public ResponseObj deletefile(String featureType, String featureId, String fileName, String attachmentType) {
 
 		ResponseObj responseObj;
 
-		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName, attachmentType,"delete");
+		responseObj = repositoryDelegator.updateAttachmentDetail(featureType, featureId, fileName, attachmentType,
+				"delete");
 		setResponse(responseObj);
 
 		return responseObj;
-	}	
+	}
 
 	public ResponseObj createSurvey(RequestObj reqparam) {
 

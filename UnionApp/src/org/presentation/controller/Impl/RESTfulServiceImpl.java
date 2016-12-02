@@ -1165,6 +1165,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		// saving file
 		String fileName = attachmentName;
+
 		String fileLocation = filePath + "/" + fileName;
 
 		String filelocationtitle = fileLocation + "~~~" + attachmentTitle;
@@ -1178,6 +1179,19 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			 */
 
 			filePath = new File(fileLocation);
+			
+			if (!filePath.exists()) {
+
+				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
+						attachmentType);
+
+			} else {
+				ResStatus resStatus = new ResStatus();
+				resStatus.setCode("00");
+				resStatus.setMsg("SUCCESS");
+				responseObj.setResStatus(resStatus);
+			}
+			
 			FileOutputStream out = new FileOutputStream(new File(fileLocation));
 			int read = 0;
 			byte[] bytes = new byte[1024];
@@ -1190,17 +1204,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 			// Update the DB Attachment Status
 
-/*			if (!filePath.exists()) {*/
 
-				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
-						attachmentType);
-
-/*			} else {
-				ResStatus resStatus = new ResStatus();
-				resStatus.setCode("00");
-				resStatus.setMsg("SUCCESS");
-				responseObj.setResStatus(resStatus);
-			}*/
 
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
@@ -1226,7 +1230,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 						+ reqparam.getDeleteFileObj().getAttachmentType() + "/"
 						+ reqparam.getDeleteFileObj().getFileName();
 				new File(path).delete();
-				
+
 				responseObj = serviceDelegator.deletefile(reqparam.getDeleteFileObj().getFeatureType(),
 						reqparam.getDeleteFileObj().getFeatureId(), reqparam.getDeleteFileObj().getFileName(),
 						reqparam.getDeleteFileObj().getAttachmentType());
