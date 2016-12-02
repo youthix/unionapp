@@ -1190,24 +1190,24 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 			// Update the DB Attachment Status
 
-			if (!filePath.exists()) {
+/*			if (!filePath.exists()) {*/
 
 				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
 						attachmentType);
 
-			} else {
+/*			} else {
 				ResStatus resStatus = new ResStatus();
 				resStatus.setCode("00");
 				resStatus.setMsg("SUCCESS");
 				responseObj.setResStatus(resStatus);
-			}
+			}*/
 
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
 		}
 		// String output = "File successfully uploaded to : " + fileLocation;
 		// return Response.status(200).entity(output).build();
-		return null;
+		return responseObj;
 	}
 
 	@Override
