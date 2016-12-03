@@ -743,9 +743,9 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						meetingdao.update(meetingBOObj);
-						createActionLog(meetingdtoObj.getMeetdate(), meetingdtoObj.getMeettime(), UnionAppConstants.update,
-								meetingdtoObj.getCreator(), meetingdtoObj.getDetail(), UnionAppConstants.meeting,
-								meetingdtoObj.getSubject());
+						createActionLog(meetingdtoObj.getMeetdate(), meetingdtoObj.getMeettime(),
+								UnionAppConstants.update, meetingdtoObj.getCreator(), meetingdtoObj.getDetail(),
+								UnionAppConstants.meeting, meetingdtoObj.getSubject());
 					}
 
 				}
@@ -791,7 +791,6 @@ public class RepositoryDelegator {
 				populateCreateActivityBO(activitydtoObj, activityBOObj);
 				activitydao.createActivity(activityBOObj);
 				populateActivityDTO(activitydtoObj, activityBOObj);
-				
 
 				createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(), UnionAppConstants.create,
 						activitydtoObj.getCreator(), activitydtoObj.getDetail(), UnionAppConstants.activity,
@@ -955,9 +954,9 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						activitydao.update(activityBOObj);
-						createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(), UnionAppConstants.update,
-								activitydtoObj.getCreator(), activitydtoObj.getDetail(), UnionAppConstants.activity,
-								activitydtoObj.getSubject());
+						createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(),
+								UnionAppConstants.update, activitydtoObj.getCreator(), activitydtoObj.getDetail(),
+								UnionAppConstants.activity, activitydtoObj.getSubject());
 					}
 				}
 
@@ -1136,6 +1135,10 @@ public class RepositoryDelegator {
 				newsletterdao.createNewsLetter(NewsLetterBOObj);
 				populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
 
+				createActionLog(NewsLetterdtoObj.getNldate(), NewsLetterdtoObj.getNltime(), UnionAppConstants.create,
+						NewsLetterdtoObj.getCreator(), NewsLetterdtoObj.getDetail(), UnionAppConstants.newsletter,
+						NewsLetterdtoObj.getSubject());
+
 			}
 
 		}
@@ -1267,6 +1270,10 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						newsletterdao.update(NewsLetterBOObj);
+
+						createActionLog(NewsLetterdtoObj.getNldate(), NewsLetterdtoObj.getNltime(),
+								UnionAppConstants.update, NewsLetterdtoObj.getCreator(), NewsLetterdtoObj.getDetail(),
+								UnionAppConstants.newsletter, NewsLetterdtoObj.getSubject());
 					}
 				}
 
@@ -1311,6 +1318,10 @@ public class RepositoryDelegator {
 				populateCreatePayrateBO(PayratedtoObj, PayrateBOObj);
 				payratedao.createPayrate(PayrateBOObj);
 				populatePayrateDTO(PayratedtoObj, PayrateBOObj);
+
+				createActionLog(PayratedtoObj.getPaydate(), PayratedtoObj.getPaytime(), UnionAppConstants.create,
+						PayratedtoObj.getCreator(), PayratedtoObj.getDetail(), UnionAppConstants.payrate,
+						PayratedtoObj.getSubject());
 
 			}
 
@@ -1443,6 +1454,10 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						payratedao.update(PayrateBOObj);
+
+						createActionLog(PayratedtoObj.getPaydate(), PayratedtoObj.getPaytime(),
+								UnionAppConstants.update, PayratedtoObj.getCreator(), PayratedtoObj.getDetail(),
+								UnionAppConstants.payrate, PayratedtoObj.getSubject());
 					}
 				}
 
@@ -1487,6 +1502,9 @@ public class RepositoryDelegator {
 				populateCreateAmrBO(AmrdtoObj, AmrBOObj);
 				amrdao.createAmr(AmrBOObj);
 				populateAmrDTO(AmrdtoObj, AmrBOObj);
+
+				createActionLog(AmrdtoObj.getAmrdate(), AmrdtoObj.getAmrtime(), UnionAppConstants.create,
+						AmrdtoObj.getCreator(), AmrdtoObj.getDetail(), UnionAppConstants.amr, AmrdtoObj.getSubject());
 
 			}
 
@@ -1618,6 +1636,10 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						amrdao.update(AmrBOObj);
+
+						createActionLog(AmrdtoObj.getAmrdate(), AmrdtoObj.getAmrtime(), UnionAppConstants.update,
+								AmrdtoObj.getCreator(), AmrdtoObj.getDetail(), UnionAppConstants.amr,
+								AmrdtoObj.getSubject());
 					}
 				}
 
@@ -1662,6 +1684,10 @@ public class RepositoryDelegator {
 				populateCreateAgreementBO(AgreementdtoObj, AgreementBOObj);
 				agreementdao.createAgreement(AgreementBOObj);
 				populateAgreementDTO(AgreementdtoObj, AgreementBOObj);
+
+				createActionLog(AgreementdtoObj.getArmdate(), AgreementdtoObj.getArmtime(), UnionAppConstants.create,
+						AgreementdtoObj.getCreator(), AgreementdtoObj.getDetail(), UnionAppConstants.agreement,
+						AgreementdtoObj.getSubject());
 
 			}
 
@@ -1822,6 +1848,10 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						agreementdao.update(AgreementBOObj);
+
+						createActionLog(AgreementdtoObj.getArmdate(), AgreementdtoObj.getArmtime(),
+								UnionAppConstants.update, AgreementdtoObj.getCreator(), AgreementdtoObj.getDetail(),
+								UnionAppConstants.agreement, AgreementdtoObj.getSubject());
 					}
 				}
 
@@ -1866,6 +1896,10 @@ public class RepositoryDelegator {
 				populateCreateSummaryBO(SummarydtoObj, SummaryBOObj);
 				summarydao.createSummary(SummaryBOObj);
 				populateSummaryDTO(SummarydtoObj, SummaryBOObj);
+
+				createActionLog(SummarydtoObj.getSumdate(), SummarydtoObj.getSumtime(), UnionAppConstants.create,
+						SummarydtoObj.getCreator(), SummarydtoObj.getDetail(), UnionAppConstants.summary,
+						SummarydtoObj.getSubject());
 
 			}
 
@@ -1998,6 +2032,10 @@ public class RepositoryDelegator {
 
 						// merge this UpdateBO back in DB
 						summarydao.update(SummaryBOObj);
+
+						createActionLog(SummarydtoObj.getSumdate(), SummarydtoObj.getSumtime(),
+								UnionAppConstants.update, SummarydtoObj.getCreator(), SummarydtoObj.getDetail(),
+								UnionAppConstants.summary, SummarydtoObj.getSubject());
 					}
 				}
 
@@ -2043,6 +2081,10 @@ public class RepositoryDelegator {
 				populateCreateSuggestionIdeaBO(suggestionIdeadtoObj, suggestionIdeaBOObj);
 				suggestionIdeadao.createSuggestionIdea(suggestionIdeaBOObj);
 				populateSuggestionIdeaDTO(suggestionIdeadtoObj, suggestionIdeaBOObj);
+
+				createActionLog(suggestionIdeadtoObj.getSuggideadate(), suggestionIdeadtoObj.getSuggideatime(),
+						UnionAppConstants.create, suggestionIdeadtoObj.getCreator(), suggestionIdeadtoObj.getDetail(),
+						UnionAppConstants.suggestionidea, suggestionIdeadtoObj.getSubject());
 
 			}
 
@@ -2183,6 +2225,12 @@ public class RepositoryDelegator {
 								suggestionIdeadtoObj.getSuggideadate() + " " + suggestionIdeadtoObj.getSuggideatime()));
 						// merge this UpdateBO back in DB
 						suggestionIdeadao.update(suggestionIdeaBOObj);
+
+						createActionLog(suggestionIdeadtoObj.getSuggideadate(), suggestionIdeadtoObj.getSuggideatime(),
+								UnionAppConstants.update, suggestionIdeadtoObj.getCreator(),
+								suggestionIdeadtoObj.getDetail(), UnionAppConstants.suggestionidea,
+								suggestionIdeadtoObj.getSubject());
+
 					}
 				}
 
@@ -2311,6 +2359,9 @@ public class RepositoryDelegator {
 				surveydao.createSurvey(surveyBOObj);
 				populateSurveyDTO(surveydtoObj, surveyBOObj);
 				surveydtoObj.setQuestiondtoLs(null);
+
+				createActionLog(null, null, UnionAppConstants.create, surveydtoObj.getCreator(),
+						surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
 
 			}
 
@@ -2543,6 +2594,9 @@ public class RepositoryDelegator {
 
 					// merge this UpdateBO back in DB
 					surveydao.update(surveyBOObj);
+
+					createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
+							surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
 				}
 			}
 
@@ -3593,8 +3647,10 @@ public class RepositoryDelegator {
 			actionlogBOObj.setDetail(actionlogdtoObj.getDetail());
 			actionlogBOObj.setModule(actionlogdtoObj.getModule());
 			actionlogBOObj.setSubject(actionlogdtoObj.getSubject());
-			actionlogBOObj
-					.setActdate(dateformatter.parse(actionlogdtoObj.getActdate() + " " + actionlogdtoObj.getActtime()));
+			if (null != actionlogdtoObj.getActdate() && null != actionlogdtoObj.getActtime()) {
+				actionlogBOObj.setActdate(
+						dateformatter.parse(actionlogdtoObj.getActdate() + " " + actionlogdtoObj.getActtime()));
+			}
 
 		} catch (ParseException e) {
 			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
@@ -3609,10 +3665,17 @@ public class RepositoryDelegator {
 
 		SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
 
-		actionlogdtoObj.setActdate(dateformatter.format(actionlogBOObj.getActdate()));
+		if (null != actionlogBOObj.getActdate()) {
+			actionlogdtoObj.setActdate(dateformatter.format(actionlogBOObj.getActdate()));
+		}
+
 		actionlogdtoObj.setAction(actionlogBOObj.getAction());
 		/* actionlogdtoObj.setActionid(actionlogBOObj.getActionid()); */
-		actionlogdtoObj.setActtime(timeformatter.format(actionlogBOObj.getActdate()));
+		if (null != actionlogBOObj.getActdate()) {
+
+			actionlogdtoObj.setActtime(timeformatter.format(actionlogBOObj.getActdate()));
+		}
+
 		actionlogdtoObj.setCreator(actionlogBOObj.getCreator());
 		actionlogdtoObj.setDetail(actionlogBOObj.getCreator());
 		actionlogdtoObj.setModule(actionlogBOObj.getCreator());
