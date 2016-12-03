@@ -2758,7 +2758,7 @@ public class RepositoryDelegator {
 		if (null != newsLetterBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(newsLetterBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(newsLetterBOObj.getAttachmentstatus())) {
-			if (attachmentType.equalsIgnoreCase("document")) {
+			if (attachmentType.equalsIgnoreCase("image")) {
 
 				if (null != newsLetterBOObj.getImgattachment()) {
 
@@ -2773,7 +2773,7 @@ public class RepositoryDelegator {
 
 				}
 
-			} else if (attachmentType.equalsIgnoreCase("image")) {
+			} else if (attachmentType.equalsIgnoreCase("document")) {
 
 				if (null != newsLetterBOObj.getDocattachment()) {
 
