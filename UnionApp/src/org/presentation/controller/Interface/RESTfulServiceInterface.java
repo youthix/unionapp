@@ -22,7 +22,9 @@ public interface RESTfulServiceInterface {
 	ResponseObj register(RequestObj reqparam);
 
 	ResponseObj fetch(RequestObj reqparam);
-
+	
+	ResponseObj fetchAllUser(RequestObj reqparam);
+	
 	ResponseObj update(RequestObj reqparam);
 
 	ResponseObj updateuserprofile(RequestObj reqparam);

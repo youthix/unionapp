@@ -126,6 +126,25 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj fetchAllUser(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		UserList userListObj;
+
+		if (null != reqparam.getCriteria()) {
+
+			responseObj = repositoryDelegator.fetchAllUser(reqparam);
+
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
 
 	public ResponseObj update(RequestObj reqparam) {
 

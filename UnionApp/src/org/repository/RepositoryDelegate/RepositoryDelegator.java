@@ -265,6 +265,42 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	public ResponseObj fetchAllUser(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		Criteria criteriaObj = reqparam.getCriteria();
+
+		System.out.println("InRDFetch");
+
+		UserList userListObj = new UserList();
+		ArrayList<User> userDTOList = new ArrayList<User>();
+
+		ArrayList<UserBO> userBOList;
+
+		userBOList = userdao.fetchAllUser(criteriaObj);
+
+		if (null != userBOList && userBOList.size() > 0) {
+
+			Iterator<UserBO> litr = userBOList.iterator();
+
+			while (litr.hasNext()) {
+				User userDTOObj = new User();
+				populateUserDTO(userDTOObj, litr.next());
+				userDTOList.add(userDTOObj);
+
+			}
+
+			userListObj.setUl(userDTOList);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			throw serviceExceptionObj;
+		}
+
+		responseObj.setUserListObj(userListObj);
+		return responseObj;
+	}
+
 	public UserBO fetchUserBO(UserList userListObj) {
 		System.out.println("InRDLogin");
 
@@ -391,17 +427,52 @@ public class RepositoryDelegator {
 				userBOObj = userBOList.get(0);
 
 				// update the meetingBO fetched from DB
+				if (null != userdtoObj.getAdd()) {
+					userBOObj.setAdd(userdtoObj.getAdd());
 
-				userBOObj.setAdd(userdtoObj.getAdd());
-				userBOObj.setAge(userdtoObj.getAge());
-				userBOObj.setCity(userdtoObj.getCity());
-				userBOObj.setConNu(userdtoObj.getConNu());
-				userBOObj.setFn(userdtoObj.getFn());
-				userBOObj.setGen(userdtoObj.getGen());
-				userBOObj.setLn(userdtoObj.getLn());
-				userBOObj.setZipcode(userdtoObj.getZipcode());
-				userBOObj.setCategory(userdtoObj.getCategory());
-				userBOObj.setTitle(userdtoObj.getTitle());
+				}
+
+				if (null != userdtoObj.getAge()) {
+
+					userBOObj.setAge(userdtoObj.getAge());
+
+				}
+
+				if (null != userdtoObj.getCity()) {
+					userBOObj.setCity(userdtoObj.getCity());
+				}
+
+				if (null != userdtoObj.getConNu()) {
+					userBOObj.setConNu(userdtoObj.getConNu());
+				}
+
+				if (null != userdtoObj.getFn()) {
+					userBOObj.setFn(userdtoObj.getFn());
+				}
+
+				if (null != userdtoObj.getGen()) {
+					userBOObj.setGen(userdtoObj.getGen());
+				}
+
+				if (null != userdtoObj.getLn()) {
+					userBOObj.setLn(userdtoObj.getLn());
+				}
+				if (null != userdtoObj.getZipcode()) {
+					userBOObj.setZipcode(userdtoObj.getZipcode());
+				}
+
+				if (null != userdtoObj.getCategory()) {
+					userBOObj.setCategory(userdtoObj.getCategory());
+				}
+				if (null != userdtoObj.getTitle()) {
+					userBOObj.setTitle(userdtoObj.getTitle());
+				}
+				if (null != userdtoObj.getRole()) {
+					userBOObj.setRole(userdtoObj.getRole());
+				}
+				if (null != userdtoObj.getStatus()) {
+					userBOObj.setStatus(userdtoObj.getStatus());
+				}
 
 				// merge this UpdateBO back in DB
 				userdao.update(userBOObj);
