@@ -121,5 +121,9 @@ public interface RESTfulServiceInterface {
 	ResponseObj fetchSurveyById(String surveyid, String userid);
 	
 	ResponseObj fetchActionLog(RequestObj reqparam);
+	
+	ResponseObj fetchSpaceInfo(RequestObj reqparam);
+	
+	ResponseObj fetchVisitorInfo(RequestObj reqparam);
 
 }

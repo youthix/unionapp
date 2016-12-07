@@ -10,9 +10,11 @@ import org.presentation.dto.feature.CategoryList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
 import org.presentation.dto.feature.PayrateList;
+import org.presentation.dto.feature.SpaceInfoDTO;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.feature.SurveyList;
+import org.presentation.dto.feature.VisitorInfoList;
 import org.presentation.dto.user.UserList;
 
 @XmlRootElement(name = "resparam")
@@ -41,6 +43,10 @@ public class ResponseObj {
 
 	private SurveyList SurveyListObj;
 	private ActionLogList ActionLogListObj;
+
+	private SpaceInfoDTO spaceInfoDTOObj;
+	
+	private VisitorInfoList visitorInfoListObj;
 
 	private String totalPage;
 
@@ -157,5 +163,23 @@ public class ResponseObj {
 	public void setActionLogListObj(ActionLogList actionLogListObj) {
 		ActionLogListObj = actionLogListObj;
 	}
+
+	public SpaceInfoDTO getSpaceInfoDTOObj() {
+		return spaceInfoDTOObj;
+	}
+
+	public void setSpaceInfoDTOObj(SpaceInfoDTO spaceInfoDTOObj) {
+		this.spaceInfoDTOObj = spaceInfoDTOObj;
+	}
+
+	public VisitorInfoList getVisitorInfoListObj() {
+		return visitorInfoListObj;
+	}
+
+	public void setVisitorInfoListObj(VisitorInfoList visitorInfoListObj) {
+		this.visitorInfoListObj = visitorInfoListObj;
+	}
+	
+	
 
 }

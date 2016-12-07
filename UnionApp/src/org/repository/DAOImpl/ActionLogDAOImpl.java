@@ -35,7 +35,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 		try {
 
-			String SQL = "select u from " + ActionLogBO.class.getName() + " u order by m.actdate asc";
+			String SQL = "select u from " + ActionLogBO.class.getName() + " u order by u.actdate desc";
 			actionLogBOList = (ArrayList<ActionLogBO>) manager.createQuery(SQL).getResultList();
 
 			System.out.println("DoneDAOFetchUser");

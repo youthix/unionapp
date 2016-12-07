@@ -3748,8 +3748,8 @@ public class RepositoryDelegator {
 		}
 
 		actionlogdtoObj.setCreator(actionlogBOObj.getCreator());
-		actionlogdtoObj.setDetail(actionlogBOObj.getCreator());
-		actionlogdtoObj.setModule(actionlogBOObj.getCreator());
+		actionlogdtoObj.setDetail(actionlogBOObj.getDetail());
+		actionlogdtoObj.setModule(actionlogBOObj.getModule());
 		actionlogdtoObj.setSubject(actionlogBOObj.getSubject());
 
 	}
