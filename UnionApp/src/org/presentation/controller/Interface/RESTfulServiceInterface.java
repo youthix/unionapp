@@ -125,5 +125,7 @@ public interface RESTfulServiceInterface {
 	ResponseObj fetchSpaceInfo(RequestObj reqparam);
 	
 	ResponseObj fetchVisitorInfo(RequestObj reqparam);
+	
+	String testMail();
 
 }

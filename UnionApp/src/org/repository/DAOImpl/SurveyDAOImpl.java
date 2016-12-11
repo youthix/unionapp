@@ -107,8 +107,10 @@ public class SurveyDAOImpl implements ISurveyDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
+/*				String SQL = "select m from " + SurveyBO.class.getName()
+						+ " m where status not in ('delete') order by m.surveyid asc ";*/
 				String SQL = "select m from " + SurveyBO.class.getName()
-						+ " m where status not in ('delete') order by m.surveyid asc ";
+						+ " m order by m.surveyid asc ";				
 				surveyBOList = (ArrayList<SurveyBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
