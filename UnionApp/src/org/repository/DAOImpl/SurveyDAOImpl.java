@@ -174,7 +174,7 @@ public class SurveyDAOImpl implements ISurveyDAO {
 							}
 
 						} else {
-							searchCriteria = "'" + criteriaObj.getFetchAgreementCriteriaObj().getValue() + "'";
+							searchCriteria = "'" + criteriaObj.getFetchSurveyCriteriaObj().getValue() + "'";
 						}
 
 						SQL = "select m from " + SurveyBO.class.getName() + " m where "
