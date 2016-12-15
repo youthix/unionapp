@@ -2,7 +2,16 @@ package org.service.delegateService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResStatus;
@@ -266,13 +275,27 @@ public class ServiceDelegator {
 					// Reset the Pwd
 					String newPwd = generatepwd();
 					userListObj.getUl().get(0).setPwd(newPwd);
-					userListObj.getUl().get(0).setNewpwd(newPwd);
+					// userListObj.getUl().get(0).setNewpwd(newPwd);
 					Criteria criteriaObj = new Criteria();
 					criteriaObj.setCriteria("TRUE");
 					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
 					updateUserCriteriaObj.setName("pwd");
 					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 					repositoryDelegator.update(userListObj, criteriaObj);
+
+					String USER_NAME = "UNIONAPP.com";
+					String PASSWORD = "XYZ123";
+					String RECIPIENT = userObj.getUsNa();
+
+					String from = USER_NAME;
+					String pass = PASSWORD;
+					String[] to = { RECIPIENT };
+
+					String subject = "New Password";
+					String body = newPwd;
+
+					sendMail(from, pass, to, subject, body);
+
 					setResponse(responseObj);
 					responseObj.setUserListObj(userListObj);
 				}
@@ -923,6 +946,7 @@ public class ServiceDelegator {
 		if (null != surveyid && null != userid) {
 
 			responseObj = repositoryDelegator.fetchSurveyById(surveyid, userid);
+			setResponse(responseObj);
 
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
@@ -1063,11 +1087,11 @@ public class ServiceDelegator {
 		VisitorInfoDTO visitorInfoDTOObj5 = new VisitorInfoDTO();
 		visitorInfoDTOObj5.setCount("70");
 		visitorInfoDTOObj5.setDate("fri");
-		
+
 		VisitorInfoDTO visitorInfoDTOObj6 = new VisitorInfoDTO();
 		visitorInfoDTOObj6.setCount("20");
 		visitorInfoDTOObj6.setDate("sat");
-		
+
 		VisitorInfoDTO visitorInfoDTOObj7 = new VisitorInfoDTO();
 		visitorInfoDTOObj7.setCount("90");
 		visitorInfoDTOObj7.setDate("sun");
@@ -1098,6 +1122,55 @@ public class ServiceDelegator {
 		 */
 
 		return responseObj;
+	}
+
+	public void sendMail(String from, String pass, String[] to, String subject, String body) {
+		Properties props = System.getProperties();
+		/*
+		 * String host = "smtp.gmail.com";
+		 * props.put("mail.smtp.starttls.enable", "true");
+		 * props.put("mail.smtp.host", host); props.put("mail.smtp.user", from);
+		 * props.put("mail.smtp.password", pass); props.put("mail.smtp.port",
+		 * "587"); props.put("mail.smtp.auth", "true");
+		 */
+
+		String host = "localhost";
+		/* props.put("mail.smtp.starttls.enable", "true"); */
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.user", from);
+		/* props.put("mail.smtp.password", pass); */
+		props.put("mail.smtp.port", "25");
+		/* props.put("mail.smtp.auth", "true"); */
+
+		Session session = Session.getDefaultInstance(props);
+		MimeMessage message = new MimeMessage(session);
+
+		try {
+			message.setFrom(new InternetAddress(from));
+			InternetAddress[] toAddress = new InternetAddress[to.length];
+
+			// To get the array of addresses
+			for (int i = 0; i < to.length; i++) {
+				toAddress[i] = new InternetAddress(to[i]);
+			}
+
+			for (int i = 0; i < toAddress.length; i++) {
+				message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+			}
+
+			message.setSubject(subject);
+			message.setText(body);
+			Transport transport = session.getTransport("smtp");
+			transport.connect(host, from, pass);
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+		} catch (AddressException ae) {
+			ae.printStackTrace();
+		} catch (MessagingException me) {
+			me.printStackTrace();
+		}
+		System.out.println("Mail Sent");
 	}
 
 	public void hello() {

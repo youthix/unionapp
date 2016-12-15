@@ -2540,6 +2540,8 @@ public class RepositoryDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 
+		String channel = reqparam.getChannel();
+
 		Gson gson = new Gson();
 
 		SurveyList surveyListObj = reqparam.getSurveyListObj();
@@ -2575,7 +2577,7 @@ public class RepositoryDelegator {
 				surveyBOObj = surveyBOList.get(0);
 				if (surveydtoObj.getStatus() != null && surveydtoObj.getStatus().equalsIgnoreCase("Delete")) {
 					surveydao.deleteOnCriteria(surveyBOObj, null);
-				} else {
+				} else if (null != channel && "app".equalsIgnoreCase(channel)) {
 
 					String surveyBOJson = surveyBOObj.getSurveyjson();
 					// String json = gson.toJson(surveyDTOObj1);
@@ -2663,12 +2665,15 @@ public class RepositoryDelegator {
 					String json = gson.toJson(surveyBO_DTOObj);
 					surveyBOObj.setSurveyjson(json);
 
-					// merge this UpdateBO back in DB
-					surveydao.update(surveyBOObj);
-
-					createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
-							surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
+				} else {
+					populateCreateSurveyBO(surveydtoObj, surveyBOObj);
 				}
+
+				// merge this UpdateBO back in DB
+				surveydao.update(surveyBOObj);
+
+				createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
+						surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
 			}
 
 			else {
@@ -3688,9 +3693,25 @@ public class RepositoryDelegator {
 	private void populateCreateSurveyBO(SurveyDTO surveydtoObj, SurveyBO surveyBOObj) {
 
 		Gson gson = new Gson();
+		if (null == surveydtoObj.getResponsecount() || surveydtoObj.getResponsecount().equalsIgnoreCase("") ) {
+			surveydtoObj.setResponsecount("0");
+		}
+		if (null == surveydtoObj.getTotalusercount() || surveydtoObj.getTotalusercount().equalsIgnoreCase("")) {
+			surveydtoObj.setTotalusercount("0");
+		}
+		if (null == surveydtoObj.getUserresponsestatus() || surveydtoObj.getUserresponsestatus().equalsIgnoreCase("")) {
+			surveydtoObj.setUserresponsestatus("false");
+		}
+
+		if (null == surveydtoObj.getStatus() || surveydtoObj.getStatus().equalsIgnoreCase("")) {
+			surveydtoObj.setStatus("false");
+		}
+
 		String json = gson.toJson(surveydtoObj);
 		System.out.println(json);
 		surveyBOObj.setSurveyjson(json);
+
+		surveyBOObj.setStatus(surveydtoObj.getStatus());
 
 	}
 

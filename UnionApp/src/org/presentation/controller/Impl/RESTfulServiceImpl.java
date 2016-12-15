@@ -152,7 +152,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/fetchalluser")
@@ -178,7 +178,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
+	}
 
 	@Override
 	@POST
@@ -1193,12 +1193,12 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			 */
 
 			filePath = new File(fileLocation);
-			
-			if(featureType.equalsIgnoreCase("profile")){
+
+			if (featureType.equalsIgnoreCase("profile")) {
 				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
 						attachmentType);
 			}
-			
+
 			else if (!filePath.exists()) {
 
 				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
@@ -1210,7 +1210,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				resStatus.setMsg("SUCCESS");
 				responseObj.setResStatus(resStatus);
 			}
-			
+
 			FileOutputStream out = new FileOutputStream(new File(fileLocation));
 			int read = 0;
 			byte[] bytes = new byte[1024];
@@ -1222,8 +1222,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			out.close();
 
 			// Update the DB Attachment Status
-
-
 
 		} catch (Exception exceptionObj) {
 			return ServiceExceptionMapper.toResponse(exceptionObj);
@@ -1504,7 +1502,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/fetchactionlog")
@@ -1530,8 +1528,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
-	
+	}
+
 	@Override
 	@POST
 	@Path("/fetchspaceinfo")
@@ -1557,8 +1555,8 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
-	
+	}
+
 	@Override
 	@POST
 	@Path("/fetchvisitorinfo")
@@ -1585,7 +1583,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/testmail")
@@ -1593,78 +1591,26 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public String testMail() {
 
-/*	      String USER_NAME = "inbox.saurabh@gmail.com";  // GMail user name (just the part before "@gmail.com")
-	      String PASSWORD = "dec_2482"; // GMail password
-*/	      
-		String USER_NAME = "inbox.saurabh@gmail.com";  // GMail user name (just the part before "@gmail.com")
-	    String PASSWORD = "dec_2482"; // GMail password
+		/*
+		 * String USER_NAME = "inbox.saurabh@gmail.com"; // GMail user name
+		 * (just the part before "@gmail.com") String PASSWORD = "dec_2482"; //
+		 * GMail password
+		 */
+		String USER_NAME = "TestMail"; // GMail user name (just
+										// the part before
+										// "@gmail.com")
+		String PASSWORD = "XYZ123"; // GMail password
 		String RECIPIENT = "code6play@gmail.com";
 
+		String from = USER_NAME;
+		String pass = PASSWORD;
+		String[] to = { RECIPIENT }; // list of recipient email addresses
+		String subject = "Java send mail example";
+		String body = "Welcome to JavaMail!";
 
-	        String from = USER_NAME;
-	        String pass = PASSWORD;
-	        String[] to = { RECIPIENT }; // list of recipient email addresses
-	        String subject = "Java send mail example";
-	        String body = "Welcome to JavaMail!";
-
-	        sendFromGMail(from, pass, to, subject, body);
-	        return "success";
-	    }
-
-	    private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
-	        Properties props = System.getProperties();
-/*	        String host = "smtp.gmail.com";
-	        props.put("mail.smtp.starttls.enable", "true");
-	        props.put("mail.smtp.host", host);
-	        props.put("mail.smtp.user", from);
-	        props.put("mail.smtp.password", pass);
-	        props.put("mail.smtp.port", "587");
-	        props.put("mail.smtp.auth", "true");*/
-	        
-	        String host = "localhost";
-	        /*props.put("mail.smtp.starttls.enable", "true");*/
-	        props.put("mail.transport.protocol", "smtp");
-	        props.put("mail.smtp.host", host);
-	        props.put("mail.smtp.user", from);
-	        /*props.put("mail.smtp.password", pass);*/
-	        props.put("mail.smtp.port", "25");
-	        /*props.put("mail.smtp.auth", "true");*/	        
-	        
-
-	        Session session = Session.getDefaultInstance(props);
-	        MimeMessage message = new MimeMessage(session);
-
-	        try {
-	            message.setFrom(new InternetAddress(from));
-	            InternetAddress[] toAddress = new InternetAddress[to.length];
-
-	            // To get the array of addresses
-	            for( int i = 0; i < to.length; i++ ) {
-	                toAddress[i] = new InternetAddress(to[i]);
-	            }
-
-	            for( int i = 0; i < toAddress.length; i++) {
-	                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-	            }
-
-	            message.setSubject(subject);
-	            message.setText(body);
-	            Transport transport = session.getTransport("smtp");
-	            transport.connect(host, from, pass);
-	            transport.sendMessage(message, message.getAllRecipients());
-	            transport.close();
-	        }
-	        catch (AddressException ae) {
-	            ae.printStackTrace();
-	        }
-	        catch (MessagingException me) {
-	            me.printStackTrace();
-	        }
-	        System.out.println("Mail Sent");
-	    }		
-
-
-	
+		serviceDelegator.sendMail(from, pass, to, subject, body);
+		return "success";
+	}
 
 	public ServiceDelegator getServiceDelegator() {
 		return serviceDelegator;
