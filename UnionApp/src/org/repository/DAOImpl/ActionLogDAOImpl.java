@@ -1,5 +1,6 @@
 package org.repository.DAOImpl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
@@ -8,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActionLogDAO;
 import org.repository.entity.ActionLogBO;
-import org.repository.entity.MeetingBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,5 +61,26 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 	public void setManager(EntityManager manager) {
 		this.manager = manager;
+	}
+
+	@Override
+	public BigDecimal fetchDbSize(String dbName) {
+
+		System.out.println("In fetchDbSize");
+		BigDecimal size=null;
+		
+		try {
+
+			size = (BigDecimal)manager
+				      .createNativeQuery("call fetchDbSize()")
+				      .getSingleResult();
+
+			System.out.println("Done fetchDbSize>>"+size);
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+		return size;
 	}
 }

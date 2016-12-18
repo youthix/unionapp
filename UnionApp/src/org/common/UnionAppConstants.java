@@ -15,4 +15,8 @@ public interface UnionAppConstants {
 	final String survey = "survey";
 	final String create = "create";
 	final String update = "update";
+	final String totalSpaceAllocated="50";
+	final String miscSpaceUsed="10";
+	final String spaceUnit="mb";
+	final String dbName="Unionapp";
 }

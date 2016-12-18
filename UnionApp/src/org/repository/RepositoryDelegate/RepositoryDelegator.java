@@ -1,9 +1,19 @@
 package org.repository.RepositoryDelegate;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.common.UnionAppConstants;
 import org.presentation.dto.RequestObj;
@@ -2697,6 +2707,52 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	public BigDecimal fetchUsedSpace(){
+		BigDecimal dbSize=actionlogdao.fetchDbSize(UnionAppConstants.dbName);
+		String path = UnionAppConstants.serverAbsPath;
+		FileSystem fs = FileSystems.getDefault();
+		Path path1 = fs.getPath(path);			
+		long usedFileSystemSize=RepositoryDelegator.size(path1);
+		return dbSize.add(new BigDecimal(usedFileSystemSize));
+	}
+	
+	public static long size(Path path) {
+
+	    final AtomicLong size = new AtomicLong(0);
+
+	    try {
+	        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+	            @Override
+	            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+
+	                size.addAndGet(attrs.size());
+	                return FileVisitResult.CONTINUE;
+	            }
+
+	            @Override
+	            public FileVisitResult visitFileFailed(Path file, IOException exc) {
+
+	                System.out.println("skipped: " + file + " (" + exc + ")");
+	                // Skip folders that can't be traversed
+	                return FileVisitResult.CONTINUE;
+	            }
+
+	            @Override
+	            public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
+
+	                if (exc != null)
+	                    System.out.println("had trouble traversing: " + dir + " (" + exc + ")");
+	                // Ignore errors traversing a folder
+	                return FileVisitResult.CONTINUE;
+	            }
+	        });
+	    } catch (IOException e) {
+	        throw new AssertionError("walkFileTree will not throw IOException if the FileVisitor does not");
+	    }
+
+	    return size.get();
+	}
+	
 	public ResponseObj fetchActionLog(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -2705,7 +2761,7 @@ public class RepositoryDelegator {
 
 		ArrayList<ActionLogBO> actionLogBOList;
 
-		actionLogBOList = actionlogdao.fetchActionLog();
+		actionLogBOList = actionlogdao.fetchActionLog();		
 
 		if (null != actionLogBOList && actionLogBOList.size() > 0) {
 

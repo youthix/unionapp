@@ -1,5 +1,6 @@
 package org.service.delegateService;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -13,6 +14,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.common.UnionAppConstants;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
@@ -1036,27 +1038,15 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 		SpaceInfoDTO spaceInfoDTOObj = new SpaceInfoDTO();
-
-		spaceInfoDTOObj.setUnit("mb");
-		spaceInfoDTOObj.setTotalspace("50");
-		spaceInfoDTOObj.setRemspace("40");
-		spaceInfoDTOObj.setUsedspace("10");
-
-		/* CategoryList categoryListObj; */
-
-		/*
-		 * if (null != reqparam.getCriteria()) {
-		 */
-		// categoryListObj =
-		// repositoryDelegator.fetchcategory(reqparam.getCriteria());
-
+		spaceInfoDTOObj.setUnit(UnionAppConstants.spaceUnit);
+		spaceInfoDTOObj.setTotalspace(UnionAppConstants.totalSpaceAllocated);
+		BigDecimal usedSpace=repositoryDelegator.fetchUsedSpace().add(new BigDecimal(UnionAppConstants.miscSpaceUsed));
+		BigDecimal remSpace=(new BigDecimal(UnionAppConstants.totalSpaceAllocated)).
+							subtract(usedSpace);
+		spaceInfoDTOObj.setRemspace(String.valueOf(remSpace.ROUND_UP));
+		spaceInfoDTOObj.setUsedspace(String.valueOf(usedSpace.ROUND_UP));		
 		responseObj.setSpaceInfoDTOObj(spaceInfoDTOObj);
 		setResponse(responseObj);
-		/*
-		 * } else { ServiceException serviceExceptionObj = new ServiceException(
-		 * "Fetch Criteria is NULL"); throw serviceExceptionObj; }
-		 */
-
 		return responseObj;
 	}
 
