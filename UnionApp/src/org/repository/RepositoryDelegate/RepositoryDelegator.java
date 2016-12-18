@@ -2709,10 +2709,12 @@ public class RepositoryDelegator {
 
 	public BigDecimal fetchUsedSpace(){
 		BigDecimal dbSize=actionlogdao.fetchDbSize(UnionAppConstants.dbName);
+		dbSize=(null==dbSize)?new BigDecimal(0):dbSize;
 		String path = UnionAppConstants.serverAbsPath;
 		FileSystem fs = FileSystems.getDefault();
 		Path path1 = fs.getPath(path);			
-		long usedFileSystemSize=RepositoryDelegator.size(path1);
+		long usedFileSystemSize=RepositoryDelegator.size(path1)/1024/1024;
+		System.out.println("used file ystem length>>>"+usedFileSystemSize);
 		return dbSize.add(new BigDecimal(usedFileSystemSize));
 	}
 	

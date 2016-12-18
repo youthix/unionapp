@@ -1040,11 +1040,10 @@ public class ServiceDelegator {
 		SpaceInfoDTO spaceInfoDTOObj = new SpaceInfoDTO();
 		spaceInfoDTOObj.setUnit(UnionAppConstants.spaceUnit);
 		spaceInfoDTOObj.setTotalspace(UnionAppConstants.totalSpaceAllocated);
-		BigDecimal usedSpace=repositoryDelegator.fetchUsedSpace().add(new BigDecimal(UnionAppConstants.miscSpaceUsed));
-		BigDecimal remSpace=(new BigDecimal(UnionAppConstants.totalSpaceAllocated)).
-							subtract(usedSpace);
-		spaceInfoDTOObj.setRemspace(String.valueOf(remSpace.ROUND_UP));
-		spaceInfoDTOObj.setUsedspace(String.valueOf(usedSpace.ROUND_UP));		
+		int usedSpace=repositoryDelegator.fetchUsedSpace().add(new BigDecimal(UnionAppConstants.miscSpaceUsed)).intValue();
+		int remSpace=new Integer(UnionAppConstants.totalSpaceAllocated)-usedSpace;		
+		spaceInfoDTOObj.setRemspace(String.valueOf(remSpace));
+		spaceInfoDTOObj.setUsedspace(String.valueOf(usedSpace));		
 		responseObj.setSpaceInfoDTOObj(spaceInfoDTOObj);
 		setResponse(responseObj);
 		return responseObj;
