@@ -8,18 +8,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ActiveUserDTO {
 		
 	private String usname;	
-	private Date activedate;	
+	private String activedate;	
 	private String activetime;
 	public String getUsname() {
 		return usname;
 	}
 	public void setUsname(String usname) {
 		this.usname = usname;
-	}
-	public Date getActivedate() {
+	}	
+	public String getActivedate() {
 		return activedate;
 	}
-	public void setActivedate(Date activedate) {
+	public void setActivedate(String activedate) {
 		this.activedate = activedate;
 	}
 	public String getActivetime() {

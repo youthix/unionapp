@@ -15,7 +15,6 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "actionlogdetail")
 public class ActionLogBO implements Serializable {
-
 	/**
 	 * 
 	 */
