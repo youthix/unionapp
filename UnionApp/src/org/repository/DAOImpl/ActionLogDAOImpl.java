@@ -1,6 +1,7 @@
 package org.repository.DAOImpl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -68,9 +69,10 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 		ArrayList<ActiveUserBO> activeUserBOList = null;
 
 		try {
+			SimpleDateFormat dateformatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			String SQL = "select u from " + ActiveUserBO.class.getName() + " u where usname='"+a.getUsname()
-								+"' and activedate='"+a.getActivedate()+"'";
+								+"' and activedate='"+dateformatter.format(a.getActivedate())+"'";
 
 			activeUserBOList = (ArrayList<ActiveUserBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 					.setMaxResults(pageSize) // limit
