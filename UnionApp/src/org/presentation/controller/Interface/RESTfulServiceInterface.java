@@ -126,6 +126,8 @@ public interface RESTfulServiceInterface {
 	
 	ResponseObj fetchVisitorInfo(RequestObj reqparam);
 	
+	ResponseObj setActiveUser(RequestObj reqparam);
+	
 	String testMail();
 
 }

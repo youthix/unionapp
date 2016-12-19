@@ -20,6 +20,7 @@ import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
+import org.presentation.dto.feature.ActiveUserList;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
@@ -1205,4 +1206,24 @@ public class ServiceDelegator {
 		resStatus.setMsg("SUCCESS");
 		responseObj.setResStatus(resStatus);
 	}
+	
+	public ResponseObj setActiveUser(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		ActiveUserList activeUserListObj = reqparam.getActiveUserListObj();
+
+		if (null != activeUserListObj) {
+
+			repositoryDelegator.setActiveUser(activeUserListObj);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException("ActiveUserList is NULL");
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	
 }

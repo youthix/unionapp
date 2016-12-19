@@ -31,7 +31,7 @@ public class ActiveUserBO implements Serializable{
 	private Date activedate;
 	
 	@Column(name = "activedatetime")
-	private String activedatetime;
+	private Date activedatetime;
 
 	public Integer getAudid() {
 		return audid;
@@ -57,12 +57,13 @@ public class ActiveUserBO implements Serializable{
 		this.activedate = activedate;
 	}
 
-	public String getActivedatetime() {
+	public Date getActivedatetime() {
 		return activedatetime;
 	}
 
-	public void setActivedatetime(String activedatetime) {
+	public void setActivedatetime(Date activedatetime) {
 		this.activedatetime = activedatetime;
 	}
+
 	
 }

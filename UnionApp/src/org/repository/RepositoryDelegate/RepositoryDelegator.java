@@ -34,6 +34,8 @@ import org.presentation.dto.criteria.UpdateMeetingCriteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActionLogDTO;
 import org.presentation.dto.feature.ActionLogList;
+import org.presentation.dto.feature.ActiveUserDTO;
+import org.presentation.dto.feature.ActiveUserList;
 import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementDTO;
@@ -74,6 +76,7 @@ import org.repository.DAOInterface.ISummaryDAO;
 import org.repository.DAOInterface.ISurveyDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActionLogBO;
+import org.repository.entity.ActiveUserBO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.AgreementBO;
 import org.repository.entity.AmrBO;
@@ -3809,6 +3812,31 @@ public class RepositoryDelegator {
 
 	}
 
+	
+	private void populateActiveUserBO(ActiveUserDTO activeUserDTOObj, ActiveUserBO activeUserBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
+
+		try {
+
+			activeUserBOObj.setUsname(activeUserDTOObj.getUsname());
+			
+			if (null != activeUserDTOObj.getActivedate() && null != activeUserDTOObj.getActivetime()) {
+				activeUserBOObj.setActivedate(
+						dateformatter.parse(activeUserDTOObj.getActivedate() + " 00:00:00"));
+				activeUserBOObj.setActivedatetime(
+						dateformatter.parse(activeUserDTOObj.getActivedate() + " " + activeUserDTOObj.getActivetime()));
+			}
+
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
 	private void populateActionLogDTO(ActionLogDTO actionlogdtoObj, ActionLogBO actionlogBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -3831,6 +3859,19 @@ public class RepositoryDelegator {
 		actionlogdtoObj.setModule(actionlogBOObj.getModule());
 		actionlogdtoObj.setSubject(actionlogBOObj.getSubject());
 
+	}
+	
+	public void setActiveUser(ActiveUserList activeUserListObj){
+		ActiveUserBO aub = new ActiveUserBO();
+		populateActiveUserBO(activeUserListObj.getActiveuserdtoLs().get(0), aub);
+		ArrayList<ActiveUserBO> aubList= actionlogdao.fetchActiveUser(aub);
+		if(aubList.size()>0){
+			aub.setAudid(aubList.get(0).getAudid());
+			actionlogdao.updateActiveUser(aub);
+		}
+		else{
+			actionlogdao.addActiveUser(aub);
+		}
 	}
 
 	private int getTotalPageCount(int totalrecordcount) {
