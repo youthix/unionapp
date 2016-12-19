@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.repository.entity.ActionLogBO;
+import org.repository.entity.ActiveUserBO;
 
 public interface IActionLogDAO {
 
@@ -12,5 +13,11 @@ public interface IActionLogDAO {
 	ArrayList<ActionLogBO> fetchActionLog();
 	
 	BigDecimal fetchDbSize(String dbName);
+	
+	ArrayList<ActiveUserBO> fetchActiveUser(ActiveUserBO a);
+	
+	void addActiveUser(ActiveUserBO activeUserBO);
+	
+	void updateActiveUser(ActiveUserBO activeUserBO);
 
 }

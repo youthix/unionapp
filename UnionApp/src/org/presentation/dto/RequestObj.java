@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.dto.feature.ActionLogList;
+import org.presentation.dto.feature.ActiveUserList;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementList;
 import org.presentation.dto.feature.AmrList;
@@ -43,6 +44,8 @@ public class RequestObj {
 	private SurveyList SurveyListObj;
 	
 	private ActionLogList ActionLogListObj;
+	
+	private ActiveUserList ActiveUserListObj;
 	
 	private DeleteFile deleteFileObj;
 
@@ -189,7 +192,13 @@ public class RequestObj {
 	public void setActionLogListObj(ActionLogList actionLogListObj) {
 		ActionLogListObj = actionLogListObj;
 	}
-	
-	
+
+	public ActiveUserList getActiveUserListObj() {
+		return ActiveUserListObj;
+	}
+
+	public void setActiveUserListObj(ActiveUserList activeUserListObj) {
+		ActiveUserListObj = activeUserListObj;
+	}
 
 }

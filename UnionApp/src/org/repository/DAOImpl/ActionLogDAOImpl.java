@@ -2,6 +2,7 @@ package org.repository.DAOImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActionLogDAO;
 import org.repository.entity.ActionLogBO;
+import org.repository.entity.ActiveUserBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +56,55 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 		return actionLogBOList;
 	}
+	
+	
+	public ArrayList<ActiveUserBO> fetchActiveUser(ActiveUserBO a) {
 
+		int offsetno = 0;
+
+		int pageSize = 15;
+
+		System.out.println("InDAOFetchActiveUser");
+		ArrayList<ActiveUserBO> activeUserBOList = null;
+
+		try {
+
+			String SQL = "select u from " + ActiveUserBO.class.getName() + " u where usname='"+a.getUsname()
+								+"' and activedate='"+a.getActivedate()+"'";
+
+			activeUserBOList = (ArrayList<ActiveUserBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
+					.setMaxResults(pageSize) // limit
+					.getResultList();
+
+			System.out.println("DoneDAOFetchActiveUser");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+		return activeUserBOList;
+	}
+
+	public void addActiveUser(ActiveUserBO activeUserBO) {
+		try {
+			manager.persist(activeUserBO);
+
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+	
+	public void updateActiveUser(ActiveUserBO activeUserBO) {
+		try {
+			manager.merge(activeUserBO);
+
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+	
 	public EntityManager getManager() {
 		return manager;
 	}
