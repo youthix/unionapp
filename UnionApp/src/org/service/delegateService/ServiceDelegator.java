@@ -1054,7 +1054,7 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 
-		VisitorInfoList visitorInfoListObj = new VisitorInfoList();
+/*		VisitorInfoList visitorInfoListObj = new VisitorInfoList();
 
 		List<VisitorInfoDTO> visitorinfodtoLs = new ArrayList<VisitorInfoDTO>();
 
@@ -1096,15 +1096,9 @@ public class ServiceDelegator {
 
 		visitorInfoListObj.setVisitorinfodtoLs(visitorinfodtoLs);
 
-		/* CategoryList categoryListObj; */
+		repositoryDelegator.fetchVisitorInfo() ;*/
 
-		/*
-		 * if (null != reqparam.getCriteria()) {
-		 */
-		// categoryListObj =
-		// repositoryDelegator.fetchcategory(reqparam.getCriteria());
-
-		responseObj.setVisitorInfoListObj(visitorInfoListObj);
+		responseObj.setVisitorInfoListObj(repositoryDelegator.fetchVisitorInfo());
 		setResponse(responseObj);
 		/*
 		 * } else { ServiceException serviceExceptionObj = new ServiceException(

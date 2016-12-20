@@ -19,5 +19,7 @@ public interface IActionLogDAO {
 	void addActiveUser(ActiveUserBO activeUserBO);
 	
 	void updateActiveUser(ActiveUserBO activeUserBO);
+	
+	ArrayList<Object> fetchActiveUsersCount();
 
 }

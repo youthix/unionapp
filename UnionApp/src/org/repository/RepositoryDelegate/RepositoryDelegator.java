@@ -12,7 +12,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.common.UnionAppConstants;
@@ -60,6 +62,8 @@ import org.presentation.dto.feature.SummaryDTO;
 import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.feature.SurveyDTO;
 import org.presentation.dto.feature.SurveyList;
+import org.presentation.dto.feature.VisitorInfoDTO;
+import org.presentation.dto.feature.VisitorInfoList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -3873,6 +3877,32 @@ public class RepositoryDelegator {
 			actionlogdao.addActiveUser(aub);
 		}
 	}
+	
+	public VisitorInfoList fetchVisitorInfo() {
+
+		VisitorInfoList visitorInfoListObj = new VisitorInfoList();
+
+		List<VisitorInfoDTO> visitorinfodtoLs = new ArrayList<VisitorInfoDTO>();
+		
+		ArrayList<Object> activeUsersCountList=actionlogdao.fetchActiveUsersCount();
+		
+		for(int i=0;i<7;i++){
+			VisitorInfoDTO visitorInfoDTOObj1 = new VisitorInfoDTO();
+			Object[] oArr=(Object[])activeUsersCountList.get(i);
+			if(null != oArr){
+			  visitorInfoDTOObj1.setCount(((Long)(oArr[0])).toString());
+			  Date d=(Date)(oArr[1]);
+			  SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+			  visitorInfoDTOObj1.setDate(dateformatter.format(d));
+			  visitorinfodtoLs.add(visitorInfoDTOObj1);
+			}
+		}
+		visitorInfoListObj.setVisitorinfodtoLs(visitorinfodtoLs);
+
+		return visitorInfoListObj;
+	}
+
+
 
 	private int getTotalPageCount(int totalrecordcount) {
 		int pagesize = 6;

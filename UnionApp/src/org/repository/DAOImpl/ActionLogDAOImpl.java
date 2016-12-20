@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -86,6 +87,31 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 		return activeUserBOList;
 	}
+	
+	public ArrayList<Object> fetchActiveUsersCount() {
+
+		System.out.println("InDAOfetchActiveUsersCount");
+		ArrayList<Object> activeUserCountList=null;
+		try {			
+
+			String SQL = "SELECT count(*) as count,activedate as activedate FROM "+ ActiveUserBO.class.getName() +" "
+					     +"where activedate > SUBDATE(sysdate(), 15)"
+					     +"and activedate < ADDDATE(sysdate(), 1)"
+					     +"group by activedate order by activedate desc";
+
+			activeUserCountList = (ArrayList<Object>) manager.createQuery(SQL).getResultList();
+
+			System.out.println("DoneDAOfetchActiveUsersCount");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			throw serviceExceptionObj;
+		}
+		
+		return activeUserCountList;
+
+	}
+	
+	
 
 	public void addActiveUser(ActiveUserBO activeUserBO) {
 		try {
