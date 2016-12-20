@@ -1054,57 +1054,9 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 
-/*		VisitorInfoList visitorInfoListObj = new VisitorInfoList();
-
-		List<VisitorInfoDTO> visitorinfodtoLs = new ArrayList<VisitorInfoDTO>();
-
-		VisitorInfoDTO visitorInfoDTOObj1 = new VisitorInfoDTO();
-		visitorInfoDTOObj1.setCount("45");
-		visitorInfoDTOObj1.setDate("mon");
-
-		VisitorInfoDTO visitorInfoDTOObj2 = new VisitorInfoDTO();
-		visitorInfoDTOObj2.setCount("40");
-		visitorInfoDTOObj2.setDate("tue");
-
-		VisitorInfoDTO visitorInfoDTOObj3 = new VisitorInfoDTO();
-		visitorInfoDTOObj3.setCount("50");
-		visitorInfoDTOObj3.setDate("wed");
-
-		VisitorInfoDTO visitorInfoDTOObj4 = new VisitorInfoDTO();
-		visitorInfoDTOObj4.setCount("60");
-		visitorInfoDTOObj4.setDate("thur");
-
-		VisitorInfoDTO visitorInfoDTOObj5 = new VisitorInfoDTO();
-		visitorInfoDTOObj5.setCount("70");
-		visitorInfoDTOObj5.setDate("fri");
-
-		VisitorInfoDTO visitorInfoDTOObj6 = new VisitorInfoDTO();
-		visitorInfoDTOObj6.setCount("20");
-		visitorInfoDTOObj6.setDate("sat");
-
-		VisitorInfoDTO visitorInfoDTOObj7 = new VisitorInfoDTO();
-		visitorInfoDTOObj7.setCount("90");
-		visitorInfoDTOObj7.setDate("sun");
-
-		visitorinfodtoLs.add(visitorInfoDTOObj1);
-		visitorinfodtoLs.add(visitorInfoDTOObj2);
-		visitorinfodtoLs.add(visitorInfoDTOObj3);
-		visitorinfodtoLs.add(visitorInfoDTOObj4);
-		visitorinfodtoLs.add(visitorInfoDTOObj5);
-		visitorinfodtoLs.add(visitorInfoDTOObj6);
-		visitorinfodtoLs.add(visitorInfoDTOObj7);
-
-		visitorInfoListObj.setVisitorinfodtoLs(visitorinfodtoLs);
-
-		repositoryDelegator.fetchVisitorInfo() ;*/
-
 		responseObj.setVisitorInfoListObj(repositoryDelegator.fetchVisitorInfo());
 		setResponse(responseObj);
-		/*
-		 * } else { ServiceException serviceExceptionObj = new ServiceException(
-		 * "Fetch Criteria is NULL"); throw serviceExceptionObj; }
-		 */
-
+		
 		return responseObj;
 	}
 
