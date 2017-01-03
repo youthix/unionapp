@@ -1584,6 +1584,33 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
+	
+	@POST
+	@Path("/user/active")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj setActiveUser(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.setActiveUser(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
+
 	@Override
 	@POST
 	@Path("/testmail")

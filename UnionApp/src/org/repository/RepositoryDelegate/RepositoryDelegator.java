@@ -1,9 +1,21 @@
 package org.repository.RepositoryDelegate;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.common.UnionAppConstants;
 import org.presentation.dto.RequestObj;
@@ -24,6 +36,8 @@ import org.presentation.dto.criteria.UpdateMeetingCriteria;
 import org.presentation.dto.criteria.UpdateUserCriteria;
 import org.presentation.dto.feature.ActionLogDTO;
 import org.presentation.dto.feature.ActionLogList;
+import org.presentation.dto.feature.ActiveUserDTO;
+import org.presentation.dto.feature.ActiveUserList;
 import org.presentation.dto.feature.ActivityDTO;
 import org.presentation.dto.feature.ActivityList;
 import org.presentation.dto.feature.AgreementDTO;
@@ -48,6 +62,8 @@ import org.presentation.dto.feature.SummaryDTO;
 import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.feature.SurveyDTO;
 import org.presentation.dto.feature.SurveyList;
+import org.presentation.dto.feature.VisitorInfoDTO;
+import org.presentation.dto.feature.VisitorInfoList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -64,6 +80,7 @@ import org.repository.DAOInterface.ISummaryDAO;
 import org.repository.DAOInterface.ISurveyDAO;
 import org.repository.DAOInterface.IUserDAO;
 import org.repository.entity.ActionLogBO;
+import org.repository.entity.ActiveUserBO;
 import org.repository.entity.ActivityBO;
 import org.repository.entity.AgreementBO;
 import org.repository.entity.AmrBO;
@@ -2704,6 +2721,54 @@ public class RepositoryDelegator {
 		return responseObj;
 	}
 
+	public BigDecimal fetchUsedSpace(){
+		BigDecimal dbSize=actionlogdao.fetchDbSize(UnionAppConstants.dbName);
+		dbSize=(null==dbSize)?new BigDecimal(0):dbSize;
+		String path = UnionAppConstants.serverAbsPath;
+		FileSystem fs = FileSystems.getDefault();
+		Path path1 = fs.getPath(path);			
+		long usedFileSystemSize=RepositoryDelegator.size(path1)/1024/1024;
+		System.out.println("used file ystem length>>>"+usedFileSystemSize);
+		return dbSize.add(new BigDecimal(usedFileSystemSize));
+	}
+	
+	public static long size(Path path) {
+
+	    final AtomicLong size = new AtomicLong(0);
+
+	    try {
+	        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+	            @Override
+	            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+
+	                size.addAndGet(attrs.size());
+	                return FileVisitResult.CONTINUE;
+	            }
+
+	            @Override
+	            public FileVisitResult visitFileFailed(Path file, IOException exc) {
+
+	                System.out.println("skipped: " + file + " (" + exc + ")");
+	                // Skip folders that can't be traversed
+	                return FileVisitResult.CONTINUE;
+	            }
+
+	            @Override
+	            public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
+
+	                if (exc != null)
+	                    System.out.println("had trouble traversing: " + dir + " (" + exc + ")");
+	                // Ignore errors traversing a folder
+	                return FileVisitResult.CONTINUE;
+	            }
+	        });
+	    } catch (IOException e) {
+	        throw new AssertionError("walkFileTree will not throw IOException if the FileVisitor does not");
+	    }
+
+	    return size.get();
+	}
+	
 	public ResponseObj fetchActionLog(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -2712,7 +2777,7 @@ public class RepositoryDelegator {
 
 		ArrayList<ActionLogBO> actionLogBOList;
 
-		actionLogBOList = actionlogdao.fetchActionLog();
+		actionLogBOList = actionlogdao.fetchActionLog();		
 
 		if (null != actionLogBOList && actionLogBOList.size() > 0) {
 
@@ -3758,6 +3823,31 @@ public class RepositoryDelegator {
 
 	}
 
+	
+	private void populateActiveUserBO(ActiveUserDTO activeUserDTOObj, ActiveUserBO activeUserBOObj) {
+
+		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+		// SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm:ss");
+
+		try {
+
+			activeUserBOObj.setUsname(activeUserDTOObj.getUsname());
+			
+			if (null != activeUserDTOObj.getActivedate() && null != activeUserDTOObj.getActivetime()) {
+				activeUserBOObj.setActivedate(
+						dateformatter.parse(activeUserDTOObj.getActivedate() + " 00:00:00"));
+				activeUserBOObj.setActivedatetime(
+						dateformatter.parse(activeUserDTOObj.getActivedate() + " " + activeUserDTOObj.getActivetime()));
+			}
+
+		} catch (ParseException e) {
+			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
+			throw serviceExceptionObj;
+		}
+
+	}
+
 	private void populateActionLogDTO(ActionLogDTO actionlogdtoObj, ActionLogBO actionlogBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -3781,6 +3871,45 @@ public class RepositoryDelegator {
 		actionlogdtoObj.setSubject(actionlogBOObj.getSubject());
 
 	}
+	
+	public void setActiveUser(ActiveUserList activeUserListObj){
+		ActiveUserBO aub = new ActiveUserBO();
+		populateActiveUserBO(activeUserListObj.getActiveuserdtoLs().get(0), aub);
+		ArrayList<ActiveUserBO> aubList= actionlogdao.fetchActiveUser(aub);
+		if(aubList.size()>0){
+			aub.setAudid(aubList.get(0).getAudid());
+			actionlogdao.updateActiveUser(aub);
+		}
+		else{
+			actionlogdao.addActiveUser(aub);
+		}
+	}
+	
+	public VisitorInfoList fetchVisitorInfo() {
+
+		VisitorInfoList visitorInfoListObj = new VisitorInfoList();
+
+		List<VisitorInfoDTO> visitorinfodtoLs = new ArrayList<VisitorInfoDTO>();
+		
+		ArrayList<Object> activeUsersCountList=actionlogdao.fetchActiveUsersCount();
+		
+		for(int i=0;i<7;i++){
+			VisitorInfoDTO visitorInfoDTOObj1 = new VisitorInfoDTO();
+			Object[] oArr=(Object[])activeUsersCountList.get(i);
+			if(null != oArr){
+			  visitorInfoDTOObj1.setCount(((Long)(oArr[0])).toString());
+			  Date d=(Date)(oArr[1]);
+			  SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+			  visitorInfoDTOObj1.setDate(dateformatter.format(d));
+			  visitorinfodtoLs.add(visitorInfoDTOObj1);
+			}
+		}
+		visitorInfoListObj.setVisitorinfodtoLs(visitorinfodtoLs);
+
+		return visitorInfoListObj;
+	}
+
+
 
 	private int getTotalPageCount(int totalrecordcount) {
 		int pagesize = 6;
