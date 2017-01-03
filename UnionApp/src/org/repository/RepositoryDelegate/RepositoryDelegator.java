@@ -2496,6 +2496,8 @@ public class RepositoryDelegator {
 		ArrayList<SurveyBO> surveyBOList;
 
 		SurveyBO surveyBOObj;
+		
+		String userid= reqparam.getUserListObj().getUl().get(0).getUsNa();
 
 		String channel = reqparam.getChannel();
 
@@ -2512,6 +2514,11 @@ public class RepositoryDelegator {
 				surveyBOObj = litr.next();
 				SurveyDTO surveyDTOObj = new SurveyDTO();
 				surveyDTOObj = populateSurveyDTO(surveyDTOObj, surveyBOObj);
+				if (surveyDTOObj != null && surveyDTOObj.getResponseid() != null
+						&& surveyDTOObj.getResponseid().contains(userid)) {
+					surveyDTOObj.setUserresponsestatus("true");
+
+				}
 				if (null != channel && "app".equalsIgnoreCase(channel)) {
 					surveyDTOObj.setQuestiondtoLs(null);
 				}
