@@ -73,8 +73,15 @@ public class UserDAOImpl implements IUserDAO {
 								+ "' , u.devicetype='" + userBO.getDevicetype() + "' where usname = '"
 								+ userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
-						SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
-								+ "' where usname = '" + userBO.getUsname() + "'";
+						if (userBO.getStatus().equalsIgnoreCase("delete")) {
+							SQL = "delete from " + UserBO.class.getName() + " where usname = '" + userBO.getUsname()
+									+ "'";
+
+						} else {
+							SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
+									+ "' where usname = '" + userBO.getUsname() + "'";
+						}
+
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.pwd='" + userBO.getPwd()
 								+ "' where usname = '" + userBO.getUsname() + "'";
