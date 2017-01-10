@@ -24,6 +24,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.common.UnionAppConstants;
+import org.common.UnionAppMsgConstants;
 import org.presentation.controller.Interface.RESTfulServiceInterface;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResStatus;
@@ -61,7 +62,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.register(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -87,7 +88,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			if (null != reqparam) {
 				responseObj = serviceDelegator.login(reqparam);
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -113,7 +114,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			if (null != reqparam) {
 				responseObj = serviceDelegator.logout(reqparam);
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -140,7 +141,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetch(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -167,7 +168,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchAllUser(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -194,7 +195,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.update(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -221,7 +222,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updateuserprofile(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -248,7 +249,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updatepwd(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -275,7 +276,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.resetpwd(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -302,7 +303,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createmeeting(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -329,7 +330,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updatemeeting(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -356,7 +357,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchmeeting(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -383,7 +384,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.acceptdenymeeting(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -410,7 +411,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createactivity(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -437,7 +438,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updateactivity(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -464,7 +465,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchactivity(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -491,7 +492,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.acceptdenyactivity(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -518,7 +519,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createNewsLetter(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -545,7 +546,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updateNewsLetter(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -571,7 +572,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchNewsLetterById(id);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -598,7 +599,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchNewsLetter(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -625,7 +626,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createPayrate(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -652,7 +653,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updatePayrate(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -678,7 +679,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchPayrateById(id);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -705,7 +706,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchPayrate(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -732,7 +733,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createAmr(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -759,7 +760,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updateAmr(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -785,7 +786,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchAmrById(id);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -812,7 +813,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchAmr(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -839,7 +840,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createAgreement(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -866,7 +867,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updateAgreement(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -892,7 +893,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchAgreementById(id);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -919,7 +920,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchAgreement(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -946,7 +947,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createSummary(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -973,7 +974,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updateSummary(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -999,7 +1000,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchSummaryById(id);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1026,7 +1027,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchSummary(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1053,7 +1054,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createsuggestionidea(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1080,7 +1081,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updatesuggestionidea(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1107,7 +1108,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchsuggestionidea(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1133,7 +1134,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchsuggestionideaById(id);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1253,7 +1254,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 						reqparam.getDeleteFileObj().getAttachmentType());
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1280,7 +1281,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.addcategory(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1307,7 +1308,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchcategory(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1410,7 +1411,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.createSurvey(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1437,7 +1438,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.updateSurvey(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1463,7 +1464,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchSurveyById(surveyid, userid);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1490,7 +1491,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchSurvey(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1517,7 +1518,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchActionLog(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1544,7 +1545,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchSpaceInfo(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1571,7 +1572,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.fetchVisitorInfo(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}
@@ -1598,7 +1599,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 				responseObj = serviceDelegator.setActiveUser(reqparam);
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("Request Object is NULL");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
 				throw serviceExceptionObj;
 
 			}

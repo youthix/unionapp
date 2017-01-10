@@ -15,6 +15,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.common.UnionAppConstants;
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResStatus;
 import org.presentation.dto.ResponseObj;
@@ -71,7 +72,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -98,7 +99,7 @@ public class ServiceDelegator {
 			responseObj.setUserListObj(userListObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -117,7 +118,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -136,7 +137,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -155,7 +156,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -174,7 +175,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -192,7 +193,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -217,10 +218,10 @@ public class ServiceDelegator {
 			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
 					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
 				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_PENDINGAPPROVAL);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 
@@ -237,14 +238,13 @@ public class ServiceDelegator {
 				}
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException(
-						"Credentials Incorrect. No matching Object Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.IN_CREDENTIAL);
 				throw serviceExceptionObj;
 			}
 			responseObj.setUserListObj(userListObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -268,10 +268,10 @@ public class ServiceDelegator {
 
 			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa())))) {
 				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_PENDINGAPPROVAL);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 
@@ -305,13 +305,13 @@ public class ServiceDelegator {
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException(
-						"Credentials Incorrect. No matching Object Found");
+						UnionAppMsgConstants.IN_CREDENTIAL);
 				throw serviceExceptionObj;
 			}
 			responseObj.setUserListObj(userListObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -330,7 +330,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("MeetingList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -349,7 +349,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -367,7 +367,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("MeetingList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -396,7 +396,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -415,7 +415,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -433,7 +433,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -462,7 +462,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("NewsLetterList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -481,7 +481,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -497,7 +497,7 @@ public class ServiceDelegator {
 			responseObj = repositoryDelegator.fetchNewsLetterById(id);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -515,7 +515,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("NewsLetterList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -534,7 +534,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("PayrateList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -553,7 +553,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -569,7 +569,7 @@ public class ServiceDelegator {
 			responseObj = repositoryDelegator.fetchPayrateById(id);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -587,7 +587,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("PayrateList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -606,7 +606,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("AmrList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -625,7 +625,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -641,7 +641,7 @@ public class ServiceDelegator {
 			responseObj = repositoryDelegator.fetchAmrById(id);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -659,7 +659,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("AmrList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -678,7 +678,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("AgreementList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -697,7 +697,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -713,7 +713,7 @@ public class ServiceDelegator {
 			responseObj = repositoryDelegator.fetchAgreementById(id);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -731,7 +731,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("AgreementList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -750,7 +750,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("SummaryList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -769,7 +769,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -785,7 +785,7 @@ public class ServiceDelegator {
 			responseObj = repositoryDelegator.fetchSummaryById(id);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -803,7 +803,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("SummaryList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -822,7 +822,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("List is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -840,7 +840,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -856,7 +856,7 @@ public class ServiceDelegator {
 			responseObj = repositoryDelegator.fetchsuggestionideaById(id);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -874,7 +874,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("List is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -916,7 +916,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Incorrect Request");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -935,7 +935,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -952,7 +952,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -970,7 +970,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Request is Incorrect");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1009,7 +1009,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1028,7 +1028,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("Fetch Criteria is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1126,7 +1126,7 @@ public class ServiceDelegator {
 			responseObj.setUserListObj(userListObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1164,7 +1164,7 @@ public class ServiceDelegator {
 			setResponse(responseObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("ActiveUserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 

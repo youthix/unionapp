@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.common.UnionAppConstants;
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
 import org.presentation.dto.criteria.Criteria;
@@ -162,7 +163,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -201,10 +202,10 @@ public class RepositoryDelegator {
 			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
 					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
 				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Blocked");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException("User is Pending for Approval");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_PENDINGAPPROVAL);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 
@@ -221,7 +222,7 @@ public class RepositoryDelegator {
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException(
-						"Credentials Incorrect. No matching Object Found");
+						UnionAppMsgConstants.IN_CREDENTIAL);
 				throw serviceExceptionObj;
 			}
 			responseObj.setUserListObj(userListObj);
@@ -229,7 +230,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -264,7 +265,7 @@ public class RepositoryDelegator {
 			userListObj.setUl(userDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -310,7 +311,7 @@ public class RepositoryDelegator {
 			userListObj.setUl(userDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -350,7 +351,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserDetails Empty. Check and Resend");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -396,7 +397,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -497,7 +498,7 @@ public class RepositoryDelegator {
 			}
 
 			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 
@@ -506,7 +507,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("MeetingList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -543,7 +544,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -626,7 +627,7 @@ public class RepositoryDelegator {
 			meetingListObj.setMeetingdtoLs(meetingDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		responseObj.setMeetingListObj(meetingListObj);
@@ -757,14 +758,14 @@ public class RepositoryDelegator {
 
 				populateUserDTO(userObj, userBOObj);
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList or Meeting List is null");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		/*
@@ -839,7 +840,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -852,7 +853,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("MeetingList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -888,7 +889,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -971,7 +972,7 @@ public class RepositoryDelegator {
 			activityListObj.setActivitydtoLs(activityDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		responseObj.setActivityListObj(activityListObj);
@@ -1049,7 +1050,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -1062,7 +1063,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1190,14 +1191,14 @@ public class RepositoryDelegator {
 
 				populateUserDTO(userObj, userBOObj);
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList or Activity List is null");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1232,7 +1233,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1272,7 +1273,7 @@ public class RepositoryDelegator {
 			NewsLetterListObj.setNewsletterdtoLs(NewsLetterDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		responseObj.setNewsLetterListObj(NewsLetterListObj);
@@ -1366,7 +1367,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -1379,7 +1380,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("NewsLetterList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1416,7 +1417,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1456,7 +1457,7 @@ public class RepositoryDelegator {
 			PayrateListObj.setPayratedtoLs(PayrateDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		responseObj.setPayrateListObj(PayrateListObj);
@@ -1550,7 +1551,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -1563,7 +1564,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("PayrateList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1599,7 +1600,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1639,7 +1640,7 @@ public class RepositoryDelegator {
 			AmrListObj.setAmrdtoLs(AmrDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		responseObj.setAmrListObj(AmrListObj);
@@ -1732,7 +1733,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -1745,7 +1746,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("AmrList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1782,7 +1783,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -1823,7 +1824,7 @@ public class RepositoryDelegator {
 			// setAttachments(AgreementListObj);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		responseObj.setAgreementListObj(AgreementListObj);
@@ -1944,7 +1945,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -1994,7 +1995,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2034,7 +2035,7 @@ public class RepositoryDelegator {
 			SummaryListObj.setSummarydtoLs(SummaryDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 		responseObj.setSummaryListObj(SummaryListObj);
@@ -2128,7 +2129,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -2141,7 +2142,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("SummaryList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2179,7 +2180,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("UserList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2243,7 +2244,7 @@ public class RepositoryDelegator {
 
 			suggestionIdeaListObj.setSuggestionideadtoLs(suggestionIdeaDTOList);
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2323,7 +2324,7 @@ public class RepositoryDelegator {
 				}
 
 				else {
-					ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} catch (ParseException e) {
@@ -2336,7 +2337,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2390,7 +2391,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("CategoryList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2421,7 +2422,7 @@ public class RepositoryDelegator {
 			categoryListObjResp.setCategorydtoLs(categoryDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2456,7 +2457,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("SurveyList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2495,7 +2496,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("ID is NULL or Empty");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2546,7 +2547,7 @@ public class RepositoryDelegator {
 
 			surveyListObj.setSurveydtoLs(surveyDTOList);
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2701,7 +2702,7 @@ public class RepositoryDelegator {
 			}
 
 			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 
@@ -2712,7 +2713,7 @@ public class RepositoryDelegator {
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("ActivityList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2793,7 +2794,7 @@ public class RepositoryDelegator {
 			actionLogListObj.setActionlogdtoLs(actionLogDTOList);
 
 		} else {
-			ServiceException serviceExceptionObj = new ServiceException("No Matching Object Found");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
 
@@ -2862,7 +2863,7 @@ public class RepositoryDelegator {
 			}
 
 			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 		} catch (Exception e) {
@@ -2983,7 +2984,7 @@ public class RepositoryDelegator {
 			}
 
 			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 		} catch (Exception e) {
@@ -3104,7 +3105,7 @@ public class RepositoryDelegator {
 			}
 
 			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 		} catch (Exception e) {
@@ -3223,7 +3224,7 @@ public class RepositoryDelegator {
 			}
 
 			else {
-				ServiceException serviceExceptionObj = new ServiceException("No Matching Obj Found");
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
 		} catch (Exception e) {
