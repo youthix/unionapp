@@ -1,20 +1,17 @@
 package org.common;
 
 public interface UnionAppMsgConstants {
-	final String REQOBJECTNULL = "Anmodning Objekt er NULL";
-	final String INSUFFICIENTINPUT = "Input data er utilstrækkelige eller forkert";
-	final String USER_BLKD = "Brugeren er blokeret";
-	final String USER_PENDINGAPPROVAL = "Brugeren er Afventer til godkendelse";
-	final String IN_CREDENTIAL = "Legitimationsoplysninger Forkert. Ingen matchende Objekt fundet";
-	final String agreement = "agreement";
-	final String summary = "summary";
-	final String suggestionidea = "suggestionidea";
-	final String payrate = "payrate";
-	final String survey = "survey";
-	final String create = "create";
-	final String update = "update";
-	final String totalSpaceAllocated="100";
-	final String miscSpaceUsed="30";
-	final String spaceUnit="mb";
-	final String dbName="Unionapp";
+	final String REQOBJECTNULL = "Forkert handling";
+	final String INSUFFICIENTINPUT = "Der er indtastet forkerte oplysninger";
+	final String USER_BLKD = "brugeren er blokeret";
+	final String USER_PENDINGAPPROVAL = "Bruger Afventer på godkendelse";
+	final String IN_CREDENTIAL = "Ugyldig Email eller adgangskode prøv igen";
+	final String RESETPWD_SUCCESS = "Vi har sendt dig et nyt kode til din mail";
+
+	final String REQOBJECTNULL_ENG = "Request Object Incorrect";
+	final String INSUFFICIENTINPUT_ENG = "Input Data is Insufficient or Incorrect";
+	final String USER_BLKD_ENG = "User is Blocked";
+	final String USER_PENDINGAPPROVAL_ENG = "User Pending For Approval";
+	final String IN_CREDENTIAL_ENG = "Invalid Credentials";
+	final String RESETPWD_SUCCESS_ENG = "New Password Sent to Registered EmailId";
 }

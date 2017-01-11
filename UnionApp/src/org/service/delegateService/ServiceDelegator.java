@@ -299,7 +299,13 @@ public class ServiceDelegator {
 
 					sendMail(from, pass, to, subject, body);
 
-					setResponse(responseObj);
+					/*setResponse(responseObj);*/
+					
+					ResStatus resStatus = new ResStatus();
+					resStatus.setCode("00");
+					resStatus.setMsg(UnionAppMsgConstants.RESETPWD_SUCCESS);
+					responseObj.setResStatus(resStatus);
+					
 					responseObj.setUserListObj(userListObj);
 				}
 

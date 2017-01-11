@@ -97,7 +97,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 			String SQL = "SELECT count(*) as count,activedate as activedate FROM "+ ActiveUserBO.class.getName() +" "
 					     +"where activedate > SUBDATE(sysdate(), 15)"
 					     +"and activedate < ADDDATE(sysdate(), 1)"
-					     +"group by activedate order by activedate asc";
+					     +"group by activedate order by activedate desc";
 
 			activeUserCountList = (ArrayList<Object>) manager.createQuery(SQL).getResultList();
 
