@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -2807,9 +2808,14 @@ public class RepositoryDelegator {
 			String subject) {
 
 		ActionLogDTO actionlogdtoObj = new ActionLogDTO();
-		actionlogdtoObj.setActdate(date);
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Date activityDate = new Date();
+		dateFormat.format(activityDate);
+		
+		actionlogdtoObj.setActdate(dateFormat.format(activityDate));
 		actionlogdtoObj.setAction(action);
-		actionlogdtoObj.setActtime(time);
+		/*actionlogdtoObj.setActtime(time);*/
 		actionlogdtoObj.setCreator(creator);
 		actionlogdtoObj.setDetail(detail);
 		actionlogdtoObj.setDetail(detail);
@@ -3812,9 +3818,10 @@ public class RepositoryDelegator {
 			actionlogBOObj.setDetail(actionlogdtoObj.getDetail());
 			actionlogBOObj.setModule(actionlogdtoObj.getModule());
 			actionlogBOObj.setSubject(actionlogdtoObj.getSubject());
+			
 			if (null != actionlogdtoObj.getActdate() && null != actionlogdtoObj.getActtime()) {
 				actionlogBOObj.setActdate(
-						dateformatter.parse(actionlogdtoObj.getActdate() + " " + actionlogdtoObj.getActtime()));
+						dateformatter.parse(actionlogdtoObj.getActdate()));
 			}
 
 		} catch (ParseException e) {
