@@ -18,7 +18,7 @@ public class HttpClientUtil {
 
 	private final String USER_AGENT = "Mozilla/5.0";
 
-	public static void main(String[] args) throws Exception {
+	public static void mainMethod(String[] args) throws Exception {
 
 		HttpClientUtil http = new HttpClientUtil();
 
