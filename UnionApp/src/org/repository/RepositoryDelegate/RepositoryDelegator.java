@@ -206,7 +206,8 @@ public class RepositoryDelegator {
 					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_PENDINGAPPROVAL);
+					ServiceException serviceExceptionObj = new ServiceException(
+							UnionAppMsgConstants.USER_PENDINGAPPROVAL);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 
@@ -222,8 +223,7 @@ public class RepositoryDelegator {
 				}
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException(
-						UnionAppMsgConstants.IN_CREDENTIAL);
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.IN_CREDENTIAL);
 				throw serviceExceptionObj;
 			}
 			responseObj.setUserListObj(userListObj);
@@ -627,10 +627,11 @@ public class RepositoryDelegator {
 
 			meetingListObj.setMeetingdtoLs(meetingDTOList);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 		responseObj.setMeetingListObj(meetingListObj);
 		int totalrecordcount = meetingdao.totalRecordCount(criteriaObj);
 
@@ -836,6 +837,9 @@ public class RepositoryDelegator {
 						createActionLog(meetingdtoObj.getMeetdate(), meetingdtoObj.getMeettime(),
 								UnionAppConstants.update, meetingdtoObj.getCreator(), meetingdtoObj.getDetail(),
 								UnionAppConstants.meeting, meetingdtoObj.getSubject());
+
+						populateMeetingDTO(meetingdtoObj, meetingBOObj);
+						responseObj.setMeetingListObj(meetingListObj);
 					}
 
 				}
@@ -849,16 +853,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateMeetingDTO(meetingdtoObj, meetingBOObj);
-
 		}
 
 		else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setMeetingListObj(meetingListObj);
 
 		return responseObj;
 	}
@@ -972,10 +972,11 @@ public class RepositoryDelegator {
 
 			activityListObj.setActivitydtoLs(activityDTOList);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 		responseObj.setActivityListObj(activityListObj);
 		int totalrecordcount = activitydao.totalRecordCount(criteriaObj);
 
@@ -1047,6 +1048,8 @@ public class RepositoryDelegator {
 						createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(),
 								UnionAppConstants.update, activitydtoObj.getCreator(), activitydtoObj.getDetail(),
 								UnionAppConstants.activity, activitydtoObj.getSubject());
+						populateActivityDTO(activitydtoObj, activityBOObj);
+						responseObj.setActivityListObj(activityListObj);
 					}
 				}
 
@@ -1059,16 +1062,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateActivityDTO(activitydtoObj, activityBOObj);
-
 		}
 
 		else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setActivityListObj(activityListObj);
 
 		return responseObj;
 	}
@@ -1273,10 +1272,11 @@ public class RepositoryDelegator {
 
 			NewsLetterListObj.setNewsletterdtoLs(NewsLetterDTOList);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 		responseObj.setNewsLetterListObj(NewsLetterListObj);
 		int totalrecordcount = newsletterdao.totalRecordCount(criteriaObj);
 
@@ -1364,6 +1364,9 @@ public class RepositoryDelegator {
 						createActionLog(NewsLetterdtoObj.getNldate(), NewsLetterdtoObj.getNltime(),
 								UnionAppConstants.update, NewsLetterdtoObj.getCreator(), NewsLetterdtoObj.getDetail(),
 								UnionAppConstants.newsletter, NewsLetterdtoObj.getSubject());
+
+						populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
+						responseObj.setNewsLetterListObj(newsLetterListObj);
 					}
 				}
 
@@ -1376,16 +1379,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
-
 		}
 
 		else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setNewsLetterListObj(newsLetterListObj);
 
 		return responseObj;
 	}
@@ -1457,10 +1456,11 @@ public class RepositoryDelegator {
 
 			PayrateListObj.setPayratedtoLs(PayrateDTOList);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 		responseObj.setPayrateListObj(PayrateListObj);
 		int totalrecordcount = payratedao.totalRecordCount(criteriaObj);
 
@@ -1548,6 +1548,8 @@ public class RepositoryDelegator {
 						createActionLog(PayratedtoObj.getPaydate(), PayratedtoObj.getPaytime(),
 								UnionAppConstants.update, PayratedtoObj.getCreator(), PayratedtoObj.getDetail(),
 								UnionAppConstants.payrate, PayratedtoObj.getSubject());
+						populatePayrateDTO(PayratedtoObj, PayrateBOObj);
+						responseObj.setPayrateListObj(PayrateListObj);
 					}
 				}
 
@@ -1560,16 +1562,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populatePayrateDTO(PayratedtoObj, PayrateBOObj);
-
 		}
 
 		else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setPayrateListObj(PayrateListObj);
 
 		return responseObj;
 	}
@@ -1640,10 +1638,11 @@ public class RepositoryDelegator {
 
 			AmrListObj.setAmrdtoLs(AmrDTOList);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 		responseObj.setAmrListObj(AmrListObj);
 		int totalrecordcount = amrdao.totalRecordCount(criteriaObj);
 
@@ -1730,6 +1729,8 @@ public class RepositoryDelegator {
 						createActionLog(AmrdtoObj.getAmrdate(), AmrdtoObj.getAmrtime(), UnionAppConstants.update,
 								AmrdtoObj.getCreator(), AmrdtoObj.getDetail(), UnionAppConstants.amr,
 								AmrdtoObj.getSubject());
+						populateAmrDTO(AmrdtoObj, AmrBOObj);
+						responseObj.setAmrListObj(AmrListObj);
 					}
 				}
 
@@ -1742,16 +1743,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateAmrDTO(AmrdtoObj, AmrBOObj);
-
 		}
 
 		else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setAmrListObj(AmrListObj);
 
 		return responseObj;
 	}
@@ -1824,10 +1821,11 @@ public class RepositoryDelegator {
 			AgreementListObj.setAgreementdtoLs(AgreementDTOList);
 			// setAttachments(AgreementListObj);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 		responseObj.setAgreementListObj(AgreementListObj);
 		int totalrecordcount = agreementdao.totalRecordCount(criteriaObj);
 
@@ -1942,6 +1940,8 @@ public class RepositoryDelegator {
 						createActionLog(AgreementdtoObj.getArmdate(), AgreementdtoObj.getArmtime(),
 								UnionAppConstants.update, AgreementdtoObj.getCreator(), AgreementdtoObj.getDetail(),
 								UnionAppConstants.agreement, AgreementdtoObj.getSubject());
+						populateAgreementDTO(AgreementdtoObj, AgreementBOObj);
+						responseObj.setAgreementListObj(AgreementListObj);
 					}
 				}
 
@@ -1954,16 +1954,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateAgreementDTO(AgreementdtoObj, AgreementBOObj);
-
 		}
 
 		else {
-			ServiceException serviceExceptionObj = new ServiceException("AgreementList is NULL");
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setAgreementListObj(AgreementListObj);
 
 		return responseObj;
 	}
@@ -2035,10 +2031,11 @@ public class RepositoryDelegator {
 
 			SummaryListObj.setSummarydtoLs(SummaryDTOList);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 		responseObj.setSummaryListObj(SummaryListObj);
 		int totalrecordcount = summarydao.totalRecordCount(criteriaObj);
 
@@ -2126,6 +2123,8 @@ public class RepositoryDelegator {
 						createActionLog(SummarydtoObj.getSumdate(), SummarydtoObj.getSumtime(),
 								UnionAppConstants.update, SummarydtoObj.getCreator(), SummarydtoObj.getDetail(),
 								UnionAppConstants.summary, SummarydtoObj.getSubject());
+						populateSummaryDTO(SummarydtoObj, SummaryBOObj);
+						responseObj.setSummaryListObj(SummaryListObj);
 					}
 				}
 
@@ -2138,16 +2137,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateSummaryDTO(SummarydtoObj, SummaryBOObj);
-
 		}
 
 		else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setSummaryListObj(SummaryListObj);
 
 		return responseObj;
 	}
@@ -2244,10 +2239,11 @@ public class RepositoryDelegator {
 			}
 
 			suggestionIdeaListObj.setSuggestionideadtoLs(suggestionIdeaDTOList);
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 
 		responseObj.setSuggestionIdeaListObj(suggestionIdeaListObj);
 		int totalrecordcount = suggestionIdeadao.totalRecordCount(criteriaObj);
@@ -2320,6 +2316,8 @@ public class RepositoryDelegator {
 								UnionAppConstants.update, suggestionIdeadtoObj.getCreator(),
 								suggestionIdeadtoObj.getDetail(), UnionAppConstants.suggestionidea,
 								suggestionIdeadtoObj.getSubject());
+						populateSuggestionIdeaDTO(suggestionIdeadtoObj, suggestionIdeaBOObj);
+						responseObj.setSuggestionIdeaListObj(suggestionIdeaListObj);
 
 					}
 				}
@@ -2333,16 +2331,12 @@ public class RepositoryDelegator {
 				throw serviceExceptionObj;
 			}
 
-			populateSuggestionIdeaDTO(suggestionIdeadtoObj, suggestionIdeaBOObj);
-
 		}
 
 		else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
 		}
-
-		responseObj.setSuggestionIdeaListObj(suggestionIdeaListObj);
 
 		return responseObj;
 	}
@@ -2515,8 +2509,8 @@ public class RepositoryDelegator {
 		ArrayList<SurveyBO> surveyBOList;
 
 		SurveyBO surveyBOObj;
-		
-		String userid= reqparam.getUserListObj().getUl().get(0).getUsNa();
+
+		String userid = reqparam.getUserListObj().getUl().get(0).getUsNa();
 
 		String channel = reqparam.getChannel();
 
@@ -2547,10 +2541,11 @@ public class RepositoryDelegator {
 			}
 
 			surveyListObj.setSurveydtoLs(surveyDTOList);
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 
 		responseObj.setSurveyListObj(surveyListObj);
 		int totalrecordcount = surveydao.totalRecordCount(criteriaObj);
@@ -2690,26 +2685,37 @@ public class RepositoryDelegator {
 					}
 					String json = gson.toJson(surveyBO_DTOObj);
 					surveyBOObj.setSurveyjson(json);
+					// merge this UpdateBO back in DB
+					surveydao.update(surveyBOObj);
+
+					createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
+							surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
+
+					surveydtoObj = populateSurveyDTO(surveydtoObj, surveyBOObj);
+					surveyListResp.add(surveydtoObj);
+					surveyListObjResp.setSurveydtoLs(surveyListResp);
+					responseObj.setSurveyListObj(surveyListObjResp);
 
 				} else {
 					populateCreateSurveyBO(surveydtoObj, surveyBOObj);
+					// merge this UpdateBO back in DB
+					surveydao.update(surveyBOObj);
+
+					createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
+							surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
+
+					surveydtoObj = populateSurveyDTO(surveydtoObj, surveyBOObj);
+					surveyListResp.add(surveydtoObj);
+					surveyListObjResp.setSurveydtoLs(surveyListResp);
+					responseObj.setSurveyListObj(surveyListObjResp);
 				}
 
-				// merge this UpdateBO back in DB
-				surveydao.update(surveyBOObj);
-
-				createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
-						surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
 			}
 
 			else {
 				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 				throw serviceExceptionObj;
 			}
-
-			surveydtoObj = populateSurveyDTO(surveydtoObj, surveyBOObj);
-			surveyListResp.add(surveydtoObj);
-			surveyListObjResp.setSurveydtoLs(surveyListResp);
 
 		}
 
@@ -2718,59 +2724,57 @@ public class RepositoryDelegator {
 			throw serviceExceptionObj;
 		}
 
-		responseObj.setSurveyListObj(surveyListObjResp);
-
 		return responseObj;
 	}
 
-	public BigDecimal fetchUsedSpace(){
-		BigDecimal dbSize=actionlogdao.fetchDbSize(UnionAppConstants.dbName);
-		dbSize=(null==dbSize)?new BigDecimal(0):dbSize;
+	public BigDecimal fetchUsedSpace() {
+		BigDecimal dbSize = actionlogdao.fetchDbSize(UnionAppConstants.dbName);
+		dbSize = (null == dbSize) ? new BigDecimal(0) : dbSize;
 		String path = UnionAppConstants.serverAbsPath;
 		FileSystem fs = FileSystems.getDefault();
-		Path path1 = fs.getPath(path);			
-		long usedFileSystemSize=RepositoryDelegator.size(path1)/1024/1024;
-		System.out.println("used file ystem length>>>"+usedFileSystemSize);
+		Path path1 = fs.getPath(path);
+		long usedFileSystemSize = RepositoryDelegator.size(path1) / 1024 / 1024;
+		System.out.println("used file ystem length>>>" + usedFileSystemSize);
 		return dbSize.add(new BigDecimal(usedFileSystemSize));
 	}
-	
+
 	public static long size(Path path) {
 
-	    final AtomicLong size = new AtomicLong(0);
+		final AtomicLong size = new AtomicLong(0);
 
-	    try {
-	        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-	            @Override
-	            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+		try {
+			Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
 
-	                size.addAndGet(attrs.size());
-	                return FileVisitResult.CONTINUE;
-	            }
+					size.addAndGet(attrs.size());
+					return FileVisitResult.CONTINUE;
+				}
 
-	            @Override
-	            public FileVisitResult visitFileFailed(Path file, IOException exc) {
+				@Override
+				public FileVisitResult visitFileFailed(Path file, IOException exc) {
 
-	                System.out.println("skipped: " + file + " (" + exc + ")");
-	                // Skip folders that can't be traversed
-	                return FileVisitResult.CONTINUE;
-	            }
+					System.out.println("skipped: " + file + " (" + exc + ")");
+					// Skip folders that can't be traversed
+					return FileVisitResult.CONTINUE;
+				}
 
-	            @Override
-	            public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
+				@Override
+				public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
 
-	                if (exc != null)
-	                    System.out.println("had trouble traversing: " + dir + " (" + exc + ")");
-	                // Ignore errors traversing a folder
-	                return FileVisitResult.CONTINUE;
-	            }
-	        });
-	    } catch (IOException e) {
-	        throw new AssertionError("walkFileTree will not throw IOException if the FileVisitor does not");
-	    }
+					if (exc != null)
+						System.out.println("had trouble traversing: " + dir + " (" + exc + ")");
+					// Ignore errors traversing a folder
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		} catch (IOException e) {
+			throw new AssertionError("walkFileTree will not throw IOException if the FileVisitor does not");
+		}
 
-	    return size.get();
+		return size.get();
 	}
-	
+
 	public ResponseObj fetchActionLog(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -2779,7 +2783,7 @@ public class RepositoryDelegator {
 
 		ArrayList<ActionLogBO> actionLogBOList;
 
-		actionLogBOList = actionlogdao.fetchActionLog();		
+		actionLogBOList = actionlogdao.fetchActionLog();
 
 		if (null != actionLogBOList && actionLogBOList.size() > 0) {
 
@@ -2808,14 +2812,14 @@ public class RepositoryDelegator {
 			String subject) {
 
 		ActionLogDTO actionlogdtoObj = new ActionLogDTO();
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date activityDate = new Date();
 		dateFormat.format(activityDate);
-		
+
 		actionlogdtoObj.setActdate(dateFormat.format(activityDate));
 		actionlogdtoObj.setAction(action);
-		/*actionlogdtoObj.setActtime(time);*/
+		/* actionlogdtoObj.setActtime(time); */
 		actionlogdtoObj.setCreator(creator);
 		actionlogdtoObj.setDetail(detail);
 		actionlogdtoObj.setDetail(detail);
@@ -3772,7 +3776,7 @@ public class RepositoryDelegator {
 	private void populateCreateSurveyBO(SurveyDTO surveydtoObj, SurveyBO surveyBOObj) {
 
 		Gson gson = new Gson();
-		if (null == surveydtoObj.getResponsecount() || surveydtoObj.getResponsecount().equalsIgnoreCase("") ) {
+		if (null == surveydtoObj.getResponsecount() || surveydtoObj.getResponsecount().equalsIgnoreCase("")) {
 			surveydtoObj.setResponsecount("0");
 		}
 		if (null == surveydtoObj.getTotalusercount() || surveydtoObj.getTotalusercount().equalsIgnoreCase("")) {
@@ -3818,11 +3822,13 @@ public class RepositoryDelegator {
 			actionlogBOObj.setDetail(actionlogdtoObj.getDetail());
 			actionlogBOObj.setModule(actionlogdtoObj.getModule());
 			actionlogBOObj.setSubject(actionlogdtoObj.getSubject());
-			
-			if (null != actionlogdtoObj.getActdate() && null != actionlogdtoObj.getActtime()) {
-				actionlogBOObj.setActdate(
-						dateformatter.parse(actionlogdtoObj.getActdate()));
-			}
+
+			/*
+			 * if (null != actionlogdtoObj.getActdate() && null !=
+			 * actionlogdtoObj.getActtime()) {
+			 */
+			actionlogBOObj.setActdate(dateformatter.parse(actionlogdtoObj.getActdate()));
+			// }
 
 		} catch (ParseException e) {
 			ServiceException serviceExceptionObj = new ServiceException(e.getMessage());
@@ -3831,7 +3837,6 @@ public class RepositoryDelegator {
 
 	}
 
-	
 	private void populateActiveUserBO(ActiveUserDTO activeUserDTOObj, ActiveUserBO activeUserBOObj) {
 
 		SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -3841,10 +3846,9 @@ public class RepositoryDelegator {
 		try {
 
 			activeUserBOObj.setUsname(activeUserDTOObj.getUsname());
-			
+
 			if (null != activeUserDTOObj.getActivedate() && null != activeUserDTOObj.getActivetime()) {
-				activeUserBOObj.setActivedate(
-						dateformatter.parse(activeUserDTOObj.getActivedate() + " 00:00:00"));
+				activeUserBOObj.setActivedate(dateformatter.parse(activeUserDTOObj.getActivedate() + " 00:00:00"));
 				activeUserBOObj.setActivedatetime(
 						dateformatter.parse(activeUserDTOObj.getActivedate() + " " + activeUserDTOObj.getActivetime()));
 			}
@@ -3879,45 +3883,42 @@ public class RepositoryDelegator {
 		actionlogdtoObj.setSubject(actionlogBOObj.getSubject());
 
 	}
-	
-	public void setActiveUser(ActiveUserList activeUserListObj){
+
+	public void setActiveUser(ActiveUserList activeUserListObj) {
 		ActiveUserBO aub = new ActiveUserBO();
 		populateActiveUserBO(activeUserListObj.getActiveuserdtoLs().get(0), aub);
-		ArrayList<ActiveUserBO> aubList= actionlogdao.fetchActiveUser(aub);
-		if(aubList.size()>0){
+		ArrayList<ActiveUserBO> aubList = actionlogdao.fetchActiveUser(aub);
+		if (aubList.size() > 0) {
 			aub.setAudid(aubList.get(0).getAudid());
 			actionlogdao.updateActiveUser(aub);
-		}
-		else{
+		} else {
 			actionlogdao.addActiveUser(aub);
 		}
 	}
-	
+
 	public VisitorInfoList fetchVisitorInfo() {
 
 		VisitorInfoList visitorInfoListObj = new VisitorInfoList();
 
 		List<VisitorInfoDTO> visitorinfodtoLs = new ArrayList<VisitorInfoDTO>();
-		
-		ArrayList<Object> activeUsersCountList=actionlogdao.fetchActiveUsersCount();
-		
-		for(int i=0;i<7;i++){
+
+		ArrayList<Object> activeUsersCountList = actionlogdao.fetchActiveUsersCount();
+
+		for (int i = 0; i < 7; i++) {
 			VisitorInfoDTO visitorInfoDTOObj1 = new VisitorInfoDTO();
-			Object[] oArr=(Object[])activeUsersCountList.get(i);
-			if(null != oArr){
-			  visitorInfoDTOObj1.setCount(((Long)(oArr[0])).toString());
-			  Date d=(Date)(oArr[1]);
-			  SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
-			  visitorInfoDTOObj1.setDate(dateformatter.format(d));
-			  visitorinfodtoLs.add(visitorInfoDTOObj1);
+			Object[] oArr = (Object[]) activeUsersCountList.get(i);
+			if (null != oArr) {
+				visitorInfoDTOObj1.setCount(((Long) (oArr[0])).toString());
+				Date d = (Date) (oArr[1]);
+				SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+				visitorInfoDTOObj1.setDate(dateformatter.format(d));
+				visitorinfodtoLs.add(visitorInfoDTOObj1);
 			}
 		}
 		visitorInfoListObj.setVisitorinfodtoLs(visitorinfodtoLs);
 
 		return visitorInfoListObj;
 	}
-
-
 
 	private int getTotalPageCount(int totalrecordcount) {
 		int pagesize = 6;

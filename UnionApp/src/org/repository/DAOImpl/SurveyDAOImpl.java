@@ -92,7 +92,7 @@ public class SurveyDAOImpl implements ISurveyDAO {
 
 						String SQL = "select m from " + SurveyBO.class.getName() + " m where "
 								+ criteriaObj.getFetchSurveyCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.surveyid asc";
+								+ ") order by m.surveyid desc";
 
 						surveyBOList = (ArrayList<SurveyBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -111,7 +111,7 @@ public class SurveyDAOImpl implements ISurveyDAO {
 				 * String SQL = "select m from " + SurveyBO.class.getName() +
 				 * " m where status not in ('delete') order by m.surveyid asc ";
 				 */
-				String SQL = "select m from " + SurveyBO.class.getName() + " m order by m.surveyid asc ";
+				String SQL = "select m from " + SurveyBO.class.getName() + " m where status not in ('delete') order by m.surveyid desc ";
 				surveyBOList = (ArrayList<SurveyBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -134,7 +134,7 @@ public class SurveyDAOImpl implements ISurveyDAO {
 		try {
 
 			String SQL = "select m from " + SurveyBO.class.getName() + " m where surveyid in (" + id
-					+ ") order by m.surveyid asc";
+					+ ") order by m.surveyid desc";
 			surveyBOListObj = (ArrayList<SurveyBO>) manager.createQuery(SQL).getResultList();
 
 		} catch (Exception e) {
@@ -188,7 +188,7 @@ public class SurveyDAOImpl implements ISurveyDAO {
 					throw serviceExceptionObj;
 				}
 			} else {
-				SQL = "select m from " + SurveyBO.class.getName() +" m";
+				SQL = "select m from " + SurveyBO.class.getName() +" m where status not in ('delete')";
 
 			}
 

@@ -24,7 +24,7 @@ public interface UnionAppConstants {
 	final String summary = "Referat" ;
 	final String suggestionidea = "Forslag og ideer"; 
 	final String payrate = "Lønsats"; 
-	final String survey = "Afstemmning" ;
+	final String survey = "Afstemning" ;
 	final String create = "Oprette";
 	final String update = "Opdatere";
 	
