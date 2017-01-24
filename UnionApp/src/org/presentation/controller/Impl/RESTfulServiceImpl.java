@@ -3,17 +3,12 @@ package org.presentation.controller.Impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -51,7 +46,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/register")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj register(RequestObj reqparam) {
 
@@ -78,7 +73,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/login")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj login(RequestObj reqparam) {
 
@@ -104,7 +99,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/logout")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj logout(RequestObj reqparam) {
 
@@ -130,7 +125,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetch")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetch(RequestObj reqparam) {
 
@@ -157,7 +152,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchalluser")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchAllUser(RequestObj reqparam) {
 
@@ -184,7 +179,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/update")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj update(RequestObj reqparam) {
 
@@ -211,7 +206,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updateuserprofile")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateuserprofile(RequestObj reqparam) {
 
@@ -238,7 +233,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updatepwd")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updatepwd(RequestObj reqparam) {
 
@@ -265,7 +260,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/resetpwd")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj resetpwd(RequestObj reqparam) {
 
@@ -292,7 +287,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createmeeting")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createmeeting(RequestObj reqparam) {
 
@@ -319,7 +314,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updatemeeting")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updatemeeting(RequestObj reqparam) {
 
@@ -346,7 +341,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchmeeting")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchmeeting(RequestObj reqparam) {
 
@@ -373,7 +368,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/acceptdenymeeting")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj acceptdenymeeting(RequestObj reqparam) {
 
@@ -400,7 +395,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createactivity")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createactivity(RequestObj reqparam) {
 
@@ -427,7 +422,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updateactivity")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateactivity(RequestObj reqparam) {
 
@@ -454,7 +449,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchactivity")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchactivity(RequestObj reqparam) {
 
@@ -481,7 +476,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/acceptdenyactivity")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj acceptdenyactivity(RequestObj reqparam) {
 
@@ -508,7 +503,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createnewsletter")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createNewsLetter(RequestObj reqparam) {
 
@@ -535,7 +530,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updatenewsletter")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateNewsLetter(RequestObj reqparam) {
 
@@ -588,7 +583,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchnewsletter")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchNewsLetter(RequestObj reqparam) {
 
@@ -615,7 +610,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createpayrate")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createPayrate(RequestObj reqparam) {
 
@@ -642,7 +637,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updatepayrate")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updatePayrate(RequestObj reqparam) {
 
@@ -695,7 +690,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchpayrate")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchPayrate(RequestObj reqparam) {
 
@@ -722,7 +717,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createamr")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createAmr(RequestObj reqparam) {
 
@@ -749,7 +744,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updateamr")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateAmr(RequestObj reqparam) {
 
@@ -802,7 +797,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchamr")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchAmr(RequestObj reqparam) {
 
@@ -829,7 +824,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createagreement")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createAgreement(RequestObj reqparam) {
 
@@ -856,7 +851,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updateagreement")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateAgreement(RequestObj reqparam) {
 
@@ -909,7 +904,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchagreement")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchAgreement(RequestObj reqparam) {
 
@@ -936,7 +931,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createsummary")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createSummary(RequestObj reqparam) {
 
@@ -963,7 +958,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updatesummary")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateSummary(RequestObj reqparam) {
 
@@ -1016,7 +1011,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchsummary")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchSummary(RequestObj reqparam) {
 
@@ -1043,7 +1038,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createsuggestionidea")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createsuggestionidea(RequestObj reqparam) {
 
@@ -1070,7 +1065,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updatesuggestionidea")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updatesuggestionidea(RequestObj reqparam) {
 
@@ -1097,7 +1092,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchsuggestionidea")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchsuggestionidea(RequestObj reqparam) {
 
@@ -1151,7 +1146,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public ResponseObj uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@HeaderParam(value = "featureType") String featureType, @HeaderParam(value = "featureId") String featureId,
@@ -1235,7 +1230,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/deletefile")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj deleteFile(RequestObj reqparam) {
 
@@ -1270,7 +1265,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/addcategory")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj addcategory(RequestObj reqparam) {
 
@@ -1297,7 +1292,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchcategory")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchcategory(RequestObj reqparam) {
 
@@ -1324,7 +1319,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/hellosurvey")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON  + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj helloSurvey(RequestObj reqparam) {
 
@@ -1337,9 +1332,22 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		SurveyDTO surveyDTOObj1 = new SurveyDTO();
 
 		QuestionDTO questionDTOObj1 = new QuestionDTO();
+		
+		String value="å";//This is a special character
+		String value2="";
 
-		questionDTOObj1.setDetail("TestQuestion1");
+		        try {
+					//value=URLEncoder.encode(value, "UTF8");
+					value = URLDecoder.decode(URLEncoder.encode(value, "UTF-8"), "ISO-8859-1");
+					value2=URLDecoder.decode(value, "UTF8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+		questionDTOObj1.setDetail("ø");
 		questionDTOObj1.setSubject("Test1");
+		System.out.println("Danish Lang - " + "ø");
 
 		QuestionDTO questionDTOObj2 = new QuestionDTO();
 
@@ -1347,17 +1355,17 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		questionDTOObj2.setSubject("Test2");
 
 		OptionDTO optionDTOObj1 = new OptionDTO();
-		optionDTOObj1.setDetail("Yes");
+		optionDTOObj1.setDetail(value);
 		optionDTOObj1.setResponsecount("4");
 
 		OptionDTO optionDTOObj2 = new OptionDTO();
 
-		optionDTOObj2.setDetail("No");
+		optionDTOObj2.setDetail(value);
 		optionDTOObj2.setResponsecount("4");
 
 		OptionDTO optionDTOObj3 = new OptionDTO();
 
-		optionDTOObj3.setDetail("MayBe");
+		optionDTOObj3.setDetail(value2);
 		optionDTOObj3.setResponsecount("4");
 
 		List<OptionDTO> opotionDTOObjLs1 = new ArrayList<OptionDTO>();
@@ -1400,7 +1408,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/createsurvey")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj createSurvey(RequestObj reqparam) {
 
@@ -1427,7 +1435,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/updatesurvey")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj updateSurvey(RequestObj reqparam) {
 
@@ -1454,7 +1462,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@GET
 	@Path("/fetchsurvey/{surveyid}/{userid}")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public ResponseObj fetchSurveyById(@PathParam("surveyid") String surveyid, @PathParam("userid") String userid) {
 
 		ResponseObj responseObj;
@@ -1480,7 +1488,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchsurvey")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchSurvey(RequestObj reqparam) {
 
@@ -1507,7 +1515,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchactionlog")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchActionLog(RequestObj reqparam) {
 
@@ -1534,7 +1542,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchspaceinfo")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchSpaceInfo(RequestObj reqparam) {
 
@@ -1561,7 +1569,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/fetchvisitorinfo")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj fetchVisitorInfo(RequestObj reqparam) {
 
@@ -1588,7 +1596,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	
 	@POST
 	@Path("/user/active")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj setActiveUser(RequestObj reqparam) {
 
@@ -1615,7 +1623,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@Override
 	@POST
 	@Path("/testmail")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public String testMail() {
 
