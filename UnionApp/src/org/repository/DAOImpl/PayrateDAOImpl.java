@@ -101,7 +101,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 						String SQL = "select m from " + PayrateBO.class.getName() + " m where "
 								+ criteriaObj.getFetchPayrateCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.paydate asc";
+								+ ") order by m.paydate desc";
 
 						PayrateBOList = (ArrayList<PayrateBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -117,7 +117,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 				}
 			} else {
 				String SQL = "select m from " + PayrateBO.class.getName()
-						+ " m where status not in ('delete') order by m.paydate asc ";
+						+ " m where status not in ('delete') order by m.paydate desc ";
 				PayrateBOList = (ArrayList<PayrateBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -141,7 +141,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 		try {
 
 			String SQL = "select m from " + PayrateBO.class.getName() + " m where payid in (" 
-						+ id + ") order by m.paydate asc";
+						+ id + ") order by m.paydate desc";
 			PayrateBOList = (ArrayList<PayrateBO>) manager.createQuery(SQL).getResultList();			
 
 			

@@ -97,7 +97,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 						String SQL = "select s from " + SuggestionIdeaBO.class.getName() + " s where "
 								+ criteriaObj.getFetchSuggestionIdeaCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by s.suggideadate asc";
+								+ ") order by s.suggideadate desc";
 
 						suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL)
 								.setFirstResult(offsetno) // offset
@@ -114,7 +114,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 				}
 			} else {
 				String SQL = "select m from " + SuggestionIdeaBO.class.getName()
-						+ " m where status not in ('delete') order by m.suggideadate asc ";
+						+ " m where status not in ('delete') order by m.suggideadate desc ";
 				suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -138,7 +138,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 		try {
 
 			String SQL = "select m from " + SuggestionIdeaBO.class.getName() + " m where suggideaid in (" + id
-					+ ") order by m.suggideadate asc";
+					+ ") order by m.suggideadate desc";
 			suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).getResultList();
 
 		} catch (Exception e) {

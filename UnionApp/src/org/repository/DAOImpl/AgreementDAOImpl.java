@@ -93,7 +93,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 						String SQL = "select m from " + AgreementBO.class.getName() + " m where "
 								+ criteriaObj.getFetchAgreementCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.armdate asc";
+								+ ") order by m.armdate desc";
 
 						AgreementBOList = (ArrayList<AgreementBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -109,7 +109,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 				}
 			} else {
 				String SQL = "select m from " + AgreementBO.class.getName()
-						+ " m where status not in ('delete') order by m.armdate asc ";
+						+ " m where status not in ('delete') order by m.armdate desc ";
 				AgreementBOList = (ArrayList<AgreementBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -133,7 +133,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 		try {
 
 			String SQL = "select m from " + AgreementBO.class.getName() + " m where armid in (" 
-						+ id + ") order by m.armdate asc";
+						+ id + ") order by m.armdate desc";
 			AgreementBOList = (ArrayList<AgreementBO>) manager.createQuery(SQL).getResultList();			
 
 			

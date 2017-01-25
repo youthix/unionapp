@@ -100,7 +100,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 						String SQL = "select m from " + NewsLetterBO.class.getName() + " m where "
 								+ criteriaObj.getFetchNewsLetterCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.nldate asc";
+								+ ") order by m.nldate desc";
 
 						NewsLetterBOList = (ArrayList<NewsLetterBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -116,7 +116,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 				}
 			} else {
 				String SQL = "select m from " + NewsLetterBO.class.getName()
-						+ " m where status not in ('delete') order by m.nldate asc ";
+						+ " m where status not in ('delete') order by m.nldate desc ";
 				NewsLetterBOList = (ArrayList<NewsLetterBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -140,7 +140,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 		try {
 
 			String SQL = "select m from " + NewsLetterBO.class.getName() + " m where nlid in (" 
-						+ id + ") order by m.nldate asc";
+						+ id + ") order by m.nldate desc";
 			newsLetterBOList = (ArrayList<NewsLetterBO>) manager.createQuery(SQL).getResultList();			
 
 			

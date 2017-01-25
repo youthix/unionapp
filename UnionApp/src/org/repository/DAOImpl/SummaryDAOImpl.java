@@ -100,7 +100,7 @@ public class SummaryDAOImpl implements ISummaryDAO {
 
 						String SQL = "select m from " + SummaryBO.class.getName() + " m where "
 								+ criteriaObj.getFetchSummaryCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.sumdate asc";
+								+ ") order by m.sumdate desc";
 
 						SummaryBOList = (ArrayList<SummaryBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -116,7 +116,7 @@ public class SummaryDAOImpl implements ISummaryDAO {
 				}
 			} else {
 				String SQL = "select m from " + SummaryBO.class.getName()
-						+ " m where status not in ('delete') order by m.sumdate asc ";
+						+ " m where status not in ('delete') order by m.sumdate desc";
 				SummaryBOList = (ArrayList<SummaryBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -140,7 +140,7 @@ public class SummaryDAOImpl implements ISummaryDAO {
 		try {
 
 			String SQL = "select m from " + SummaryBO.class.getName() + " m where sumid in (" 
-						+ id + ") order by m.sumdate asc";
+						+ id + ") order by m.sumdate desc";
 			SummaryBOList = (ArrayList<SummaryBO>) manager.createQuery(SQL).getResultList();			
 
 			

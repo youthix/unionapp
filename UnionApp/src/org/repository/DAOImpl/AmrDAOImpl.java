@@ -101,7 +101,7 @@ public class AmrDAOImpl implements IAmrDAO{
 
 						String SQL = "select m from " + AmrBO.class.getName() + " m where "
 								+ criteriaObj.getFetchAmrCriteriaObj().getName() + " in (" + searchCriteria
-								+ ") order by m.amrdate asc";
+								+ ") order by m.amrdate desc";
 
 						AmrBOList = (ArrayList<AmrBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 								.setMaxResults(pageSize) // limit
@@ -117,7 +117,7 @@ public class AmrDAOImpl implements IAmrDAO{
 				}
 			} else {
 				String SQL = "select m from " + AmrBO.class.getName()
-						+ " m where status not in ('delete') order by m.amrdate asc ";
+						+ " m where status not in ('delete') order by m.amrdate desc ";
 				AmrBOList = (ArrayList<AmrBO>) manager.createQuery(SQL).setFirstResult(offsetno) // offset
 						.setMaxResults(pageSize) // limit
 						.getResultList();
@@ -141,7 +141,7 @@ public class AmrDAOImpl implements IAmrDAO{
 		try {
 
 			String SQL = "select m from " + AmrBO.class.getName() + " m where amrid in (" 
-						+ id + ") order by m.amrdate asc";
+						+ id + ") order by m.amrdate desc";
 			AmrBOList = (ArrayList<AmrBO>) manager.createQuery(SQL).getResultList();			
 
 			
