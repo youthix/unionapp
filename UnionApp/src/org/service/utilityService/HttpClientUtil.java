@@ -52,7 +52,10 @@ public class HttpClientUtil {
 		
 		
 		StringEntity requestEntity = new StringEntity(
-			    "{\"data\":{\"score\":\"5x1\"},\"to\":\"eqNEPfDY-pU:APA91bHY7L2M_rBoCRGriP_Fhr6eFtf8ia4JCjYw3wPmVo4WBWhvjbNgBp2Jah8dLLueXLAp6FZtveuftQh_3yCdiSi8D434aqEBnPHGcZS5p0rueM2JppsC782yOGhgJVijLy8QNQzQ\"}",
+			    //"{\"data\":{\"score\":\"5x1\"},\"to\":\"eqNEPfDY-pU:APA91bHY7L2M_rBoCRGriP_Fhr6eFtf8ia4JCjYw3wPmVo4WBWhvjbNgBp2Jah8dLLueXLAp6FZtveuftQh_3yCdiSi8D434aqEBnPHGcZS5p0rueM2JppsC782yOGhgJVijLy8QNQzQ\"}",
+				//"{\"notification\":{\"apps\":{\"alert\":{\"body\" : \"Helllo\",\"title\" : \"Title\"}},\"badge\":\"1\",\"sound\":\"default\"},\"to\":\"eCP99TBwMQU:APA91bG1vwQfn7XhKodRe6HzrDRDq2daj006XPv1b6LyLGZYOsq3gnXQVM9QqG67CmTOgCbmCRXhVozlw8TDZVrScooIuNoA8srbwVXW5ZKluEhWhm9YPvrrAm2qKM7A4geGWbZgpGUf\"}",
+				"{\"notification\":{\"title\":\"Hello\",\"text\":\"Hello I am Saurabh\"},\"priority\":\"high\",\"to\":\"eCP99TBwMQU:APA91bG1vwQfn7XhKodRe6HzrDRDq2daj006XPv1b6LyLGZYOsq3gnXQVM9QqG67CmTOgCbmCRXhVozlw8TDZVrScooIuNoA8srbwVXW5ZKluEhWhm9YPvrrAm2qKM7A4geGWbZgpGUf\"}",
+				//"{\"data\":[\"aps\":{\"alert\":{\"body\" : \"Helllo\",\"title\" : \"Title\"},\"badge\":\"1\",\"sound\":\"default\"},\"to\":\"eCP99TBwMQU:APA91bG1vwQfn7XhKodRe6HzrDRDq2daj006XPv1b6LyLGZYOsq3gnXQVM9QqG67CmTOgCbmCRXhVozlw8TDZVrScooIuNoA8srbwVXW5ZKluEhWhm9YPvrrAm2qKM7A4geGWbZgpGUf\"]}",
 			    ContentType.APPLICATION_JSON);
 		post.setEntity(requestEntity);
 
