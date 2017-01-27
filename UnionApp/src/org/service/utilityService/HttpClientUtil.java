@@ -13,8 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class HttpClientUtil {
 
-	private final String USER_AGENT = "Mozilla/5.0";
-
+	
 	public static void mainMethod(String[] args) throws Exception {
 
 		HttpClientUtil http = new HttpClientUtil();
@@ -24,36 +23,6 @@ public class HttpClientUtil {
 
 		System.out.println("\nTesting 2 - Send Http POST request");
 		http.sendPost();
-
-	}
-
-	// HTTP GET request
-	private void sendGet() throws Exception {
-
-		String url = "http://www.google.com/search?q=developer";
-
-		HttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-
-		// add request header
-		request.addHeader("User-Agent", USER_AGENT);
-
-		HttpResponse response = client.execute(request);
-
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " +
-                       response.getStatusLine().getStatusCode());
-
-		BufferedReader rd = new BufferedReader(
-                       new InputStreamReader(response.getEntity().getContent()));
-
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-		}
-
-		System.out.println(result.toString());
 
 	}
 
@@ -69,7 +38,7 @@ public class HttpClientUtil {
 		// add header
 		//post.setHeader("User-Agent", USER_AGENT);
 		//post.setHeader("Authorization", "key=AIzaSyAnpZ6KII9z3W_JBJCLSM-WOcE7Nm2bMkA");
-		post.setHeader("Authorization", "key=AAAAk5K8e_I:APA91bGmA-3-jQM0SUSUYx1V_7to-IA1wu1R-_YqYdC1HRLNUQpH7N1NPe1V_sdfvgkQUfqEbfBbNZlQ6mGMFlf0C3SHPqAtDuzasfprUsw4HREARLnhXeO7TOJ4iJuATqU-C6WjPU0V");
+		post.setHeader("Authorization", "key=AAAAozxQtE0:APA91bFh2JsmdW2hOqP3_psipNvFTpkLLCD1hzdZX5S-YFxpUIU8jlHxVJLZ6j-UcVeOH8r-GtFBdsgIkD7Ot6-cJl5UStjiH0lgAFaE3L3ZoVaCgdmN__xiZ3fwb-1mhhZpVcEWNJjh");
 		post.setHeader("Content-Type", "application/json");
 
 		/*List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
@@ -83,7 +52,10 @@ public class HttpClientUtil {
 		
 		
 		StringEntity requestEntity = new StringEntity(
-			    "{\"data\":{\"score\":\"5x1\"},\"to\":\"fMC5cgQPuKs:APA91bFhqQDhU_3TqCe-c_0385PANYRGVbHb_EmWJR8m-kVEoXcZs0YTi-C-x8xEZSVQspJ_odA8njJpoEX-xrOpl9TUpUjsaAM4mwXYBagB_YXnO7ewY3K8OsLVoxlRRgCadYv12tcf\"}",
+			    //"{\"data\":{\"score\":\"5x1\"},\"to\":\"eqNEPfDY-pU:APA91bHY7L2M_rBoCRGriP_Fhr6eFtf8ia4JCjYw3wPmVo4WBWhvjbNgBp2Jah8dLLueXLAp6FZtveuftQh_3yCdiSi8D434aqEBnPHGcZS5p0rueM2JppsC782yOGhgJVijLy8QNQzQ\"}",
+				//"{\"notification\":{\"apps\":{\"alert\":{\"body\" : \"Helllo\",\"title\" : \"Title\"}},\"badge\":\"1\",\"sound\":\"default\"},\"to\":\"eCP99TBwMQU:APA91bG1vwQfn7XhKodRe6HzrDRDq2daj006XPv1b6LyLGZYOsq3gnXQVM9QqG67CmTOgCbmCRXhVozlw8TDZVrScooIuNoA8srbwVXW5ZKluEhWhm9YPvrrAm2qKM7A4geGWbZgpGUf\"}",
+				"{\"notification\":{\"title\":\"Hello\",\"text\":\"Hello I am Saurabh\"},\"priority\":\"high\",\"to\":\"eCP99TBwMQU:APA91bG1vwQfn7XhKodRe6HzrDRDq2daj006XPv1b6LyLGZYOsq3gnXQVM9QqG67CmTOgCbmCRXhVozlw8TDZVrScooIuNoA8srbwVXW5ZKluEhWhm9YPvrrAm2qKM7A4geGWbZgpGUf\"}",
+				//"{\"data\":[\"aps\":{\"alert\":{\"body\" : \"Helllo\",\"title\" : \"Title\"},\"badge\":\"1\",\"sound\":\"default\"},\"to\":\"eCP99TBwMQU:APA91bG1vwQfn7XhKodRe6HzrDRDq2daj006XPv1b6LyLGZYOsq3gnXQVM9QqG67CmTOgCbmCRXhVozlw8TDZVrScooIuNoA8srbwVXW5ZKluEhWhm9YPvrrAm2qKM7A4geGWbZgpGUf\"]}",
 			    ContentType.APPLICATION_JSON);
 		post.setEntity(requestEntity);
 
