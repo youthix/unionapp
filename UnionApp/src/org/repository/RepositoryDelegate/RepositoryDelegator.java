@@ -2610,7 +2610,7 @@ public class RepositoryDelegator {
 					// userIds.
 					if (surveydtoObj.getUserresponsestatus() != null
 							&& surveydtoObj.getUserresponsestatus().equalsIgnoreCase("true")) {
-						surveyBO_DTOObj.setUserresponsestatus("true");
+						//surveyBO_DTOObj.setUserresponsestatus("true");
 						String oldresponsecount = surveyBO_DTOObj.getResponsecount();
 						if (oldresponsecount == null || oldresponsecount.equalsIgnoreCase("")) {
 
@@ -2885,7 +2885,7 @@ public class RepositoryDelegator {
 	private void addNewsLetterAttachment(String fileName, String attachmentType, NewsLetterBO newsLetterBOObj) {
 		newsLetterBOObj.setAttachmentstatus("true");
 
-		if (attachmentType.equalsIgnoreCase("document")) {
+		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 			if (newsLetterBOObj.getDocattachment() != null && newsLetterBOObj.getDocattachment() != "") {
 				String docattachment = newsLetterBOObj.getDocattachment();
@@ -2897,7 +2897,7 @@ public class RepositoryDelegator {
 
 		}
 
-		else if (attachmentType.equalsIgnoreCase("image")) {
+		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 			if (newsLetterBOObj.getImgattachment() != null && newsLetterBOObj.getImgattachment() != "") {
 				String imgattachment = newsLetterBOObj.getImgattachment();
@@ -2917,7 +2917,7 @@ public class RepositoryDelegator {
 		if (null != newsLetterBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(newsLetterBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(newsLetterBOObj.getAttachmentstatus())) {
-			if (attachmentType.equalsIgnoreCase("image")) {
+			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 				if (null != newsLetterBOObj.getImgattachment()) {
 
@@ -2932,7 +2932,7 @@ public class RepositoryDelegator {
 
 				}
 
-			} else if (attachmentType.equalsIgnoreCase("document")) {
+			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 				if (null != newsLetterBOObj.getDocattachment()) {
 
@@ -3006,7 +3006,7 @@ public class RepositoryDelegator {
 	private void addAgreementAttachment(String fileName, String attachmentType, AgreementBO agreementBOObj) {
 		agreementBOObj.setAttachmentstatus("true");
 
-		if (attachmentType.equalsIgnoreCase("document")) {
+		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 			if (agreementBOObj.getDocattachment() != null && agreementBOObj.getDocattachment() != "") {
 				String docattachment = agreementBOObj.getDocattachment();
@@ -3018,7 +3018,7 @@ public class RepositoryDelegator {
 
 		}
 
-		else if (attachmentType.equalsIgnoreCase("image")) {
+		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 			if (agreementBOObj.getImgattachment() != null && agreementBOObj.getImgattachment() != "") {
 				String imgattachment = agreementBOObj.getImgattachment();
@@ -3038,7 +3038,7 @@ public class RepositoryDelegator {
 		if (null != agreementBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())) {
-			if (attachmentType.equalsIgnoreCase("document")) {
+			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 				if (null != agreementBOObj.getImgattachment()) {
 
@@ -3053,7 +3053,7 @@ public class RepositoryDelegator {
 
 				}
 
-			} else if (attachmentType.equalsIgnoreCase("image")) {
+			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 				if (null != agreementBOObj.getDocattachment()) {
 
@@ -3127,7 +3127,7 @@ public class RepositoryDelegator {
 	private void addPayrateAttachment(String fileName, String attachmentType, PayrateBO payrateBOObj) {
 		payrateBOObj.setAttachmentstatus("true");
 
-		if (attachmentType.equalsIgnoreCase("document")) {
+		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 			if (payrateBOObj.getDocattachment() != null && payrateBOObj.getDocattachment() != "") {
 				String docattachment = payrateBOObj.getDocattachment();
@@ -3139,7 +3139,7 @@ public class RepositoryDelegator {
 
 		}
 
-		else if (attachmentType.equalsIgnoreCase("image")) {
+		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 			if (payrateBOObj.getImgattachment() != null && payrateBOObj.getImgattachment() != "") {
 				String imgattachment = payrateBOObj.getImgattachment();
@@ -3158,7 +3158,7 @@ public class RepositoryDelegator {
 
 		if (null != payrateBOObj.getAttachmentstatus() && !"false".equalsIgnoreCase(payrateBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(payrateBOObj.getAttachmentstatus())) {
-			if (attachmentType.equalsIgnoreCase("document")) {
+			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 				if (null != payrateBOObj.getImgattachment()) {
 
@@ -3173,7 +3173,7 @@ public class RepositoryDelegator {
 
 				}
 
-			} else if (attachmentType.equalsIgnoreCase("image")) {
+			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 				if (null != payrateBOObj.getDocattachment()) {
 

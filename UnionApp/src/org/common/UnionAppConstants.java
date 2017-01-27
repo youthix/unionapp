@@ -15,6 +15,8 @@ public interface UnionAppConstants {
 	final String survey_eng = "survey";
 	final String create_eng = "create";
 	final String update_eng = "update";
+	final String document_eng = "document";
+	final String image_eng = "image";
 	
 	final String meeting = "Møde";
 	final String activity = "Aktivitet"; 
@@ -27,6 +29,8 @@ public interface UnionAppConstants {
 	final String survey = "Afstemning" ;
 	final String create = "Oprette";
 	final String update = "Opdatere";
+	final String document = "Dokument";
+	final String image = "Billede";	
 	
 	final String totalSpaceAllocated="100";
 	final String miscSpaceUsed="30";
