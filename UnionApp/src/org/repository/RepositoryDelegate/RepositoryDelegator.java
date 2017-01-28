@@ -54,6 +54,8 @@ import org.presentation.dto.feature.MeetingDTO;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterDTO;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.NotificationDTO;
+import org.presentation.dto.feature.NotificationList;
 import org.presentation.dto.feature.OptionDTO;
 import org.presentation.dto.feature.PayrateDTO;
 import org.presentation.dto.feature.PayrateList;
@@ -538,7 +540,7 @@ public class RepositoryDelegator {
 
 				createActionLog(meetingdtoObj.getMeetdate(), meetingdtoObj.getMeettime(), UnionAppConstants.create,
 						meetingdtoObj.getCreator(), meetingdtoObj.getDetail(), UnionAppConstants.meeting,
-						meetingdtoObj.getSubject());
+						meetingdtoObj.getSubject(), meetingdtoObj.getStatus());
 
 			}
 
@@ -835,8 +837,8 @@ public class RepositoryDelegator {
 						// merge this UpdateBO back in DB
 						meetingdao.update(meetingBOObj);
 						createActionLog(meetingdtoObj.getMeetdate(), meetingdtoObj.getMeettime(),
-								UnionAppConstants.update, meetingdtoObj.getCreator(), meetingdtoObj.getDetail(),
-								UnionAppConstants.meeting, meetingdtoObj.getSubject());
+								UnionAppConstants.update, meetingdtoObj.getCreator(), meetingdtoObj.getMeetingid(),
+								UnionAppConstants.meeting, meetingdtoObj.getSubject(), meetingdtoObj.getStatus());
 
 						populateMeetingDTO(meetingdtoObj, meetingBOObj);
 						responseObj.setMeetingListObj(meetingListObj);
@@ -884,7 +886,7 @@ public class RepositoryDelegator {
 
 				createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(), UnionAppConstants.create,
 						activitydtoObj.getCreator(), activitydtoObj.getDetail(), UnionAppConstants.activity,
-						activitydtoObj.getSubject());
+						activitydtoObj.getSubject(), activitydtoObj.getStatus());
 			}
 
 		}
@@ -1046,8 +1048,8 @@ public class RepositoryDelegator {
 						// merge this UpdateBO back in DB
 						activitydao.update(activityBOObj);
 						createActionLog(activitydtoObj.getActdate(), activitydtoObj.getActtime(),
-								UnionAppConstants.update, activitydtoObj.getCreator(), activitydtoObj.getDetail(),
-								UnionAppConstants.activity, activitydtoObj.getSubject());
+								UnionAppConstants.update, activitydtoObj.getCreator(), activitydtoObj.getActivityid(),
+								UnionAppConstants.activity, activitydtoObj.getSubject(), activitydtoObj.getStatus());
 						populateActivityDTO(activitydtoObj, activityBOObj);
 						responseObj.setActivityListObj(activityListObj);
 					}
@@ -1226,7 +1228,7 @@ public class RepositoryDelegator {
 
 				createActionLog(NewsLetterdtoObj.getNldate(), NewsLetterdtoObj.getNltime(), UnionAppConstants.create,
 						NewsLetterdtoObj.getCreator(), NewsLetterdtoObj.getDetail(), UnionAppConstants.newsletter,
-						NewsLetterdtoObj.getSubject());
+						NewsLetterdtoObj.getSubject(), NewsLetterdtoObj.getStatus());
 
 			}
 
@@ -1362,8 +1364,9 @@ public class RepositoryDelegator {
 						newsletterdao.update(NewsLetterBOObj);
 
 						createActionLog(NewsLetterdtoObj.getNldate(), NewsLetterdtoObj.getNltime(),
-								UnionAppConstants.update, NewsLetterdtoObj.getCreator(), NewsLetterdtoObj.getDetail(),
-								UnionAppConstants.newsletter, NewsLetterdtoObj.getSubject());
+								UnionAppConstants.update, NewsLetterdtoObj.getCreator(), NewsLetterdtoObj.getNlid(),
+								UnionAppConstants.newsletter, NewsLetterdtoObj.getSubject(),
+								NewsLetterdtoObj.getStatus());
 
 						populateNewsLetterDTO(NewsLetterdtoObj, NewsLetterBOObj);
 						responseObj.setNewsLetterListObj(newsLetterListObj);
@@ -1410,7 +1413,7 @@ public class RepositoryDelegator {
 
 				createActionLog(PayratedtoObj.getPaydate(), PayratedtoObj.getPaytime(), UnionAppConstants.create,
 						PayratedtoObj.getCreator(), PayratedtoObj.getDetail(), UnionAppConstants.payrate,
-						PayratedtoObj.getSubject());
+						PayratedtoObj.getSubject(), PayratedtoObj.getStatus());
 
 			}
 
@@ -1546,8 +1549,8 @@ public class RepositoryDelegator {
 						payratedao.update(PayrateBOObj);
 
 						createActionLog(PayratedtoObj.getPaydate(), PayratedtoObj.getPaytime(),
-								UnionAppConstants.update, PayratedtoObj.getCreator(), PayratedtoObj.getDetail(),
-								UnionAppConstants.payrate, PayratedtoObj.getSubject());
+								UnionAppConstants.update, PayratedtoObj.getCreator(), PayratedtoObj.getPayid(),
+								UnionAppConstants.payrate, PayratedtoObj.getSubject(), PayratedtoObj.getStatus());
 						populatePayrateDTO(PayratedtoObj, PayrateBOObj);
 						responseObj.setPayrateListObj(PayrateListObj);
 					}
@@ -1592,7 +1595,8 @@ public class RepositoryDelegator {
 				populateAmrDTO(AmrdtoObj, AmrBOObj);
 
 				createActionLog(AmrdtoObj.getAmrdate(), AmrdtoObj.getAmrtime(), UnionAppConstants.create,
-						AmrdtoObj.getCreator(), AmrdtoObj.getDetail(), UnionAppConstants.amr, AmrdtoObj.getSubject());
+						AmrdtoObj.getCreator(), AmrdtoObj.getDetail(), UnionAppConstants.amr, AmrdtoObj.getSubject(),
+						AmrdtoObj.getStatus());
 
 			}
 
@@ -1727,8 +1731,8 @@ public class RepositoryDelegator {
 						amrdao.update(AmrBOObj);
 
 						createActionLog(AmrdtoObj.getAmrdate(), AmrdtoObj.getAmrtime(), UnionAppConstants.update,
-								AmrdtoObj.getCreator(), AmrdtoObj.getDetail(), UnionAppConstants.amr,
-								AmrdtoObj.getSubject());
+								AmrdtoObj.getCreator(), AmrdtoObj.getAmrid(), UnionAppConstants.amr,
+								AmrdtoObj.getSubject(), AmrdtoObj.getStatus());
 						populateAmrDTO(AmrdtoObj, AmrBOObj);
 						responseObj.setAmrListObj(AmrListObj);
 					}
@@ -1774,7 +1778,7 @@ public class RepositoryDelegator {
 
 				createActionLog(AgreementdtoObj.getArmdate(), AgreementdtoObj.getArmtime(), UnionAppConstants.create,
 						AgreementdtoObj.getCreator(), AgreementdtoObj.getDetail(), UnionAppConstants.agreement,
-						AgreementdtoObj.getSubject());
+						AgreementdtoObj.getSubject(), AgreementdtoObj.getStatus());
 
 			}
 
@@ -1938,8 +1942,8 @@ public class RepositoryDelegator {
 						agreementdao.update(AgreementBOObj);
 
 						createActionLog(AgreementdtoObj.getArmdate(), AgreementdtoObj.getArmtime(),
-								UnionAppConstants.update, AgreementdtoObj.getCreator(), AgreementdtoObj.getDetail(),
-								UnionAppConstants.agreement, AgreementdtoObj.getSubject());
+								UnionAppConstants.update, AgreementdtoObj.getCreator(), AgreementdtoObj.getArmid(),
+								UnionAppConstants.agreement, AgreementdtoObj.getSubject(), AgreementdtoObj.getStatus());
 						populateAgreementDTO(AgreementdtoObj, AgreementBOObj);
 						responseObj.setAgreementListObj(AgreementListObj);
 					}
@@ -1985,7 +1989,7 @@ public class RepositoryDelegator {
 
 				createActionLog(SummarydtoObj.getSumdate(), SummarydtoObj.getSumtime(), UnionAppConstants.create,
 						SummarydtoObj.getCreator(), SummarydtoObj.getDetail(), UnionAppConstants.summary,
-						SummarydtoObj.getSubject());
+						SummarydtoObj.getSubject(), SummarydtoObj.getStatus());
 
 			}
 
@@ -2121,8 +2125,8 @@ public class RepositoryDelegator {
 						summarydao.update(SummaryBOObj);
 
 						createActionLog(SummarydtoObj.getSumdate(), SummarydtoObj.getSumtime(),
-								UnionAppConstants.update, SummarydtoObj.getCreator(), SummarydtoObj.getDetail(),
-								UnionAppConstants.summary, SummarydtoObj.getSubject());
+								UnionAppConstants.update, SummarydtoObj.getCreator(), SummarydtoObj.getSumid(),
+								UnionAppConstants.summary, SummarydtoObj.getSubject(), SummarydtoObj.getStatus());
 						populateSummaryDTO(SummarydtoObj, SummaryBOObj);
 						responseObj.setSummaryListObj(SummaryListObj);
 					}
@@ -2169,7 +2173,8 @@ public class RepositoryDelegator {
 
 				createActionLog(suggestionIdeadtoObj.getSuggideadate(), suggestionIdeadtoObj.getSuggideatime(),
 						UnionAppConstants.create, suggestionIdeadtoObj.getCreator(), suggestionIdeadtoObj.getDetail(),
-						UnionAppConstants.suggestionidea, suggestionIdeadtoObj.getSubject());
+						UnionAppConstants.suggestionidea, suggestionIdeadtoObj.getSubject(),
+						suggestionIdeadtoObj.getStatus());
 
 			}
 
@@ -2314,8 +2319,8 @@ public class RepositoryDelegator {
 
 						createActionLog(suggestionIdeadtoObj.getSuggideadate(), suggestionIdeadtoObj.getSuggideatime(),
 								UnionAppConstants.update, suggestionIdeadtoObj.getCreator(),
-								suggestionIdeadtoObj.getDetail(), UnionAppConstants.suggestionidea,
-								suggestionIdeadtoObj.getSubject());
+								suggestionIdeadtoObj.getSuggideaid(), UnionAppConstants.suggestionidea,
+								suggestionIdeadtoObj.getSubject(), suggestionIdeadtoObj.getStatus());
 						populateSuggestionIdeaDTO(suggestionIdeadtoObj, suggestionIdeaBOObj);
 						responseObj.setSuggestionIdeaListObj(suggestionIdeaListObj);
 
@@ -2445,7 +2450,8 @@ public class RepositoryDelegator {
 				surveydtoObj.setQuestiondtoLs(null);
 
 				createActionLog(null, null, UnionAppConstants.create, surveydtoObj.getCreator(),
-						surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
+						surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject(),
+						surveydtoObj.getStatus());
 
 			}
 
@@ -2610,7 +2616,7 @@ public class RepositoryDelegator {
 					// userIds.
 					if (surveydtoObj.getUserresponsestatus() != null
 							&& surveydtoObj.getUserresponsestatus().equalsIgnoreCase("true")) {
-						//surveyBO_DTOObj.setUserresponsestatus("true");
+						// surveyBO_DTOObj.setUserresponsestatus("true");
 						String oldresponsecount = surveyBO_DTOObj.getResponsecount();
 						if (oldresponsecount == null || oldresponsecount.equalsIgnoreCase("")) {
 
@@ -2689,7 +2695,8 @@ public class RepositoryDelegator {
 					surveydao.update(surveyBOObj);
 
 					createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
-							surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
+							surveydtoObj.getSurveyid(), UnionAppConstants.survey, surveydtoObj.getSubject(),
+							surveydtoObj.getStatus());
 
 					surveydtoObj = populateSurveyDTO(surveydtoObj, surveyBOObj);
 					surveyListResp.add(surveydtoObj);
@@ -2702,7 +2709,8 @@ public class RepositoryDelegator {
 					surveydao.update(surveyBOObj);
 
 					createActionLog(null, null, UnionAppConstants.update, surveydtoObj.getCreator(),
-							surveydtoObj.getDetail(), UnionAppConstants.survey, surveydtoObj.getSubject());
+							surveydtoObj.getSurveyid(), UnionAppConstants.survey, surveydtoObj.getSubject(),
+							surveydtoObj.getStatus());
 
 					surveydtoObj = populateSurveyDTO(surveydtoObj, surveyBOObj);
 					surveyListResp.add(surveydtoObj);
@@ -2809,7 +2817,7 @@ public class RepositoryDelegator {
 	}
 
 	public void createActionLog(String date, String time, String action, String creator, String detail, String module,
-			String subject) {
+			String subject, String status) {
 
 		ActionLogDTO actionlogdtoObj = new ActionLogDTO();
 
@@ -2825,12 +2833,142 @@ public class RepositoryDelegator {
 		actionlogdtoObj.setDetail(detail);
 		actionlogdtoObj.setModule(module);
 		actionlogdtoObj.setSubject(subject);
+		actionlogdtoObj.setStatus(status);
 
 		ActionLogBO actionLogBOObj = new ActionLogBO();
 
 		populateActionLogBO(actionlogdtoObj, actionLogBOObj);
 		actionlogdao.addActionLog(actionLogBOObj);
 
+	}
+
+	public ResponseObj fetchNotificationItem(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		NotificationList notificationListObj = new NotificationList();
+		ArrayList<NotificationDTO> notificaitonDTOList = new ArrayList<NotificationDTO>();
+
+		NotificationDTO notiVoteDTO = new NotificationDTO();
+		notiVoteDTO.setModule(UnionAppConstants.survey_noti);
+		notiVoteDTO.setCount(0);
+
+		NotificationDTO notiMeetDTO = new NotificationDTO();
+		notiMeetDTO.setModule(UnionAppConstants.meeting_noti);
+		notiMeetDTO.setCount(0);
+
+		NotificationDTO notiNLDTO = new NotificationDTO();
+		notiNLDTO.setModule(UnionAppConstants.newsletter_noti);
+		notiNLDTO.setCount(0);
+
+		NotificationDTO notiActDTO = new NotificationDTO();
+		notiActDTO.setModule(UnionAppConstants.activity_noti);
+		notiActDTO.setCount(0);
+
+		NotificationDTO notiSuggDTO = new NotificationDTO();
+		notiSuggDTO.setModule(UnionAppConstants.suggestionidea_noti);
+		notiSuggDTO.setCount(0);
+
+		NotificationDTO notiSumDTO = new NotificationDTO();
+		notiSumDTO.setModule(UnionAppConstants.summary_noti);
+		notiSumDTO.setCount(0);
+
+		NotificationDTO notiAmrDTO = new NotificationDTO();
+		notiAmrDTO.setModule(UnionAppConstants.amr_noti);
+		notiAmrDTO.setCount(0);
+
+		NotificationDTO notiAgrDTO = new NotificationDTO();
+		notiAgrDTO.setModule(UnionAppConstants.agreement_noti);
+		notiAgrDTO.setCount(0);
+
+		NotificationDTO notiPayDTO = new NotificationDTO();
+		notiPayDTO.setModule(UnionAppConstants.payrate_noti);
+		notiPayDTO.setCount(0);
+
+		ArrayList<ActionLogBO> actionLogBOList;
+
+		actionLogBOList = actionlogdao.fetchActionLogForNotification(reqparam.getTimestamp());
+
+		if (null != actionLogBOList && actionLogBOList.size() > 0) {
+
+			Iterator<ActionLogBO> litr = actionLogBOList.iterator();
+
+			while (litr.hasNext()) { 
+				ActionLogBO actionLogBO = litr.next();
+
+				switch (actionLogBO.getModule()) {
+				case UnionAppConstants.survey:
+					populatenotificationdto(notiVoteDTO, actionLogBO);
+					break;
+				case UnionAppConstants.meeting:
+					populatenotificationdto(notiMeetDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.newsletter:
+					populatenotificationdto(notiNLDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.activity:
+					populatenotificationdto(notiActDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.suggestionidea:
+					populatenotificationdto(notiSuggDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.summary:
+					populatenotificationdto(notiSumDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.amr:
+					populatenotificationdto(notiAmrDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.agreement:
+					populatenotificationdto(notiAgrDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.payrate:
+					populatenotificationdto(notiPayDTO, actionLogBO);
+					break;
+				}
+
+			}
+
+		}
+
+		notificaitonDTOList.add(notiVoteDTO);
+		notificaitonDTOList.add(notiMeetDTO);
+		notificaitonDTOList.add(notiNLDTO);
+		notificaitonDTOList.add(notiActDTO);
+		notificaitonDTOList.add(notiSuggDTO);
+		notificaitonDTOList.add(notiSumDTO);
+		notificaitonDTOList.add(notiAmrDTO);
+		notificaitonDTOList.add(notiAgrDTO);
+		notificaitonDTOList.add(notiPayDTO);
+
+		notificationListObj.setNotificationdtoLs(notificaitonDTOList);
+
+		responseObj.setNotificationListObj(notificationListObj);
+
+		return responseObj;
+	}
+
+	private void populatenotificationdto(NotificationDTO notiDTO, ActionLogBO actionLogBO) {
+		int oldCount = notiDTO.getCount();
+		int newCount = oldCount + 1;
+		notiDTO.setCount(newCount);
+
+		String oldid = notiDTO.getItemid();
+
+		String newId;
+
+		if (oldid != null && oldid != "") {
+
+			newId = oldid + "," + (actionLogBO).getDetail();
+		} else {
+			newId = (actionLogBO).getDetail();
+		}
+		notiDTO.setItemid(newId);
 	}
 
 	private void updateNLAttachmentDet(String featureId, String fileName, String attachmentType, String status) {
@@ -2885,7 +3023,8 @@ public class RepositoryDelegator {
 	private void addNewsLetterAttachment(String fileName, String attachmentType, NewsLetterBO newsLetterBOObj) {
 		newsLetterBOObj.setAttachmentstatus("true");
 
-		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
+		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))
+				|| (attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 			if (newsLetterBOObj.getDocattachment() != null && newsLetterBOObj.getDocattachment() != "") {
 				String docattachment = newsLetterBOObj.getDocattachment();
@@ -2897,7 +3036,8 @@ public class RepositoryDelegator {
 
 		}
 
-		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
+		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))
+				|| (attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 			if (newsLetterBOObj.getImgattachment() != null && newsLetterBOObj.getImgattachment() != "") {
 				String imgattachment = newsLetterBOObj.getImgattachment();
@@ -2917,7 +3057,8 @@ public class RepositoryDelegator {
 		if (null != newsLetterBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(newsLetterBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(newsLetterBOObj.getAttachmentstatus())) {
-			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
+			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))
+					|| (attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 				if (null != newsLetterBOObj.getImgattachment()) {
 
@@ -2932,7 +3073,8 @@ public class RepositoryDelegator {
 
 				}
 
-			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
+			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))
+					|| (attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 				if (null != newsLetterBOObj.getDocattachment()) {
 
@@ -3006,7 +3148,8 @@ public class RepositoryDelegator {
 	private void addAgreementAttachment(String fileName, String attachmentType, AgreementBO agreementBOObj) {
 		agreementBOObj.setAttachmentstatus("true");
 
-		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
+		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))
+				|| (attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 			if (agreementBOObj.getDocattachment() != null && agreementBOObj.getDocattachment() != "") {
 				String docattachment = agreementBOObj.getDocattachment();
@@ -3018,7 +3161,8 @@ public class RepositoryDelegator {
 
 		}
 
-		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
+		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))
+				|| (attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 			if (agreementBOObj.getImgattachment() != null && agreementBOObj.getImgattachment() != "") {
 				String imgattachment = agreementBOObj.getImgattachment();
@@ -3038,7 +3182,8 @@ public class RepositoryDelegator {
 		if (null != agreementBOObj.getAttachmentstatus()
 				&& !"false".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())) {
-			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
+			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))
+					|| (attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 				if (null != agreementBOObj.getImgattachment()) {
 
@@ -3053,7 +3198,8 @@ public class RepositoryDelegator {
 
 				}
 
-			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
+			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))
+					|| (attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 				if (null != agreementBOObj.getDocattachment()) {
 
@@ -3127,7 +3273,8 @@ public class RepositoryDelegator {
 	private void addPayrateAttachment(String fileName, String attachmentType, PayrateBO payrateBOObj) {
 		payrateBOObj.setAttachmentstatus("true");
 
-		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
+		if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))
+				|| (attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 			if (payrateBOObj.getDocattachment() != null && payrateBOObj.getDocattachment() != "") {
 				String docattachment = payrateBOObj.getDocattachment();
@@ -3139,7 +3286,8 @@ public class RepositoryDelegator {
 
 		}
 
-		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
+		else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))
+				|| (attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 			if (payrateBOObj.getImgattachment() != null && payrateBOObj.getImgattachment() != "") {
 				String imgattachment = payrateBOObj.getImgattachment();
@@ -3158,7 +3306,8 @@ public class RepositoryDelegator {
 
 		if (null != payrateBOObj.getAttachmentstatus() && !"false".equalsIgnoreCase(payrateBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(payrateBOObj.getAttachmentstatus())) {
-			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))||(attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
+			if ((attachmentType.equalsIgnoreCase(UnionAppConstants.document))
+					|| (attachmentType.equalsIgnoreCase(UnionAppConstants.document_eng))) {
 
 				if (null != payrateBOObj.getImgattachment()) {
 
@@ -3173,7 +3322,8 @@ public class RepositoryDelegator {
 
 				}
 
-			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))||(attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
+			} else if ((attachmentType.equalsIgnoreCase(UnionAppConstants.image))
+					|| (attachmentType.equalsIgnoreCase(UnionAppConstants.image_eng))) {
 
 				if (null != payrateBOObj.getDocattachment()) {
 
@@ -3828,6 +3978,7 @@ public class RepositoryDelegator {
 			 * actionlogdtoObj.getActtime()) {
 			 */
 			actionlogBOObj.setActdate(dateformatter.parse(actionlogdtoObj.getActdate()));
+			actionlogBOObj.setStatus(actionlogdtoObj.getStatus());
 			// }
 
 		} catch (ParseException e) {

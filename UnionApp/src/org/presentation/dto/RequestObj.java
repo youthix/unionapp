@@ -54,6 +54,8 @@ public class RequestObj {
 	private String channel;
 
 	private String pageno;
+	
+	private String timestamp;
 
 	public String getPageno() {
 		return pageno;
@@ -199,6 +201,14 @@ public class RequestObj {
 
 	public void setActiveUserListObj(ActiveUserList activeUserListObj) {
 		ActiveUserListObj = activeUserListObj;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
 	}
 
 }

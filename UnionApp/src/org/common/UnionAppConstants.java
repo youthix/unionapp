@@ -32,6 +32,21 @@ public interface UnionAppConstants {
 	final String document = "Dokument";
 	final String image = "Billede";	
 	
+	
+	//Notification
+	
+	final String meeting_noti = "Næste møde";
+	final String activity_noti = "Aktiviteter"; 
+	final String newsletter_noti = "Nyhedsbrev"; 
+	final String amr_noti = "AMR";
+	final String agreement_noti = "Lokalaftale"; 
+	final String summary_noti = "Referat" ;
+	final String suggestionidea_noti = "Forslag og ideer"; 
+	final String payrate_noti = "Lønsats"; 
+	final String survey_noti = "Afstemning" ;
+	
+
+	
 	final String totalSpaceAllocated="100";
 	final String miscSpaceUsed="30";
 	final String spaceUnit="mb";

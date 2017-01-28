@@ -9,6 +9,7 @@ import org.presentation.dto.feature.AmrList;
 import org.presentation.dto.feature.CategoryList;
 import org.presentation.dto.feature.MeetingList;
 import org.presentation.dto.feature.NewsLetterList;
+import org.presentation.dto.feature.NotificationList;
 import org.presentation.dto.feature.PayrateList;
 import org.presentation.dto.feature.SpaceInfoDTO;
 import org.presentation.dto.feature.SuggestionIdeaList;
@@ -47,6 +48,8 @@ public class ResponseObj {
 	private SpaceInfoDTO spaceInfoDTOObj;
 	
 	private VisitorInfoList visitorInfoListObj;
+	
+	private NotificationList notificationListObj;
 
 	private String totalPage;
 
@@ -178,6 +181,14 @@ public class ResponseObj {
 
 	public void setVisitorInfoListObj(VisitorInfoList visitorInfoListObj) {
 		this.visitorInfoListObj = visitorInfoListObj;
+	}
+
+	public NotificationList getNotificationListObj() {
+		return notificationListObj;
+	}
+
+	public void setNotificationListObj(NotificationList notificationListObj) {
+		this.notificationListObj = notificationListObj;
 	}
 	
 	

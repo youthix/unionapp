@@ -1639,6 +1639,25 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
+	@POST
+	@Path("/fetch/notification")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj fetchNotificationItem(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {			
+				responseObj = serviceDelegator.fetchNotificationItem(reqparam);
+			
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}
 
 	@Override
 	@POST

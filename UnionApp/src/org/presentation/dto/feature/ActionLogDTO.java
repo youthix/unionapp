@@ -21,6 +21,8 @@ public class ActionLogDTO {
 	private String actionid;
 
 	private String module;
+	
+	private String status;
 
 	public String getSubject() {
 		return subject;
@@ -84,6 +86,14 @@ public class ActionLogDTO {
 
 	public void setModule(String module) {
 		this.module = module;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

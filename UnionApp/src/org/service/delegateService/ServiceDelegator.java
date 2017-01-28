@@ -128,7 +128,7 @@ public class ServiceDelegator {
 	public ResponseObj fetch(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		
+
 		if (null != reqparam.getCriteria()) {
 
 			responseObj = repositoryDelegator.fetch(reqparam);
@@ -146,7 +146,7 @@ public class ServiceDelegator {
 	public ResponseObj fetchAllUser(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		
+
 		if (null != reqparam.getCriteria()) {
 
 			responseObj = repositoryDelegator.fetchAllUser(reqparam);
@@ -219,7 +219,8 @@ public class ServiceDelegator {
 					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_PENDINGAPPROVAL);
+					ServiceException serviceExceptionObj = new ServiceException(
+							UnionAppMsgConstants.USER_PENDINGAPPROVAL);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 
@@ -269,7 +270,8 @@ public class ServiceDelegator {
 					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_PENDINGAPPROVAL);
+					ServiceException serviceExceptionObj = new ServiceException(
+							UnionAppMsgConstants.USER_PENDINGAPPROVAL);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
 
@@ -297,19 +299,18 @@ public class ServiceDelegator {
 
 					sendMail(from, pass, to, subject, body);
 
-					/*setResponse(responseObj);*/
-					
+					/* setResponse(responseObj); */
+
 					ResStatus resStatus = new ResStatus();
 					resStatus.setCode("00");
 					resStatus.setMsg(UnionAppMsgConstants.RESETPWD_SUCCESS);
 					responseObj.setResStatus(resStatus);
-					
+
 					responseObj.setUserListObj(userListObj);
 				}
 
 			} else {
-				ServiceException serviceExceptionObj = new ServiceException(
-						UnionAppMsgConstants.IN_CREDENTIAL);
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.IN_CREDENTIAL);
 				throw serviceExceptionObj;
 			}
 			responseObj.setUserListObj(userListObj);
@@ -1045,10 +1046,11 @@ public class ServiceDelegator {
 		SpaceInfoDTO spaceInfoDTOObj = new SpaceInfoDTO();
 		spaceInfoDTOObj.setUnit(UnionAppConstants.spaceUnit);
 		spaceInfoDTOObj.setTotalspace(UnionAppConstants.totalSpaceAllocated);
-		int usedSpace=repositoryDelegator.fetchUsedSpace().add(new BigDecimal(UnionAppConstants.miscSpaceUsed)).intValue();
-		int remSpace=new Integer(UnionAppConstants.totalSpaceAllocated)-usedSpace;		
+		int usedSpace = repositoryDelegator.fetchUsedSpace().add(new BigDecimal(UnionAppConstants.miscSpaceUsed))
+				.intValue();
+		int remSpace = new Integer(UnionAppConstants.totalSpaceAllocated) - usedSpace;
 		spaceInfoDTOObj.setRemspace(String.valueOf(remSpace));
-		spaceInfoDTOObj.setUsedspace(String.valueOf(usedSpace));		
+		spaceInfoDTOObj.setUsedspace(String.valueOf(usedSpace));
 		responseObj.setSpaceInfoDTOObj(spaceInfoDTOObj);
 		setResponse(responseObj);
 		return responseObj;
@@ -1060,7 +1062,7 @@ public class ServiceDelegator {
 
 		responseObj.setVisitorInfoListObj(repositoryDelegator.fetchVisitorInfo());
 		setResponse(responseObj);
-		
+
 		return responseObj;
 	}
 
@@ -1156,7 +1158,7 @@ public class ServiceDelegator {
 		resStatus.setMsg("SUCCESS");
 		responseObj.setResStatus(resStatus);
 	}
-	
+
 	public ResponseObj setActiveUser(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
@@ -1178,9 +1180,9 @@ public class ServiceDelegator {
 	public ResponseObj sendNotification() throws Exception {
 
 		ResponseObj responseObj = new ResponseObj();
-		int responseCode=httpClientUtil.sendNotification();
+		int responseCode = httpClientUtil.sendNotification();
 
-		if (200 == responseCode) {			
+		if (200 == responseCode) {
 			setResponse(responseObj);
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.PROBLEM_IN_NOTIFCATION);
@@ -1190,5 +1192,15 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-	
+	public ResponseObj fetchNotificationItem(RequestObj reqparam) throws Exception {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		responseObj = repositoryDelegator.fetchNotificationItem(reqparam);
+
+		setResponse(responseObj);
+
+		return responseObj;
+	}
+
 }

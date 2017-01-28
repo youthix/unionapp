@@ -21,5 +21,7 @@ public interface IActionLogDAO {
 	void updateActiveUser(ActiveUserBO activeUserBO);
 	
 	ArrayList<Object> fetchActiveUsersCount();
+	
+	ArrayList<ActionLogBO> fetchActionLogForNotification(String datetime);
 
 }
