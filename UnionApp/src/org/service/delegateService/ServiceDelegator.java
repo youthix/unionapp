@@ -2,7 +2,6 @@ package org.service.delegateService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -33,8 +32,6 @@ import org.presentation.dto.feature.SpaceInfoDTO;
 import org.presentation.dto.feature.SuggestionIdeaList;
 import org.presentation.dto.feature.SummaryList;
 import org.presentation.dto.feature.SurveyList;
-import org.presentation.dto.feature.VisitorInfoDTO;
-import org.presentation.dto.feature.VisitorInfoList;
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
@@ -131,8 +128,7 @@ public class ServiceDelegator {
 	public ResponseObj fetch(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		UserList userListObj;
-
+		
 		if (null != reqparam.getCriteria()) {
 
 			responseObj = repositoryDelegator.fetch(reqparam);
@@ -150,8 +146,7 @@ public class ServiceDelegator {
 	public ResponseObj fetchAllUser(RequestObj reqparam) {
 
 		ResponseObj responseObj = new ResponseObj();
-		UserList userListObj;
-
+		
 		if (null != reqparam.getCriteria()) {
 
 			responseObj = repositoryDelegator.fetchAllUser(reqparam);

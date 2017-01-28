@@ -13,6 +13,9 @@
 
 	<bean id="serviceDelegator" class="org.service.delegateService.ServiceDelegator">
 	</bean>
+	
+	<bean id="httpClientUtil" class="org.service.utilityService.HttpClientUtil">
+	</bean>
 
 	<bean id="repositoryDelegator" class="org.repository.RepositoryDelegate.RepositoryDelegator">
 	</bean>

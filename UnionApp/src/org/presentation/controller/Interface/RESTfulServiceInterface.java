@@ -3,12 +3,9 @@ package org.presentation.controller.Interface;
 import java.io.InputStream;
 
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.core.Response;
 
 import org.presentation.dto.RequestObj;
 import org.presentation.dto.ResponseObj;
-import org.presentation.dto.feature.SurveyDTO;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
