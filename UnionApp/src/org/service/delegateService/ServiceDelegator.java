@@ -1180,7 +1180,7 @@ public class ServiceDelegator {
 		ResponseObj responseObj = new ResponseObj();
 		int responseCode=httpClientUtil.sendNotification();
 
-		if (200 != responseCode) {			
+		if (200 == responseCode) {			
 			setResponse(responseObj);
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.PROBLEM_IN_NOTIFCATION);
