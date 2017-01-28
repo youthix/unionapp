@@ -1621,7 +1621,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	}
 	
 	@GET
-	@Path("/notify")
+	@Path("/send/notification")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public ResponseObj sendNotification() {
 
