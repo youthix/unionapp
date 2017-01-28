@@ -16,7 +16,7 @@ public class HttpClientUtil {
 
 	
 	// HTTP POST request
-	public static int sendNotification() throws Exception {
+	public int sendNotification() throws Exception {
 
 		String url = UnionAppConstants.fcmServerUrl;
 

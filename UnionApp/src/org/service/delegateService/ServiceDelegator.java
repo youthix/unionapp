@@ -47,6 +47,8 @@ public class ServiceDelegator {
 
 	@Autowired
 	private RepositoryDelegator repositoryDelegator;
+	@Autowired
+	private HttpClientUtil httpClientUtil;
 	UserList res;
 
 	ResStatus resStatus;
@@ -1181,7 +1183,7 @@ public class ServiceDelegator {
 	public ResponseObj sendNotification() throws Exception {
 
 		ResponseObj responseObj = new ResponseObj();
-		int responseCode=HttpClientUtil.sendNotification();
+		int responseCode=httpClientUtil.sendNotification();
 
 		if (200 != responseCode) {			
 			setResponse(responseObj);
