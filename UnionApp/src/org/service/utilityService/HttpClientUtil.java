@@ -16,7 +16,7 @@ public class HttpClientUtil {
 
 	
 	// HTTP POST request
-	public static void sendNotification() throws Exception {
+	public static int sendNotification() throws Exception {
 
 		String url = UnionAppConstants.fcmServerUrl;
 
@@ -40,8 +40,9 @@ public class HttpClientUtil {
 
 		HttpResponse response = client.execute(post);
 		System.out.println("Post parameters : " + post.getEntity());
-		System.out.println("Notification Response Code : " +
-                                    response.getStatusLine().getStatusCode());
+		int responseCode=response.getStatusLine().getStatusCode();
+		System.out.println("Notification Response Code : " +responseCode
+                                    );
 
 		BufferedReader rd = new BufferedReader(
                         new InputStreamReader(response.getEntity().getContent()));
@@ -53,6 +54,7 @@ public class HttpClientUtil {
 		}
 
 		System.out.println(result.toString());
+		return responseCode;
 	}
 
 }

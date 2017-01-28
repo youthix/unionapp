@@ -7,6 +7,7 @@ public interface UnionAppMsgConstants {
 	final String USER_PENDINGAPPROVAL = "Bruger Afventer på godkendelse";
 	final String IN_CREDENTIAL = "Ugyldig Email eller adgangskode prøv igen";
 	final String RESETPWD_SUCCESS = "Vi har sendt dig et nyt kode til din mail";
+	final String PROBLEM_IN_NOTIFCATION= "Nogle fejl opstod under afsendelse notificaiton";
 
 	final String REQOBJECTNULL_ENG = "Request Object Incorrect";
 	final String INSUFFICIENTINPUT_ENG = "Input Data is Insufficient or Incorrect";
@@ -14,4 +15,5 @@ public interface UnionAppMsgConstants {
 	final String USER_PENDINGAPPROVAL_ENG = "User Pending For Approval";
 	final String IN_CREDENTIAL_ENG = "Invalid Credentials";
 	final String RESETPWD_SUCCESS_ENG = "New Password Sent to Registered EmailId";
+	final String PROBLEM_IN_NOTIFCATION_ENG= "Some error occured while sending notificaiton";
 }

@@ -128,6 +128,8 @@ public interface RESTfulServiceInterface {
 	
 	ResponseObj setActiveUser(RequestObj reqparam);
 	
+	ResponseObj sendNotification();
+	
 	String testMail();
 
 }

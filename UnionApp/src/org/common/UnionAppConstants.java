@@ -36,4 +36,10 @@ public interface UnionAppConstants {
 	final String miscSpaceUsed="30";
 	final String spaceUnit="mb";
 	final String dbName="Unionapp";
+	
+	//FCM constants
+	final String fcmServerKey="AAAAozxQtE0:APA91bFh2JsmdW2hOqP3_psipNvFTpkLLCD1hzdZX5S-YFxpUIU8jlHxVJLZ6j-UcVeOH8r-GtFBdsgIkD7Ot6-cJl5UStjiH0lgAFaE3L3ZoVaCgdmN__xiZ3fwb-1mhhZpVcEWNJjh";
+	final String fcmServerUrl="https://fcm.googleapis.com/fcm/send";
+	final String notificationTitle="Unik-Apps notifikation";
+	final String notififcaitonMessage="Hej du har en besked fra WFS Klubben";
 }

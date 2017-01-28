@@ -40,6 +40,7 @@ import org.presentation.dto.user.UserList;
 import org.presentation.util.ServiceException;
 import org.repository.RepositoryDelegate.RepositoryDelegator;
 import org.repository.entity.UserBO;
+import org.service.utilityService.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ServiceDelegator {
@@ -1171,6 +1172,21 @@ public class ServiceDelegator {
 
 		} else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}
+
+	public ResponseObj sendNotification() throws Exception {
+
+		ResponseObj responseObj = new ResponseObj();
+		int responseCode=HttpClientUtil.sendNotification();
+
+		if (200 != responseCode) {			
+			setResponse(responseObj);
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.PROBLEM_IN_NOTIFCATION);
 			throw serviceExceptionObj;
 		}
 
