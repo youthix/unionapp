@@ -2287,7 +2287,7 @@ public class RepositoryDelegator {
 
 		FetchSuggestionIdeaCriteria fetchSuggestionIdeaCriteriaObj = new FetchSuggestionIdeaCriteria();
 
-		fetchSuggestionIdeaCriteriaObj.setName("suggestionideaid");
+		fetchSuggestionIdeaCriteriaObj.setName("suggideaid");
 
 		if (suggestionIdeaList.size() > 0) {
 

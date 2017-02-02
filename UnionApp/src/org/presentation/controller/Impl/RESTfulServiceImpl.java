@@ -1436,7 +1436,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 	@POST
 	@Path("/updatesurvey")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
-	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public ResponseObj updateSurvey(RequestObj reqparam) {
 
 		ResponseObj responseObj;
