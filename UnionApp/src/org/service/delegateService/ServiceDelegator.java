@@ -58,6 +58,7 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 		UserList userListObj = reqparam.getUserListObj();
+		String channel = reqparam.getChannel();
 
 		/*
 		 * else if (userBOObj.getLoginstatus().equalsIgnoreCase("T")) {
@@ -67,7 +68,7 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			responseObj = repositoryDelegator.login(userListObj);
+			responseObj = repositoryDelegator.login(userListObj,channel);
 
 			setResponse(responseObj);
 

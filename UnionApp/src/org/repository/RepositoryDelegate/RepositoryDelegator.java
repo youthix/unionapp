@@ -173,7 +173,7 @@ public class RepositoryDelegator {
 		return userListObjResp;
 	}
 
-	public ResponseObj login(UserList userListObj) {
+	public ResponseObj login(UserList userListObj, String channel) {
 		System.out.println("InRDLogin");
 
 		ResponseObj responseObj = new ResponseObj();
@@ -199,35 +199,66 @@ public class RepositoryDelegator {
 			criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
 
 			userBOList = userdao.fetchUser(criteriaObj, pageNo);
+			if (userBOList != null) {
 
-			userBOObj = userBOList.get(0);
+				userBOObj = userBOList.get(0);
 
-			if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
-					&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
-				if (userBOObj.getStatus().equalsIgnoreCase("B")) {
-					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
+				if ((null != userBOObj) && ((userBOObj.getUsname().equalsIgnoreCase(userObj.getUsNa()))
+						&& (userBOObj.getPwd().equalsIgnoreCase(userObj.getPwd())))) {
+					if (userBOObj.getStatus().equalsIgnoreCase("B")) {
+						ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.USER_BLKD);
+						throw serviceExceptionObj;
+					} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
+						ServiceException serviceExceptionObj = new ServiceException(
+								UnionAppMsgConstants.USER_PENDINGAPPROVAL);
+						throw serviceExceptionObj;
+					} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
+
+						if (null != channel && channel.equalsIgnoreCase("admin")) {
+							// check if the admin user is login, if not then
+							// throw error.
+							if (userBOObj.getRole().equalsIgnoreCase("A")) {
+
+								// Update the Login status
+								userListObj.getUl().get(0).setLoginstatus("T");
+								Criteria criteriaUpdateObj = new Criteria();
+								criteriaUpdateObj.setCriteria("TRUE");
+								UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+								updateUserCriteriaObj.setName("loginstatus");
+								criteriaUpdateObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
+								update(userListObj, criteriaUpdateObj);
+								populateUserDTO(userObj, userBOObj);
+
+							} else {
+								ServiceException serviceExceptionObj = new ServiceException(
+										UnionAppMsgConstants.NOACCESS);
+								throw serviceExceptionObj;
+							}
+
+						} else {
+							// Update the Login status
+							userListObj.getUl().get(0).setLoginstatus("T");
+							Criteria criteriaUpdateObj = new Criteria();
+							criteriaUpdateObj.setCriteria("TRUE");
+							UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
+							updateUserCriteriaObj.setName("loginstatus");
+							criteriaUpdateObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
+							update(userListObj, criteriaUpdateObj);
+							populateUserDTO(userObj, userBOObj);
+						}
+
+					}
+
+				} else {
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.IN_CREDENTIAL);
 					throw serviceExceptionObj;
-				} else if (userBOObj.getStatus().equalsIgnoreCase("P")) {
-					ServiceException serviceExceptionObj = new ServiceException(
-							UnionAppMsgConstants.USER_PENDINGAPPROVAL);
-					throw serviceExceptionObj;
-				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
-
-					// Update the Login status
-					userListObj.getUl().get(0).setLoginstatus("T");
-					Criteria criteriaUpdateObj = new Criteria();
-					criteriaUpdateObj.setCriteria("TRUE");
-					UpdateUserCriteria updateUserCriteriaObj = new UpdateUserCriteria();
-					updateUserCriteriaObj.setName("loginstatus");
-					criteriaUpdateObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
-					update(userListObj, criteriaUpdateObj);
-					populateUserDTO(userObj, userBOObj);
 				}
 
 			} else {
 				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.IN_CREDENTIAL);
 				throw serviceExceptionObj;
 			}
+
 			responseObj.setUserListObj(userListObj);
 
 		}
@@ -2864,6 +2895,10 @@ public class RepositoryDelegator {
 		notiActDTO.setModule(UnionAppConstants.activity_noti);
 		notiActDTO.setCount(0);
 
+		NotificationDTO notiConDTO = new NotificationDTO();
+		notiConDTO.setModule(UnionAppConstants.contact_noti);
+		notiConDTO.setCount(0);
+
 		NotificationDTO notiSuggDTO = new NotificationDTO();
 		notiSuggDTO.setModule(UnionAppConstants.suggestionidea_noti);
 		notiSuggDTO.setCount(0);
@@ -2892,7 +2927,7 @@ public class RepositoryDelegator {
 
 			Iterator<ActionLogBO> litr = actionLogBOList.iterator();
 
-			while (litr.hasNext()) { 
+			while (litr.hasNext()) {
 				ActionLogBO actionLogBO = litr.next();
 
 				switch (actionLogBO.getModule()) {
@@ -2909,6 +2944,10 @@ public class RepositoryDelegator {
 
 				case UnionAppConstants.activity:
 					populatenotificationdto(notiActDTO, actionLogBO);
+					break;
+
+				case UnionAppConstants.contact:
+					populatenotificationdto(notiConDTO, actionLogBO);
 					break;
 
 				case UnionAppConstants.suggestionidea:
@@ -2940,6 +2979,7 @@ public class RepositoryDelegator {
 		notificaitonDTOList.add(notiMeetDTO);
 		notificaitonDTOList.add(notiNLDTO);
 		notificaitonDTOList.add(notiActDTO);
+		notificaitonDTOList.add(notiConDTO);
 		notificaitonDTOList.add(notiSuggDTO);
 		notificaitonDTOList.add(notiSumDTO);
 		notificaitonDTOList.add(notiAmrDTO);

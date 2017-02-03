@@ -20,6 +20,7 @@ public interface UnionAppConstants {
 	
 	final String meeting = "Møde";
 	final String activity = "Aktivitet"; 
+	final String contact = "Kontaktliste";
 	final String newsletter = "Nyhedsbrev"; 
 	final String amr = "AMR";
 	final String agreement = "Aftaler"; 
@@ -44,6 +45,7 @@ public interface UnionAppConstants {
 	final String suggestionidea_noti = "Forslag og ideer"; 
 	final String payrate_noti = "Lønsats"; 
 	final String survey_noti = "Afstemning" ;
+	final String contact_noti = "Kontaktliste" ;
 	
 
 	

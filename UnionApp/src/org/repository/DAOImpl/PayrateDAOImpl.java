@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IPayrateDAO;
@@ -27,7 +28,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 			manager.persist(PayrateBO);
 			System.out.println("Done createPayrate");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -47,7 +48,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -112,7 +113,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -125,7 +126,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -146,7 +147,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 			
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 		System.out.println("Done fetchPayrateById");
@@ -193,7 +194,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -208,7 +209,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -236,7 +237,7 @@ public class PayrateDAOImpl implements IPayrateDAO{
 
 			System.out.println("Done deleteOnCriteria");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}

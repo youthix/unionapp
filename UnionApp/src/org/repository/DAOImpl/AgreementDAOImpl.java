@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IAgreementDAO;
@@ -27,7 +28,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 			manager.persist(AgreementBO);
 			System.out.println("Done createAgreement");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -39,7 +40,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -104,7 +105,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -117,7 +118,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -138,7 +139,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 			
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 		System.out.println("Done fetchAgreementById");
@@ -185,7 +186,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -200,7 +201,7 @@ public class AgreementDAOImpl implements IAgreementDAO{
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 

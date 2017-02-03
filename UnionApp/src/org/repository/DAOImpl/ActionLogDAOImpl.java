@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.common.UnionAppMsgConstants;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActionLogDAO;
 import org.repository.entity.ActionLogBO;
@@ -28,7 +29,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 			manager.persist(actioinLogBO);
 
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -52,7 +53,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -77,7 +78,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -105,7 +106,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 			System.out.println("DoneDAOFetchActiveUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -126,7 +127,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 			System.out.println("DoneDAOfetchActiveUsersCount");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -139,7 +140,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 			manager.persist(activeUserBO);
 
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -149,7 +150,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 			manager.merge(activeUserBO);
 
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -174,7 +175,7 @@ public class ActionLogDAOImpl implements IActionLogDAO {
 
 			System.out.println("Done fetchDbSize>>" + size);
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 

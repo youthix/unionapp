@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.ISuggestionIdeaDAO;
@@ -25,7 +26,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 		try {
 			manager.persist(suggestionIdeaBO);
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -42,7 +43,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 			manager.merge(suggestionIdeaBO);
 
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -109,7 +110,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -122,7 +123,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -142,7 +143,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 			suggestionIdeaBOList = (ArrayList<SuggestionIdeaBO>) manager.createQuery(SQL).getResultList();
 
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 		System.out.println("Done fetchSuggestionIdeaById");
@@ -189,7 +190,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -200,7 +201,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 				count = manager.createQuery(SQL).getResultList().size();
 			}
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -228,7 +229,7 @@ public class SuggestionIdeaDAOImpl implements ISuggestionIdeaDAO {
 
 			System.out.println("Done deleteOnCriteria");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}

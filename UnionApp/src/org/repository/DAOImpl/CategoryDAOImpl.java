@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.ICategoryDAO;
@@ -26,7 +27,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 			manager.persist(categoryBO);
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -42,7 +43,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 

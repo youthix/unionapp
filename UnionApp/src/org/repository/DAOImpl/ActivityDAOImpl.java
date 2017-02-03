@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.IActivityDAO;
@@ -26,7 +27,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 			manager.persist(activityBO);
 			System.out.println("DoneDAOCreateMeet");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -46,7 +47,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -72,7 +73,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 			System.out.println("DoneDAOUpdateLoginStatus");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -87,7 +88,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 			System.out.println("Done Activity deleteCron !!");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -154,7 +155,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -167,7 +168,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -213,7 +214,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -224,7 +225,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 				count = manager.createQuery(SQL).getResultList().size();
 			}
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -252,7 +253,7 @@ public class ActivityDAOImpl implements IActivityDAO {
 
 			System.out.println("Done deleteOnCriteria");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}

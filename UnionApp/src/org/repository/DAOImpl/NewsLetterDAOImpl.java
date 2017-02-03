@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.common.UnionAppMsgConstants;
 import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.INewsLetterDAO;
@@ -26,7 +27,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 			manager.persist(newsLetterBO);
 			System.out.println("Done createNewsLetter");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -46,7 +47,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 			System.out.println("DoneDAOAddUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -111,7 +112,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -124,7 +125,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -145,7 +146,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 			
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 		System.out.println("Done fetchNewsLetterById");
@@ -192,7 +193,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 				} else {
 
-					ServiceException serviceExceptionObj = new ServiceException("Criteria Object is empty or null ");
+					ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 					throw serviceExceptionObj;
 				}
 			} else {
@@ -207,7 +208,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Fetching : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
@@ -235,7 +236,7 @@ public class NewsLetterDAOImpl implements INewsLetterDAO {
 
 			System.out.println("Done deleteOnCriteria");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException("Error While Persisiting : " + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
