@@ -298,10 +298,10 @@ public class RepositoryDelegator {
 
 			userListObj.setUl(userDTOList);
 
-		} else {
+		} /*else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
-		}
+		}*/
 
 		responseObj.setUserListObj(userListObj);
 		userBOList = userdao.fetchAllUser(criteriaObj);
@@ -344,10 +344,10 @@ public class RepositoryDelegator {
 
 			userListObj.setUl(userDTOList);
 
-		} else {
+		} /*else {
 			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
 			throw serviceExceptionObj;
-		}
+		}*/
 
 		responseObj.setUserListObj(userListObj);
 		return responseObj;
@@ -618,7 +618,7 @@ public class RepositoryDelegator {
 		Criteria criteriaUserObj = new Criteria();
 		criteriaUserObj.setCriteria("TRUE");
 		criteriaUserObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
-		userBOList = userdao.fetchAllUser(criteriaObj);
+		userBOList = userdao.fetchAllUser(criteriaUserObj);
 
 		if (null != userBOList) {
 			totalActUserCount = userBOList.size();
@@ -963,7 +963,7 @@ public class RepositoryDelegator {
 		Criteria criteriaUserObj = new Criteria();
 		criteriaUserObj.setCriteria("TRUE");
 		criteriaUserObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
-		userBOList = userdao.fetchAllUser(criteriaObj);
+		userBOList = userdao.fetchAllUser(criteriaUserObj);
 
 		if (null != userBOList) {
 			totalActUserCount = userBOList.size();
@@ -2452,9 +2452,6 @@ public class RepositoryDelegator {
 
 			categoryListObjResp.setCategorydtoLs(categoryDTOList);
 
-		} else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
 		}
 
 		return categoryListObjResp;
