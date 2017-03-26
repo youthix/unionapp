@@ -4092,6 +4092,7 @@ public class RepositoryDelegator {
 
 		ArrayList<Object> activeUsersCountList = actionlogdao.fetchActiveUsersCount();
 
+		if(activeUsersCountList.size()>7)
 		for (int i = 0; i < 7; i++) {
 			VisitorInfoDTO visitorInfoDTOObj1 = new VisitorInfoDTO();
 			Object[] oArr = (Object[]) activeUsersCountList.get(i);

@@ -1,9 +1,9 @@
 package org.common;
 
 public interface UnionAppConstants {
-	final String serverAbsPath = "/opt/tomcat/webapps/attachments/";
+	final String serverAbsPath = "/var/lib/tomcat7/webapps/attachments/";
 	//String localAbsPath="/C:/Saurabh/Images/";
-	final String serverUriPath = "http://codeplay-dev6.cloud.cms500.com/attachments/";
+	final String serverUriPath = "http://ec2-35-154-221-255.ap-south-1.compute.amazonaws.com:8080/attachments/";
 	final String meeting_eng = "meeting";
 	final String activity_eng = "activity";
 	final String newsletter_eng = "neewsletter";
