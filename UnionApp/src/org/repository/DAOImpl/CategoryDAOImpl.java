@@ -11,6 +11,7 @@ import org.presentation.dto.criteria.Criteria;
 import org.presentation.util.ServiceException;
 import org.repository.DAOInterface.ICategoryDAO;
 import org.repository.entity.CategoryBO;
+import org.repository.entity.PayrateBO;
 import org.repository.entity.UserBO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,8 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 			manager.persist(categoryBO);
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(
+					UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 	}
@@ -43,11 +45,58 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 			System.out.println("DoneDAOFetchUser");
 		} catch (Exception e) {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
+			ServiceException serviceExceptionObj = new ServiceException(
+					UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
 			throw serviceExceptionObj;
 		}
 
 		return categoryBOList;
+	}
+
+	public ArrayList<CategoryBO> fetchCategoryById(String id) {
+
+		ArrayList<CategoryBO> categoryBOList = null;
+
+		try {
+
+			String SQL = "select m from " + CategoryBO.class.getName() + " m where catid in (" + id + ")";
+			categoryBOList = (ArrayList<CategoryBO>) manager.createQuery(SQL).getResultList();
+
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException(
+					UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
+			throw serviceExceptionObj;
+		}
+		return categoryBOList;
+	}
+
+	public void update(CategoryBO categoryBO) {
+		try {
+			System.out.println("InDAOAddUser");
+
+			manager.merge(categoryBO);
+
+			System.out.println("DoneDAOAddUser");
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException(
+					UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
+			throw serviceExceptionObj;
+		}
+	}
+
+	public void delete(String id) {
+		try {
+
+			String SQL = "delete from " + CategoryBO.class.getName() + " where catid = '" + id + "'";
+
+			Query query = manager.createQuery(SQL);
+			query.executeUpdate();
+
+		} catch (Exception e) {
+			ServiceException serviceExceptionObj = new ServiceException(
+					UnionAppMsgConstants.INSUFFICIENTINPUT + e.getMessage());
+			throw serviceExceptionObj;
+		}
 	}
 
 	public EntityManager getManager() {

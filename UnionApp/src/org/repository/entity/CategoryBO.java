@@ -20,6 +20,9 @@ public class CategoryBO implements Serializable {
 
 	@Column(name = "catname")
 	private String catname;
+	
+	@Column(name = "cattype")
+	private String cattype;	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,6 +43,14 @@ public class CategoryBO implements Serializable {
 
 	public void setCatid(Integer catid) {
 		this.catid = catid;
+	}
+
+	public String getCattype() {
+		return cattype;
+	}
+
+	public void setCattype(String cattype) {
+		this.cattype = cattype;
 	}
 	
 	

@@ -38,6 +38,8 @@ public class Criteria {
 
 	private FetchSurveyCriteria fetchSurveyCriteriaObj;
 
+	private CategoryCriteria categoryCriteriaObj;
+
 	public String getCriteria() {
 		return criteria;
 	}
@@ -157,6 +159,13 @@ public class Criteria {
 	public void setFetchSurveyCriteriaObj(FetchSurveyCriteria fetchSurveyCriteriaObj) {
 		this.fetchSurveyCriteriaObj = fetchSurveyCriteriaObj;
 	}
-	
-	
+
+	public CategoryCriteria getCategoryCriteriaObj() {
+		return categoryCriteriaObj;
+	}
+
+	public void setCategoryCriteriaObj(CategoryCriteria categoryCriteriaObj) {
+		this.categoryCriteriaObj = categoryCriteriaObj;
+	}
+
 }

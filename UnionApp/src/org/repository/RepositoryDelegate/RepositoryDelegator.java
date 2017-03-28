@@ -283,7 +283,21 @@ public class RepositoryDelegator {
 
 		ArrayList<UserBO> userBOList;
 
-		userBOList = userdao.fetchUser(criteriaObj, reqparam.getPageno());
+		if (null != criteriaObj && null != criteriaObj.getCriteria()
+				&& criteriaObj.getCriteria().equalsIgnoreCase("True") && criteriaObj.getFetchUserCriteriaObj() != null
+				&& criteriaObj.getFetchUserCriteriaObj().getName().equalsIgnoreCase("category")) {
+			{
+				if (null != reqparam.getChannel() && reqparam.getChannel().equalsIgnoreCase("app")) {
+					userBOList = userdao.fetchUser(criteriaObj, reqparam.getPageno());
+				} else {
+					userBOList = userdao.fetchAllUser(criteriaObj);
+				}
+
+			}
+
+		} else {
+			userBOList = userdao.fetchUser(criteriaObj, reqparam.getPageno());
+		}
 
 		if (null != userBOList && userBOList.size() > 0) {
 
@@ -298,10 +312,11 @@ public class RepositoryDelegator {
 
 			userListObj.setUl(userDTOList);
 
-		} /*else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}*/
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 
 		responseObj.setUserListObj(userListObj);
 		userBOList = userdao.fetchAllUser(criteriaObj);
@@ -344,10 +359,11 @@ public class RepositoryDelegator {
 
 			userListObj.setUl(userDTOList);
 
-		} /*else {
-			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
-			throw serviceExceptionObj;
-		}*/
+		} /*
+			 * else { ServiceException serviceExceptionObj = new
+			 * ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT); throw
+			 * serviceExceptionObj; }
+			 */
 
 		responseObj.setUserListObj(userListObj);
 		return responseObj;
@@ -523,7 +539,13 @@ public class RepositoryDelegator {
 					userBOObj.setRole(userdtoObj.getRole());
 				}
 				if (null != userdtoObj.getStatus()) {
-					userBOObj.setStatus(userdtoObj.getStatus());
+					if (null != reqparam.getChannel() && reqparam.getChannel().equalsIgnoreCase("admin")
+							&& !userdtoObj.getStatus().equalsIgnoreCase("e")) {
+						userBOObj.setStatus("a");
+					} else {
+						userBOObj.setStatus(userdtoObj.getStatus());
+					}
+
 				}
 
 				// merge this UpdateBO back in DB
@@ -2439,13 +2461,33 @@ public class RepositoryDelegator {
 
 		categoryBOList = categorydao.fetchCategory(criteriaObj);
 
+		int totalActUserCount = 0;
+		ArrayList<UserBO> userBOList = null;
+
 		if (null != categoryBOList && categoryBOList.size() > 0) {
 
 			Iterator<CategoryBO> litr = categoryBOList.iterator();
 
 			while (litr.hasNext()) {
 				CategoryDTO categoryDTOObj = new CategoryDTO();
-				populateCategoryDTO(categoryDTOObj, litr.next());
+				CategoryBO categoryBOObj = litr.next();
+				populateCategoryDTO(categoryDTOObj, categoryBOObj);
+
+				FetchUserCriteria fetchUserCriteriaObj = new FetchUserCriteria();
+
+				fetchUserCriteriaObj.setName("category");
+				fetchUserCriteriaObj.setValue(categoryBOObj.getCatname());
+				// criteriaObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+
+				Criteria criteriaUserObj = new Criteria();
+				criteriaUserObj.setCriteria("TRUE");
+				criteriaUserObj.setFetchUserCriteriaObj(fetchUserCriteriaObj);
+				userBOList = userdao.fetchAllUser(criteriaUserObj);
+
+				if (null != userBOList) {
+					totalActUserCount = userBOList.size();
+				}
+				categoryDTOObj.setUsercount(Integer.toString(totalActUserCount));
 				categoryDTOList.add(categoryDTOObj);
 
 			}
@@ -2455,6 +2497,62 @@ public class RepositoryDelegator {
 		}
 
 		return categoryListObjResp;
+	}
+
+	public ResponseObj updateCategory(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+
+		/*
+		 * First fetch the Category from the DB basis the id coming in the
+		 * request Then update teh fields of the PayrateBo fetched from DB with
+		 * those received in the input
+		 */
+		CategoryList catListObj = reqparam.getCategoryListObj();
+
+		ArrayList<CategoryDTO> catDTOList = (ArrayList<CategoryDTO>) catListObj.getCategorydtoLs();
+
+		ArrayList<CategoryBO> categoryBOList;
+
+		CategoryBO categoryBOObj = null;
+
+		if (catDTOList.size() > 0) {
+
+			CategoryDTO categoryDTOObj = catDTOList.get(0);
+
+			categoryBOList = categorydao.fetchCategoryById(categoryDTOObj.getCatid());
+
+			if (null != categoryBOList && categoryBOList.size() > 0) {
+
+				categoryBOObj = categoryBOList.get(0);
+				if (categoryDTOObj.getAction().equalsIgnoreCase("Delete")) {
+					categorydao.delete(categoryDTOObj.getCatid());
+				} else {
+
+					categoryBOObj.setCatname(categoryDTOObj.getCatname());
+
+					categoryBOObj.setCattype(categoryDTOObj.getCattype());
+
+					// merge this UpdateBO back in DB
+					categorydao.update(categoryBOObj);
+
+					responseObj.setCategoryListObj(catListObj);
+				}
+			}
+
+			else {
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
+				throw serviceExceptionObj;
+			}
+
+		}
+
+		else {
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
 	}
 
 	public ResponseObj createSurvey(SurveyList surveyListObj) {
@@ -3432,7 +3530,7 @@ public class RepositoryDelegator {
 
 	private void populateCreateUserBO(User userObj, UserBO userBOObj) {
 
-		userBOObj.setUsname(userObj.getUsNa());
+		userBOObj.setUsname(userObj.getEmId());
 		userBOObj.setDeviceid(userObj.getDeviceid());
 		userBOObj.setPwd(userObj.getPwd());
 		userBOObj.setAdd(userObj.getAdd());
@@ -3444,6 +3542,7 @@ public class RepositoryDelegator {
 		userBOObj.setJoindt(userObj.getJoinDt());
 		userBOObj.setLn(userObj.getLn());
 		userBOObj.setZipcode(userObj.getZipcode());
+		userBOObj.setCategory(userObj.getCategory());
 		userBOObj.setCity(userObj.getCity());
 		if (null == userObj.getLoginstatus() || userObj.getLoginstatus().equals("")) {
 			userBOObj.setLoginstatus("F");
@@ -3951,12 +4050,15 @@ public class RepositoryDelegator {
 	private void populateCreateCatBO(CategoryDTO catDTOObj, CategoryBO catBOObj) {
 
 		catBOObj.setCatname(catDTOObj.getCatname());
+		catBOObj.setCattype(catDTOObj.getCattype());
+
 	}
 
 	private void populateCategoryDTO(CategoryDTO catDTOObj, CategoryBO catBOObj) {
 
 		catDTOObj.setCatid(catBOObj.getCatid().toString());
 		catDTOObj.setCatname(catBOObj.getCatname());
+		catDTOObj.setCattype(catBOObj.getCattype());
 
 	}
 

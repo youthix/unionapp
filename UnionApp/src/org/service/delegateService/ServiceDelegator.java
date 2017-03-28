@@ -1040,6 +1040,24 @@ public class ServiceDelegator {
 
 		return responseObj;
 	}
+	
+	public ResponseObj updatecategory(RequestObj reqparam) {
+
+		ResponseObj responseObj = new ResponseObj();
+		CategoryList categoryListObj = reqparam.getCategoryListObj();
+
+		if (null != categoryListObj) {
+
+			responseObj = repositoryDelegator.updateCategory(reqparam);
+			setResponse(responseObj);
+
+		} else {
+			ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.INSUFFICIENTINPUT);
+			throw serviceExceptionObj;
+		}
+
+		return responseObj;
+	}	
 
 	public ResponseObj fetchSpaceInfo(RequestObj reqparam) {
 

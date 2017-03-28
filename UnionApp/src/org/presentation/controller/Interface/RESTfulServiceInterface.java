@@ -97,6 +97,8 @@ public interface RESTfulServiceInterface {
 	ResponseObj addcategory(RequestObj reqparam);
 
 	ResponseObj fetchcategory(RequestObj reqparam);
+	
+	ResponseObj updatecategory(RequestObj reqparam);
 
 	ResponseObj uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail,

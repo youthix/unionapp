@@ -68,28 +68,29 @@ public class UserDAOImpl implements IUserDAO {
 
 					if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("loginstatus")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.loginstatus='" + userBO.getLoginstatus()
-								+ "' where usname = '" + userBO.getUsname() + "'";
+								+ "' where emailid = '" + userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("deviceid")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.deviceid='" + userBO.getDeviceid()
-								+ "' , u.devicetype='" + userBO.getDevicetype() + "' where usname = '"
+								+ "' , u.devicetype='" + userBO.getDevicetype() + "' where emailid = '"
 								+ userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("status")) {
-						if (userBO.getStatus().equalsIgnoreCase("delete")) {
-							SQL = "delete from " + UserBO.class.getName() + " where usname = '" + userBO.getUsname()
+						if (userBO.getStatus().equalsIgnoreCase("delete") || userBO.getStatus().equalsIgnoreCase("B")) {
+							SQL = "delete from " + UserBO.class.getName() + " where emailid = '" + userBO.getUsname()
 									+ "'";
 
 						} else {
-							SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
-									+ "' where usname = '" + userBO.getUsname() + "'";
+/*							SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
+									+ "' where emailid = '" + userBO.getUsname() + "'";*/
+							SQL = "update " + UserBO.class.getName() + " u Set u.status='A' where emailid = '" + userBO.getUsname() + "'";
 						}
 
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("pwd")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.pwd='" + userBO.getPwd()
-								+ "' where usname = '" + userBO.getUsname() + "'";
+								+ "' where emailid = '" + userBO.getUsname() + "'";
 					} else if (criteriaObj.getUpdateUserCriteriaObj().getName().equalsIgnoreCase("meeting")) {
 						SQL = "update " + UserBO.class.getName() + " u Set u.acceptmeetingid='"
 								+ userBO.getAcceptmeetingid() + "' , u.declinemeetingid='"
-								+ userBO.getDeclinemeetingid() + "' where usname = '" + userBO.getUsname() + "'";
+								+ userBO.getDeclinemeetingid() + "' where emailid = '" + userBO.getUsname() + "'";
 					}
 				}
 			}

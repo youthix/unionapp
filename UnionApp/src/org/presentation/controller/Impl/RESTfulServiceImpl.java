@@ -1315,6 +1315,33 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
+	
+	@Override
+	@POST
+	@Path("/updatecategory")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public ResponseObj updatecategory(RequestObj reqparam) {
+
+		ResponseObj responseObj;
+
+		try {
+			if (null != reqparam) {
+				responseObj = serviceDelegator.updatecategory(reqparam);
+
+			} else {
+				ServiceException serviceExceptionObj = new ServiceException(UnionAppMsgConstants.REQOBJECTNULL);
+				throw serviceExceptionObj;
+
+			}
+		} catch (Exception exceptionObj) {
+
+			return ServiceExceptionMapper.toResponse(exceptionObj);
+		}
+
+		return responseObj;
+
+	}	
 
 	@Override
 	@POST
