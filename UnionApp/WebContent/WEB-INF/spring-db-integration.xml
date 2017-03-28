@@ -48,13 +48,29 @@
       <property name="username" value="root" />
       <property name="password" value="PTGtff28266" />
    </bean>   --> 
-     
-   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    
+   <!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="com.mysql.jdbc.Driver" />
       <property name="url" value="jdbc:mysql://mysql20687-codeplay-dev6.cloud.cms500.com:3306/unionapp" />
       <property name="username" value="root" />
       <property name="password" value="PTGtff28266" />
-   </bean>      
+   </bean>       -->
+   
+ <!--   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+      <property name="url" value="jdbc:mysql://185.134.30.228:3306/unionapp" />
+      <property name="username" value="root" />
+      <property name="password" value="password" />
+   </bean> -->
+   
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+      <property name="url" value="jdbc:mysql://unionapp-db.cdrkoqrpshk9.ap-south-1.rds.amazonaws.com:3306/unionapp" />
+      <property name="username" value="root" />
+      <property name="password" value="saurabhsquare" />
+   </bean>
+   
+   
    
 <!-- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="com.mysql.jdbc.Driver" />
