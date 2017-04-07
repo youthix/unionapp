@@ -56,19 +56,19 @@
       <property name="password" value="PTGtff28266" />
    </bean>       -->
    
- <!--   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="com.mysql.jdbc.Driver" />
       <property name="url" value="jdbc:mysql://185.134.30.228:3306/unionapp" />
-      <property name="username" value="root" />
-      <property name="password" value="password" />
-   </bean> -->
+      <property name="username" value="admin_unik" />
+      <property name="password" value="XTFlmIl5ZT" />
+   </bean>
    
-   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  <!--  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="com.mysql.jdbc.Driver" />
       <property name="url" value="jdbc:mysql://unionapp-db.cdrkoqrpshk9.ap-south-1.rds.amazonaws.com:3306/unionapp" />
       <property name="username" value="root" />
       <property name="password" value="saurabhsquare" />
-   </bean>
+   </bean> -->
    
    
    
