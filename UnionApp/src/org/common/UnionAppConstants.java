@@ -3,7 +3,7 @@ package org.common;
 public interface UnionAppConstants {
 	final String serverAbsPath = "/var/lib/tomcat7/webapps/attachments/";
 	//String localAbsPath="/C:/Saurabh/Images/";
-	final String serverUriPath = "http://ec2-35-154-221-255.ap-south-1.compute.amazonaws.com:8080/attachments/";
+	final String serverUriPath = "http://185.134.30.228:8080/attachments/";
 	final String meeting_eng = "meeting";
 	final String activity_eng = "activity";
 	final String newsletter_eng = "neewsletter";
