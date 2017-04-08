@@ -173,7 +173,7 @@ public class UserDAOImpl implements IUserDAO {
 
 					String SQL = "select u from " + UserBO.class.getName() + " u where "
 							+ criteriaObj.getFetchUserCriteriaObj().getName() + " = '"
-							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "'";
+							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "' and role in ('A','N')";
 
 					userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
 					;

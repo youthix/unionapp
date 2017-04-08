@@ -217,7 +217,7 @@ public class RepositoryDelegator {
 						if (null != channel && channel.equalsIgnoreCase("admin")) {
 							// check if the admin user is login, if not then
 							// throw error.
-							if (userBOObj.getRole().equalsIgnoreCase("A")) {
+							if (userBOObj.getRole().equalsIgnoreCase("A") || userBOObj.getRole().equalsIgnoreCase("G")) {
 
 								// Update the Login status
 								userListObj.getUl().get(0).setLoginstatus("T");

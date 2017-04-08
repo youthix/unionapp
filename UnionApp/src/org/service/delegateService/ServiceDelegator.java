@@ -287,8 +287,8 @@ public class ServiceDelegator {
 					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 					repositoryDelegator.update(userListObj, criteriaObj);
 
-					String USER_NAME = "UNIONAPP.com";
-					String PASSWORD = "XYZ123";
+					String USER_NAME = "unik-apps.com";
+					String PASSWORD = "lgmqis";
 					String RECIPIENT = userObj.getUsNa();
 
 					String from = USER_NAME;
@@ -1095,14 +1095,14 @@ public class ServiceDelegator {
 		 * "587"); props.put("mail.smtp.auth", "true");
 		 */
 
-		String host = "localhost";
+		String host = "unik-apps.com";
 		/* props.put("mail.smtp.starttls.enable", "true"); */
 		props.put("mail.transport.protocol", "smtp");
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.user", from);
-		/* props.put("mail.smtp.password", pass); */
-		props.put("mail.smtp.port", "25");
-		/* props.put("mail.smtp.auth", "true"); */
+		props.put("mail.smtp.password", pass);
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.auth", "true");
 
 		Session session = Session.getDefaultInstance(props);
 		MimeMessage message = new MimeMessage(session);
