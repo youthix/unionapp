@@ -169,8 +169,20 @@ public class UserDAOImpl implements IUserDAO {
 		try {
 
 			if (null != criteriaObj.getCriteria() && criteriaObj.getCriteria().equalsIgnoreCase("True")) {
-				if (criteriaObj.getFetchUserCriteriaObj() != null) {
+			if(null != criteriaObj && null != criteriaObj.getCriteria()
+				&& criteriaObj.getCriteria().equalsIgnoreCase("True") && criteriaObj.getFetchUserCriteriaObj() != null
+				&& criteriaObj.getFetchUserCriteriaObj().getName().equalsIgnoreCase("category"))	{
 
+				String SQL = "select u from " + UserBO.class.getName() + " u where "
+						+ criteriaObj.getFetchUserCriteriaObj().getName() + " = '"
+						+ criteriaObj.getFetchUserCriteriaObj().getValue() + "' and role in ('A','N','e')";
+
+				userBOList = (ArrayList<UserBO>) manager.createQuery(SQL).getResultList();
+				;
+
+			
+			}
+			else if (criteriaObj.getFetchUserCriteriaObj() != null) {
 					String SQL = "select u from " + UserBO.class.getName() + " u where "
 							+ criteriaObj.getFetchUserCriteriaObj().getName() + " = '"
 							+ criteriaObj.getFetchUserCriteriaObj().getValue() + "' and role in ('A','N')";
