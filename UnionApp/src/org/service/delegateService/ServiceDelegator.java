@@ -287,8 +287,8 @@ public class ServiceDelegator {
 					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 					repositoryDelegator.update(userListObj, criteriaObj);
 
-					String USER_NAME = "unik-apps.com";
-					String PASSWORD = "lgmqis";
+					String USER_NAME = "wfs@unik-apps.com";
+					String PASSWORD = "admin";
 					String RECIPIENT = userObj.getUsNa();
 
 					String from = USER_NAME;
