@@ -78,9 +78,12 @@ public class UserDAOImpl implements IUserDAO {
 							SQL = "delete from " + UserBO.class.getName() + " where emailid = '" + userBO.getUsname()
 									+ "'";
 
-						} else {
-/*							SQL = "update " + UserBO.class.getName() + " u Set u.status='" + userBO.getStatus()
-									+ "' where emailid = '" + userBO.getUsname() + "'";*/
+						}
+						else if (userBO.getStatus().equalsIgnoreCase("notapproved")) {
+							SQL = "update " + UserBO.class.getName() + " u Set u.status='NA' where emailid = '" + userBO.getUsname() + "'";
+
+						}
+						else {
 							SQL = "update " + UserBO.class.getName() + " u Set u.status='A' where emailid = '" + userBO.getUsname() + "'";
 						}
 

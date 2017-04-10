@@ -2,16 +2,7 @@ package org.service.delegateService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.UUID;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import org.common.UnionAppConstants;
 import org.common.UnionAppMsgConstants;
@@ -38,6 +29,7 @@ import org.presentation.util.ServiceException;
 import org.repository.RepositoryDelegate.RepositoryDelegator;
 import org.repository.entity.UserBO;
 import org.service.utilityService.HttpClientUtil;
+import org.service.utilityService.Mailer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ServiceDelegator {
@@ -46,6 +38,8 @@ public class ServiceDelegator {
 	private RepositoryDelegator repositoryDelegator;
 	@Autowired
 	private HttpClientUtil httpClientUtil;
+	@Autowired
+	private Mailer mailer;
 	UserList res;
 
 	ResStatus resStatus;
@@ -170,6 +164,10 @@ public class ServiceDelegator {
 		if (null != userListObj) {
 
 			repositoryDelegator.update(userListObj, reqparam.getCriteria());
+			if(userListObj.getUl()!=null 
+					&& userListObj.getUl().get(0).getStatus().equalsIgnoreCase(UnionAppMsgConstants.NOTAPPROVED)){
+				mailer.denialMail(userListObj);
+			}
 			responseObj.setUserListObj(userListObj);
 			setResponse(responseObj);
 
@@ -189,6 +187,10 @@ public class ServiceDelegator {
 		if (null != userListObj) {
 
 			responseObj = repositoryDelegator.updateuserprofile(reqparam);
+			if(userListObj.getUl()!=null 
+					&& userListObj.getUl().get(0).getStatus().equalsIgnoreCase(UnionAppMsgConstants.APPROVED)){
+				mailer.approvalMail(userListObj);
+			}
 			setResponse(responseObj);
 
 		} else {
@@ -258,8 +260,6 @@ public class ServiceDelegator {
 
 		if (null != userListObj) {
 
-			// UserBO userBOObj = repositoryDelegator.login(userListObj);
-
 			UserBO userBOObj = repositoryDelegator.fetchUserBO(userListObj);
 
 			ArrayList<User> userList = (ArrayList<User>) userListObj.getUl();
@@ -275,7 +275,6 @@ public class ServiceDelegator {
 							UnionAppMsgConstants.USER_PENDINGAPPROVAL);
 					throw serviceExceptionObj;
 				} else if (userBOObj.getStatus().equalsIgnoreCase("A")) {
-
 					// Reset the Pwd
 					String newPwd = generatepwd();
 					userListObj.getUl().get(0).setPwd(newPwd);
@@ -287,20 +286,7 @@ public class ServiceDelegator {
 					criteriaObj.setUpdateUserCriteriaObj(updateUserCriteriaObj);
 					repositoryDelegator.update(userListObj, criteriaObj);
 
-					String USER_NAME = "wfs@unik-apps.com";
-					String PASSWORD = "admin";
-					String RECIPIENT = userObj.getUsNa();
-
-					String from = USER_NAME;
-					String pass = PASSWORD;
-					String[] to = { RECIPIENT };
-
-					String subject = "New Password";
-					String body = newPwd;
-
-					sendMail(from, pass, to, subject, body);
-
-					/* setResponse(responseObj); */
+					mailer.forgotPasswordMail(userListObj, newPwd);
 
 					ResStatus resStatus = new ResStatus();
 					resStatus.setCode("00");
@@ -1085,56 +1071,7 @@ public class ServiceDelegator {
 		return responseObj;
 	}
 
-	public void sendMail(String from, String pass, String[] to, String subject, String body) {
-		Properties props = System.getProperties();
-		/*
-		 * String host = "smtp.gmail.com";
-		 * props.put("mail.smtp.starttls.enable", "true");
-		 * props.put("mail.smtp.host", host); props.put("mail.smtp.user", from);
-		 * props.put("mail.smtp.password", pass); props.put("mail.smtp.port",
-		 * "587"); props.put("mail.smtp.auth", "true");
-		 */
-
-		String host = "unik-apps.com";
-		/* props.put("mail.smtp.starttls.enable", "true"); */
-		props.put("mail.transport.protocol", "smtp");
-		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.user", from);
-		props.put("mail.smtp.password", pass);
-		props.put("mail.smtp.port", "587");
-		props.put("mail.smtp.auth", "true");
-
-		Session session = Session.getDefaultInstance(props);
-		MimeMessage message = new MimeMessage(session);
-
-		try {
-			message.setFrom(new InternetAddress(from));
-			InternetAddress[] toAddress = new InternetAddress[to.length];
-
-			// To get the array of addresses
-			for (int i = 0; i < to.length; i++) {
-				toAddress[i] = new InternetAddress(to[i]);
-			}
-
-			for (int i = 0; i < toAddress.length; i++) {
-				message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-			}
-
-			message.setSubject(subject);
-			message.setText(body);
-			Transport transport = session.getTransport("smtp");
-			transport.connect(host, from, pass);
-			transport.sendMessage(message, message.getAllRecipients());
-			transport.close();
-		} catch (AddressException ae) {
-			ae.printStackTrace();
-		} catch (MessagingException me) {
-			me.printStackTrace();
-		}
-		System.out.println("Mail Sent");
-	}
-
-	public void hello() {
+		public void hello() {
 		System.out.println("In Service");
 	}
 

@@ -1710,7 +1710,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		String subject = "Java send mail example";
 		String body = "Welcome to JavaMail!";
 
-		serviceDelegator.sendMail(from, pass, to, subject, body);
+		//serviceDelegator.sendMail(from, pass, to, subject, body);
 		return "success";
 	}
 
