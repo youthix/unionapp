@@ -165,7 +165,7 @@ public class ServiceDelegator {
 
 			repositoryDelegator.update(userListObj, reqparam.getCriteria());
 			if(userListObj.getUl()!=null 
-					&& userListObj.getUl().get(0).getStatus().equalsIgnoreCase(UnionAppMsgConstants.NOTAPPROVED)){
+					&& userListObj.getUl().get(0).getStatus().equalsIgnoreCase(UnionAppConstants.notapproved)){
 				mailer.denialMail(userListObj);
 			}
 			responseObj.setUserListObj(userListObj);
@@ -188,7 +188,7 @@ public class ServiceDelegator {
 
 			responseObj = repositoryDelegator.updateuserprofile(reqparam);
 			if(userListObj.getUl()!=null 
-					&& userListObj.getUl().get(0).getStatus().equalsIgnoreCase(UnionAppMsgConstants.APPROVED)){
+					&& userListObj.getUl().get(0).getStatus().equalsIgnoreCase(UnionAppConstants.approved)){
 				mailer.approvalMail(userListObj);
 			}
 			setResponse(responseObj);

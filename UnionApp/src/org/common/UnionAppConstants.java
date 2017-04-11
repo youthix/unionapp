@@ -17,7 +17,8 @@ public interface UnionAppConstants {
 	final String update_eng = "update";
 	final String document_eng = "document";
 	final String image_eng = "image";
-	
+	final String notapproved = "notapproved";
+	final String approved = "approved";
 	final String meeting = "Møde";
 	final String activity = "Aktivitet"; 
 	final String contact = "Kontaktliste";
