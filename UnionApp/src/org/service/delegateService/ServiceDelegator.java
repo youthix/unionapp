@@ -183,12 +183,11 @@ public class ServiceDelegator {
 
 		ResponseObj responseObj = new ResponseObj();
 		UserList userListObj = reqparam.getUserListObj();
-
+		String status=userListObj.getUl().get(0).getStatus();
 		if (null != userListObj) {
 
 			responseObj = repositoryDelegator.updateuserprofile(reqparam);
-			if(userListObj.getUl()!=null 
-					&& userListObj.getUl().get(0).getStatus().equalsIgnoreCase(UnionAppConstants.approved)){
+			if(status.equalsIgnoreCase(UnionAppConstants.approved)){
 				mailer.approvalMail(userListObj);
 			}
 			setResponse(responseObj);
