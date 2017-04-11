@@ -12,9 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.presentation.dto.user.User;
 import org.presentation.dto.user.UserList;
-import org.springframework.stereotype.Component;
 
-@Component
 public class Mailer {
 	
 	final String USER_NAME = "wfs@unik-apps.com";

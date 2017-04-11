@@ -16,6 +16,9 @@
 	
 	<bean id="httpClientUtil" class="org.service.utilityService.HttpClientUtil">
 	</bean>
+	
+	<bean id="mailer" class="org.service.utilityService.Mailer">
+	</bean>
 
 	<bean id="repositoryDelegator" class="org.repository.RepositoryDelegate.RepositoryDelegator">
 	</bean>
