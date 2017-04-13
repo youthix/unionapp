@@ -1196,7 +1196,11 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			}
 
 			else if (!filePath.exists()) {
-
+				System.out.println("filePath>>"+fileLocation);
+                System.out.println("featureType>>"+featureType);
+                System.out.println("featureId>>"+featureId);
+                System.out.println("filelocationtitle>>"+filelocationtitle);
+                System.out.println("attachmentType>>"+attachmentType);
 				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
 						attachmentType);
 
