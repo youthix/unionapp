@@ -1158,7 +1158,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		// String path = UnionAppConstants.serverAbsPath + featureType + "/" +
 		// featureId + "/" + attachmentType;
-		String path = UnionAppConstants.serverAbsPath + featureType + "/" + featureId + "/" + attachmentType;
+
+		String path = UnionAppConstants.serverAbsPath + featureType + "/" + featureId + "/" + attachmentType + "/"
+				+ attachmentTitle;
 
 		File filePath = new File(path);
 		if (!filePath.isDirectory()) {
@@ -1196,11 +1198,11 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 			}
 
 			else if (!filePath.exists()) {
-				System.out.println("filePath>>"+fileLocation);
-                System.out.println("featureType>>"+featureType);
-                System.out.println("featureId>>"+featureId);
-                System.out.println("filelocationtitle>>"+filelocationtitle);
-                System.out.println("attachmentType>>"+attachmentType);
+				System.out.println("filePath>>" + fileLocation);
+				System.out.println("featureType>>" + featureType);
+				System.out.println("featureId>>" + featureId);
+				System.out.println("filelocationtitle>>" + filelocationtitle);
+				System.out.println("attachmentType>>" + attachmentType);
 				responseObj = serviceDelegator.updateAttachmentDetail(featureType, featureId, filelocationtitle,
 						attachmentType);
 
@@ -1319,7 +1321,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@Override
 	@POST
 	@Path("/updatecategory")
@@ -1345,12 +1347,12 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		return responseObj;
 
-	}	
+	}
 
 	@Override
 	@POST
 	@Path("/hellosurvey")
-	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON  + ";charset=utf-8")
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 	public ResponseObj helloSurvey(RequestObj reqparam) {
 
@@ -1363,18 +1365,18 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		SurveyDTO surveyDTOObj1 = new SurveyDTO();
 
 		QuestionDTO questionDTOObj1 = new QuestionDTO();
-		
-		String value="å";//This is a special character
-		String value2="";
 
-		        try {
-					//value=URLEncoder.encode(value, "UTF8");
-					value = URLDecoder.decode(URLEncoder.encode(value, "UTF-8"), "ISO-8859-1");
-					value2=URLDecoder.decode(value, "UTF8");
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		String value = "å";// This is a special character
+		String value2 = "";
+
+		try {
+			// value=URLEncoder.encode(value, "UTF8");
+			value = URLDecoder.decode(URLEncoder.encode(value, "UTF-8"), "ISO-8859-1");
+			value2 = URLDecoder.decode(value, "UTF8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		questionDTOObj1.setDetail("ø");
 		questionDTOObj1.setSubject("Test1");
@@ -1624,7 +1626,6 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 	}
 
-	
 	@POST
 	@Path("/user/active")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -1650,7 +1651,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		return responseObj;
 
 	}
-	
+
 	@GET
 	@Path("/send/notification")
 	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -1658,9 +1659,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		ResponseObj responseObj;
 
-		try {			
-				responseObj = serviceDelegator.sendNotification();
-			
+		try {
+			responseObj = serviceDelegator.sendNotification();
+
 		} catch (Exception exceptionObj) {
 
 			return ServiceExceptionMapper.toResponse(exceptionObj);
@@ -1678,9 +1679,9 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 
 		ResponseObj responseObj;
 
-		try {			
-				responseObj = serviceDelegator.fetchNotificationItem(reqparam);
-			
+		try {
+			responseObj = serviceDelegator.fetchNotificationItem(reqparam);
+
 		} catch (Exception exceptionObj) {
 
 			return ServiceExceptionMapper.toResponse(exceptionObj);
@@ -1714,7 +1715,7 @@ public class RESTfulServiceImpl implements RESTfulServiceInterface {
 		String subject = "Java send mail example";
 		String body = "Welcome to JavaMail!";
 
-		//serviceDelegator.sendMail(from, pass, to, subject, body);
+		// serviceDelegator.sendMail(from, pass, to, subject, body);
 		return "success";
 	}
 

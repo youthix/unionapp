@@ -1,5 +1,7 @@
 package org.repository.RepositoryDelegate;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.FileSystem;
@@ -217,7 +219,8 @@ public class RepositoryDelegator {
 						if (null != channel && channel.equalsIgnoreCase("admin")) {
 							// check if the admin user is login, if not then
 							// throw error.
-							if (userBOObj.getRole().equalsIgnoreCase("A") || userBOObj.getRole().equalsIgnoreCase("G")) {
+							if (userBOObj.getRole().equalsIgnoreCase("A")
+									|| userBOObj.getRole().equalsIgnoreCase("G")) {
 
 								// Update the Login status
 								userListObj.getUl().get(0).setLoginstatus("T");
@@ -3887,7 +3890,20 @@ public class RepositoryDelegator {
 				&& !"false".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())
 				&& !"".equalsIgnoreCase(agreementBOObj.getAttachmentstatus())) {
 			if (null != agreementBOObj.getImgattachment()) {
-				String[] imgAttachments = agreementBOObj.getImgattachment().split(",");
+
+				String attachmentString = "";
+
+				String path = UnionAppConstants.serverAbsPath + "agreement" + "/" + agreementBOObj.getArmid() + "/"
+						+ "Billede";
+
+				attachmentString = createAttachmentString(attachmentString, path);
+
+				/*
+				 * String[] imgAttachments =
+				 * agreementBOObj.getImgattachment().split(",");
+				 */
+				String[] imgAttachments = attachmentString.split(",");
+
 				for (String img : imgAttachments) {
 					String s[] = splitTitle(img);
 					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
@@ -3897,7 +3913,19 @@ public class RepositoryDelegator {
 			}
 
 			if (null != agreementBOObj.getDocattachment()) {
-				String[] docAttachments = agreementBOObj.getDocattachment().split(",");
+
+				String attachmentString = "";
+
+				String path = UnionAppConstants.serverAbsPath + "agreement" + "/" + agreementBOObj.getArmid() + "/"
+						+ "Dokument";
+
+				attachmentString = createAttachmentString(attachmentString, path);
+
+				/*
+				 * String[] docAttachments =
+				 * agreementBOObj.getDocattachment().split(",");
+				 */
+				String[] docAttachments = attachmentString.split(",");
 				for (String doc : docAttachments) {
 					String s[] = splitTitle(doc);
 					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
@@ -3918,7 +3946,16 @@ public class RepositoryDelegator {
 				&& !"".equalsIgnoreCase(NewsLetterBOObj.getAttachmentstatus())) {
 			if (null != NewsLetterBOObj.getImgattachment()) {
 
-				String[] imgAttachments = NewsLetterBOObj.getImgattachment().split(",");
+				String attachmentString = "";
+
+				String path = UnionAppConstants.serverAbsPath + "newsletter" + "/" + NewsLetterBOObj.getNlid() + "/"
+						+ "Billede";
+
+				attachmentString = createAttachmentString(attachmentString, path);
+
+				// String[] imgAttachments =
+				// NewsLetterBOObj.getImgattachment().split(",");
+				String[] imgAttachments = attachmentString.split(",");
 				for (String img : imgAttachments) {
 					String s[] = splitTitle(img);
 					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
@@ -3929,7 +3966,18 @@ public class RepositoryDelegator {
 
 			if (null != NewsLetterBOObj.getDocattachment()) {
 
-				String[] docAttachments = NewsLetterBOObj.getDocattachment().split(",");
+				String attachmentString = "";
+
+				String path = UnionAppConstants.serverAbsPath + "newsletter" + "/" + NewsLetterBOObj.getNlid() + "/"
+						+ "Dokument";
+
+				attachmentString = createAttachmentString(attachmentString, path);
+
+				/*
+				 * String[] docAttachments =
+				 * NewsLetterBOObj.getDocattachment().split(",");
+				 */
+				String[] docAttachments = attachmentString.split(",");
 				for (String doc : docAttachments) {
 					String s[] = splitTitle(doc);
 					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
@@ -3943,6 +3991,33 @@ public class RepositoryDelegator {
 		NewsLetterdtoObj.setAttachmentlist(al);
 	}
 
+	private String createAttachmentString(String imageAttachmentString, String path) {
+		File directory = new File(path);
+
+		// get all the files from a directory
+		File[] fList = directory.listFiles();
+		for (File file : fList) {
+			if (file.isDirectory()) {
+				String updatedPath = path + "/" + file.getName();
+				File updateDdirectory = new File(updatedPath);
+				File[] updatedfList = updateDdirectory.listFiles();
+				System.out.println(file.getName());
+				for (File updatedfile : updatedfList) {
+
+					if (updatedfile.isFile()) {
+						String imageAbsPath = updatedPath + "/" + updatedfile.getName();
+						String pathWithTitle = imageAbsPath + "~~~" + file.getName();
+						imageAttachmentString = imageAttachmentString + pathWithTitle + ",";
+						System.out.println(file.getName());
+					}
+				}
+				System.out.println(imageAttachmentString);
+			}
+		}
+		System.out.println(imageAttachmentString);
+		return imageAttachmentString;
+	}
+
 	private void populateAttachments(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
 		AttachmentList al = new AttachmentList();
 		int counter = 0;
@@ -3950,7 +4025,20 @@ public class RepositoryDelegator {
 				&& !"".equalsIgnoreCase(PayrateBOObj.getAttachmentstatus())) {
 
 			if (null != PayrateBOObj.getImgattachment()) {
-				String[] imgAttachments = PayrateBOObj.getImgattachment().split(",");
+
+				String attachmentString = "";
+
+				String path = UnionAppConstants.serverAbsPath + "payrate" + "/" + PayrateBOObj.getPayid() + "/"
+						+ "Billede";
+
+				attachmentString = createAttachmentString(attachmentString, path);
+
+				String[] imgAttachments = attachmentString.split(",");
+
+				/*
+				 * String[] imgAttachments =
+				 * PayrateBOObj.getImgattachment().split(",");
+				 */
 				for (String img : imgAttachments) {
 					String s[] = splitTitle(img);
 					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "image"));
@@ -3959,7 +4047,20 @@ public class RepositoryDelegator {
 			}
 			if (null != PayrateBOObj.getDocattachment()) {
 
-				String[] docAttachments = PayrateBOObj.getDocattachment().split(",");
+				String attachmentString = "";
+
+				String path = UnionAppConstants.serverAbsPath + "payrate" + "/" + PayrateBOObj.getPayid() + "/"
+						+ "Dokument";
+
+				attachmentString = createAttachmentString(attachmentString, path);
+
+				String[] docAttachments = attachmentString.split(",");
+
+				/*
+				 * String[] docAttachments =
+				 * PayrateBOObj.getDocattachment().split(",");
+				 */
+
 				for (String doc : docAttachments) {
 					String s[] = splitTitle(doc);
 					al.getAttachmentdtoLs().add(new AttachmentDTO(s[1], s[0], "doc"));
@@ -4194,18 +4295,18 @@ public class RepositoryDelegator {
 
 		ArrayList<Object> activeUsersCountList = actionlogdao.fetchActiveUsersCount();
 
-		if(activeUsersCountList.size()>7)
-		for (int i = 0; i < 7; i++) {
-			VisitorInfoDTO visitorInfoDTOObj1 = new VisitorInfoDTO();
-			Object[] oArr = (Object[]) activeUsersCountList.get(i);
-			if (null != oArr) {
-				visitorInfoDTOObj1.setCount(((Long) (oArr[0])).toString());
-				Date d = (Date) (oArr[1]);
-				SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
-				visitorInfoDTOObj1.setDate(dateformatter.format(d));
-				visitorinfodtoLs.add(visitorInfoDTOObj1);
+		if (activeUsersCountList.size() > 7)
+			for (int i = 0; i < 7; i++) {
+				VisitorInfoDTO visitorInfoDTOObj1 = new VisitorInfoDTO();
+				Object[] oArr = (Object[]) activeUsersCountList.get(i);
+				if (null != oArr) {
+					visitorInfoDTOObj1.setCount(((Long) (oArr[0])).toString());
+					Date d = (Date) (oArr[1]);
+					SimpleDateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+					visitorInfoDTOObj1.setDate(dateformatter.format(d));
+					visitorinfodtoLs.add(visitorInfoDTOObj1);
+				}
 			}
-		}
 		visitorInfoListObj.setVisitorinfodtoLs(visitorinfodtoLs);
 
 		return visitorInfoListObj;

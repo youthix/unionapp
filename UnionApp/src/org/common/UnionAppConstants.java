@@ -2,7 +2,7 @@ package org.common;
 
 public interface UnionAppConstants {
 	final String serverAbsPath = "/var/lib/tomcat7/webapps/attachments/";
-	//String localAbsPath="/C:/Saurabh/Images/";
+	String localAbsPath="/C:/Saurabh/UnionAppAttachment/";
 	final String serverUriPath = "http://185.134.30.228:8080/attachments/";
 	final String meeting_eng = "meeting";
 	final String activity_eng = "activity";
