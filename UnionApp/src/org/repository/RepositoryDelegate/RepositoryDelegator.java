@@ -3991,7 +3991,7 @@ public class RepositoryDelegator {
 		NewsLetterdtoObj.setAttachmentlist(al);
 	}
 
-	private String createAttachmentString(String imageAttachmentString, String path) {
+	private String createAttachmentString(String attachmentString, String path) {
 		File directory = new File(path);
 
 		// get all the files from a directory
@@ -4007,15 +4007,15 @@ public class RepositoryDelegator {
 					if (updatedfile.isFile()) {
 						String imageAbsPath = updatedPath + "/" + updatedfile.getName();
 						String pathWithTitle = imageAbsPath + "~~~" + file.getName();
-						imageAttachmentString = imageAttachmentString + pathWithTitle + ",";
+						attachmentString = attachmentString + pathWithTitle + ",";
 						System.out.println(file.getName());
 					}
 				}
-				System.out.println(imageAttachmentString);
+				System.out.println(attachmentString);
 			}
 		}
-		System.out.println(imageAttachmentString);
-		return imageAttachmentString;
+		System.out.println(attachmentString);
+		return attachmentString;
 	}
 
 	private void populateAttachments(PayrateDTO PayratedtoObj, PayrateBO PayrateBOObj) {
